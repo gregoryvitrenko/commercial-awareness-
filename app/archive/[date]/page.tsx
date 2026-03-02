@@ -1,15 +1,10 @@
 import { notFound } from 'next/navigation';
-import { getBriefing, listBriefings } from '@/lib/storage';
+import { getBriefing } from '@/lib/storage';
 import { Header } from '@/components/Header';
 import { BriefingView } from '@/components/BriefingView';
 
 interface Params {
   params: Promise<{ date: string }>;
-}
-
-export async function generateStaticParams() {
-  const dates = await listBriefings();
-  return dates.map((date) => ({ date }));
 }
 
 export async function generateMetadata({ params }: Params) {

@@ -3,34 +3,44 @@ import path from 'path';
 import type { Briefing } from './types';
 
 // ─── Backend detection ────────────────────────────────────────────────────────
-// Uses Vercel KV when KV env vars are present (Vercel production).
-// Falls back to local filesystem for dev / self-hosted deployments.
+// Uses Upstash Redis when env vars are present (production on Vercel).
+// Falls back to local filesystem for dev.
 
-function useKV(): boolean {
-  return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+function useRedis(): boolean {
+  return !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
 }
 
-// ─── Vercel KV backend ────────────────────────────────────────────────────────
+function getRedis() {
+  const { Redis } = require('@upstash/redis');
+  return new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
+}
 
-async function kvSave(briefing: Briefing): Promise<void> {
-  const { kv } = await import('@vercel/kv');
+// ─── Redis backend ────────────────────────────────────────────────────────────
+
+async function redisSave(briefing: Briefing): Promise<void> {
+  const redis = getRedis();
   await Promise.all([
-    kv.set(`briefing:${briefing.date}`, briefing),
-    kv.zadd('briefing:index', {
+    redis.set(`briefing:${briefing.date}`, JSON.stringify(briefing)),
+    redis.zadd('briefing:index', {
       score: new Date(briefing.date).getTime(),
       member: briefing.date,
     }),
   ]);
 }
 
-async function kvGet(date: string): Promise<Briefing | null> {
-  const { kv } = await import('@vercel/kv');
-  return kv.get<Briefing>(`briefing:${date}`);
+async function redisGet(date: string): Promise<Briefing | null> {
+  const redis = getRedis();
+  const data = await redis.get(`briefing:${date}`);
+  if (!data) return null;
+  return typeof data === 'string' ? JSON.parse(data) : data;
 }
 
-async function kvList(): Promise<string[]> {
-  const { kv } = await import('@vercel/kv');
-  const dates = await kv.zrange('briefing:index', 0, -1, { rev: true });
+async function redisList(): Promise<string[]> {
+  const redis = getRedis();
+  const dates = await redis.zrange('briefing:index', 0, -1, { rev: true });
   return dates as string[];
 }
 
@@ -46,8 +56,11 @@ function ensureDir(): void {
 
 function fsSave(briefing: Briefing): void {
   ensureDir();
-  const filePath = path.join(DATA_DIR, `${briefing.date}.json`);
-  fs.writeFileSync(filePath, JSON.stringify(briefing, null, 2), 'utf-8');
+  fs.writeFileSync(
+    path.join(DATA_DIR, `${briefing.date}.json`),
+    JSON.stringify(briefing, null, 2),
+    'utf-8'
+  );
 }
 
 function fsGet(date: string): Briefing | null {
@@ -73,23 +86,23 @@ function fsList(): string[] {
   }
 }
 
-// ─── Public API (always async) ────────────────────────────────────────────────
+// ─── Public API ───────────────────────────────────────────────────────────────
 
 export async function saveBriefing(briefing: Briefing): Promise<void> {
-  if (useKV()) {
-    await kvSave(briefing);
+  if (useRedis()) {
+    await redisSave(briefing);
   } else {
     fsSave(briefing);
   }
 }
 
 export async function getBriefing(date: string): Promise<Briefing | null> {
-  if (useKV()) return kvGet(date);
+  if (useRedis()) return redisGet(date);
   return fsGet(date);
 }
 
 export async function listBriefings(): Promise<string[]> {
-  if (useKV()) return kvList();
+  if (useRedis()) return redisList();
   return fsList();
 }
 

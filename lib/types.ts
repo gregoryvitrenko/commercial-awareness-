@@ -13,6 +13,7 @@ export interface Story {
   summary: string;
   whyItMatters: string;
   talkingPoint: string;
+  sources?: string[];
 }
 
 export interface Briefing {
@@ -25,42 +26,36 @@ export interface Briefing {
 
 export const TOPIC_STYLES: Record<
   TopicCategory,
-  { badge: string; border: string; label: string; shadow: string }
+  { badge: string; topBorder: string; label: string }
 > = {
   'M&A': {
-    badge: 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
-    border: 'border-l-4 border-l-blue-500',
-    label: 'text-blue-400',
-    shadow: 'shadow-blue-500/5',
+    badge: 'text-blue-600 dark:text-blue-400',
+    topBorder: 'border-t-2 border-t-blue-500',
+    label: 'text-blue-600 dark:text-blue-400',
   },
   'Capital Markets': {
-    badge: 'bg-violet-500/10 text-violet-400 border border-violet-500/20',
-    border: 'border-l-4 border-l-violet-500',
-    label: 'text-violet-400',
-    shadow: 'shadow-violet-500/5',
+    badge: 'text-violet-600 dark:text-violet-400',
+    topBorder: 'border-t-2 border-t-violet-500',
+    label: 'text-violet-600 dark:text-violet-400',
   },
   'Energy & Tech': {
-    badge: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
-    border: 'border-l-4 border-l-emerald-500',
-    label: 'text-emerald-400',
-    shadow: 'shadow-emerald-500/5',
+    badge: 'text-emerald-600 dark:text-emerald-400',
+    topBorder: 'border-t-2 border-t-emerald-500',
+    label: 'text-emerald-600 dark:text-emerald-400',
   },
   'Regulation': {
-    badge: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
-    border: 'border-l-4 border-l-amber-500',
-    label: 'text-amber-400',
-    shadow: 'shadow-amber-500/5',
+    badge: 'text-amber-600 dark:text-amber-400',
+    topBorder: 'border-t-2 border-t-amber-500',
+    label: 'text-amber-600 dark:text-amber-400',
   },
   'Disputes': {
-    badge: 'bg-rose-500/10 text-rose-400 border border-rose-500/20',
-    border: 'border-l-4 border-l-rose-500',
-    label: 'text-rose-400',
-    shadow: 'shadow-rose-500/5',
+    badge: 'text-rose-600 dark:text-rose-400',
+    topBorder: 'border-t-2 border-t-rose-500',
+    label: 'text-rose-600 dark:text-rose-400',
   },
   'International': {
-    badge: 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20',
-    border: 'border-l-4 border-l-cyan-500',
-    label: 'text-cyan-400',
-    shadow: 'shadow-cyan-500/5',
+    badge: 'text-cyan-600 dark:text-cyan-400',
+    topBorder: 'border-t-2 border-t-cyan-500',
+    label: 'text-cyan-600 dark:text-cyan-400',
   },
 };

@@ -1,12 +1,40 @@
-import Anthropic from '@anthropic-ai/sdk';
+import Groq from 'groq-sdk';
 import type { Briefing, Story, TopicCategory } from './types';
+import { getBriefing } from './storage';
 
 const SYSTEM_PROMPT = `You are a Commercial Awareness Agent producing daily briefings for a first-year LLB student in London targeting Magic Circle, Silver Circle, and elite US law firms. Your briefings are sharp, factually accurate, and commercially sophisticated. You write for a reader who is intelligent but time-pressed — think briefing a sharp trainee solicitor, not filing a memo.`;
 
-function buildUserPrompt(dateStr: string): string {
-  return `Today is ${dateStr}.
+function buildExclusionBlock(previousBriefing: Briefing | null): string {
+  if (!previousBriefing || previousBriefing.stories.length === 0) return '';
 
-Search for the 5–8 highest-signal commercial and legal stories from the last 24 hours. Prioritise stories in this order:
+  const storyList = previousBriefing.stories
+    .map(
+      (s, i) =>
+        `${i + 1}. [${s.topic}] ${s.headline}\n   Key entities: ${s.summary.slice(0, 120)}…`
+    )
+    .join('\n');
+
+  return `
+⛔ HARD EXCLUSION — recent briefings already covered these stories. You MUST NOT include:
+- Any story involving the same company, deal, regulator, court case, or person named below
+- Any story that is a continuation, update, or reframing of the same underlying event
+- Any story in the same sector with the same narrative arc
+
+Recently covered stories to avoid:
+${storyList}
+
+If the news sources below contain updates to these exact stories, skip them entirely and find fresher angles.
+`;
+}
+
+function buildUserPrompt(
+  dateStr: string,
+  searchContext: string,
+  exclusionBlock: string
+): string {
+  return `Today is ${dateStr}.
+${exclusionBlock}
+Using the news sources provided below, identify the 5–8 highest-signal commercial and legal stories published TODAY. Prioritise stories in this order:
 
 1. M&A and private equity deals with significant UK/European nexus
 2. Capital markets, IPOs, restructuring, banking & finance
@@ -15,35 +43,40 @@ Search for the 5–8 highest-signal commercial and legal stories from the last 2
 5. Commercially significant disputes or arbitration
 6. Global moves clearly relevant to international firms operating in London
 
-Search across: FT, Reuters, Bloomberg, BBC Business, The Economist, The Lawyer, Law.com, Legal Business, and the insights/news pages of A&O Shearman, Slaughter and May, Clifford Chance, Linklaters, Freshfields, Latham & Watkins, Kirkland & Ellis.
-
 Return a raw JSON object (no markdown fences, no preamble) with this exact structure:
 
 {
   "stories": [
     {
       "topic": "M&A",
-      "headline": "One sharp, declarative sentence",
-      "summary": "3–4 sentences. Factually accurate — who, what, where, numbers if known.",
-      "whyItMatters": "2–3 sentences on client impact, deal flow, or strategic implications for law firms.",
-      "talkingPoint": "One punchy, confident sentence you could drop into a vacation scheme or TC interview."
+      "headline": "One sharp, declarative sentence — name the parties, deal value, and type of transaction",
+      "summary": "10–14 sentences. This is the most important field — write it like a detailed briefing note. Cover: (1) who the parties are and their context, (2) what precisely happened, (3) deal value and structure if known, (4) advisers on each side by name, (5) regulatory approvals required and timeline, (6) financing structure or terms, (7) strategic rationale for both sides, (8) broader market context and what drove this deal now, (9) any complications, conditions, or open questions.",
+      "whyItMatters": "6–8 sentences. Explain in depth: (1) which specific practice areas this engages and why, (2) what it means for deal flow and client advisory pipelines at the leading firms, (3) the regulatory or policy dimension and what it signals, (4) what a trainee or junior associate would actually work on in this matter, (5) how it connects to broader market themes or cycles, (6) any precedent it sets or question it raises for future transactions.",
+      "talkingPoint": "2–3 confident, analytically sharp sentences suitable for a TC interview or vacation scheme partner chat. Lead with a bold observation, then give the so-what for law firms.",
+      "sources": ["https://example.com/article-url"]
     }
   ],
-  "sectorWatch": "2–3 sentences on the most important broader trend worth tracking this week.",
-  "oneToFollow": "One sentence identifying a developing story to monitor over the next few days."
+  "sectorWatch": "3–4 sentences on the most important broader trend worth tracking this week — name specific firms, regulators, or deals driving it.",
+  "oneToFollow": "2 sentences: identify the developing story to monitor and explain precisely why it matters for commercial lawyers."
 }
 
-Rules for topic field — must be exactly one of: "M&A", "Capital Markets", "Energy & Tech", "Regulation", "Disputes", "International"
+Rules:
+- topic must be exactly one of: "M&A", "Capital Markets", "Energy & Tech", "Regulation", "Disputes", "International"
+- sources must be an array of 1–3 real URLs drawn from the SOURCE lines in the news context below. Only include URLs that actually appear in the sources provided.
+- Every story must be from TODAY's news — do not recycle stories from previous days
+- Name specific law firms, banks, and advisers wherever the sources mention them
 
-Tone: Intelligent but not stuffy. Brief a sharp colleague, not a filing report. Zero filler phrases ("it is worth noting", "this highlights the importance of", "in conclusion"). If a number is imprecise, say so briefly rather than omitting it.`;
+Tone: Intelligent but not stuffy. Brief a sharp colleague, not a filing report. Zero filler phrases ("it is worth noting", "this highlights the importance of", "in conclusion"). If a number is imprecise, say so briefly rather than omitting it.
+
+--- RECENT NEWS SOURCES ---
+
+${searchContext}`;
 }
 
 function extractJSON(text: string): string {
-  // Try fenced code block first
   const fenceMatch = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
   if (fenceMatch) return fenceMatch[1].trim();
 
-  // Try bare JSON object
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (jsonMatch) return jsonMatch[0];
 
@@ -60,6 +93,7 @@ function buildBriefing(parsed: Record<string, unknown>, date: string): Briefing 
     summary: (s.summary as string) ?? '',
     whyItMatters: (s.whyItMatters as string) ?? '',
     talkingPoint: (s.talkingPoint as string) ?? '',
+    sources: (s.sources as string[]) ?? [],
   }));
 
   return {
@@ -71,79 +105,46 @@ function buildBriefing(parsed: Record<string, unknown>, date: string): Briefing 
   };
 }
 
-async function generateWithWebSearch(
-  client: Anthropic,
-  today: string,
-  dateStr: string,
-): Promise<Briefing> {
-  const messages: Anthropic.Messages.MessageParam[] = [
-    { role: 'user', content: buildUserPrompt(dateStr) },
+async function searchNews(dateLabel: string): Promise<string> {
+  const apiKey = process.env.TAVILY_API_KEY;
+  if (!apiKey) return '(no web search — Tavily API key not set)';
+
+  // Date-specific queries anchored to today so Tavily prioritises fresh results
+  const queries = [
+    `UK M&A private equity deal announced ${dateLabel}`,
+    `UK capital markets IPO banking finance news ${dateLabel}`,
+    `UK EU competition law financial regulation ${dateLabel}`,
+    `energy infrastructure technology AI legal news ${dateLabel}`,
+    `UK commercial litigation arbitration dispute ${dateLabel}`,
   ];
 
-  const MAX_ITERATIONS = 20;
+  const results = await Promise.all(
+    queries.map((q) =>
+      fetch('https://api.tavily.com/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          api_key: apiKey,
+          query: q,
+          search_depth: 'basic',
+          max_results: 3,
+          include_answer: false,
+        }),
+      }).then((r) => r.json())
+    )
+  );
 
-  for (let i = 0; i < MAX_ITERATIONS; i++) {
-    const response = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? 'claude-opus-4-6',
-      max_tokens: 8192,
-      system: SYSTEM_PROMPT,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      tools: [{ type: 'web_search_20250305' as any, name: 'web_search' }],
-      messages,
-    });
+  const items = results
+    .flatMap((r) => (r.results ?? []) as { url: string; title: string; content: string }[])
+    .map((item) => `SOURCE: ${item.url}\nTITLE: ${item.title}\nCONTENT: ${item.content}`)
+    .join('\n\n---\n\n');
 
-    const toolUseBlocks = response.content.filter((b) => b.type === 'tool_use');
-    const textBlocks = response.content.filter((b) => b.type === 'text');
-
-    if (response.stop_reason === 'end_turn' || toolUseBlocks.length === 0) {
-      const text = textBlocks
-        .map((b) => (b as Anthropic.Messages.TextBlock).text)
-        .join('');
-      const jsonStr = extractJSON(text);
-      return buildBriefing(JSON.parse(jsonStr), today);
-    }
-
-    // Continue the agentic search loop
-    messages.push({ role: 'assistant', content: response.content });
-
-    const toolResults: Anthropic.Messages.ToolResultBlockParam[] = toolUseBlocks.map((b) => ({
-      type: 'tool_result',
-      tool_use_id: (b as Anthropic.Messages.ToolUseBlock).id,
-      content: '',
-    }));
-
-    messages.push({ role: 'user', content: toolResults });
-  }
-
-  throw new Error('Reached max iteration limit during web-search generation loop');
-}
-
-async function generatePlain(
-  client: Anthropic,
-  today: string,
-  dateStr: string,
-): Promise<Briefing> {
-  const response = await client.messages.create({
-    model: process.env.ANTHROPIC_MODEL ?? 'claude-opus-4-6',
-    max_tokens: 8192,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: buildUserPrompt(dateStr) }],
-  });
-
-  const text = response.content
-    .filter((b) => b.type === 'text')
-    .map((b) => (b as Anthropic.Messages.TextBlock).text)
-    .join('');
-
-  const jsonStr = extractJSON(text);
-  return buildBriefing(JSON.parse(jsonStr), today);
+  return items || '(no search results returned)';
 }
 
 export async function generateBriefing(): Promise<Briefing> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY environment variable is not set');
-
-  const client = new Anthropic({ apiKey });
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) throw new Error('GROQ_API_KEY environment variable is not set');
 
   const today = new Date().toISOString().split('T')[0];
   const dateStr = new Date().toLocaleDateString('en-GB', {
@@ -153,10 +154,48 @@ export async function generateBriefing(): Promise<Briefing> {
     day: 'numeric',
   });
 
-  const useWebSearch = process.env.USE_WEB_SEARCH !== 'false';
+  // Load the last two briefings to build a strong exclusion list
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const twoDaysAgo = new Date();
+  twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
-  if (useWebSearch) {
-    return generateWithWebSearch(client, today, dateStr);
-  }
-  return generatePlain(client, today, dateStr);
+  const [yesterdayBriefing, twoDaysAgoBriefing] = await Promise.all([
+    getBriefing(yesterday.toISOString().split('T')[0]),
+    getBriefing(twoDaysAgo.toISOString().split('T')[0]),
+  ]);
+
+  // Merge both days into one exclusion block (yesterday + day before)
+  const combinedBriefing: Briefing | null = yesterdayBriefing
+    ? {
+        ...yesterdayBriefing,
+        stories: [
+          ...yesterdayBriefing.stories,
+          ...(twoDaysAgoBriefing?.stories ?? []),
+        ],
+      }
+    : twoDaysAgoBriefing;
+
+  const exclusionBlock = buildExclusionBlock(combinedBriefing);
+
+  const useWebSearch = process.env.USE_WEB_SEARCH !== 'false';
+  const searchContext = useWebSearch
+    ? await searchNews(dateStr)
+    : '(web search disabled — using training data only)';
+
+  const groq = new Groq({ apiKey });
+
+  const completion = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: buildUserPrompt(dateStr, searchContext, exclusionBlock) },
+    ],
+    max_tokens: 8192,
+    temperature: 0.4, // lower = more disciplined, less likely to repeat familiar narrative patterns
+  });
+
+  const text = completion.choices[0]?.message?.content ?? '';
+  const jsonStr = extractJSON(text);
+  return buildBriefing(JSON.parse(jsonStr), today);
 }

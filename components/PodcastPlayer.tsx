@@ -5,6 +5,7 @@ import { Play, Pause, Square, Loader2, Download, SlidersHorizontal } from 'lucid
 import type { Briefing } from '@/lib/types';
 
 const CHARS_PER_MINUTE = 650;
+const SPEEDS = [0.75, 1, 1.25, 1.5, 2];
 const DEFAULT_VOICE_ID = 'onwK4e9ZLuTAKqWW03F9'; // Daniel (British, authoritative)
 const LS_VOICE_KEY = 'podcast-voice-id';
 
@@ -87,6 +88,8 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
   const statusRef = useRef<'idle' | 'loading' | 'playing' | 'paused' | 'error'>('idle');
   const progressBarRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
+  const speedRef = useRef(1);
+  const [speed, setSpeed] = useState(1);
 
   function updateStatus(s: typeof status) {
     statusRef.current = s;
@@ -188,6 +191,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
       URL.revokeObjectURL(url);
     };
 
+    audio.playbackRate = speedRef.current;
     await audio.play();
     updateStatus('playing');
     if (audio.duration && isFinite(audio.duration)) setDuration(audio.duration);
@@ -209,7 +213,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
       window.speechSynthesis.onvoiceschanged = applyVoice;
     }
 
-    utterance.rate = 0.95;
+    utterance.rate = speedRef.current * 0.95;
     utterance.onboundary = (event) => {
       const absolute = startChar + event.charIndex;
       charIndexRef.current = absolute;
@@ -293,6 +297,23 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
     setProgress(0);
     setErrorMsg(null);
     charIndexRef.current = 0;
+  }
+
+  // ── Speed control ─────────────────────────────────────────────────────────
+
+  function cycleSpeed() {
+    const idx = SPEEDS.indexOf(speedRef.current);
+    const next = SPEEDS[(idx + 1) % SPEEDS.length];
+    speedRef.current = next;
+    setSpeed(next);
+    // Apply immediately to whichever playback path is active
+    if (audioRef.current) {
+      audioRef.current.playbackRate = next;
+    } else if (statusRef.current === 'playing' && scriptRef.current) {
+      // Restart TTS from current char position with new rate
+      window.speechSynthesis.cancel();
+      playTTSFromChar(scriptRef.current, charIndexRef.current);
+    }
   }
 
   // ── Progress bar drag ─────────────────────────────────────────────────────
@@ -515,6 +536,16 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
               <Download className="w-4 h-4" />
             </a>
           )}
+
+          {/* Speed */}
+          <button
+            onClick={cycleSpeed}
+            className="h-8 px-2 text-[11px] font-mono font-semibold text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-200 transition-colors tabular-nums"
+            aria-label="Change playback speed"
+            title="Playback speed"
+          >
+            {speed === 1 ? '1×' : `${speed}×`}
+          </button>
 
           {/* Voice selector toggle — only when ElevenLabs voices exist */}
           {(hasVoices || voicesLoading) && (

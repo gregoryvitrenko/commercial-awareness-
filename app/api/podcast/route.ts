@@ -98,14 +98,28 @@ One to Follow: ${briefing.oneToFollow}`;
 
   const anthropic = new Anthropic({ apiKey });
 
-  const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-5',
-    max_tokens: 2048,
-    messages: [{ role: 'user', content: prompt }],
-  });
+  let script: string;
+  try {
+    const message = await anthropic.messages.create({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 2048,
+      messages: [{ role: 'user', content: prompt }],
+    });
 
-  const block = message.content[0];
-  const script = block.type === 'text' ? block.text : '';
+    const block = message.content[0];
+    script = block.type === 'text' ? block.text : '';
+  } catch (err) {
+    console.error('[podcast] Anthropic API error:', err);
+    const msg = err instanceof Error ? err.message : 'Unknown error';
+    return NextResponse.json(
+      { error: `Script generation failed: ${msg}` },
+      { status: 502 }
+    );
+  }
+
+  if (!script) {
+    return NextResponse.json({ error: 'Script generation returned empty.' }, { status: 500 });
+  }
 
   // Persist to disk — subsequent requests return this cached version
   saveScript(targetDate, script);

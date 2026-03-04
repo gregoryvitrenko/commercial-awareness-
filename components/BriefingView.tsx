@@ -2,8 +2,6 @@ import Link from 'next/link';
 import type { Briefing } from '@/lib/types';
 import { StoryGrid } from './StoryGrid';
 import { SectorWatch } from './SectorWatch';
-import { QuizBanner } from './QuizBanner';
-import { Headphones } from 'lucide-react';
 
 interface BriefingViewProps {
   briefing: Briefing;
@@ -18,24 +16,6 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
       <p className="font-sans text-[13px] text-stone-400 dark:text-stone-500 mb-8 leading-relaxed">
         Daily commercial law briefings for future City trainees — curated stories, talking points, and firm intelligence, every morning.
       </p>
-
-      {/* Podcast link banner */}
-      <Link
-        href="/podcast"
-        className="flex items-center gap-3 px-4 py-3 mb-4 rounded-sm bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 hover:border-stone-400 dark:hover:border-stone-600 transition-colors group"
-      >
-        <Headphones className="w-4 h-4 text-stone-400 dark:text-stone-500 flex-shrink-0" />
-        <p className="text-[12px] font-sans text-stone-600 dark:text-stone-400 flex-1">
-          <span className="font-semibold text-stone-800 dark:text-stone-200">Listen to today&apos;s briefing</span>
-          <span className="text-stone-400 dark:text-stone-500"> · ~4 min podcast</span>
-        </p>
-        <span className="text-[11px] font-sans text-stone-400 dark:text-stone-500 group-hover:text-stone-700 dark:group-hover:text-stone-300 transition-colors flex-shrink-0">
-          Listen →
-        </span>
-      </Link>
-
-      {/* Daily quiz entry point */}
-      <QuizBanner date={briefing.date} />
 
       {/* Start Here callouts — guide non-subscribers to high-value content */}
       {!subscribed && (

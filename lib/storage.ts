@@ -165,52 +165,57 @@ export async function getQuiz(date: string): Promise<DailyQuiz | null> {
   return fsGetQuiz(date);
 }
 
-// ─── Aptitude question cache ───────────────────────────────────────────────────
-// One set per (date, testType) — shared across all users, same as quiz caching.
+// ─── Aptitude question bank ────────────────────────────────────────────────────
+// Persistent pool of questions per test type, refreshed weekly.
+// All users draw random subsets from the same bank — no per-user API calls.
 
-async function redisSaveAptitude(date: string, testType: string, questions: AptitudeQuestion[]): Promise<void> {
-  const redis = getRedis();
-  await redis.set(`aptitude:${date}:${testType}`, JSON.stringify(questions));
+export interface AptitudeBankStore {
+  questions: AptitudeQuestion[];
+  lastRefreshed: string; // YYYY-MM-DD
 }
 
-async function redisGetAptitude(date: string, testType: string): Promise<AptitudeQuestion[] | null> {
+async function redisSaveAptitudeBank(testType: string, data: AptitudeBankStore): Promise<void> {
   const redis = getRedis();
-  const data = await redis.get(`aptitude:${date}:${testType}`);
-  if (!data) return null;
-  return typeof data === 'string' ? JSON.parse(data) : data;
+  await redis.set(`aptitude-bank:${testType}`, JSON.stringify(data));
 }
 
-function fsSaveAptitude(date: string, testType: string, questions: AptitudeQuestion[]): void {
+async function redisGetAptitudeBank(testType: string): Promise<AptitudeBankStore | null> {
+  const redis = getRedis();
+  const raw = await redis.get(`aptitude-bank:${testType}`);
+  if (!raw) return null;
+  return typeof raw === 'string' ? JSON.parse(raw) : raw;
+}
+
+function fsSaveAptitudeBank(testType: string, data: AptitudeBankStore): void {
   ensureDir();
   fs.writeFileSync(
-    path.join(DATA_DIR, `${date}-aptitude-${testType}.json`),
-    JSON.stringify(questions, null, 2),
+    path.join(DATA_DIR, `aptitude-bank-${testType}.json`),
+    JSON.stringify(data, null, 2),
     'utf-8',
   );
 }
 
-function fsGetAptitude(date: string, testType: string): AptitudeQuestion[] | null {
+function fsGetAptitudeBank(testType: string): AptitudeBankStore | null {
   try {
     const content = fs.readFileSync(
-      path.join(DATA_DIR, `${date}-aptitude-${testType}.json`),
+      path.join(DATA_DIR, `aptitude-bank-${testType}.json`),
       'utf-8',
     );
-    return JSON.parse(content) as AptitudeQuestion[];
+    return JSON.parse(content) as AptitudeBankStore;
   } catch {
     return null;
   }
 }
 
-export async function saveAptitudeQuestions(date: string, testType: string, questions: AptitudeQuestion[]): Promise<void> {
+export async function saveAptitudeBank(testType: string, data: AptitudeBankStore): Promise<void> {
   if (useRedis()) {
-    await redisSaveAptitude(date, testType, questions);
+    await redisSaveAptitudeBank(testType, data);
   } else {
-    fsSaveAptitude(date, testType, questions);
+    fsSaveAptitudeBank(testType, data);
   }
 }
 
-export async function getAptitudeQuestions(date: string, testType: string): Promise<AptitudeQuestion[] | null> {
-  if (!isValidDate(date)) return null;
-  if (useRedis()) return redisGetAptitude(date, testType);
-  return fsGetAptitude(date, testType);
+export async function getAptitudeBank(testType: string): Promise<AptitudeBankStore | null> {
+  if (useRedis()) return redisGetAptitudeBank(testType);
+  return fsGetAptitudeBank(testType);
 }

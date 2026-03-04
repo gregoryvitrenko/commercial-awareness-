@@ -1,0 +1,456 @@
+{
+  "date": "2026-03-03",
+  "generatedAt": "2026-03-03T00:34:44.797Z",
+  "questions": [
+    {
+      "id": "1-1",
+      "storyId": "1",
+      "question": "What is the name of the fund services platform acquired by Pollen Street Capital?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Thesis Services Limited"
+        },
+        {
+          "letter": "B",
+          "text": "Thesis Holdings Limited"
+        },
+        {
+          "letter": "C",
+          "text": "Pollen Street Services"
+        },
+        {
+          "letter": "D",
+          "text": "Fund Services Platform Limited"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that Pollen Street Capital has announced the acquisition of Thesis Holdings Limited, a fund services platform. This is the specific fact from the Summary."
+    },
+    {
+      "id": "1-2",
+      "storyId": "1",
+      "question": "Which Magic Circle firms are well-positioned to advise on this type of deal?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only Allen & Overy and Clifford Chance"
+        },
+        {
+          "letter": "B",
+          "text": "Only Freshfields Bruckhaus Deringer and Linklaters"
+        },
+        {
+          "letter": "C",
+          "text": "Freshfields Bruckhaus Deringer, Linklaters, Allen & Overy, and Clifford Chance"
+        },
+        {
+          "letter": "D",
+          "text": "None of the Magic Circle firms"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that Magic Circle firms such as Freshfields Bruckhaus Deringer and Linklaters are well-positioned to advise on this type of deal, given their strong track record in private equity and M&A transactions, and also mentions Allen & Overy and Clifford Chance as having expertise in financial services regulation."
+    },
+    {
+      "id": "1-3",
+      "storyId": "1",
+      "question": "What is the commercial significance of the acquisition of Thesis Holdings Limited by Pollen Street Capital?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It highlights the decline of the UK investment sector"
+        },
+        {
+          "letter": "B",
+          "text": "It highlights the continued demand for high-quality fund services platforms"
+        },
+        {
+          "letter": "C",
+          "text": "It highlights the lack of private equity firms in the UK"
+        },
+        {
+          "letter": "D",
+          "text": "It highlights the decrease in M&A activity"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the acquisition of Thesis Holdings Limited by Pollen Street Capital highlights the continued demand for high-quality fund services platforms, with private equity firms looking to invest in this sector, which is the commercial significance of the deal."
+    },
+    {
+      "id": "2-1",
+      "storyId": "2",
+      "question": "Who believes that the London IPO market will see a significant increase in IPO activity in 2026?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Gareth McCartney, global co-head of debt capital markets at UBS"
+        },
+        {
+          "letter": "B",
+          "text": "Gareth McCartney, global co-head of equity capital markets at UBS"
+        },
+        {
+          "letter": "C",
+          "text": "Gareth McCartney, global co-head of M&A at UBS"
+        },
+        {
+          "letter": "D",
+          "text": "Gareth McCartney, global co-head of private equity at UBS"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that Gareth McCartney, global co-head of equity capital markets at UBS, believes that the London IPO market will see a significant increase in IPO activity in 2026."
+    },
+    {
+      "id": "2-2",
+      "storyId": "2",
+      "question": "Which Magic Circle firms are well-positioned to advise on IPOs in the London market?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only Allen & Overy and Clifford Chance"
+        },
+        {
+          "letter": "B",
+          "text": "Only Freshfields Bruckhaus Deringer and Linklaters"
+        },
+        {
+          "letter": "C",
+          "text": "Freshfields Bruckhaus Deringer, Linklaters, Allen & Overy, and Clifford Chance"
+        },
+        {
+          "letter": "D",
+          "text": "None of the Magic Circle firms"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that Magic Circle firms such as Linklaters and Freshfields Bruckhaus Deringer are well-positioned to advise on IPOs, given their strong track record in equity capital markets transactions."
+    },
+    {
+      "id": "2-3",
+      "storyId": "2",
+      "question": "What is the commercial significance of the expected increase in IPO activity in the London market?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It highlights the decline of the London Stock Exchange"
+        },
+        {
+          "letter": "B",
+          "text": "It highlights the continued demand for equity capital markets transactions"
+        },
+        {
+          "letter": "C",
+          "text": "It highlights the lack of companies looking to raise capital"
+        },
+        {
+          "letter": "D",
+          "text": "It highlights the decrease in investor appetite"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the expected increase in IPO activity in the London market highlights the continued demand for equity capital markets transactions, with companies looking to raise capital to drive growth and expansion."
+    },
+    {
+      "id": "3-1",
+      "storyId": "3",
+      "question": "What is the goal of the Department of Energy's national labs in relation to AI infrastructure?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "To reduce the use of AI in the energy sector"
+        },
+        {
+          "letter": "B",
+          "text": "To create a more efficient and effective AI infrastructure"
+        },
+        {
+          "letter": "C",
+          "text": "To decrease the development of new computing systems"
+        },
+        {
+          "letter": "D",
+          "text": "To stop the improvement of existing computing systems"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the goal of the Department of Energy's national labs is to create a more efficient and effective AI infrastructure that can support the growing demands of the energy sector."
+    },
+    {
+      "id": "3-2",
+      "storyId": "3",
+      "question": "Which firms may be involved in advising on the development of AI infrastructure in the energy sector?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only Magic Circle firms"
+        },
+        {
+          "letter": "B",
+          "text": "Only elite US firms"
+        },
+        {
+          "letter": "C",
+          "text": "Magic Circle firms such as Allen & Overy and Clifford Chance, and elite US firms such as Latham & Watkins and Kirkland & Ellis"
+        },
+        {
+          "letter": "D",
+          "text": "None of the above firms"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that Magic Circle firms such as Allen & Overy and Clifford Chance may be involved in advising on the regulatory aspects of the development of AI infrastructure, and elite US firms such as Latham & Watkins and Kirkland & Ellis may be involved in advising on the development of AI infrastructure."
+    },
+    {
+      "id": "3-3",
+      "storyId": "3",
+      "question": "What is the commercial significance of the development of AI infrastructure in the energy sector?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It highlights the decline of the energy sector"
+        },
+        {
+          "letter": "B",
+          "text": "It highlights the continued demand for technology and energy transactions"
+        },
+        {
+          "letter": "C",
+          "text": "It highlights the lack of investment in AI infrastructure"
+        },
+        {
+          "letter": "D",
+          "text": "It highlights the decrease in the use of AI in the energy sector"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the development of AI infrastructure highlights the continued demand for technology and energy transactions, with companies looking to invest in new and innovative technologies."
+    },
+    {
+      "id": "4-1",
+      "storyId": "4",
+      "question": "What is expected to continue to evolve in 2026 in the UK and EU?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Competition law and policy landscape"
+        },
+        {
+          "letter": "B",
+          "text": "Corporate governance code"
+        },
+        {
+          "letter": "C",
+          "text": "Intellectual property law"
+        },
+        {
+          "letter": "D",
+          "text": "Employment law"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The briefing states that the UK and EU competition law and policy landscape is expected to continue to evolve in 2026."
+    },
+    {
+      "id": "4-2",
+      "storyId": "4",
+      "question": "Which firms are well-positioned to advise on competition law and policy?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only elite US firms"
+        },
+        {
+          "letter": "B",
+          "text": "Only Magic Circle firms"
+        },
+        {
+          "letter": "C",
+          "text": "Magic Circle firms such as Freshfields Bruckhaus Deringer and Linklaters, and elite US firms such as Latham & Watkins and Kirkland & Ellis"
+        },
+        {
+          "letter": "D",
+          "text": "None of the above firms"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that Magic Circle firms such as Freshfields Bruckhaus Deringer and Linklaters are well-positioned to advise on competition law and policy, and elite US firms such as Latham & Watkins and Kirkland & Ellis may be involved in advising on competition law and policy, particularly in relation to cross-border transactions."
+    },
+    {
+      "id": "4-3",
+      "storyId": "4",
+      "question": "What is the commercial significance of the evolution of the competition law and policy landscape?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It highlights the decline of competition law and policy"
+        },
+        {
+          "letter": "B",
+          "text": "It highlights the importance of regulatory approvals and compliance"
+        },
+        {
+          "letter": "C",
+          "text": "It highlights the lack of investment in competition law and policy"
+        },
+        {
+          "letter": "D",
+          "text": "It highlights the decrease in competition law and policy matters"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the continued evolution of the competition law and policy landscape highlights the importance of regulatory approvals and compliance, with companies looking to navigate the complex and ever-changing regulatory environment."
+    },
+    {
+      "id": "5-1",
+      "storyId": "5",
+      "question": "What is expected to continue to evolve in 2026 in the commercial disputes landscape?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The use of mediation and arbitration"
+        },
+        {
+          "letter": "B",
+          "text": "The use of artificial intelligence and other technologies"
+        },
+        {
+          "letter": "C",
+          "text": "The use of litigation and court proceedings"
+        },
+        {
+          "letter": "D",
+          "text": "The use of alternative dispute resolution methods"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the use of artificial intelligence and other technologies is expected to play an increasingly important role in disputes in 2026."
+    },
+    {
+      "id": "5-2",
+      "storyId": "5",
+      "question": "Which firms are well-positioned to advise on commercial disputes?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only elite US firms"
+        },
+        {
+          "letter": "B",
+          "text": "Only Magic Circle firms"
+        },
+        {
+          "letter": "C",
+          "text": "Magic Circle firms such as Linklaters and Freshfields Bruckhaus Deringer, and elite US firms such as Latham & Watkins and Kirkland & Ellis"
+        },
+        {
+          "letter": "D",
+          "text": "None of the above firms"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that Magic Circle firms such as Linklaters and Freshfields Bruckhaus Deringer are well-positioned to advise on commercial disputes, and elite US firms such as Latham & Watkins and Kirkland & Ellis may be involved in advising on commercial disputes, particularly in relation to cross-border transactions."
+    },
+    {
+      "id": "5-3",
+      "storyId": "5",
+      "question": "What is the commercial significance of the evolution of the commercial disputes landscape?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It highlights the decline of commercial disputes"
+        },
+        {
+          "letter": "B",
+          "text": "It highlights the importance of expertise in commercial disputes"
+        },
+        {
+          "letter": "C",
+          "text": "It highlights the lack of investment in commercial disputes"
+        },
+        {
+          "letter": "D",
+          "text": "It highlights the decrease in commercial disputes matters"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the continued evolution of the commercial disputes landscape highlights the importance of expertise in this area, with companies looking to navigate the complex and ever-changing regulatory environment."
+    },
+    {
+      "id": "6-1",
+      "storyId": "6",
+      "question": "What is expected to continue to evolve in 2026 in the international trade landscape?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The use of tariffs and trade barriers"
+        },
+        {
+          "letter": "B",
+          "text": "The impact of the COVID-19 pandemic and supply chain disruptions"
+        },
+        {
+          "letter": "C",
+          "text": "The use of trade agreements and international trade organizations"
+        },
+        {
+          "letter": "D",
+          "text": "The decline of international trade"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the ongoing impact of the COVID-19 pandemic and the resulting supply chain disruptions are expected to continue to shape the international trade landscape in 2026."
+    },
+    {
+      "id": "6-2",
+      "storyId": "6",
+      "question": "Which firms are well-positioned to advise on international trade?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Only elite US firms"
+        },
+        {
+          "letter": "B",
+          "text": "Only Magic Circle firms"
+        },
+        {
+          "letter": "C",
+          "text": "Magic Circle firms such as Linklaters and Freshfields Bruckhaus Deringer, and elite US firms such as Latham & Watkins and Kirkland & Ellis"
+        },
+        {
+          "letter": "D",
+          "text": "None of the above firms"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that Magic Circle firms such as Linklaters and Freshfields Bruckhaus Deringer are well-positioned to advise on international trade, and elite US firms such as Latham & Watkins and Kirkland & Ellis may be involved in advising on international trade, particularly in relation to cross-border transactions."
+    },
+    {
+      "id": "6-3",
+      "storyId": "6",
+      "question": "What is the commercial significance of the evolution of the international trade landscape?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It highlights the decline of international trade"
+        },
+        {
+          "letter": "B",
+          "text": "It highlights the importance of expertise in international trade"
+        },
+        {
+          "letter": "C",
+          "text": "It highlights the lack of investment in international trade"
+        },
+        {
+          "letter": "D",
+          "text": "It highlights the decrease in international trade matters"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the continued evolution of the international trade landscape highlights the importance of expertise in this area, with companies looking to navigate the complex and ever-changing regulatory environment."
+    }
+  ]
+}

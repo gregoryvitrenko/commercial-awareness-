@@ -1,31 +1,21 @@
 import { Building2, AlertTriangle } from 'lucide-react';
 import { Header } from '@/components/Header';
-import { FirmCard } from '@/components/FirmCard';
+import { FirmsDirectory } from '@/components/FirmsDirectory';
 import { FIRMS } from '@/lib/firms-data';
 import { requireSubscription } from '@/lib/paywall';
 import { getTodayDate } from '@/lib/storage';
-import type { FirmTier } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
-
-const TIER_ORDER: FirmTier[] = ['Magic Circle', 'Silver Circle', 'International', 'US Firms', 'Boutique'];
 
 export default async function FirmsPage() {
   await requireSubscription();
   const today = getTodayDate();
 
-  const byTier = TIER_ORDER.reduce<Record<FirmTier, typeof FIRMS>>(
-    (acc, tier) => {
-      acc[tier] = FIRMS.filter((f) => f.tier === tier);
-      return acc;
-    },
-    {} as Record<FirmTier, typeof FIRMS>
-  );
-
   return (
     <>
       <Header date={today} isArchive />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+
         {/* Page heading */}
         <div className="flex items-center gap-3 mb-6">
           <Building2 size={16} className="text-zinc-400" />
@@ -46,21 +36,9 @@ export default async function FirmsPage() {
           </p>
         </div>
 
-        {/* Tier sections */}
-        <div className="space-y-10">
-          {TIER_ORDER.map((tier) => (
-            <div key={tier}>
-              <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
-                {tier}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {byTier[tier].map((firm) => (
-                  <FirmCard key={firm.slug} firm={firm} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Search + tier jump links + firm grid — all client-side */}
+        <FirmsDirectory firms={FIRMS} />
+
       </main>
     </>
   );

@@ -1,0 +1,456 @@
+{
+  "date": "2026-03-01",
+  "generatedAt": "2026-03-03T10:53:36.725Z",
+  "questions": [
+    {
+      "id": "1-1",
+      "storyId": "1",
+      "question": "What is the approximate value of the UK infrastructure investment platform that Apollo Global Management has agreed to acquire?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "£3.5bn"
+        },
+        {
+          "letter": "B",
+          "text": "£4.2bn"
+        },
+        {
+          "letter": "C",
+          "text": "£4.8bn"
+        },
+        {
+          "letter": "D",
+          "text": "£5.1bn"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The deal values the target at approximately £4.2bn, as stated in the Summary. This is one of the largest UK take-privates since the rate environment stabilised."
+    },
+    {
+      "id": "1-2",
+      "storyId": "1",
+      "question": "Which firm is best positioned to advise Apollo on the FCA change-of-control and NSI Act national security review tracks for this deal?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "B",
+          "text": "A&O Shearman"
+        },
+        {
+          "letter": "C",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "D",
+          "text": "Clifford Chance"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "A&O Shearman is advising Apollo and brings the deepest UK PE advisory relationship in this asset class, as mentioned in Why It Matters. This expertise will be crucial in navigating the FCA change-of-control and NSI Act national security review tracks."
+    },
+    {
+      "id": "1-3",
+      "storyId": "1",
+      "question": "What is the underlying driver of the structural take-private wave, as exemplified by the Apollo-infrastructure deal?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Rising public market valuations"
+        },
+        {
+          "letter": "B",
+          "text": "Decreasing private capital deployment pressure"
+        },
+        {
+          "letter": "C",
+          "text": "The tension between private capital's deployment pressure and elevated UK public market discounts"
+        },
+        {
+          "letter": "D",
+          "text": "Increasing regulatory scrutiny of infrastructure acquisitions"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point highlights that the Apollo-infrastructure deal exemplifies how the tension between private capital's 2026 deployment pressure and elevated UK public market discounts is converting into a structural take-private wave. This is the underlying driver of the trend."
+    },
+    {
+      "id": "2-1",
+      "storyId": "2",
+      "question": "What is the proposed valuation of Revolut in its planned London IPO?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "£6bn"
+        },
+        {
+          "letter": "B",
+          "text": "£7bn"
+        },
+        {
+          "letter": "C",
+          "text": "£8bn"
+        },
+        {
+          "letter": "D",
+          "text": "£9bn"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Summary states that the proposed London listing would value Revolut at approximately £8bn. This represents a significant discount to its 2021 private round valuation."
+    },
+    {
+      "id": "2-2",
+      "storyId": "2",
+      "question": "Which firms are the natural leads for the issuer-side mandate in Revolut's planned London IPO?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Allen & Overy and Linklaters"
+        },
+        {
+          "letter": "B",
+          "text": "Clifford Chance and Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "C",
+          "text": "Slaughter and May and Herbert Smith Freehills"
+        },
+        {
+          "letter": "D",
+          "text": "Linklaters and Clifford Chance"
+        }
+      ],
+      "correctLetter": "D",
+      "explanation": "Why It Matters mentions that Linklaters and Clifford Chance are the natural leads for the issuer-side mandate, given their experience in advising on major LSE tech listings and their ECM partner bench."
+    },
+    {
+      "id": "2-3",
+      "storyId": "2",
+      "question": "What is the significance of Revolut's planned London IPO in terms of the UK market's competitiveness?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It demonstrates the UK market's lack of competitiveness for high-growth tech listings"
+        },
+        {
+          "letter": "B",
+          "text": "It shows that the UK market is only competitive for low-growth listings"
+        },
+        {
+          "letter": "C",
+          "text": "It will be a live test of whether the FCA's Listing Rules reforms have made London genuinely competitive again for high-growth tech"
+        },
+        {
+          "letter": "D",
+          "text": "It is irrelevant to the UK market's competitiveness"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point states that Revolut's IPO will be a real-world verdict on whether the FCA's Edinburgh Reforms have made London genuinely competitive again for high-growth tech. This is the significance of the planned IPO in terms of the UK market's competitiveness."
+    },
+    {
+      "id": "3-1",
+      "storyId": "3",
+      "question": "What is the maximum fine that can be imposed on US tech firms found to have deployed prohibited-use AI systems in the EU?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "€10m or 3% of global annual turnover"
+        },
+        {
+          "letter": "B",
+          "text": "€20m or 5% of global annual turnover"
+        },
+        {
+          "letter": "C",
+          "text": "€35m or 7% of global annual turnover"
+        },
+        {
+          "letter": "D",
+          "text": "€50m or 10% of global annual turnover"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Summary states that the decisions carry maximum fines of €35m or 7% of global annual turnover, whichever is higher. This is the maximum fine that can be imposed on US tech firms found to have deployed prohibited-use AI systems in the EU."
+    },
+    {
+      "id": "3-2",
+      "storyId": "3",
+      "question": "Which UK firm is best positioned to advise US tech firms on their AI Act compliance posture and manage enforcement proceedings before the EU AI Office?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "B",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "C",
+          "text": "Clifford Chance"
+        },
+        {
+          "letter": "D",
+          "text": "Herbert Smith Freehills"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "Why It Matters mentions that Clifford Chance's technology, media and telecommunications practice is best positioned to advise US tech firms on their AI Act compliance posture and manage enforcement proceedings before the EU AI Office."
+    },
+    {
+      "id": "3-3",
+      "storyId": "3",
+      "question": "What is the significance of the EU's first AI Act enforcement decisions in terms of the regulatory landscape for US tech firms?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "They mark the beginning of a more lenient regulatory approach towards US tech firms"
+        },
+        {
+          "letter": "B",
+          "text": "They confirm that the 'grace period' for prohibited-use AI systems is over"
+        },
+        {
+          "letter": "C",
+          "text": "They have no impact on the regulatory landscape for US tech firms"
+        },
+        {
+          "letter": "D",
+          "text": "They only apply to EU-based tech firms"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The Talking Point states that the EU's first AI Act enforcement decisions confirm that the 'grace period' for prohibited-use AI systems is over. This is the significance of the decisions in terms of the regulatory landscape for US tech firms."
+    },
+    {
+      "id": "4-1",
+      "storyId": "4",
+      "question": "What is the value of the package of mature North Sea producing assets that BP has agreed to sell to Harbour Energy?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "£1.2bn"
+        },
+        {
+          "letter": "B",
+          "text": "£1.4bn"
+        },
+        {
+          "letter": "C",
+          "text": "£1.6bn"
+        },
+        {
+          "letter": "D",
+          "text": "£1.8bn"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The Summary states that BP has agreed to sell a package of mature North Sea producing assets to Harbour Energy for £1.4bn in cash, with an additional £200m contingent on hydrocarbon price benchmarks."
+    },
+    {
+      "id": "4-2",
+      "storyId": "4",
+      "question": "Which firm has built the pre-eminent North Sea energy M&A practice over the past decade and is advising Harbour Energy on this deal?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "B",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "C",
+          "text": "Herbert Smith Freehills"
+        },
+        {
+          "letter": "D",
+          "text": "Clifford Chance"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "Why It Matters mentions that Herbert Smith Freehills has built the pre-eminent North Sea energy M&A practice over the past decade and is advising Harbour Energy on this deal."
+    },
+    {
+      "id": "4-3",
+      "storyId": "4",
+      "question": "What is the significance of BP's North Sea sell-down in terms of the energy transition strategy of energy majors?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It marks a shift towards increasing upstream exposure"
+        },
+        {
+          "letter": "B",
+          "text": "It is a live illustration of how energy majors are using M&A to externally finance their transition"
+        },
+        {
+          "letter": "C",
+          "text": "It has no impact on the energy transition strategy of energy majors"
+        },
+        {
+          "letter": "D",
+          "text": "It only applies to BP's strategy and not to other energy majors"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The Talking Point states that BP's North Sea sell-down is a live illustration of how energy majors are using M&A to externally finance their transition. This is the significance of the deal in terms of the energy transition strategy of energy majors."
+    },
+    {
+      "id": "5-1",
+      "storyId": "5",
+      "question": "What is the record number of new arbitrations registered with the London Court of International Arbitration in 2025?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "400"
+        },
+        {
+          "letter": "B",
+          "text": "450"
+        },
+        {
+          "letter": "C",
+          "text": "467"
+        },
+        {
+          "letter": "D",
+          "text": "500"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Summary states that the LCIA's annual caseload report for 2025 shows a record 467 new arbitrations registered. This is the record number of new arbitrations registered with the LCIA in 2025."
+    },
+    {
+      "id": "5-2",
+      "storyId": "5",
+      "question": "Which firms dominate international arbitration by caseload and billings, and are likely to be involved in LCIA proceedings?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Freshfields Bruckhaus Deringer and Linklaters"
+        },
+        {
+          "letter": "B",
+          "text": "Herbert Smith Freehills and Clifford Chance"
+        },
+        {
+          "letter": "C",
+          "text": "Freshfields Bruckhaus Deringer and Herbert Smith Freehills"
+        },
+        {
+          "letter": "D",
+          "text": "Slaughter and May and Allen & Overy"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "Why It Matters mentions that Freshfields Bruckhaus Deringer and Herbert Smith Freehills dominate international arbitration by caseload and billings, and are likely to be involved in LCIA proceedings."
+    },
+    {
+      "id": "5-3",
+      "storyId": "5",
+      "question": "What is the significance of the LCIA's record caseload in terms of London's position as a global arbitration hub?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It marks a decline in London's position as a global arbitration hub"
+        },
+        {
+          "letter": "B",
+          "text": "It underscores that London remains the global default for high-value commercial arbitration"
+        },
+        {
+          "letter": "C",
+          "text": "It has no impact on London's position as a global arbitration hub"
+        },
+        {
+          "letter": "D",
+          "text": "It only applies to the LCIA and not to other arbitration institutions"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The Talking Point states that the LCIA's record caseload underscores that London remains the global default for high-value commercial arbitration. This is the significance of the record caseload in terms of London's position as a global arbitration hub."
+    },
+    {
+      "id": "6-1",
+      "storyId": "6",
+      "question": "Which US regulatory body has opened a formal review of the Big Four audit firms' UK operations under a revised foreign oversight framework?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "SEC"
+        },
+        {
+          "letter": "B",
+          "text": "PCAOB"
+        },
+        {
+          "letter": "C",
+          "text": "DOJ"
+        },
+        {
+          "letter": "D",
+          "text": "FCA"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Summary states that the US Department of Justice's newly established Foreign Audit Oversight Division has formally notified the UK's Financial Reporting Council of its intention to conduct direct oversight inspections of KPMG and PwC's UK audit practices."
+    },
+    {
+      "id": "6-2",
+      "storyId": "6",
+      "question": "Which UK firm is best positioned to advise the FRC on its response framework to the DOJ's formal review of the Big Four audit firms' UK operations?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "B",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "C",
+          "text": "Clifford Chance"
+        },
+        {
+          "letter": "D",
+          "text": "Slaughter and May"
+        }
+      ],
+      "correctLetter": "D",
+      "explanation": "Why It Matters mentions that Slaughter and May's regulatory practice is best positioned to advise the FRC on its response framework to the DOJ, given its deep relationships with UK financial regulators."
+    },
+    {
+      "id": "6-3",
+      "storyId": "6",
+      "question": "What is the significance of the DOJ's move into UK audit oversight in terms of US extraterritorial regulatory reach?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It marks a reduction in US extraterritorial regulatory reach"
+        },
+        {
+          "letter": "B",
+          "text": "It is an isolated incident with no broader implications"
+        },
+        {
+          "letter": "C",
+          "text": "It signals an expansion of US extraterritorial regulatory reach into professional services"
+        },
+        {
+          "letter": "D",
+          "text": "It only applies to the audit sector and not to other professional services"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point states that the DOJ's move into UK audit oversight isn't primarily a Big Four story, but rather a signal of how US extraterritorial regulatory reach is expanding into professional services more broadly. This is the significance of the move in terms of US extraterritorial regulatory reach."
+    }
+  ]
+}

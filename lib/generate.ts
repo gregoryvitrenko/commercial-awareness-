@@ -79,6 +79,7 @@ Rules:
 - Name specific law firms, banks, and advisers wherever the sources mention them
 - If a practice area has no strong story from the provided sources, use your training knowledge to produce a credible, current-feeling story for that area — but still mark sources as []
 - firms must be an array of 2–5 short law firm names explicitly mentioned in this story (e.g. "Freshfields", "Linklaters", "Kirkland"). Use short names only — no "& Partners", no "LLP". If no firms are named, use []
+- In the summary and all three whyItMatters sub-fields, wrap 4–8 key terms per paragraph in **double asterisks** like this: **CMA**, **£4.2bn**, **Freshfields**, **Article 101 TFEU**. Bold only the most scan-worthy facts: deal values, firm names, regulatory bodies, named legislation, and central named parties. Do not bold every proper noun — be selective so bolding carries weight.
 
 Tone: Intelligent but not stuffy. Brief a sharp colleague, not a filing report. Zero filler phrases ("it is worth noting", "this highlights the importance of", "in conclusion"). If a number is imprecise, say so briefly rather than omitting it.
 

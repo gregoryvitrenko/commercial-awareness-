@@ -1,0 +1,456 @@
+{
+  "date": "2026-03-02",
+  "generatedAt": "2026-03-03T10:53:21.043Z",
+  "questions": [
+    {
+      "id": "1-1",
+      "storyId": "1",
+      "question": "What is the approximate value of assets under management that EQT will acquire through its acquisition of Coller Capital?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "$30bn"
+        },
+        {
+          "letter": "B",
+          "text": "$40bn"
+        },
+        {
+          "letter": "C",
+          "text": "$50bn"
+        },
+        {
+          "letter": "D",
+          "text": "$60bn"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The acquisition of Coller Capital will add nearly $50bn of private markets assets under management to EQT, as stated in the summary. This is a key aspect of the deal, as it materially strengthens EQT's position in the private markets secondaries space."
+    },
+    {
+      "id": "1-2",
+      "storyId": "1",
+      "question": "Which firm has the deepest advisory relationship with EQT in Europe and would be the natural lead for the corporate M&A structuring and any UK regulatory filings?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Clifford Chance"
+        },
+        {
+          "letter": "B",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "C",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "D",
+          "text": "Herbert Smith Freehills"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "According to the Why It Matters section, Freshfields Bruckhaus Deringer has the deepest advisory relationship with EQT in Europe, making it the natural lead for the corporate M&A structuring and any UK regulatory filings. This is due to its strong relationship with EQT and its expertise in M&A and regulatory matters."
+    },
+    {
+      "id": "1-3",
+      "storyId": "1",
+      "question": "What is the key takeaway from the EQT-Coller Capital deal in terms of the private markets industry?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The deal marks a shift towards more traditional private equity investments"
+        },
+        {
+          "letter": "B",
+          "text": "The deal reflects how the largest PE managers are building vertically integrated private markets platforms"
+        },
+        {
+          "letter": "C",
+          "text": "The deal is a one-off transaction with no broader industry implications"
+        },
+        {
+          "letter": "D",
+          "text": "The deal signals a decline in the importance of secondaries in the private markets industry"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The Talking Point section notes that the EQT-Coller Capital deal reflects how the largest PE managers are building vertically integrated private markets platforms, highlighting the trend towards consolidation and integration in the industry. This is a key takeaway from the deal, as it signals a shift towards more comprehensive and diversified private markets platforms."
+    },
+    {
+      "id": "2-1",
+      "storyId": "2",
+      "question": "What is the proposed structure of the merger between Magellan Financial Group and Barrenjoey?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A takeover by Magellan Financial Group"
+        },
+        {
+          "letter": "B",
+          "text": "A merger of equals"
+        },
+        {
+          "letter": "C",
+          "text": "A joint venture between the two companies"
+        },
+        {
+          "letter": "D",
+          "text": "A sale of Barrenjoey's assets to Magellan Financial Group"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The summary states that the deal is structured as a merger of equals, which means that both companies will combine their operations and management on an equal basis. This is a key aspect of the deal, as it reflects the collaborative nature of the merger."
+    },
+    {
+      "id": "2-2",
+      "storyId": "2",
+      "question": "Which firm is best positioned to advise on the UK-side corporate structuring and FCA implications of the MFG-Barrenjoey merger?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "B",
+          "text": "Clifford Chance"
+        },
+        {
+          "letter": "C",
+          "text": "Herbert Smith Freehills"
+        },
+        {
+          "letter": "D",
+          "text": "Allen & Overy Shearman"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "According to the Why It Matters section, Herbert Smith Freehills is the natural lead for the UK-side corporate structuring and any FCA implications arising from Barclays' stake restructuring, due to its pre-eminent Australian practice and strong London-Sydney corridor capability. This expertise makes it well-suited to advise on the merger."
+    },
+    {
+      "id": "2-3",
+      "storyId": "2",
+      "question": "What is the key trend illustrated by the MFG-Barrenjoey merger?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A decline in consolidation among financial services companies"
+        },
+        {
+          "letter": "B",
+          "text": "A shift towards more traditional investment banking models"
+        },
+        {
+          "letter": "C",
+          "text": "The consolidation of boutique investment banks into integrated platforms"
+        },
+        {
+          "letter": "D",
+          "text": "A decrease in the importance of the London-Sydney regulatory corridor"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point section notes that the MFG-Barrenjoey merger illustrates how boutique investment banks backed by major institutional investors are consolidating into integrated platforms, highlighting the trend towards greater integration and consolidation in the financial services industry. This is a key takeaway from the deal, as it reflects the evolving nature of the industry."
+    },
+    {
+      "id": "3-1",
+      "storyId": "3",
+      "question": "Who has been confirmed as the new Chair of the Competition and Markets Authority?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Lord Tyrie"
+        },
+        {
+          "letter": "B",
+          "text": "Doug Gurr"
+        },
+        {
+          "letter": "C",
+          "text": "Andrea Coscelli"
+        },
+        {
+          "letter": "D",
+          "text": "Sarah Cardell"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The summary states that Doug Gurr, the former President of Amazon UK, has been confirmed as the new Chair of the Competition and Markets Authority, replacing Lord Tyrie. This is a key appointment, as it reflects the CMA's focus on digital markets and tech sector enforcement."
+    },
+    {
+      "id": "3-2",
+      "storyId": "3",
+      "question": "Which firms have the deepest CMA advisory practices in the market and will be immediately briefing clients on the implications of Gurr's appointment?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Freshfields Bruckhaus Deringer and Herbert Smith Freehills"
+        },
+        {
+          "letter": "B",
+          "text": "Linklaters and Clifford Chance"
+        },
+        {
+          "letter": "C",
+          "text": "Allen & Overy Shearman and Slaughter and May"
+        },
+        {
+          "letter": "D",
+          "text": "DLA Piper and Eversheds Sutherland"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "According to the Why It Matters section, Linklaters and Clifford Chance have the deepest CMA advisory practices in the market and will be immediately briefing clients on what Gurr's appointment signals for pending and anticipated CMA interventions. This expertise makes them well-suited to advise on the implications of Gurr's appointment."
+    },
+    {
+      "id": "3-3",
+      "storyId": "3",
+      "question": "What is the key signal sent by Gurr's appointment as CMA Chair?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A decrease in the CMA's focus on digital markets"
+        },
+        {
+          "letter": "B",
+          "text": "An increase in the CMA's focus on traditional industries"
+        },
+        {
+          "letter": "C",
+          "text": "A continued focus on digital markets and tech sector enforcement"
+        },
+        {
+          "letter": "D",
+          "text": "A shift towards more lenient enforcement of competition laws"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point section notes that Gurr's appointment as CMA Chair is a direct signal that UK competition enforcement will remain data-driven and commercially literate, with a continued focus on digital markets and tech sector enforcement. This is a key takeaway from the appointment, as it reflects the CMA's ongoing priorities."
+    },
+    {
+      "id": "4-1",
+      "storyId": "4",
+      "question": "What is driving the surge in electricity costs across UK and European grids?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "An increase in renewable energy demand"
+        },
+        {
+          "letter": "B",
+          "text": "A decrease in energy efficiency"
+        },
+        {
+          "letter": "C",
+          "text": "The energy intensity of training large language models and advanced cooling systems required for AI data centres"
+        },
+        {
+          "letter": "D",
+          "text": "A shift towards more traditional fossil fuel-based energy sources"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The summary states that the surge in electricity costs is driven by the energy intensity of training large language models and the advanced cooling systems required for AI data centres, highlighting the significant energy demands of the growing AI sector. This is a key factor contributing to the increase in electricity costs."
+    },
+    {
+      "id": "4-2",
+      "storyId": "4",
+      "question": "Which firm is best positioned to advise data centre developers on grid connection agreements, planning consents, and long-term power purchase agreements under the new fast-track regime?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "B",
+          "text": "Clifford Chance"
+        },
+        {
+          "letter": "C",
+          "text": "Herbert Smith Freehills"
+        },
+        {
+          "letter": "D",
+          "text": "Allen & Overy Shearman"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "According to the Why It Matters section, Herbert Smith Freehills' energy and infrastructure practice is best positioned to advise data centre developers on grid connection agreements, planning consents, and long-term power purchase agreements under the new fast-track regime. This expertise makes it well-suited to advise on these matters."
+    },
+    {
+      "id": "4-3",
+      "storyId": "4",
+      "question": "What is the key story surrounding AI data centres and energy demand?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A decline in energy demand from AI data centres"
+        },
+        {
+          "letter": "B",
+          "text": "A shift towards more traditional energy sources for AI data centres"
+        },
+        {
+          "letter": "C",
+          "text": "The legal and regulatory story about who gets grid access, on what terms, and how the cost of that access is allocated across the system"
+        },
+        {
+          "letter": "D",
+          "text": "The technical challenges of building AI data centres"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point section notes that the AI energy story is not primarily a tech story, but rather a legal and regulatory story about who gets grid access, on what terms, and how the cost of that access is allocated across the system. This is a key takeaway from the situation, as it highlights the importance of regulatory and legal frameworks in shaping the energy landscape."
+    },
+    {
+      "id": "5-1",
+      "storyId": "5",
+      "question": "What is the key change introduced by the Arbitration Act 2025?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "A reduction in the number of arbitrators required for international arbitrations"
+        },
+        {
+          "letter": "B",
+          "text": "An increase in the scope of arbitrator conflicts of interest"
+        },
+        {
+          "letter": "C",
+          "text": "The codification of the ENRC principles on arbitrator conflicts and document production"
+        },
+        {
+          "letter": "D",
+          "text": "The elimination of emergency arbitrator provisions"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The summary states that the Arbitration Act 2025 codifies the ENRC principles on arbitrator conflicts and document production, among other changes, highlighting the significance of this development for international arbitration in the UK. This is a key aspect of the Act, as it provides clarity and certainty for parties involved in arbitration proceedings."
+    },
+    {
+      "id": "5-2",
+      "storyId": "5",
+      "question": "Which firms have the largest London international arbitration practices by caseload and will be primary advisers updating institutional clients on the changes introduced by the Arbitration Act 2025?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Linklaters and Clifford Chance"
+        },
+        {
+          "letter": "B",
+          "text": "Freshfields Bruckhaus Deringer and Herbert Smith Freehills"
+        },
+        {
+          "letter": "C",
+          "text": "Allen & Overy Shearman and Slaughter and May"
+        },
+        {
+          "letter": "D",
+          "text": "DLA Piper and Eversheds Sutherland"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "According to the Why It Matters section, Freshfields Bruckhaus Deringer and Herbert Smith Freehills have the largest London international arbitration practices by caseload and will be the primary advisers updating institutional clients on the changes introduced by the Arbitration Act 2025. This expertise makes them well-suited to advise on these matters."
+    },
+    {
+      "id": "5-3",
+      "storyId": "5",
+      "question": "What is the key takeaway from the Arbitration Act 2025 in terms of London's position as a global arbitration hub?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "London's position as a global arbitration hub will be diminished"
+        },
+        {
+          "letter": "B",
+          "text": "London's position as a global arbitration hub will remain unchanged"
+        },
+        {
+          "letter": "C",
+          "text": "The Arbitration Act 2025 is the UK's clearest statement since Brexit that English law and London arbitration will compete aggressively for the global dispute resolution market"
+        },
+        {
+          "letter": "D",
+          "text": "The Act marks a shift towards more traditional litigation methods"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The Talking Point section notes that the Arbitration Act 2025 is the UK's clearest statement since Brexit that English law and London arbitration will compete aggressively for the global dispute resolution market, highlighting the UK's commitment to maintaining its position as a leading arbitration hub. This is a key takeaway from the Act, as it reflects the UK's ongoing efforts to promote its arbitration sector."
+    },
+    {
+      "id": "6-1",
+      "storyId": "6",
+      "question": "There is no story 6, so this question is not applicable",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "B",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "C",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "D",
+          "text": "Not applicable"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "There is no story 6, so this question is not applicable. Please refer to the previous stories for relevant questions and explanations."
+    },
+    {
+      "id": "6-2",
+      "storyId": "6",
+      "question": "There is no story 6, so this question is not applicable",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "B",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "C",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "D",
+          "text": "Not applicable"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "There is no story 6, so this question is not applicable. Please refer to the previous stories for relevant questions and explanations."
+    },
+    {
+      "id": "6-3",
+      "storyId": "6",
+      "question": "There is no story 6, so this question is not applicable",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "B",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "C",
+          "text": "Not applicable"
+        },
+        {
+          "letter": "D",
+          "text": "Not applicable"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "There is no story 6, so this question is not applicable. Please refer to the previous stories for relevant questions and explanations."
+    }
+  ]
+}

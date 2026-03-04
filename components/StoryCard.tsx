@@ -3,6 +3,7 @@ import { Lock } from 'lucide-react';
 import { TOPIC_STYLES, type Story } from '@/lib/types';
 import { BookmarkButton } from './BookmarkButton';
 import { firmNameToSlug } from '@/lib/firms-data';
+import { stripBold } from '@/lib/bold';
 
 interface StoryCardProps {
   story: Story;
@@ -14,14 +15,16 @@ interface StoryCardProps {
 export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
   const styles = TOPIC_STYLES[story.topic] ?? TOPIC_STYLES['International'];
 
+  const plainSummary = stripBold(story.summary);
   const excerpt =
-    story.summary.length > 180
-      ? story.summary.slice(0, 177).trimEnd() + '…'
-      : story.summary;
+    plainSummary.length > 180
+      ? plainSummary.slice(0, 177).trimEnd() + '…'
+      : plainSummary;
 
-  const talkingPointTeaser = story.talkingPoint.length > 110
-    ? story.talkingPoint.slice(0, 107).trimEnd() + '…'
-    : story.talkingPoint;
+  const plainTalkingPoint = stripBold(story.talkingPoint);
+  const talkingPointTeaser = plainTalkingPoint.length > 110
+    ? plainTalkingPoint.slice(0, 107).trimEnd() + '…'
+    : plainTalkingPoint;
 
   const cardInner = (
     <article className="relative flex flex-col bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden px-5 pt-5 pb-6 h-full transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/40">

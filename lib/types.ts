@@ -1,6 +1,7 @@
 export type TopicCategory =
   | 'M&A'
   | 'Capital Markets'
+  | 'Banking & Finance'
   | 'Energy & Tech'
   | 'Regulation'
   | 'Disputes'
@@ -181,6 +182,10 @@ export const TOPIC_STYLES: Record<
   'Capital Markets': {
     label: 'text-violet-800 dark:text-violet-300',
     dot: 'bg-violet-700 dark:bg-violet-400',
+  },
+  'Banking & Finance': {
+    label: 'text-orange-800 dark:text-orange-300',
+    dot: 'bg-orange-700 dark:bg-orange-400',
   },
   'Energy & Tech': {
     label: 'text-emerald-800 dark:text-emerald-300',

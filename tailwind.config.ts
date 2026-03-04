@@ -96,14 +96,14 @@ const config: Config = {
   },
   safelist: [
     // topic label text colours (muted editorial palette)
-    'text-blue-800', 'text-violet-800', 'text-emerald-800',
+    'text-blue-800', 'text-violet-800', 'text-orange-800', 'text-emerald-800',
     'text-amber-800', 'text-rose-800', 'text-teal-800',
-    'dark:text-blue-300', 'dark:text-violet-300', 'dark:text-emerald-300',
+    'dark:text-blue-300', 'dark:text-violet-300', 'dark:text-orange-300', 'dark:text-emerald-300',
     'dark:text-amber-300', 'dark:text-rose-300', 'dark:text-teal-300',
     // topic dot colours
-    'bg-blue-700', 'bg-violet-700', 'bg-emerald-700',
+    'bg-blue-700', 'bg-violet-700', 'bg-orange-700', 'bg-emerald-700',
     'bg-amber-700', 'bg-rose-700', 'bg-teal-700',
-    'dark:bg-blue-400', 'dark:bg-violet-400', 'dark:bg-emerald-400',
+    'dark:bg-blue-400', 'dark:bg-violet-400', 'dark:bg-orange-400', 'dark:bg-emerald-400',
     'dark:bg-amber-400', 'dark:bg-rose-400', 'dark:bg-teal-400',
   ],
   plugins: [require("tailwindcss-animate")],

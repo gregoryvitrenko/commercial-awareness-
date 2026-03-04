@@ -3,6 +3,7 @@ import type { TopicCategory } from './types';
 export const TOPIC_SLUGS: Record<TopicCategory, string> = {
   'M&A': 'ma',
   'Capital Markets': 'capital-markets',
+  'Banking & Finance': 'banking-finance',
   'Energy & Tech': 'energy-tech',
   'Regulation': 'regulation',
   'Disputes': 'disputes',
@@ -15,5 +16,5 @@ export const SLUG_TO_TOPIC: Record<string, TopicCategory> = Object.fromEntries(
 );
 
 export const ALL_TOPICS: TopicCategory[] = [
-  'M&A', 'Capital Markets', 'Energy & Tech', 'Regulation', 'Disputes', 'International', 'AI & Law',
+  'M&A', 'Capital Markets', 'Banking & Finance', 'Energy & Tech', 'Regulation', 'Disputes', 'International', 'AI & Law',
 ];

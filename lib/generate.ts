@@ -34,15 +34,16 @@ function buildUserPrompt(
 ): string {
   return `Today is ${dateStr}.
 ${exclusionBlock}
-Using the news sources provided below, produce exactly 7 stories — one for each of the practice areas below. You MUST cover all seven; omitting any area is an error. Select the highest-signal story available from TODAY's news in each area:
+Using the news sources provided below, produce exactly 8 stories — one for each of the practice areas below. You MUST cover all eight; omitting any area is an error. Select the highest-signal story available from TODAY's news in each area:
 
 1. M&A — private equity and M&A deals with UK/European nexus
-2. Capital Markets — IPOs, debt issuance, restructuring, banking & finance
-3. Energy & Tech — energy, infrastructure, or technology with regulatory or transactional relevance (exclude AI — covered separately)
-4. Regulation — competition law, financial regulation, or regulatory enforcement
-5. Disputes — commercially significant litigation, arbitration, or enforcement action
-6. International — cross-border deals, trade law, or global moves relevant to London firms
-7. AI & Law — artificial intelligence in legal practice (firm AI strategies, AI tool adoption, AI-related regulation such as the EU AI Act, generative AI in deal-making or litigation, or AI literacy requirements in trainee recruitment)
+2. Capital Markets — IPOs, equity offerings, debt issuance, and bond markets
+3. Banking & Finance — leveraged finance, loan facilities, syndicated lending, private credit, fund finance, and structured finance transactions
+4. Energy & Tech — energy, infrastructure, or technology with regulatory or transactional relevance (exclude AI — covered separately)
+5. Regulation — competition law, financial regulation, or regulatory enforcement
+6. Disputes — commercially significant litigation, arbitration, or enforcement action
+7. International — cross-border deals, trade law, or global moves relevant to London firms
+8. AI & Law — artificial intelligence in legal practice (firm AI strategies, AI tool adoption, AI-related regulation such as the EU AI Act, generative AI in deal-making or litigation, or AI literacy requirements in trainee recruitment)
 
 Return a raw JSON object (no markdown fences, no preamble) with this exact structure:
 
@@ -73,7 +74,7 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
 }
 
 Rules:
-- You MUST produce exactly 7 stories. Each of the seven topics must appear exactly once: "M&A", "Capital Markets", "Energy & Tech", "Regulation", "Disputes", "International", "AI & Law"
+- You MUST produce exactly 8 stories. Each of the eight topics must appear exactly once: "M&A", "Capital Markets", "Banking & Finance", "Energy & Tech", "Regulation", "Disputes", "International", "AI & Law"
 - sources must be an array of 1–3 real URLs drawn from the SOURCE lines in the news context below. Only include URLs that actually appear in the sources provided. Each URL must be a direct article-level link (e.g. ft.com/content/abc123, reuters.com/markets/deals/...) — NEVER a section page, category index, or homepage (e.g. never ft.com/mergers-acquisitions, never bloomberg.com/markets). If the only available URL for a story is a section/category page, omit it and use [].
 - Every story must be from TODAY's news — do not recycle stories from previous days
 - Name specific law firms, banks, and advisers wherever the sources mention them
@@ -146,9 +147,10 @@ async function searchNews(dateLabel: string): Promise<string> {
   // Date-specific queries anchored to today so Tavily prioritises fresh results
   const queries = [
     `UK M&A private equity deal announced ${dateLabel}`,
-    `UK capital markets IPO banking finance news ${dateLabel}`,
+    `UK capital markets IPO equity debt bond issuance ${dateLabel}`,
+    `UK leveraged finance loan syndicated lending private credit ${dateLabel}`,
     `UK EU competition law financial regulation ${dateLabel}`,
-    `energy infrastructure technology AI legal news ${dateLabel}`,
+    `energy infrastructure technology legal news ${dateLabel}`,
     `UK commercial litigation arbitration dispute ${dateLabel}`,
     `cross-border international trade deal London law firms ${dateLabel}`,
     `AI artificial intelligence law firms legal practice regulation ${dateLabel}`,

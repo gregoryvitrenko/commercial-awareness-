@@ -166,6 +166,24 @@ Return raw JSON only (no markdown):
 Generate exactly ${count} questions.`;
 }
 
+// ── Bank building ─────────────────────────────────────────────────────────────
+
+const BANK_BATCHES: Record<string, number> = { 'watson-glaser': 3, 'sjt': 2 };
+export const BANK_TTL_DAYS = 7;
+
+/** Build a full question bank for a test type by running parallel batches. */
+export async function buildAptitudeBank(
+  testType: 'watson-glaser' | 'sjt',
+): Promise<AptitudeQuestion[]> {
+  const batches = BANK_BATCHES[testType] ?? 2;
+  const results = await Promise.all(
+    Array.from({ length: batches }, () => generateAptitudeQuestions(testType, 10)),
+  );
+  const all = results.flat();
+  all.forEach((q, i) => { q.id = `${testType}-${i + 1}`; });
+  return all;
+}
+
 // ── Main export ───────────────────────────────────────────────────────────────
 
 export async function generateAptitudeQuestions(

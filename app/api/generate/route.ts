@@ -1,10 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { generateBriefing } from '@/lib/generate';
-import { saveBriefing, getBriefing, getTodayDate } from '@/lib/storage';
+import { saveBriefing, getBriefing, getTodayDate, getAptitudeBank, saveAptitudeBank } from '@/lib/storage';
 import { generateAndSavePodcastScript } from '@/lib/podcast';
+import { buildAptitudeBank, BANK_TTL_DAYS } from '@/lib/aptitude';
 
 export const maxDuration = 300; // 5-minute timeout for generation
+
+async function refreshStaleBanks(today: string): Promise<void> {
+  const types = ['watson-glaser', 'sjt'] as const;
+  for (const testType of types) {
+    try {
+      const existing = await getAptitudeBank(testType);
+      const age = existing
+        ? Math.abs((new Date(today).getTime() - new Date(existing.lastRefreshed).getTime()) / (1000 * 60 * 60 * 24))
+        : Infinity;
+      if (age >= BANK_TTL_DAYS) {
+        const questions = await buildAptitudeBank(testType);
+        await saveAptitudeBank(testType, { questions, lastRefreshed: today });
+        console.log(`[generate] Aptitude bank refreshed: ${testType} (${questions.length} questions)`);
+      }
+    } catch (err) {
+      console.error(`[generate] Aptitude bank refresh failed for ${testType}:`, err);
+    }
+  }
+}
 
 function isCronAuthorized(request: NextRequest): boolean {
   const cronSecret = process.env.CRON_SECRET;
@@ -36,11 +56,13 @@ async function handleGenerate(request: NextRequest, force = false) {
     const briefing = await generateBriefing();
     await saveBriefing(briefing);
 
-    // Auto-generate podcast script immediately after briefing — fire-and-forget
-    // so a podcast failure never blocks the briefing response.
+    // Auto-generate podcast script — fire-and-forget
     generateAndSavePodcastScript(briefing).catch((err) =>
       console.error('[generate] Podcast auto-generation failed:', err)
     );
+
+    // Refresh aptitude question banks if stale (>7 days) — fire-and-forget
+    void refreshStaleBanks(today);
 
     return NextResponse.json({
       message: 'Briefing generated successfully',

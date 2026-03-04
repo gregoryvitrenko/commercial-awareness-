@@ -98,6 +98,23 @@ export interface FirmDeadline {
   applyUrl: string;   // Official application page URL
 }
 
+export type DiversitySchemeType =
+  | 'socioeconomic'   // low income, state school, first-gen
+  | 'ethnicity'       // race/ethnicity specific
+  | 'work-experience' // school-age work experience (year 10–12)
+  | 'gender'          // women in law
+  | 'disability';     // disability access
+
+export interface DiversityScheme {
+  name: string;
+  type: DiversitySchemeType;
+  /** 1–2 sentences on who qualifies */
+  eligibility: string;
+  /** e.g. "Applications open October · closes January" */
+  typically: string;
+  applyUrl: string;
+}
+
 export interface FirmProfile {
   slug: string;           // URL segment e.g. "clifford-chance"
   name: string;           // Full legal name

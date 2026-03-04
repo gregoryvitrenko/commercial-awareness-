@@ -11,12 +11,14 @@ import {
   TrendingUp,
   Calendar,
   Newspaper,
+  Heart,
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { getFirmBySlug } from '@/lib/firms-data';
+import { getDiversitySchemes } from '@/lib/diversity-data';
 import { requireSubscription } from '@/lib/paywall';
 import { listBriefings, getBriefing, getTodayDate } from '@/lib/storage';
-import { TOPIC_STYLES, type FirmTier } from '@/lib/types';
+import { TOPIC_STYLES, type FirmTier, type DiversitySchemeType } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,6 +33,27 @@ const TIER_BADGE: Record<FirmTier, string> = {
     'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800',
   'Boutique':
     'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800',
+};
+
+const SCHEME_TYPE_BADGE: Record<DiversitySchemeType, string> = {
+  socioeconomic:
+    'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800',
+  ethnicity:
+    'bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-800',
+  'work-experience':
+    'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800',
+  gender:
+    'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800',
+  disability:
+    'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800',
+};
+
+const SCHEME_TYPE_LABEL: Record<DiversitySchemeType, string> = {
+  socioeconomic: 'Socioeconomic',
+  ethnicity: 'Ethnicity',
+  'work-experience': 'Work Experience',
+  gender: 'Gender',
+  disability: 'Disability',
 };
 
 function StatBox({ label, value }: { label: string; value: string }) {
@@ -82,6 +105,7 @@ export default async function FirmProfilePage({
   if (!firm) notFound();
 
   const today = getTodayDate();
+  const diversitySchemes = getDiversitySchemes(slug);
 
   // ── Recent Stories: scan last 30 days ──────────────────────────────────────
   const allDates = await listBriefings();
@@ -287,6 +311,48 @@ export default async function FirmProfilePage({
                 View Forage simulations
                 <ExternalLink size={11} />
               </a>
+            </div>
+          )}
+
+          {/* ── Diversity & Access Schemes ───────────────────────────────────── */}
+          {diversitySchemes.length > 0 && (
+            <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-5 py-5">
+              <SectionHeading icon={<Heart size={13} />} label="Diversity & Access Schemes" />
+              <div className="space-y-3">
+                {diversitySchemes.map((scheme) => (
+                  <div
+                    key={scheme.name}
+                    className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                        <p className="text-[13px] font-semibold text-stone-900 dark:text-stone-100">
+                          {scheme.name}
+                        </p>
+                        <span
+                          className={`inline-block text-[9px] font-sans font-semibold tracking-[0.08em] uppercase px-2 py-0.5 rounded-sm ${SCHEME_TYPE_BADGE[scheme.type]}`}
+                        >
+                          {SCHEME_TYPE_LABEL[scheme.type]}
+                        </span>
+                      </div>
+                      <p className="text-[12px] text-stone-600 dark:text-stone-400 leading-relaxed mb-1.5">
+                        {scheme.eligibility}
+                      </p>
+                      <p className="text-[11px] font-mono text-stone-400 dark:text-stone-500">
+                        {scheme.typically}
+                      </p>
+                    </div>
+                    <a
+                      href={scheme.applyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+                    >
+                      Apply →
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 

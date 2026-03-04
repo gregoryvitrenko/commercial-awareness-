@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
 import { TOPIC_STYLES, type Story } from '@/lib/types';

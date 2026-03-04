@@ -104,7 +104,8 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
     const savedVoice = localStorage.getItem(LS_VOICE_KEY);
     if (savedVoice) setSelectedVoiceId(savedVoice);
 
-    fetch(`/api/podcast-audio?date=${briefing.date}&check=true`)
+    const savedVoice2 = localStorage.getItem(LS_VOICE_KEY) ?? DEFAULT_VOICE_ID;
+    fetch(`/api/podcast-audio?date=${briefing.date}&voiceId=${savedVoice2}&check=true`)
       .then((r) => r.json())
       .then((d: { exists: boolean }) => { if (d.exists) setAudioReady(true); })
       .catch(() => {});
@@ -127,6 +128,16 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [briefing.date]);
+
+  // Re-check audio readiness when voice changes
+  useEffect(() => {
+    setAudioReady(false);
+    fetch(`/api/podcast-audio?date=${briefing.date}&voiceId=${selectedVoiceId}&check=true`)
+      .then((r) => r.json())
+      .then((d: { exists: boolean }) => { if (d.exists) setAudioReady(true); })
+      .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedVoiceId, briefing.date]);
 
   function toggleVoicePanel() {
     setIsOpen((prev) => !prev);
@@ -597,7 +608,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
         <div className="flex items-center gap-1">
           {audioReady && (
             <a
-              href={`/api/podcast-audio?date=${briefing.date}&download=true`}
+              href={`/api/podcast-audio?date=${briefing.date}&voiceId=${selectedVoiceId}&download=true`}
               download={`commercial-awareness-${briefing.date}.mp3`}
               className="w-10 h-10 flex items-center justify-center text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-200 transition-colors"
               aria-label="Download audio"

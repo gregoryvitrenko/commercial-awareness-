@@ -11,7 +11,12 @@ export const maxDuration = 60;
 const DATA_DIR = path.join(process.cwd(), 'data', 'briefings');
 const DEFAULT_VOICE_ID = 'onwK4e9ZLuTAKqWW03F9'; // Daniel — first curated voice
 
-function audioFile(date: string): string {
+function audioFile(date: string, voiceId: string = DEFAULT_VOICE_ID): string {
+  return path.join(DATA_DIR, `${date}-podcast-${voiceId}.mp3`);
+}
+
+// Legacy path (before per-voice caching) — kept for backward compat
+function legacyAudioFile(date: string): string {
   return path.join(DATA_DIR, `${date}-podcast.mp3`);
 }
 
@@ -19,10 +24,14 @@ function scriptFile(date: string): string {
   return path.join(DATA_DIR, `${date}-podcast.txt`);
 }
 
-function getCachedAudio(date: string): Buffer | null {
+function getCachedAudio(date: string, voiceId: string = DEFAULT_VOICE_ID): Buffer | null {
   try {
-    return fs.readFileSync(audioFile(date));
+    return fs.readFileSync(audioFile(date, voiceId));
   } catch {
+    // Fall back to legacy file for the default voice only
+    if (voiceId === DEFAULT_VOICE_ID) {
+      try { return fs.readFileSync(legacyAudioFile(date)); } catch { /* none */ }
+    }
     return null;
   }
 }
@@ -44,13 +53,18 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Valid date query parameter required (YYYY-MM-DD)' }, { status: 400 });
   }
 
+  const voiceIdParam = searchParams.get('voiceId') ?? DEFAULT_VOICE_ID;
+
   // ?check=true → lightweight existence check (no binary response)
   if (searchParams.get('check') === 'true') {
-    return NextResponse.json({ exists: fs.existsSync(audioFile(date)) });
+    const exists =
+      fs.existsSync(audioFile(date, voiceIdParam)) ||
+      (voiceIdParam === DEFAULT_VOICE_ID && fs.existsSync(legacyAudioFile(date)));
+    return NextResponse.json({ exists });
   }
 
   // Serve the cached MP3
-  const audio = getCachedAudio(date);
+  const audio = getCachedAudio(date, voiceIdParam);
   if (!audio) {
     return NextResponse.json({ error: 'No cached audio for this date' }, { status: 404 });
   }
@@ -95,8 +109,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Valid date is required in request body (YYYY-MM-DD)' }, { status: 400 });
   }
 
+  // Whitelist-validate voiceId early — needed for per-voice cache key
+  const resolvedVoiceId = (voiceId && isWhitelistedVoiceId(voiceId)) ? voiceId : DEFAULT_VOICE_ID;
+
   // ── Return cached audio — no ElevenLabs charge ──
-  const cached = getCachedAudio(date);
+  const cached = getCachedAudio(date, resolvedVoiceId);
   if (cached) {
     return new Response(new Uint8Array(cached), {
       headers: {
@@ -128,9 +145,6 @@ export async function POST(request: NextRequest) {
   }
 
   // ── Call ElevenLabs ──
-  // Whitelist-validate voiceId before interpolating into the URL.
-  // isWhitelistedVoiceId checks against the curated set — prevents arbitrary IDs.
-  const resolvedVoiceId = (voiceId && isWhitelistedVoiceId(voiceId)) ? voiceId : DEFAULT_VOICE_ID;
   const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${resolvedVoiceId}`, {
     method: 'POST',
     headers: {
@@ -163,7 +177,7 @@ export async function POST(request: NextRequest) {
   // ── Save to disk and record usage — only charged once per day ──
   const audioBuffer = Buffer.from(await res.arrayBuffer());
   fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(audioFile(date), audioBuffer);
+  fs.writeFileSync(audioFile(date, resolvedVoiceId), audioBuffer);
   recordUsage(charCount);
 
   return new Response(audioBuffer, {

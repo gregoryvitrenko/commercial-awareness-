@@ -154,20 +154,28 @@ async function searchNews(dateLabel: string): Promise<string> {
     `AI artificial intelligence law firms legal practice regulation ${dateLabel}`,
   ];
 
+  const TAVILY_TIMEOUT_MS = 12_000; // 12 s per request — fail fast rather than hang
+
   const results = await Promise.all(
-    queries.map((q) =>
-      fetch('https://api.tavily.com/search', {
+    queries.map((q) => {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), TAVILY_TIMEOUT_MS);
+      return fetch('https://api.tavily.com/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           api_key: apiKey,
           query: q,
-          search_depth: 'advanced',
+          search_depth: 'basic', // 'advanced' is slow; basic is plenty for news
           max_results: 5,
           include_answer: false,
         }),
-      }).then((r) => r.json())
-    )
+      })
+        .then((r) => r.json())
+        .catch(() => ({ results: [] })) // on timeout or network error, return empty
+        .finally(() => clearTimeout(timer));
+    })
   );
 
   const CONTENT_LIMIT = 800;

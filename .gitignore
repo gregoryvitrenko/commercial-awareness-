@@ -28,6 +28,7 @@ next-env.d.ts
 # User data — never commit (dev-only fallbacks; production uses Upstash Redis)
 data/subscriptions.json
 data/bookmarks.json
+data/comments.json
 
 # Generated briefing cache (optional — uncomment to exclude)
 # data/briefings/*.json

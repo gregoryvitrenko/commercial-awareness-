@@ -116,6 +116,15 @@ export interface DiversityScheme {
   applyUrl: string;
 }
 
+export interface FirmAssessment {
+  /** e.g. 'Vacation Scheme / Training Contract' or 'All programmes' */
+  programme: string;
+  /** Ordered list, e.g. ['Watson Glaser', 'Verbal Reasoning'] */
+  tests: string[];
+  /** Optional context, e.g. 'Game-based via Arctic Shores at application stage' */
+  notes?: string;
+}
+
 export interface FirmProfile {
   slug: string;           // URL segment e.g. "clifford-chance"
   name: string;           // Full legal name
@@ -141,6 +150,8 @@ export interface FirmProfile {
   accentColor: string;   // Tailwind text class for tier badge
   /** Forage virtual experience URL — undefined if no programme exists */
   forageUrl?: string;
+  /** Online assessments used at application stage — manually curated, verify each cycle */
+  assessments?: FirmAssessment[];
 }
 
 // ─── Sector Primers ──────────────────────────────────────────────────────────

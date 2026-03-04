@@ -12,6 +12,7 @@ import {
   Calendar,
   Newspaper,
   Heart,
+  GraduationCap,
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { getFirmBySlug } from '@/lib/firms-data';
@@ -258,6 +259,54 @@ export default async function FirmProfilePage({
               </p>
             </div>
           </SectionCard>
+
+          {/* ── Assessments ─────────────────────────────────────────────────── */}
+          {firm.assessments && firm.assessments.length > 0 && (
+            <SectionCard accent={tierAccent}>
+              <div className="flex items-start justify-between gap-3 mb-4">
+                <SectionHeading icon={<GraduationCap size={13} />} label="Online Assessments" />
+                <Link
+                  href="/tests"
+                  className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
+                >
+                  Practice tests →
+                </Link>
+              </div>
+              <div className="space-y-3">
+                {firm.assessments.map((assessment) => (
+                  <div
+                    key={assessment.programme}
+                    className="bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
+                  >
+                    <p className="text-[11px] font-mono text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-2">
+                      {assessment.programme}
+                    </p>
+                    {assessment.tests.length === 0 ? (
+                      <p className="text-[12px] text-stone-400 dark:text-stone-500 italic">
+                        No formal online assessments
+                      </p>
+                    ) : (
+                      <div className="flex flex-wrap gap-1.5 mb-1">
+                        {assessment.tests.map((test) => (
+                          <span
+                            key={test}
+                            className="inline-block text-[10px] font-sans font-semibold px-2 py-0.5 rounded-sm bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-300 dark:border-stone-600"
+                          >
+                            {test}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {assessment.notes && (
+                      <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-1.5 leading-relaxed">
+                        {assessment.notes}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </SectionCard>
+          )}
 
           {/* ── Training Contract ────────────────────────────────────────────── */}
           <SectionCard accent={tierAccent}>

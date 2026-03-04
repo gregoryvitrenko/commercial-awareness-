@@ -12,6 +12,7 @@
  */
 
 import type { FirmProfile } from './types';
+import { FIRM_ASSESSMENTS } from './firm-assessments-data';
 
 export const FIRMS: FirmProfile[] = [
 
@@ -1477,7 +1478,10 @@ for (const firm of FIRMS) {
 }
 
 export function getFirmBySlug(slug: string): FirmProfile | undefined {
-  return _bySlug.get(slug);
+  const firm = _bySlug.get(slug);
+  if (!firm) return undefined;
+  // Merge assessment data — kept separate to avoid cluttering firm entries
+  return { ...firm, assessments: FIRM_ASSESSMENTS[slug] ?? [] };
 }
 
 export function firmNameToSlug(name: string): string | undefined {

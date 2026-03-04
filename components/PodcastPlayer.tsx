@@ -485,7 +485,11 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
               Daily Briefing
             </p>
             <p className="font-mono text-[9px] text-stone-500 mt-2 tracking-wide">
-              {isLoading ? 'Writing script…' : formatCoverDate(briefing.date)}
+              {isLoading
+                ? duration != null
+                  ? 'Generating audio…'
+                  : 'Fetching script…'
+                : formatCoverDate(briefing.date)}
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Lock } from 'lucide-react';
 import { TOPIC_STYLES, type Story } from '@/lib/types';
 import { BookmarkButton } from './BookmarkButton';
@@ -15,6 +16,7 @@ interface StoryCardProps {
 }
 
 export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
+  const router = useRouter();
   const styles = TOPIC_STYLES[story.topic] ?? TOPIC_STYLES['International'];
 
   const plainSummary = stripBold(story.summary);
@@ -108,17 +110,19 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
     </article>
   );
 
-  if (!subscribed) {
-    return (
-      <Link href="/upgrade" className="block group">
-        {cardInner}
-      </Link>
-    );
-  }
+  const destination = subscribed ? `/story/${story.id}` : '/upgrade';
 
   return (
-    <Link href={`/story/${story.id}`} className="block group">
+    <div
+      role="link"
+      tabIndex={0}
+      onClick={() => router.push(destination)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') router.push(destination);
+      }}
+      className="block group cursor-pointer"
+    >
       {cardInner}
-    </Link>
+    </div>
   );
 }

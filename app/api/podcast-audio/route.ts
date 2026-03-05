@@ -12,7 +12,7 @@ import {
   getCachedScript,
 } from '@/lib/podcast-storage';
 
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const DEFAULT_VOICE_ID = 'onwK4e9ZLuTAKqWW03F9'; // Daniel — first curated voice
 

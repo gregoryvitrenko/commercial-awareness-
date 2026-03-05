@@ -79,6 +79,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'M&A is the flagship practice area at most commercial law firms and the one interviewers most expect you to understand. Being able to articulate the deal lifecycle, explain the difference between warranties and indemnities, and discuss a recent transaction you have followed demonstrates exactly the kind of commercial fluency firms look for at vacation scheme and training contract interviews.',
+    interviewQs: [
+      {
+        question: 'Tell me about an M&A deal you have been following recently.',
+        whatTheyWant: 'Commercial awareness, genuine engagement with the market, and the ability to analyse a transaction beyond the headline — including who the parties are, why the deal happened, and what the legal issues are.',
+        skeleton: 'Name the deal and the parties, then explain the commercial rationale — why did the buyer want this target? Identify the key legal elements: was it a share or asset deal, was there regulatory scrutiny, how was it financed? Then give your own view — is the valuation credible, what could go wrong, what does it tell you about the sector? Close by connecting it to a practice area at this firm.',
+      },
+      {
+        question: 'What is the difference between a warranty and an indemnity in an acquisition?',
+        whatTheyWant: 'Technical M&A knowledge — can you explain a core concept accurately and show you understand why it matters commercially?',
+        skeleton: 'A warranty is a contractual statement of fact about the target — if it turns out to be untrue, the buyer can claim damages for the loss suffered, but must prove both breach and loss. An indemnity is a pound-for-pound reimbursement for a specific identified risk — no need to prove loss, which makes it a stronger protection. In practice, sellers push for warranties (harder for buyers to claim on), buyers push for indemnities on specific risks surfaced in due diligence. The disclosure letter qualifies warranties by setting out known exceptions.',
+      },
+      {
+        question: 'What is due diligence and why is it important in an acquisition?',
+        whatTheyWant: 'Understanding of the deal process and a trainee\'s practical role — not just a definition, but why it matters and what lawyers actually do.',
+        skeleton: 'Due diligence is the buyer\'s investigation of the target before committing to the deal — covering legal, financial, tax, and commercial matters. Its purpose is to surface risks that affect the price, the structure, or whether to proceed at all. Legally, it informs the warranty and indemnity negotiations: a risk you discover becomes something you seek an indemnity for or price into the deal. For a trainee, DD is often the entry point into deal work — reviewing contracts, flagging change-of-control provisions, identifying litigation risks, and summarising findings for the partner.',
+      },
+    ],
   },
 
   // ─── 2. Capital Markets ─────────────────────────────────────────────────────
@@ -158,7 +175,24 @@ export const PRIMERS: Primer[] = [
       },
     ],
     whyItMatters:
-      'Capital markets work is central to the practice of most City law firms and is a staple interview topic. Understanding the difference between equity and debt, being able to explain what a prospectus does, and following a recent IPO or bond issuance signals the commercial awareness that recruiters are testing for. Many trainees rotate through a capital markets seat, so familiarity with the landscape gives you a genuine head start.',
+      'Capital markets work is central to the practice of most City law firms and a staple interview topic. Understanding the difference between equity and debt, being able to explain what a prospectus does, and following a recent IPO or bond issuance signals the commercial awareness that recruiters are testing for. Many trainees rotate through a capital markets seat, so familiarity with the landscape gives you a genuine head start.',
+    interviewQs: [
+      {
+        question: 'What is the difference between equity and debt capital markets, and when would a company use each?',
+        whatTheyWant: 'A clear understanding of two distinct fundraising mechanisms — and commercial judgment about when each makes sense.',
+        skeleton: 'Equity capital markets involve a company issuing shares — selling ownership — to raise money, typically through an IPO or rights issue. The company gives up a stake but has no repayment obligation. Debt capital markets involve issuing bonds — borrowing from investors at a fixed interest rate, with an obligation to repay principal at maturity. A company with strong cash flows and a desire to avoid dilution might prefer debt; a company with no credit rating or wanting to raise large amounts at IPO without ongoing interest costs might prefer equity. The choice depends on the cost of capital, existing leverage, and the company\'s stage of development.',
+      },
+      {
+        question: 'Walk me through the key stages of an IPO.',
+        whatTheyWant: 'Process knowledge and an understanding of what lawyers actually do at each stage — not just a generic description.',
+        skeleton: 'An IPO begins with the company appointing advisers: investment banks as underwriters and lawyers for both issuer and banks. Due diligence is conducted and a prospectus is drafted — the core legal document disclosing all material information about the company and carrying significant liability if inaccurate. The FCA reviews and approves the prospectus. The bookbuilding process gauges investor demand at various price points. Once the offer price is set, the shares are allocated and trading begins on the exchange. Lawyers are involved throughout — drafting and verifying the prospectus, negotiating the underwriting agreement, managing regulatory filings, and advising on timing and structure.',
+      },
+      {
+        question: 'What is a prospectus and why does it carry significant legal liability?',
+        whatTheyWant: 'Understanding of disclosure obligations and the legal consequences of getting it wrong — a core capital markets concept.',
+        skeleton: 'A prospectus is the disclosure document required for public offers of securities — it must contain all information an investor needs to make an informed assessment of the issuer\'s financial position and prospects. Under UK law, if the prospectus contains a misleading statement or omits something material, investors who suffered loss can claim compensation from the issuer and, in some cases, the directors and underwriters. This is why lawyers spend significant time on the verification process — tracing every factual statement to a supporting source. The liability risk is what makes capital markets due diligence so rigorous compared to private transactions.',
+      },
+    ],
   },
 
   // ─── 3. Banking & Finance ─────────────────────────────────────────────────────
@@ -239,6 +273,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'Banking and finance is one of the largest and most active practice areas at every major City firm, yet many applicants neglect it in favour of M&A or disputes. Being able to explain how a facility agreement works, what financial covenants do, and why an intercreditor agreement matters in a leveraged buyout immediately sets you apart. Firms see hundreds of candidates who can discuss a recent M&A deal — far fewer who can articulate the debt side of the same transaction. If you can connect a headline PE deal to its financing structure, you demonstrate the kind of joined-up commercial thinking that partners look for.',
+    interviewQs: [
+      {
+        question: 'What is the difference between secured and unsecured lending, and why does it matter to a lender?',
+        whatTheyWant: 'A grasp of fundamental lending concepts and the commercial logic behind how risk is priced and protected.',
+        skeleton: 'Secured lending means the lender has a legal claim over specific assets of the borrower — if the borrower defaults, the lender can enforce against those assets to recover the debt. Unsecured lending has no such claim, so the lender ranks alongside other general creditors in an insolvency. The practical consequence is risk and pricing: secured lenders accept a lower interest rate because they have downside protection; unsecured lenders charge more to compensate for their weaker position. In a leveraged buyout, the capital structure typically layers secured debt (senior facilities) over unsecured high-yield bonds, with equity at the bottom absorbing first losses.',
+      },
+      {
+        question: 'What are financial covenants in a loan agreement and what purpose do they serve?',
+        whatTheyWant: 'Understanding of how lenders protect themselves throughout the life of a loan — not just at the point of drawdown.',
+        skeleton: 'Financial covenants are contractual undertakings by a borrower to maintain certain financial metrics throughout the life of a loan — typically leverage ratios, interest coverage ratios, or minimum liquidity levels. They serve as early warning mechanisms: if a borrower\'s financial performance deteriorates to the point where a covenant is breached, the lender gets a right to accelerate the loan or renegotiate terms before the borrower is actually insolvent. There are two main types: maintenance covenants, tested regularly regardless of events; and incurrence covenants, only tested when the borrower takes a specified action. The shift toward cov-lite loan structures — fewer or no maintenance covenants — has been a major feature of recent leveraged finance markets.',
+      },
+      {
+        question: 'Explain leveraged finance and how it connects to private equity deals.',
+        whatTheyWant: 'Commercial understanding of PE deal structures and the role of debt — showing you can link finance to M&A in a joined-up way.',
+        skeleton: 'Leveraged finance refers to lending to companies with significant existing debt — typically in the context of private equity acquisitions. When a PE firm buys a company in a leveraged buyout, it finances the majority of the purchase price with debt rather than equity, secured against the target\'s assets and repaid from its cash flows. This amplifies returns if the business performs, but increases risk if it does not. The debt is structured in layers: typically senior secured facilities, sometimes mezzanine debt, and high-yield bonds. Banking lawyers on a PE deal are responsible for negotiating and documenting these facilities, drafting intercreditor agreements that govern the relationship between different classes of lender, and coordinating with M&A lawyers on the acquisition structure.',
+      },
+    ],
   },
 
   // ─── 4. Energy & Tech ───────────────────────────────────────────────────────
@@ -319,6 +370,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'Energy and technology are the two sectors generating the most new legal work across the City. Firms are hiring aggressively in both areas, and interviewers expect you to have a view on the energy transition, data regulation, and how technology is reshaping deal activity. Being able to discuss a recent offshore wind deal or explain why AI raises competition concerns shows you understand where the profession is heading.',
+    interviewQs: [
+      {
+        question: 'What legal issues arise from the energy transition to renewables?',
+        whatTheyWant: 'Awareness of a rapidly growing legal sector and the ability to identify the specific types of legal work it generates — not just a generic comment about climate change.',
+        skeleton: 'The energy transition generates work across several legal disciplines. Project finance lawyers structure the debt and equity for large renewable projects — offshore wind, solar farms, hydrogen plants. M&A lawyers advise on acquisitions of energy companies and asset portfolios as the sector consolidates. Regulatory lawyers deal with grid connection consents, planning permissions, and the evolving subsidy regime. There are also complex contractual issues around power purchase agreements — long-term contracts between energy generators and buyers — and emerging questions around carbon credits and ESG disclosure. The scale of infrastructure investment required means this is one of the most active areas in the City for the next decade.',
+      },
+      {
+        question: 'What is a power purchase agreement (PPA) and why has it become commercially important?',
+        whatTheyWant: 'Specific knowledge of a key energy contract structure — showing you have read beyond the headlines.',
+        skeleton: 'A PPA is a long-term contract under which a buyer (often a corporate) agrees to purchase electricity directly from a renewable energy generator at a fixed or indexed price. They have become commercially significant because they provide the revenue certainty that makes renewable projects bankable — lenders will finance a wind farm with a 15-year PPA in place where they might not without one. For corporates, PPAs allow them to meet sustainability commitments and hedge against energy price volatility. Lawyers are involved in negotiating price mechanisms, force majeure provisions, termination rights, and the interaction with grid connection arrangements. The market has grown rapidly as corporate net-zero commitments drive demand.',
+      },
+      {
+        question: 'How is technology changing the types of M&A deals lawyers work on?',
+        whatTheyWant: 'Commercial awareness of how the tech sector intersects with M&A practice — and specific legal issues that arise in tech deals.',
+        skeleton: 'Technology M&A has become one of the dominant deal categories. The legal work differs from traditional M&A in several ways: intellectual property due diligence is central — assessing ownership of code, patents, and data; data protection compliance is a major risk area, especially GDPR obligations inherited on acquisition; and regulatory scrutiny has intensified, with competition authorities examining Big Tech acquisitions for anti-competitive effects. Valuation is also more complex, often based on user metrics or IP rather than traditional EBITDA. The pace of the market — with deal timelines compressed and earn-out structures common — creates distinctive drafting challenges. Lawyers advising on tech M&A need both transactional skill and sector-specific fluency.',
+      },
+    ],
   },
 
   // ─── 5. Financial Regulation ────────────────────────────────────────────────
@@ -399,6 +467,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'Financial regulation underpins every transaction that touches the City of London. Whether you end up in M&A, capital markets, or banking, you will encounter regulatory constraints daily. Interviewers at firms with strong regulatory practices — and that includes most of the Magic Circle — expect you to know who the FCA and PRA are, understand what market abuse means, and have a view on how the UK\'s post-Brexit regulatory landscape is evolving.',
+    interviewQs: [
+      {
+        question: 'Who are the FCA and PRA, and what is the difference between their roles?',
+        whatTheyWant: 'Basic regulatory literacy — candidates applying to City firms must know who regulates financial services in the UK.',
+        skeleton: 'The Financial Conduct Authority regulates the conduct of financial services firms — how they treat customers, market integrity, and consumer protection. It authorises and supervises firms including investment banks, asset managers, and financial advisers, and enforces rules against market abuse and mis-selling. The Prudential Regulation Authority, which sits within the Bank of England, regulates the financial soundness of banks, insurers, and major investment firms — its focus is on systemic stability rather than conduct. In practice, the largest banks are dual-regulated: supervised by both the FCA for conduct and the PRA for prudential matters. The distinction matters for lawyers because different rules apply depending on whether you are dealing with a conduct issue or a capital adequacy question.',
+      },
+      {
+        question: 'What is market abuse and why does it matter for lawyers advising on transactions?',
+        whatTheyWant: 'Understanding of a key regulatory risk in deal-making — and awareness that lawyers need to actively manage it.',
+        skeleton: 'Market abuse covers conduct that undermines the integrity of financial markets — primarily insider dealing and market manipulation. Insider dealing involves trading securities on the basis of material non-public information; market manipulation involves artificial price movements or misleading signals. Both are prohibited under the Market Abuse Regulation. For lawyers on M&A or capital markets transactions, this is a live risk throughout: they work with price-sensitive information and must implement information barriers, maintain insider lists, and advise clients on disclosure obligations. Getting this wrong can expose clients to FCA enforcement and, in serious cases, criminal prosecution. A strong awareness of these obligations is essential for anyone working in transactional practice.',
+      },
+      {
+        question: 'How has Brexit affected the UK\'s financial regulatory landscape?',
+        whatTheyWant: 'Awareness of a major structural change in UK financial regulation and its practical implications for the City.',
+        skeleton: 'Brexit meant the UK left the EU\'s single rulebook — the body of financial regulation that previously governed UK markets. In the short term, the UK largely replicated EU rules into domestic law (the "onshoring" approach) to avoid disruption. Over time, the UK has diverged: the Edinburgh Reforms announced in 2022 aimed to make the UK more competitive, including changes to Solvency II for insurers and reform of the listing regime. The key ongoing consequence for lawyers is the loss of passporting rights — UK-authorised firms can no longer automatically offer services across the EU without separate local authorisation. Many firms have established EU subsidiaries, creating a more complex regulatory structure to advise on. Understanding this landscape matters because cross-border financial transactions now involve navigating two distinct regulatory regimes.',
+      },
+    ],
   },
 
   // ─── 6. Disputes ────────────────────────────────────────────────────────────
@@ -479,6 +564,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'Dispute resolution is one of the largest practice areas by headcount at City firms, and many trainees are drawn to the intellectual challenge of advocacy and strategic case management. Even if you aim for a transactional practice, understanding how disputes arise from deals — warranty claims, shareholder disputes, regulatory investigations — makes you a better deal lawyer. Interviewers value candidates who can discuss a recent high-profile case and explain its commercial implications.',
+    interviewQs: [
+      {
+        question: 'What is the difference between litigation and arbitration, and why might a client choose one over the other?',
+        whatTheyWant: 'Understanding of the two main mechanisms for resolving commercial disputes — and commercial judgment about when each is appropriate.',
+        skeleton: 'Litigation is dispute resolution through the courts — in England, typically the Commercial Court or the Business and Property Courts. Judgments are public, the process is governed by the Civil Procedure Rules, and enforcement depends on the jurisdiction. Arbitration is a private process where parties agree to submit their dispute to one or more arbitrators whose award is binding. The key advantages of arbitration for international disputes are confidentiality, the ability to choose arbitrators with sector expertise, and enforceability: the New York Convention means arbitral awards can be enforced in over 160 countries, making it far more practical for cross-border disputes than trying to enforce a court judgment abroad. Clients choosing between them weigh cost, speed, expertise, confidentiality needs, and the location of the counterparty.',
+      },
+      {
+        question: 'Why is England — specifically London — a leading seat for international commercial arbitration?',
+        whatTheyWant: 'Commercial awareness of London\'s position as a legal and dispute resolution hub — and the practical reasons behind it.',
+        skeleton: 'London is one of the leading seats for international arbitration for several interconnected reasons. English law is widely chosen as governing law in international contracts because it is well-developed, commercially sophisticated, and produces predictable outcomes. The English courts have a strong pro-arbitration stance — they enforce arbitration agreements and arbitral awards consistently. The London Court of International Arbitration (LCIA) is one of the world\'s leading arbitral institutions with established procedural rules. England\'s Arbitration Act 1996 provides a clear statutory framework. And London has a deep pool of specialist arbitration practitioners, expert witnesses, and arbitrators. For a client signing a complex cross-border contract, English law and London arbitration together provide confidence in the resolution mechanism regardless of where the dispute ends up.',
+      },
+      {
+        question: 'What is the disclosure process in commercial litigation and what role does a trainee typically play?',
+        whatTheyWant: 'Practical understanding of what trainees actually do in disputes — showing you have researched the role, not just the law.',
+        skeleton: 'Disclosure (formerly discovery) is the process by which each party to litigation must identify and share documents relevant to the issues in dispute. In English proceedings, this is governed by the CPR — parties exchange lists of documents and provide inspection of relevant ones. In large commercial cases, this involves reviewing potentially hundreds of thousands of documents, often using review platforms and, increasingly, AI-assisted tools to identify relevance and privilege. Trainee involvement is significant: reviewing documents for relevance and legal privilege, preparing privilege logs, assisting with witness statement preparation, and supporting associates on court bundle preparation are all common trainee tasks in a disputes seat. It is unglamorous but important — and a trainee who does it carefully and flags issues early is genuinely valuable.',
+      },
+    ],
   },
 
   // ─── 7. International ───────────────────────────────────────────────────────
@@ -559,6 +661,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'Every Magic Circle and international firm operates across multiple jurisdictions, and understanding how cross-border deals work is essential. Interviewers want to see that you grasp why governing law matters, how sanctions affect deal execution, and what challenges arise when multiple legal systems interact. Discussing a recent cross-border deal or geopolitical development — and articulating its legal implications — demonstrates the global perspective these firms value.',
+    interviewQs: [
+      {
+        question: 'Why does the choice of governing law matter in a cross-border contract?',
+        whatTheyWant: 'Understanding of a fundamental concept in international commercial law — and why it has practical consequences.',
+        skeleton: 'Governing law determines which country\'s legal rules apply to interpret and enforce the contract. This matters because legal systems differ in important ways: what counts as a valid contract, what remedies are available for breach, how implied terms operate, and what limitations apply to liability all vary between jurisdictions. In a dispute, the governing law determines the legal framework within which the court or arbitral tribunal decides the case. English law is frequently chosen in international contracts precisely because it is commercially sophisticated, well-understood, and produces predictable outcomes. The choice of governing law also interacts with jurisdiction clauses — which court or arbitral seat handles disputes — and enforcement, which depends on where the counterparty has assets.',
+      },
+      {
+        question: 'What additional legal complexities arise in a cross-border acquisition compared to a domestic deal?',
+        whatTheyWant: 'Commercial awareness of what makes international M&A genuinely harder — showing you can think beyond the basic deal structure.',
+        skeleton: 'Cross-border M&A layers multiple jurisdictions onto an already complex process. Regulatory complexity multiplies: competition law approvals may be needed in several jurisdictions simultaneously, each with different thresholds and timelines. Foreign direct investment screening — such as the UK\'s National Security and Investment Act — adds another layer of governmental review. The due diligence scope expands: local counsel in each relevant jurisdiction must review local law compliance, and employment law, real estate, tax, and regulatory requirements differ across borders. Currency risk affects deal economics. Cultural and language differences can complicate negotiation and integration. And once completed, a cross-border structure must be maintained across multiple legal systems, each with its own reporting, governance, and tax obligations.',
+      },
+      {
+        question: 'How do sanctions affect the ability to complete a commercial transaction?',
+        whatTheyWant: 'Awareness of a major and growing area of legal risk in international business — and the lawyer\'s role in managing it.',
+        skeleton: 'Sanctions are government-imposed restrictions on dealings with specified countries, entities, or individuals, typically for geopolitical reasons. In the UK, the Office of Financial Sanctions Implementation administers financial sanctions; the Export Control Joint Unit handles trade sanctions. For a commercial transaction, sanctions create several risks: a party to the deal, a beneficial owner, or even a counterparty bank may be a designated person — in which case the transaction may be prohibited. Lawyers conduct sanctions screening as part of due diligence and must ensure that payment flows, financing structures, and contractual counterparties are sanctions-compliant. Post-Russia sanctions since 2022 have dramatically expanded the scope and complexity of this work, and it now features in virtually every significant cross-border deal.',
+      },
+    ],
   },
 
   // ─── 8. AI & Law ────────────────────────────────────────────────────────────
@@ -639,6 +758,23 @@ export const PRIMERS: Primer[] = [
     ],
     whyItMatters:
       'AI is transforming both the substance and the practice of law simultaneously. Firms want trainees who understand the legal questions AI raises — IP ownership, liability, regulatory classification — and who can engage intelligently with the AI tools the firm itself is adopting. This is no longer a niche topic: it appears in client work across every practice area, and being conversant with the EU AI Act, the UK\'s approach, and the key IP and liability questions gives you a genuine edge in interviews and on the job.',
+    interviewQs: [
+      {
+        question: 'What are the main legal issues that arise from the development and deployment of AI?',
+        whatTheyWant: 'Awareness of AI as a legal and commercial topic — and the ability to identify specific legal disciplines rather than just speaking in generalities.',
+        skeleton: 'AI raises distinct issues across several legal areas. Intellectual property is fundamental: who owns the output of an AI system — the developer, the user, the data provider — remains contested, and whether AI-generated works attract copyright protection is still being resolved by courts. Liability is complex: if an AI system causes harm, is the developer, the deployer, or the user responsible? Data protection is central: training AI on personal data raises GDPR compliance questions, and the ICO has produced guidance on this. Competition law is emerging: dominant AI platforms may face scrutiny over access to data and algorithmic fairness. Regulatory classification matters — whether an AI system is categorised as a medical device, a financial service, or a general-purpose tool determines which regulatory regime applies.',
+      },
+      {
+        question: 'What is the EU AI Act and how does it approach AI regulation?',
+        whatTheyWant: 'Knowledge of the most significant piece of AI legislation globally — and whether you understand what it actually does.',
+        skeleton: 'The EU AI Act, which entered into force in 2024, is the world\'s first comprehensive legal framework for AI. It adopts a risk-based approach: AI systems are classified by risk level, with different obligations at each tier. Prohibited AI (such as real-time biometric surveillance in public spaces and social scoring) is banned outright. High-risk AI — systems used in critical infrastructure, employment, law enforcement, or education — must meet requirements including transparency, human oversight, and conformity assessments. General-purpose AI models such as large language models face transparency obligations. Lower-risk AI has lighter requirements. The Act has extraterritorial effect — it applies to any AI system placed on the EU market, regardless of where the developer is based. For UK lawyers, it matters because most UK firms advising EU clients or deploying AI in EU contexts will need to understand compliance obligations.',
+      },
+      {
+        question: 'How are law firms currently using AI and what does this mean for trainees?',
+        whatTheyWant: 'Practical awareness of AI adoption in legal practice — and a realistic, balanced view of implications rather than either panic or dismissal.',
+        skeleton: 'Law firms are actively deploying AI across several areas: document review and due diligence (using large language models to identify relevant clauses and flag issues across thousands of documents); contract analysis (AI tools that extract and compare key terms); legal research (AI-assisted case law and legislation search); and first-draft document generation for standard templates. The implications for trainees are nuanced. Some tasks that juniors traditionally did — reading every document in a data room, for example — are increasingly AI-assisted, which changes the nature of trainee work. The expectation is rising: trainees must add value at a higher level more quickly, with stronger analytical and client-facing skills relative to their experience. The firms doing this well are investing in training and integrating AI as a tool that amplifies junior capability rather than replacing it.',
+      },
+    ],
   },
 ];
 

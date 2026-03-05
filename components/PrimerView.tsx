@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ChevronLeft, Clock, BookOpen, GraduationCap } from 'lucide-react';
+import { ChevronLeft, Clock, BookOpen, GraduationCap, MessageSquare, Eye, Target } from 'lucide-react';
 import type { Primer } from '@/lib/types';
 import { TOPIC_STYLES } from '@/lib/types';
 import { renderBold } from '@/lib/bold';
@@ -96,6 +96,52 @@ export function PrimerView({ primer }: { primer: Primer }) {
             </p>
           </div>
         </div>
+
+        {/* Interview Questions */}
+        {primer.interviewQs && primer.interviewQs.length > 0 && (
+          <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden">
+            <div className="flex items-center gap-2 px-5 py-4 border-b border-stone-100 dark:border-stone-800">
+              <MessageSquare size={13} className="text-stone-400 dark:text-stone-500" />
+              <span className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+                Interview Questions
+              </span>
+            </div>
+            <div className="divide-y divide-stone-100 dark:divide-stone-800">
+              {primer.interviewQs.map((iq, i) => (
+                <div key={i} className="px-5 py-5 space-y-4">
+                  {/* Question */}
+                  <p className="font-serif text-[15px] font-bold text-stone-900 dark:text-stone-50 leading-snug">
+                    &ldquo;{iq.question}&rdquo;
+                  </p>
+                  {/* What they want */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <Eye size={11} className="text-stone-400" />
+                      <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+                        What they&apos;re assessing
+                      </p>
+                    </div>
+                    <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed">
+                      {iq.whatTheyWant}
+                    </p>
+                  </div>
+                  {/* Answer skeleton */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <Target size={11} className="text-stone-400" />
+                      <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+                        Answer skeleton
+                      </p>
+                    </div>
+                    <p className="text-[13px] text-stone-600 dark:text-stone-300 leading-relaxed border-l-2 border-stone-200 dark:border-stone-700 pl-3">
+                      {iq.skeleton}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

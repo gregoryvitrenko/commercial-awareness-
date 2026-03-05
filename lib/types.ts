@@ -167,6 +167,14 @@ export interface PrimerKeyTerm {
   definition: string;
 }
 
+export interface PrimerInterviewQ {
+  question: string;
+  /** What the interviewer is assessing with this question */
+  whatTheyWant: string;
+  /** How to structure a strong answer — 3-4 sentences */
+  skeleton: string;
+}
+
 export interface Primer {
   slug: string;
   title: string;
@@ -178,6 +186,8 @@ export interface Primer {
   keyTerms: PrimerKeyTerm[];
   /** 2–3 sentences on why this matters for law students */
   whyItMatters: string;
+  /** 3 interview questions with answer guidance */
+  interviewQs?: PrimerInterviewQ[];
 }
 
 // ─── Topic Styles ─────────────────────────────────────────────────────────────

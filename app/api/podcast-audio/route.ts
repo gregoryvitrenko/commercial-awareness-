@@ -107,12 +107,6 @@ export async function POST(request: NextRequest) {
   const limited = await checkRateLimit(userId ?? 'preview-dev', 'podcast-audio', 5, 3600);
   if (limited) return limited;
 
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
-    console.error('[podcast-audio] ELEVENLABS_API_KEY is not configured.');
-    return NextResponse.json({ error: 'Audio generation is currently unavailable.' }, { status: 500 });
-  }
-
   const body = await request.json();
   const { date, voiceId } = body as { date?: string; voiceId?: string };
 
@@ -123,7 +117,7 @@ export async function POST(request: NextRequest) {
   // Whitelist-validate voiceId early — needed for per-voice cache key
   const resolvedVoiceId = (voiceId && isWhitelistedVoiceId(voiceId)) ? voiceId : DEFAULT_VOICE_ID;
 
-  // ── Return cached audio — no ElevenLabs charge ──
+  // ── Return cached audio — no ElevenLabs charge (checked BEFORE API key) ──
   const cached = getCachedAudio(date, resolvedVoiceId);
   if (cached) {
     return new Response(new Uint8Array(cached), {
@@ -153,6 +147,13 @@ export async function POST(request: NextRequest) {
       { error: 'Monthly audio generation quota reached. Please try again next month.' },
       { status: 429 }
     );
+  }
+
+  // ── API key required only for live ElevenLabs generation ──
+  const apiKey = process.env.ELEVENLABS_API_KEY;
+  if (!apiKey) {
+    console.error('[podcast-audio] ELEVENLABS_API_KEY is not configured.');
+    return NextResponse.json({ error: 'Audio generation is currently unavailable.' }, { status: 500 });
   }
 
   // ── Call ElevenLabs ──

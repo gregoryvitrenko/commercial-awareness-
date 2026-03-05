@@ -22,6 +22,8 @@ const CSP = [
   "frame-src 'self' https://js.stripe.com https://checkout.stripe.com https://billing.stripe.com https://hooks.stripe.com",
   // API calls from browser: Clerk, Stripe
   "connect-src 'self' https://*.clerk.com https://clerk.com wss://*.clerk.com https://clerk.accounts.dev https://*.clerk.accounts.dev https://api.stripe.com https://checkout.stripe.com https://errors.stripe.com",
+  // Audio/video blobs (podcast player uses URL.createObjectURL on ElevenLabs response)
+  "media-src 'self' blob:",
   // Web workers used by Next.js
   "worker-src 'self' blob:",
   // Block <object> / <embed>

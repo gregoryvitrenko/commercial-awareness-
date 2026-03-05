@@ -152,6 +152,7 @@ Requires `CRON_SECRET` env var set in Vercel — GET handler checks `Authorizati
 - Rate limiting uses `userId ?? 'preview-dev'` as fallback key in dev
 - Dev server: `npm run dev` on port 3001 (see `.claude/launch.json`)
 - **⚠️ NEVER start dev server from within Claude Code** — Claude Desktop injects empty ANTHROPIC_API_KEY, overriding .env.local. Use Terminal.app instead.
+- **⚠️ DO NOT use preview tools for API-only changes** (`app/api/**`, `lib/**`). These routes require live Vercel infrastructure (Redis, Blob, ElevenLabs) and cannot be verified locally. For API changes: commit, push, and test on the live site. Preview tools are only useful for UI/component changes.
 
 ---
 

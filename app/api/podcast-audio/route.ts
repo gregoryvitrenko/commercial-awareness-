@@ -169,15 +169,21 @@ export async function POST(request: NextRequest) {
 
   // ── Save and return ──
   const audioBuffer = Buffer.from(await res.arrayBuffer());
-  const savedUrl = await saveAudio(date, resolvedVoiceId, audioBuffer);
   await recordUsage(charCount);
+
+  let savedUrl: string | null = null;
+  try {
+    savedUrl = await saveAudio(date, resolvedVoiceId, audioBuffer);
+  } catch (err) {
+    console.error('[podcast-audio] Failed to save audio (Blob not configured?):', err);
+  }
 
   if (savedUrl) {
     // Production: return Blob URL
     return NextResponse.json({ url: savedUrl });
   }
 
-  // Dev: return buffer directly
+  // Dev or failed save: return buffer directly
   return new Response(audioBuffer, {
     headers: {
       'Content-Type': 'audio/mpeg',

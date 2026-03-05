@@ -106,9 +106,12 @@ export type FirmTier =
   | 'Boutique';
 
 export interface FirmDeadline {
-  label: string;      // e.g. "Summer Vacation Scheme 2026"
-  typically: string;  // e.g. "Opens October · Closes January"
-  applyUrl: string;   // Official application page URL
+  label: string;       // e.g. "Summer Vacation Scheme 2026"
+  typically: string;   // e.g. "Opens October · Closes January" — always present, cycle-agnostic
+  openDate?: string;   // "2025-10-01" — ISO date, present when exact date known
+  closeDate?: string;  // "2026-01-15" — ISO date, present when exact date known
+  rolling?: boolean;   // true if firm reviews on rolling basis (apply early)
+  applyUrl: string;    // Official application page URL
 }
 
 export type DiversitySchemeType =

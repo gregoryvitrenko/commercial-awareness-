@@ -49,10 +49,24 @@ async function getCountdown(userId: string): Promise<CountdownData | null> {
       if (!firm) continue;
 
       for (const deadline of firm.trainingContract.deadlines) {
-        const closeMonth = parseCloseMonth(deadline.typically);
-        if (!closeMonth) continue;
+        let daysLeft: number | null = null;
 
-        const daysLeft = daysUntilCloseMonth(closeMonth);
+        // Prefer exact closeDate if available
+        if (deadline.closeDate) {
+          const close = new Date(deadline.closeDate + 'T23:59:59');
+          const now = new Date();
+          const diff = Math.ceil((close.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+          if (diff > 0) daysLeft = diff; // Only count future deadlines
+        }
+
+        // Fallback to month parsing from typically
+        if (daysLeft === null) {
+          const closeMonth = parseCloseMonth(deadline.typically);
+          if (closeMonth) daysLeft = daysUntilCloseMonth(closeMonth);
+        }
+
+        if (daysLeft === null || daysLeft <= 0) continue;
+
         if (!best || daysLeft < best.daysLeft) {
           best = {
             firmName: firm.name,

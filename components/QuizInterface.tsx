@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Loader2, CheckCircle2, XCircle, RotateCcw, ArrowLeft, Trophy, Flame, Zap } from 'lucide-react';
+import { Loader2, CheckCircle2, XCircle, RotateCcw, ArrowLeft, Trophy, Flame, Zap, BarChart3 } from 'lucide-react';
 import type { DailyQuiz, QuizQuestion, TopicCategory } from '@/lib/types';
 import { TOPIC_STYLES } from '@/lib/types';
 
@@ -108,6 +108,59 @@ function saveLastResult(score: number, total: number, date: string): void {
   } catch {}
 }
 
+interface StoryMeta {
+  id: string;
+  topic: TopicCategory;
+  headline: string;
+}
+
+// ── Lifetime stats tracking ──────────────────────────────────────────────────
+
+interface TopicStats { total: number; correct: number }
+interface QuizStats {
+  total: number;
+  correct: number;
+  topics: Partial<Record<TopicCategory, TopicStats>>;
+}
+
+const STATS_KEY = 'folio-quiz-stats';
+
+function loadQuizStats(): QuizStats {
+  try {
+    const raw = localStorage.getItem(STATS_KEY);
+    return raw ? (JSON.parse(raw) as QuizStats) : { total: 0, correct: 0, topics: {} };
+  } catch {
+    return { total: 0, correct: 0, topics: {} };
+  }
+}
+
+function recordQuizStats(
+  questions: QuizQuestion[],
+  answers: Record<string, 'A' | 'B' | 'C' | 'D'>,
+  storyMeta: StoryMeta[]
+): void {
+  try {
+    const stats = loadQuizStats();
+    const topicByStoryId = new Map(storyMeta.map((m) => [m.id, m.topic]));
+
+    for (const q of questions) {
+      if (!answers[q.id]) continue; // unanswered
+      stats.total++;
+      const isCorrect = answers[q.id] === q.correctLetter;
+      if (isCorrect) stats.correct++;
+
+      const topic = topicByStoryId.get(q.storyId);
+      if (topic) {
+        if (!stats.topics[topic]) stats.topics[topic] = { total: 0, correct: 0 };
+        stats.topics[topic]!.total++;
+        if (isCorrect) stats.topics[topic]!.correct++;
+      }
+    }
+
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  } catch {}
+}
+
 // Records today's streak completion; returns the new streak count.
 function recordStreakCompletion(date: string): number {
   try { localStorage.setItem(streakDoneKey(date), '1'); } catch {}
@@ -134,12 +187,6 @@ function recordStreakCompletion(date: string): number {
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-interface StoryMeta {
-  id: string;
-  topic: TopicCategory;
-  headline: string;
-}
 
 // Pick the first question from each story — used for streak (daily) mode.
 function getStreakQuestions(questions: QuizQuestion[]): QuizQuestion[] {
@@ -232,6 +279,9 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
   // Cross-session last result (for score hero on Daily card)
   const [lastResult, setLastResult] = useState<LastResultData | null>(null);
 
+  // Lifetime quiz stats
+  const [stats, setStats] = useState<QuizStats>({ total: 0, correct: 0, topics: {} });
+
   useEffect(() => {
     // Load streak-specific result for the daily card — never overwritten by deep practice
     const saved = loadStreakResult(date);
@@ -243,6 +293,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
     setStreakDone(isStreakDoneToday(date));
 
     setLastResult(loadLastResult());
+    setStats(loadQuizStats());
   }, [date]);
 
   // How many questions each mode will use (for labelling before quiz loads)
@@ -358,6 +409,12 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
         setAnswers(nextAnswers);
       }
 
+      // Record lifetime stats (first attempt only — retries would double-count)
+      if (!isRetry) {
+        recordQuizStats(activeQuestions, nextAnswers, storyMeta);
+        setStats(loadQuizStats());
+      }
+
       // Record streak if completing streak mode for today (not an archive date, not a retry)
       if (quizMode === 'streak' && isToday && !isRetry && !streakDone) {
         const newCount = recordStreakCompletion(date);
@@ -384,6 +441,77 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
         <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-4">
           {alreadyDone ? 'Completed' : isToday ? "Today's quiz" : 'Practice quiz'}
         </h3>
+
+        {/* ── Lifetime stats banner ──────────────────────────────────────── */}
+        {stats.total > 0 && (() => {
+          const overallPct = Math.round((stats.correct / stats.total) * 100);
+          const topicEntries = (Object.entries(stats.topics) as [TopicCategory, TopicStats][])
+            .filter(([, s]) => s.total >= 3) // only show topics with enough data
+            .sort((a, b) => (b[1].correct / b[1].total) - (a[1].correct / a[1].total));
+          const best = topicEntries[0];
+
+          return (
+            <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-5 py-4 mb-3">
+              {/* Summary row */}
+              <div className="flex items-center gap-2 mb-3">
+                <BarChart3 className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 flex-shrink-0" />
+                <span className="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-zinc-500 dark:text-zinc-400">
+                  Lifetime Stats
+                </span>
+              </div>
+              <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 mb-4">
+                <div>
+                  <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">{stats.total}</span>
+                  <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 ml-1.5">answered</span>
+                </div>
+                <div>
+                  <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">{overallPct}%</span>
+                  <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 ml-1.5">accuracy</span>
+                </div>
+                {best && (
+                  <div>
+                    <span className={`text-[11px] font-mono font-semibold ${TOPIC_STYLES[best[0]].label}`}>
+                      {best[0]}
+                    </span>
+                    <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 ml-1">
+                      {Math.round((best[1].correct / best[1].total) * 100)}% — strongest
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Per-topic mastery bars */}
+              {topicEntries.length >= 2 && (
+                <div className="space-y-2">
+                  {topicEntries.map(([topic, s]) => {
+                    const pct = Math.round((s.correct / s.total) * 100);
+                    return (
+                      <div key={topic} className="flex items-center gap-3">
+                        <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${TOPIC_STYLES[topic].dot}`} />
+                        <span className={`text-[10px] font-mono font-medium tracking-wide w-[100px] truncate flex-shrink-0 ${TOPIC_STYLES[topic].label}`}>
+                          {topic}
+                        </span>
+                        <div className="flex-1 h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all duration-500 ${
+                              pct >= 80 ? 'bg-emerald-500 dark:bg-emerald-400' :
+                              pct >= 60 ? 'bg-amber-500 dark:bg-amber-400' :
+                              'bg-rose-500 dark:bg-rose-400'
+                            }`}
+                            style={{ width: `${pct}%` }}
+                          />
+                        </div>
+                        <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 w-[32px] text-right flex-shrink-0">
+                          {pct}%
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 

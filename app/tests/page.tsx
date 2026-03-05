@@ -25,9 +25,13 @@ export default async function TestsPage() {
             {TESTS.length} tests
           </span>
         </div>
+        <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed mb-2 max-w-2xl">
+          Most Magic Circle and Silver Circle firms screen applicants with an online aptitude test before interview.
+          Clifford Chance, Freshfields, Linklaters, and Latham & Watkins all use the Watson Glaser.
+          A&O Shearman and Herbert Smith Freehills use situational judgement tests.
+        </p>
         <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed mb-8 max-w-2xl">
-          Practice the online assessments used by Magic Circle and US firms at application stage.
-          Questions are AI-generated fresh each session so you never see the same question twice.
+          Questions are AI-generated fresh each session from a 240-question bank — you never see the same question twice.
         </p>
 
         {/* Test grid */}

@@ -24,13 +24,14 @@ export const TESTS: TestMeta[] = [
     name: 'Watson Glaser Critical Thinking Appraisal',
     shortName: 'Watson Glaser',
     vendor: 'Pearson TalentLens',
-    strapline: 'The critical thinking test used by most Magic Circle and Silver Circle firms.',
+    strapline: 'The critical thinking test used by most Magic Circle and Silver Circle firms to screen applicants.',
     description:
       'The Watson Glaser is the most widely used aptitude test in UK law firm recruitment. It assesses your ability to think critically — distinguishing facts from inferences, recognising assumptions, and evaluating the strength of arguments. Most Magic Circle and Silver Circle firms use it as an early screening stage, often before inviting candidates to assessment days. Questions are drawn from legal, business and everyday contexts.',
     usedBy: [
-      'Clifford Chance', 'Freshfields', 'Linklaters', 'Slaughter and May',
+      'Clifford Chance', 'Freshfields', 'Linklaters',
       'Ashurst', 'Hogan Lovells', 'Norton Rose Fulbright',
-      'White & Case', 'Sidley Austin', 'Mishcon de Reya', 'Simmons & Simmons',
+      'Latham & Watkins', 'White & Case', 'Sidley Austin',
+      'Covington & Burling', 'Mishcon de Reya', 'Simmons & Simmons',
     ],
     subtypes: [
       {
@@ -75,7 +76,7 @@ export const TESTS: TestMeta[] = [
     name: 'Situational Judgement Test',
     shortName: 'SJT',
     vendor: 'Various (Capp, Arctic Shores, cut-e)',
-    strapline: 'Scenario-based judgement tests used to screen for professional behaviour and values.',
+    strapline: 'Scenario-based judgement tests used by firms like A&O Shearman and HSF to screen for professional behaviour.',
     description:
       'The Situational Judgement Test (SJT) presents you with realistic workplace scenarios and asks you to identify the most (or least) effective response. Unlike the Watson Glaser, there are no strictly correct answers — the test is designed to assess professional values, ethical judgement and interpersonal effectiveness. Law firms use SJTs to screen for behaviours that align with their culture: client service, collaboration, integrity, and resilience. A&O Shearman uses a game-based variant via Arctic Shores; other firms use traditional written SJTs.',
     usedBy: [

@@ -80,7 +80,7 @@ export default async function TestPage({
             {test.usedBy.length > 0 && (
               <div>
                 <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
-                  Used by
+                  Used by {test.usedBy.length} of 38 profiled firms
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {test.usedBy.map((firm) => (

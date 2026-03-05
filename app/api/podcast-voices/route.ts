@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { auth } from '@clerk/nextjs/server';
 
 // Curated voices for a professional UK law news briefing.
 // Filtered by voice_id so they work regardless of ElevenLabs display-name changes.
@@ -11,7 +12,13 @@ const CURATED: { id: string; name: string; label: string }[] = [
   { id: 'XrExE9yKIg1WjnnlVkGX', name: 'Matilda', label: 'British · Clear'       },
 ];
 
+// SECURITY FIX: require auth — previously unauthenticated requests could enumerate
+// ElevenLabs account voices and waste API quota.
 export async function GET() {
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ voices: [] }, { status: 401 });
+  }
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ voices: [] });

@@ -6,6 +6,8 @@ import {
   addBookmarkForUser,
   removeBookmarkForUser,
 } from '@/lib/bookmarks-server';
+import { isValidDate, isValidStoryId } from '@/lib/security';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export async function GET() {
   const { userId } = await auth();
@@ -29,13 +31,30 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Subscription required' }, { status: 403 });
   }
 
-  const bookmark = await request.json().catch(() => null);
-  if (!bookmark) {
+  // Rate limit: 60 bookmark adds per hour
+  const limited = await checkRateLimit(userId, 'bookmarks-post', 60, 3600);
+  if (limited) return limited;
+
+  const body = await request.json().catch(() => null);
+
+  // SECURITY FIX: validate expected fields explicitly — previously spread the entire
+  // client-controlled object into storage, allowing arbitrary key injection.
+  if (
+    !body ||
+    typeof body.storyId !== 'string' ||
+    typeof body.date !== 'string' ||
+    !isValidStoryId(body.storyId) ||
+    !isValidDate(body.date)
+  ) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
 
   await addBookmarkForUser(userId, {
-    ...bookmark,
+    storyId:   body.storyId,
+    date:      body.date,
+    headline:  typeof body.headline  === 'string' ? body.headline.slice(0, 300)  : '',
+    topic:     typeof body.topic     === 'string' ? body.topic.slice(0, 50)      : '',
+    excerpt:   typeof body.excerpt   === 'string' ? body.excerpt.slice(0, 500)   : '',
     savedAt: new Date().toISOString(),
   });
   return NextResponse.json({ ok: true });

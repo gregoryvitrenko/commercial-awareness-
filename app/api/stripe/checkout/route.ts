@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { auth, currentUser } from '@clerk/nextjs/server';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -9,6 +10,11 @@ export async function POST(request: NextRequest) {
   if (!userId) {
     return NextResponse.json({ error: 'You must be signed in to subscribe.' }, { status: 401 });
   }
+
+  // Rate limit: 5 checkout session creations per hour per user.
+  // Prevents billing endpoint flooding and Stripe API abuse.
+  const limited = await checkRateLimit(userId, 'checkout', 5, 3600);
+  if (limited) return limited;
 
   const user = await currentUser();
   const email = user?.emailAddresses?.[0]?.emailAddress;

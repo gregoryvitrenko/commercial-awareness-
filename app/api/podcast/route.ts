@@ -3,6 +3,8 @@ import { auth } from '@clerk/nextjs/server';
 import { getBriefing, getTodayDate } from '@/lib/storage';
 import { isValidDate } from '@/lib/security';
 import { getCachedScript, generateAndSavePodcastScript } from '@/lib/podcast';
+import { isSubscribed } from '@/lib/subscription';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export const maxDuration = 60;
 
@@ -12,6 +14,19 @@ export async function POST(request: NextRequest) {
     console.warn('[podcast] POST — unauthenticated request rejected');
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  // SECURITY FIX: podcast script is premium content — enforce subscription at API level.
+  // Previously any authenticated user could retrieve the full podcast script.
+  const subscribed = await isSubscribed(userId);
+  if (!subscribed) {
+    console.warn(`[podcast] POST — unsubscribed user ${userId} blocked`);
+    return NextResponse.json({ error: 'Subscription required' }, { status: 403 });
+  }
+
+  // Rate limit: 10 podcast script requests per hour (scripts are cached; this throttles
+  // generation attempts which invoke Claude Sonnet)
+  const limited = await checkRateLimit(userId, 'podcast', 10, 3600);
+  if (limited) return limited;
 
   const body = await request.json().catch(() => ({}));
   const rawDate = body.date ?? getTodayDate();
@@ -35,9 +50,11 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error('[podcast] generation error:', err);
     const msg = err instanceof Error ? err.message : 'Unknown error';
+    // SECURITY FIX: never leak raw error messages to the client — they can reveal
+    // internal implementation details, API key names, or file paths.
     if (msg.includes('ANTHROPIC_API_KEY')) {
       return NextResponse.json({ error: 'Podcast generation is currently unavailable.' }, { status: 500 });
     }
-    return NextResponse.json({ error: `Script generation failed: ${msg}` }, { status: 502 });
+    return NextResponse.json({ error: 'Script generation failed. Please try again later.' }, { status: 502 });
   }
 }

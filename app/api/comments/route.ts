@@ -3,6 +3,7 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 import { getComments, addComment, deleteComment } from '@/lib/comments-server';
 import { isSubscribed } from '@/lib/subscription';
 import { isValidDate, isValidStoryId } from '@/lib/security';
+import { checkRateLimit } from '@/lib/rate-limit';
 import type { Comment } from '@/lib/types';
 
 export async function GET(request: NextRequest) {
@@ -29,6 +30,10 @@ export async function POST(request: NextRequest) {
   if (!subscribed) {
     return NextResponse.json({ error: 'Subscription required' }, { status: 403 });
   }
+
+  // Rate limit: 20 comments per hour per user
+  const limited = await checkRateLimit(userId, 'comments', 20, 3600);
+  if (limited) return limited;
 
   const body = await request.json().catch(() => ({}));
   const { date, storyId, text } = body as { date?: string; storyId?: string; text?: string };

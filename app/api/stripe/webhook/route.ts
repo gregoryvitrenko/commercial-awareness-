@@ -5,6 +5,28 @@ import { sendWelcomeEmail } from '@/lib/email';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
+// ─── Idempotency helper ────────────────────────────────────────────────────────
+// Stripe can replay webhook events (retries, test dashboard re-sends).
+// We track processed event IDs in Redis for 48h to prevent duplicate processing
+// (e.g. sending two welcome emails, double-recording a subscription).
+async function markEventProcessed(eventId: string): Promise<boolean> {
+  // Returns true if the event was NEW (safe to process), false if already seen.
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    // No Redis in dev — skip idempotency check (acceptable for local testing)
+    return true;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { Redis } = require('@upstash/redis');
+  const redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
+  const key = `stripe-event:${eventId}`;
+  // SET NX: only sets if key doesn't exist. Returns 'OK' if set, null if already exists.
+  const result = await redis.set(key, '1', { nx: true, ex: 172800 }); // 48h TTL
+  return result !== null; // null = already existed = duplicate
+}
+
 export async function POST(request: NextRequest) {
   const body = await request.text();
   const sig = request.headers.get('stripe-signature');
@@ -18,6 +40,15 @@ export async function POST(request: NextRequest) {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+  }
+
+  // SECURITY FIX: idempotency check — Stripe retries failed webhooks and allows
+  // re-sending from the dashboard. Without this, a replayed event would send
+  // duplicate welcome emails and re-process subscription state unnecessarily.
+  const isNew = await markEventProcessed(event.id);
+  if (!isNew) {
+    console.log(`[webhook] Duplicate event ${event.id} (${event.type}) — skipped`);
+    return NextResponse.json({ received: true, duplicate: true });
   }
 
   switch (event.type) {

@@ -4,8 +4,14 @@ import { generateBriefing } from '@/lib/generate';
 import { saveBriefing, getBriefing, getTodayDate, getAptitudeBank, saveAptitudeBank } from '@/lib/storage';
 import { generateAndSavePodcastScript } from '@/lib/podcast';
 import { buildAptitudeBank, BANK_TTL_DAYS } from '@/lib/aptitude';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export const maxDuration = 300; // 5-minute timeout for generation
+
+// SECURITY: Briefing generation calls Tavily + Claude + ElevenLabs TTS — costs real
+// money. Must be admin-only. Any authenticated user reaching this without the check
+// could drain API quotas intentionally or accidentally.
+const ADMIN_USER_ID = process.env.ADMIN_USER_ID ?? 'user_3AR29PSfsNfmy9wxcyjCvplC7hH';
 
 async function refreshStaleBanks(today: string): Promise<void> {
   const types = ['watson-glaser', 'sjt'] as const;
@@ -83,13 +89,23 @@ export async function GET(request: NextRequest) {
   return handleGenerate(request);
 }
 
-// Manual UI trigger uses POST — requires a signed-in Clerk session.
-// Pass ?force=true to regenerate even if today's briefing already exists.
+// Manual UI trigger uses POST — restricted to admin user only.
+// SECURITY FIX: previously any authenticated user could trigger expensive AI generation.
 export async function POST(request: NextRequest) {
   const { userId } = await auth();
   if (!userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+
+  if (userId !== ADMIN_USER_ID) {
+    console.warn(`[generate] POST — non-admin user ${userId} blocked`);
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
+  // Rate-limit even the admin to prevent accidental runaway triggers (10/hour)
+  const limited = await checkRateLimit(userId, 'generate', 10, 3600);
+  if (limited) return limited;
+
   const force = request.nextUrl.searchParams.get('force') === 'true';
   return handleGenerate(request, force);
 }

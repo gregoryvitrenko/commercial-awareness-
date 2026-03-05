@@ -4,6 +4,12 @@ import { isSubscribed } from '@/lib/subscription';
 import { buildAptitudeBank, BANK_TTL_DAYS } from '@/lib/aptitude';
 import { getAptitudeBank, saveAptitudeBank, getTodayDate } from '@/lib/storage';
 import type { AptitudeQuestion } from '@/lib/aptitude';
+import { checkRateLimit } from '@/lib/rate-limit';
+
+// Maximum number of seen question IDs the client may send.
+// Without a cap a malicious client could send a 100k-element array to force
+// an O(n²) filter loop, causing CPU spikes on every request.
+const MAX_SEEN_IDS = 200;
 
 export const maxDuration = 60;
 
@@ -22,8 +28,18 @@ export async function POST(request: NextRequest) {
   const subscribed = await isSubscribed(userId);
   if (!subscribed) return NextResponse.json({ error: 'Subscription required' }, { status: 403 });
 
+  // Rate limit: 30 requests per hour — generous for legitimate use, throttles abuse
+  const limited = await checkRateLimit(userId, 'aptitude', 30, 3600);
+  if (limited) return limited;
+
   const body = await request.json();
-  const { testType, seenIds = [] } = body as { testType?: string; seenIds?: string[] };
+  const rawSeenIds = body.seenIds;
+  const { testType } = body as { testType?: string };
+
+  // SECURITY FIX: cap seenIds to prevent large array DoS via O(n²) filter
+  const seenIds: string[] = Array.isArray(rawSeenIds)
+    ? (rawSeenIds as unknown[]).slice(0, MAX_SEEN_IDS).filter((id): id is string => typeof id === 'string')
+    : [];
 
   if (testType !== 'watson-glaser' && testType !== 'sjt') {
     return NextResponse.json({ error: 'testType must be "watson-glaser" or "sjt"' }, { status: 400 });

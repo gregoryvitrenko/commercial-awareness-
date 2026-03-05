@@ -5,6 +5,7 @@ import { auth } from '@clerk/nextjs/server';
 import { isSubscribed } from '@/lib/subscription';
 import { hasCapacity, getMonthlyUsage, recordUsage } from '@/lib/char-usage';
 import { isValidDate, isWhitelistedVoiceId, sanitizeUpstreamError } from '@/lib/security';
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export const maxDuration = 60;
 
@@ -95,6 +96,12 @@ export async function POST(request: NextRequest) {
     console.warn(`[podcast-audio] POST — unsubscribed user ${userId} attempted audio generation`);
     return NextResponse.json({ error: 'Subscription required' }, { status: 403 });
   }
+
+  // Rate limit: 5 audio generation requests per hour per user.
+  // ElevenLabs credits are finite (100k chars/month on Creator plan). The monthly
+  // budget check prevents overage, but rate limiting prevents hammering the endpoint.
+  const limited = await checkRateLimit(userId, 'podcast-audio', 5, 3600);
+  if (limited) return limited;
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) {

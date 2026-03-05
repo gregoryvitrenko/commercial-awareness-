@@ -1,0 +1,29 @@
+User-agent: *
+# Allow public landing page and marketing content
+Allow: /$
+Allow: /upgrade
+Allow: /sign-in
+Allow: /sign-up
+
+# Block premium content routes from indexing
+Disallow: /quiz
+Disallow: /quiz/
+Disallow: /archive
+Disallow: /archive/
+Disallow: /story/
+Disallow: /topic/
+Disallow: /saved
+Disallow: /firms
+Disallow: /firms/
+Disallow: /primers
+Disallow: /primers/
+Disallow: /podcast
+Disallow: /tests
+Disallow: /tests/
+Disallow: /onboarding
+Disallow: /success
+
+# Block all API routes from crawlers
+Disallow: /api/
+
+Sitemap: https://commercialawareness.co.uk/sitemap.xml

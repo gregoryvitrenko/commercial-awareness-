@@ -27,6 +27,7 @@ Disallow: /tests
 Disallow: /tests/
 Disallow: /interview
 Disallow: /interview/
+Disallow: /tracker
 Disallow: /onboarding
 Disallow: /success
 

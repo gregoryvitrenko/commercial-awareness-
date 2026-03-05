@@ -114,6 +114,27 @@ export interface FirmDeadline {
   applyUrl: string;    // Official application page URL
 }
 
+// ── Application Tracker ──────────────────────────────────────────────────────
+
+export type ApplicationStatus =
+  | 'not-started'
+  | 'in-progress'
+  | 'submitted'
+  | 'interview'
+  | 'offer'
+  | 'rejected';
+
+export interface TrackedApplication {
+  firmSlug: string;
+  programme: string;         // deadline.label, e.g. "Summer Vacation Scheme 2026"
+  status: ApplicationStatus;
+  appliedAt?: string;        // ISO date — set when status becomes 'submitted'
+  notes: string;             // user notes, max 500 chars
+  updatedAt: string;         // ISO timestamp — last status/note change
+}
+
+// ── Diversity Schemes ────────────────────────────────────────────────────────
+
 export type DiversitySchemeType =
   | 'socioeconomic'   // low income, state school, first-gen
   | 'ethnicity'       // race/ethnicity specific

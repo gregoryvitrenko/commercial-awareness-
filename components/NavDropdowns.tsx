@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {
   Newspaper, Headphones, BookOpen, Building2, Calendar,
   PenLine, GraduationCap, Bookmark, ChevronDown, MessageSquare, Compass, Scale,
+  ClipboardList,
 } from 'lucide-react';
 
 type NavItem = { label: string; href: string; Icon: React.ElementType };
@@ -41,6 +42,7 @@ const NAV_GROUPS: NavGroup[] = [
       { label: 'Interview Prep', href: '/interview', Icon: MessageSquare },
       { label: 'Firm Fit Quiz', href: '/firm-fit', Icon: Compass },
       { label: 'Area Fit Quiz', href: '/area-fit', Icon: Scale },
+      { label: 'Tracker', href: '/tracker', Icon: ClipboardList },
     ],
   },
 ];

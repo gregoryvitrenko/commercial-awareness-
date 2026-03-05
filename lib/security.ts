@@ -57,6 +57,16 @@ export function isValidSlug(slug: string): boolean {
 }
 
 /**
+ * Validates that an application status is one of the allowed enum values.
+ */
+const VALID_APP_STATUSES = new Set([
+  'not-started', 'in-progress', 'submitted', 'interview', 'offer', 'rejected',
+]);
+export function isValidApplicationStatus(s: unknown): boolean {
+  return typeof s === 'string' && VALID_APP_STATUSES.has(s);
+}
+
+/**
  * Returns a safe, sanitised error message from an upstream API response.
  * Never leaks raw API error bodies to the client.
  */

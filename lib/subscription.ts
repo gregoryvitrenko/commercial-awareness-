@@ -77,6 +77,8 @@ export async function removeSubscription(userId: string): Promise<void> {
 }
 
 export async function isSubscribed(userId: string): Promise<boolean> {
+  // Admin always has access
+  if (userId === process.env.ADMIN_USER_ID) return true;
   const sub = await getSubscription(userId);
   if (!sub) return false;
   const now = Math.floor(Date.now() / 1000);

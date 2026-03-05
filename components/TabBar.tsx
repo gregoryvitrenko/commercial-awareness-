@@ -54,6 +54,8 @@ export function TabBar({ presentTopics, activeTopic }: TabBarProps) {
           </Link>
         );
       })}
+      {/* Trailing spacer — padding-right doesn't expand scroll area in overflow containers on Safari/Firefox */}
+      <span className="flex-shrink-0 w-4 sm:w-6" aria-hidden="true" />
     </div>
   );
 }

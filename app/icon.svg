@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background square -->
+  <rect width="32" height="32" rx="7" fill="#1c1917"/>
+  <!-- Document shape (white) -->
+  <path d="M7 5H21L25 9V27H7V5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round" fill="none"/>
+  <!-- Corner fold -->
+  <path d="M21 5L21 9H25" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+  <!-- F vertical -->
+  <line x1="11" y1="14" x2="11" y2="22" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- F top bar -->
+  <line x1="11" y1="14" x2="19" y2="14" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- F middle bar -->
+  <line x1="11" y1="18" x2="17" y2="18" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

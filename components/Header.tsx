@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ThemeToggle } from './ThemeToggle';
 import { AuthButtons } from './AuthButtons';
 import { NavDropdowns } from './NavDropdowns';
+import { FolioMark } from './FolioLogo';
 
 interface HeaderProps {
   date: string;
@@ -36,7 +37,8 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
           <span className="hidden sm:block font-mono text-[11px] text-stone-400 dark:text-stone-500 tracking-wide">
             {formatShortDate(displayDate)}
           </span>
-          <Link href="/" className="group flex justify-center">
+          <Link href="/" className="group flex items-center justify-center gap-2.5">
+            <FolioMark size={34} className="text-stone-900 dark:text-stone-50 group-hover:opacity-75 transition-opacity flex-shrink-0" />
             <h1 className="font-serif text-[32px] sm:text-[38px] font-bold tracking-tight text-stone-900 dark:text-stone-50 group-hover:opacity-75 transition-opacity">
               Folio
             </h1>

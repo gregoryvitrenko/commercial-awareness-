@@ -80,14 +80,9 @@ export const FIRMS: FirmProfile[] = [
       nqSalaryNote: '~£185,000',
       deadlines: [
         {
-          label: 'First Year Insight Programme',
-          typically: 'Opens September · Closes October',
-          applyUrl: 'https://www.cliffordchance.com/careers/careers-in-law/students/first-year-programme.html',
-        },
-        {
-          label: 'Summer Vacation Scheme',
+          label: 'SPARK (Insight & Vacation Scheme)',
           typically: 'Opens October · Closes November',
-          applyUrl: 'https://www.cliffordchance.com/careers/careers-in-law/students/vacation-schemes.html',
+          applyUrl: 'https://www.cliffordchance.com/careers/careers-in-law/students/spark.html',
         },
         {
           label: 'Training Contract (direct)',
@@ -96,7 +91,7 @@ export const FIRMS: FirmProfile[] = [
         },
       ],
       applyUrl: 'https://www.cliffordchance.com/careers/careers-in-law/students.html',
-      lastVerified: '2026-03-03',
+      lastVerified: '2026-03-05',
     },
     accentColor: 'text-blue-700 dark:text-blue-400',
     forageUrl: 'https://www.theforage.com/simulations?companies=clifford-chance',

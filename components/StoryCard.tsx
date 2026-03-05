@@ -110,7 +110,7 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
     </article>
   );
 
-  const destination = subscribed ? `/story/${story.id}` : '/upgrade';
+  const destination = subscribed ? `/story/${story.id}?date=${date}` : '/upgrade';
 
   return (
     <div

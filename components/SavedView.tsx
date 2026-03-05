@@ -69,7 +69,7 @@ export function SavedView({ today }: SavedViewProps) {
       {bookmarks.map((b) => {
         const styles = TOPIC_STYLES[b.topic] ?? TOPIC_STYLES['International'];
         const note = notes[`${b.date}-${b.storyId}`];
-        const href = b.date === today ? `/story/${b.storyId}` : `/archive/${b.date}`;
+        const href = `/story/${b.storyId}?date=${b.date}`;
 
         return (
           <div

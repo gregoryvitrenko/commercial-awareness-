@@ -7,17 +7,31 @@ import { Header } from '@/components/Header';
 import { TabBar } from '@/components/TabBar';
 import { ArticleStory } from '@/components/ArticleStory';
 import { requireSubscription } from '@/lib/paywall';
+import { isValidDate } from '@/lib/security';
 import { auth } from '@clerk/nextjs/server';
 
 export const dynamic = 'force-dynamic';
 
-export default async function StoryPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function StoryPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ date?: string }>;
+}) {
   await requireSubscription();
   const { userId } = await auth();
   const { id } = await params;
+  const { date: dateParam } = await searchParams;
 
   const today = getTodayDate();
-  const briefing = (await getBriefing(today)) ?? (await getLatestBriefing());
+
+  // If a date is provided (e.g. from archive or saved view), load that specific briefing.
+  // Fall back to today's/latest for direct navigation from the main briefing.
+  const briefing = (dateParam && isValidDate(dateParam))
+    ? await getBriefing(dateParam)
+    : (await getBriefing(today)) ?? (await getLatestBriefing());
+
   if (!briefing) notFound();
 
   const story = briefing.stories.find(s => s.id === id);

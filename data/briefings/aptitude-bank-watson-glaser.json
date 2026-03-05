@@ -1,0 +1,1433 @@
+{
+  "questions": [
+    {
+      "id": "watson-glaser-1",
+      "subtype": "Inference",
+      "passage": "Langley & Partners LLP has experienced a 23% increase in client disputes over contract interpretation in the past 18 months. The firm's dispute resolution team has grown from 12 to 19 lawyers. Despite this expansion, the average time to resolve a dispute has increased from 8 months to 11 months. The firm has not invested in new case management software during this period.",
+      "question": "The firm's inability to reduce dispute resolution time is directly attributable to insufficient investment in case management systems.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "While the passage states that case management software has not been invested in and that resolution times have increased, it does not provide sufficient evidence to conclude that the software investment is the direct cause. Other factors could explain the slower resolution time (e.g., increased complexity of disputes, staffing integration issues, or increased caseloads per lawyer). The passage does not rule out alternative explanations."
+    },
+    {
+      "id": "watson-glaser-2",
+      "subtype": "Inference",
+      "passage": "In a survey of 450 UK law firm partners, 68% stated that client cost transparency is a key competitive advantage. Of those partners, 71% reported that their firms had implemented detailed billing breakdowns in the past two years. However, only 34% of all surveyed partners reported that their firms had achieved client satisfaction scores above 8 out of 10 for billing clarity.",
+      "question": "Implementing detailed billing breakdowns alone is insufficient to ensure high client satisfaction with billing clarity.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "Of the 68% of partners who view cost transparency as important, 71% implemented detailed billing breakdowns. Yet only 34% of all partners achieved high satisfaction scores on billing clarity. This suggests that even among firms with detailed breakdowns, client satisfaction with clarity remains relatively low (approximately 48% of those with breakdowns achieved high scores). This pattern supports the inference that implementation alone is probably insufficient, though the passage does not definitively exclude other contributing factors."
+    },
+    {
+      "id": "watson-glaser-3",
+      "subtype": "Recognition of Assumptions",
+      "passage": "The Managing Partner of Ashton Law Group stated: 'We must require all junior associates to attend mandatory in-office networking events each Thursday evening. This will strengthen team cohesion and reduce voluntary staff turnover.'",
+      "question": "Attendance at in-office networking events is more effective at reducing turnover than other retention strategies such as flexible working or enhanced professional development.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The Managing Partner assumes that networking events will reduce turnover, but makes no assumption comparing this strategy to other retention methods. The statement does not claim that networking is more effective than alternatives—only that it will reduce turnover. The speaker could believe multiple strategies are equally effective or that other approaches are more important; the statement does not require this comparative assumption."
+    },
+    {
+      "id": "watson-glaser-4",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A senior counsel at Mitchell & Dean has recommended: 'We should consolidate our four regional office leases into a single central London location. This move will allow us to cut property costs by 35% and improve collaboration between practice groups.'",
+      "question": "Employees based at the regional offices will be willing and able to commute to a central London location.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The recommendation assumes that consolidating offices will improve collaboration and achieve cost savings. For these benefits to materialize, the counsel implicitly assumes that regional office staff can relocate to or commute to the central location and continue working effectively. Without this assumption—that staff can and will be present at the new location—the recommendation would be impractical and the collaboration benefit would not occur."
+    },
+    {
+      "id": "watson-glaser-5",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All clients of Prescott LLP who have received legal advice on commercial contracts must complete a post-advice satisfaction survey. Premise 2: Marcus Chen received legal advice on commercial contracts from Prescott LLP.",
+      "question": "Marcus Chen must complete a post-advice satisfaction survey.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "Premise 1 establishes that all clients receiving legal advice on commercial contracts must complete a survey. Premise 2 establishes that Marcus Chen received exactly this type of advice. By deductive logic, Marcus Chen falls into the category of 'all clients who have received legal advice on commercial contracts,' and therefore must complete the survey. The conclusion necessarily follows."
+    },
+    {
+      "id": "watson-glaser-6",
+      "subtype": "Deduction",
+      "passage": "Premise 1: Partners who have been qualified for fewer than five years are not eligible for the firm's equity partnership scheme. Premise 2: Sarah Johnson is eligible for the firm's equity partnership scheme.",
+      "question": "Sarah Johnson has been qualified as a solicitor for at least five years.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "Premise 1 states that ineligibility is a consequence of being qualified for fewer than five years. Premise 2 establishes that Sarah Johnson is eligible. By contrapositive logic, if being qualified for fewer than five years leads to ineligibility, then being eligible means she must have been qualified for at least five years. The conclusion necessarily follows from the premises."
+    },
+    {
+      "id": "watson-glaser-7",
+      "subtype": "Interpretation",
+      "passage": "Following a disciplinary investigation into breach of confidentiality, the Law Society found that the partner in question had shared client information with a third-party commercial entity without explicit client consent. The partner claimed that implied consent existed based on the client's general engagement letter. The Law Society determined that the client's standard engagement letter did not mention or reference the possibility of information sharing with third parties. The Law Society concluded that no reasonable interpretation of the engagement letter could have conveyed consent to such sharing.",
+      "question": "The partner's conduct breached professional confidentiality obligations under the circumstances described.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage establishes that: (1) the partner shared client information without explicit consent; (2) the engagement letter did not mention third-party sharing; (3) the Law Society found that the engagement letter could not reasonably be interpreted as conveying consent. Together, these facts establish that the information was shared without valid consent, which directly demonstrates a breach of confidentiality obligations. The conclusion follows beyond reasonable doubt from the evidence presented."
+    },
+    {
+      "id": "watson-glaser-8",
+      "subtype": "Interpretation",
+      "passage": "A commercial contract contained a termination clause stating: 'Either party may terminate this agreement with 90 days' written notice if there has been a material breach by the other party that remains uncured for 30 days after notice.' Company A sent a termination notice on 15 March citing a breach by Company B. Company B cured the alleged breach on 10 April. Company A argues that the notice was valid and termination is effective. Company B argues that since the breach was cured before the 30-day cure period expired, no valid grounds for termination existed.",
+      "question": "Company B's position is supported by the plain language of the termination clause.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The termination clause explicitly requires two conditions: (1) material breach, and (2) breach remaining uncured for 30 days after notice. The clause does not allow termination if the breach is cured within the 30-day period. Since Company B cured the breach on 10 April, which is within 30 days of the 15 March notice, the condition for termination is not satisfied. Company B's position that no valid grounds for termination exist is directly supported by the plain language of the clause."
+    },
+    {
+      "id": "watson-glaser-9",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should UK law firms be required by regulation to publish their gender pay gap data annually?",
+      "question": "Argument: Publishing gender pay gap data would be costly for law firms to collate and verify, requiring investment in HR systems and external auditing.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "While this argument identifies a real cost, it is weak as a response to whether firms should publish gender pay data. The argument addresses implementation burden but does not engage with the substantive question of whether transparency on pay equity is important or necessary. A strong argument would address whether the benefits of transparency (e.g., improved accountability, market confidence, pay fairness) outweigh the costs, or would present evidence that the costs are prohibitively high relative to firm resources. Merely stating that something is costly does not constitute a strong argument against regulation."
+    },
+    {
+      "id": "watson-glaser-10",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should law firms invest in artificial intelligence tools to automate routine document review tasks currently performed by junior associates?",
+      "question": "Argument: AI-powered document review systems are demonstrably faster and more consistent than human reviewers for large-scale contract analysis, reducing both costs and error rates in document-heavy matters.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This argument is strong because it directly addresses the core question of whether firms should invest in AI automation. It provides multiple relevant benefits: speed, consistency, cost reduction, and improved accuracy. These are all material considerations for a business decision on automation investment. The argument is grounded in concrete performance attributes (faster, more consistent, lower error rates) that are directly relevant to the question. It neither relies on emotion nor addresses irrelevant factors, making it a substantively strong argument."
+    },
+    {
+      "id": "watson-glaser-11",
+      "subtype": "Inference",
+      "passage": "Hartley & Associates, a mid-sized commercial law firm, has experienced a 15% increase in client retention over the past two years. During the same period, the firm invested heavily in training programmes for junior associates and upgraded its case management software. The firm's billable hours per associate have remained stable, while partner income has grown by 8%.",
+      "question": "The training programmes and software upgrades were the primary drivers of improved client retention at Hartley & Associates.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "While the passage states that both improvements in training/software and client retention occurred during the same period, it does not establish a causal link. Other factors (market conditions, quality of legal work, client service, or competitive advantage) could have driven retention. Correlation is not established as causation, so we cannot definitively conclude what caused the improvement."
+    },
+    {
+      "id": "watson-glaser-12",
+      "subtype": "Inference",
+      "passage": "A survey of UK law firms found that firms offering flexible working arrangements report higher job satisfaction scores among associates. Of the 150 firms surveyed, 68 firms offer flexible working, and associates at these firms averaged 7.2 out of 10 on a satisfaction scale. The remaining 82 firms do not offer flexible working, and their associates averaged 5.9 out of 10. However, the survey did not control for firm size, specialisation, or salary levels.",
+      "question": "Associates at firms without flexible working are more likely to leave their firms than those at firms with flexible working.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The passage provides satisfaction score data but no actual turnover or attrition rates. Lower satisfaction may correlate with higher departure rates, but the passage does not provide evidence of actual staff turnover. Additionally, uncontrolled variables (firm size, salary, specialisation) could confound the relationship between flexibility and retention."
+    },
+    {
+      "id": "watson-glaser-13",
+      "subtype": "Recognition of Assumptions",
+      "passage": "The managing partner of Grant LLP stated: 'We must implement mandatory attendance at the office four days per week. Remote working has eroded the mentorship relationships between senior and junior lawyers, which is critical to their development.'",
+      "question": "The managing partner assumes that in-person presence is necessary for effective mentorship to occur.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The managing partner's reasoning rests on the belief that remote working has 'eroded' mentorship, implying that mentorship requires or is significantly strengthened by physical presence. The argument would not hold if mentorship could be equally effective remotely. This assumption underpins the conclusion that four-day office attendance is necessary."
+    },
+    {
+      "id": "watson-glaser-14",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A junior associate wrote to HR: 'I am requesting a pay increase based on my performance this year. I have completed 2,200 billable hours, which exceeds the firm target of 1,900 hours. I also took on three pro bono matters on my own initiative, and my client feedback scores average 8.5 out of 10.'",
+      "question": "The associate assumes that exceeding billable hour targets is a sufficient reason for a pay increase.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The associate cites billable hours as one reason among several (pro bono work, client feedback). The argument does not assume that billable hours alone are sufficient—the associate presents multiple grounds for the increase. To say the assumption is made, we would need the associate to claim that hours alone justify the raise, excluding all other factors."
+    },
+    {
+      "id": "watson-glaser-15",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All associates in the Corporate team have completed the advanced contract law module. Premise 2: Sarah is an associate in the Corporate team.",
+      "question": "Sarah has completed the advanced contract law module.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a valid categorical syllogism. Premise 1 establishes that all members of the Corporate team have completed the module. Premise 2 establishes that Sarah is a member of the Corporate team. Therefore, Sarah must have completed the module. The conclusion necessarily follows from the two premises."
+    },
+    {
+      "id": "watson-glaser-16",
+      "subtype": "Deduction",
+      "passage": "Premise 1: If a client disputes a bill, the matter is escalated to the Senior Partner. Premise 2: Ms Chen's bill was not escalated to the Senior Partner.",
+      "question": "Ms Chen did not dispute her bill.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "Premise 1 establishes: Dispute → Escalation. Premise 2 states: No Escalation. By modus tollens (denying the consequent), we can conclude: No Dispute. If a dispute would necessarily trigger escalation, and escalation did not occur, then no dispute occurred. The conclusion follows necessarily from the premises."
+    },
+    {
+      "id": "watson-glaser-17",
+      "subtype": "Interpretation",
+      "passage": "Following the introduction of a new client feedback system in January, Harrison & Cole recorded the following: in January, 87% of clients rated their experience as 'good' or 'excellent'. From February through May, this figure remained between 85% and 89%. In June, after the firm conducted mandatory training on client communication for all fee-earners, satisfaction rose to 92% and remained at 91–93% through December. Exit surveys from departing clients during the second half of the year cited improved responsiveness and clearer communication as key factors in their decisions to stay.",
+      "question": "The mandatory communication training programme directly improved client satisfaction levels.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage establishes a clear sequence: satisfaction was stable at 85–89% until June, when training was conducted. Satisfaction then rose to 92% and remained elevated through year-end. Exit interviews explicitly cite improved responsiveness and communication—the skills targeted by the training. The timing, sustained elevation, and client feedback together make it beyond reasonable doubt that the training directly improved satisfaction."
+    },
+    {
+      "id": "watson-glaser-18",
+      "subtype": "Interpretation",
+      "passage": "A law firm's equality and diversity report states: 'Women comprise 42% of the associate cohort and 28% of the partner cohort. The firm achieved a 12% increase in female associate promotions to partner in 2023 compared to 2022. However, women remain underrepresented in leadership roles, and the average salary for female partners is 6% lower than for male partners with equivalent experience.'",
+      "question": "The firm's promotion practices are systematically biased against women.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "While the passage shows underrepresentation of women at partner level and a salary gap, it does not provide information about whether promotion decisions themselves are biased. The 12% increase in female promotions could indicate improved promotion practices. The salary gap could reflect historical hiring practices, different practice areas, or seniority levels rather than current promotion bias. Without comparative data on promotion rates by gender or evidence of discriminatory decision-making, we cannot conclude that promotion practices are systematically biased."
+    },
+    {
+      "id": "watson-glaser-19",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Proposal: Should law firms implement mandatory pro bono targets (e.g., each associate must complete 50 hours per year)?",
+      "question": "Argument: Pro bono work reduces billable hours and therefore reduces firm profitability, which harms the financial security of all staff and partners.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This argument is strong because it is directly relevant to the proposal (pro bono targets) and raises a genuine, material concern: opportunity cost in terms of billable hours and firm revenue. The argument is not based on emotion or trivial considerations—it addresses a legitimate business trade-off that decision-makers must weigh. While other considerations (reputation, staff morale, regulatory compliance) might outweigh this concern, the argument itself is substantive and important."
+    },
+    {
+      "id": "watson-glaser-20",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Proposal: Should law firms require all staff to attend an annual firm-wide away day lasting two full days?",
+      "question": "Argument: The away day will be held at a hotel in the Cotswolds, which is very beautiful, and staff will enjoy the peaceful countryside setting during lunch breaks.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "This argument is weak because it relies on a peripheral, subjective consideration (aesthetic beauty and personal enjoyment of the setting) rather than addressing the substantive question of whether mandatory attendance is justified. A strong argument would address matters such as team cohesion, business case, cost-benefit analysis, or opportunity cost of lost billable time. The argument does not meaningfully support the proposal's actual merit."
+    },
+    {
+      "id": "watson-glaser-21",
+      "subtype": "Inference",
+      "passage": "Meridian Legal LLP increased its partner compensation by 12% last year, while associate salaries rose by only 3%. The firm's revenue grew by 8% overall. Senior partners attribute the disparity to market pressures for retaining experienced litigators. Three associates left the firm in the last quarter to join competitors.",
+      "question": "The firm's associate retention strategy is less effective than its partner retention strategy.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The passage shows that associates received a 3% raise while partners received 12%, and three associates departed to competitors. This suggests the partner compensation strategy is working better to retain senior staff. However, we do not know the total associate turnover rate, whether those associates would have stayed with higher pay, or what other retention factors exist. The inference is probably true but not certain from the passage alone."
+    },
+    {
+      "id": "watson-glaser-22",
+      "subtype": "Inference",
+      "passage": "The Competition and Markets Authority (CMA) published guidance stating that law firms cannot collude on fee-setting. This guidance applies to all firms operating in England and Wales. Bennett & Co operates exclusively in England and Wales. The firm's fee structure is reviewed quarterly by its partnership board.",
+      "question": "Bennett & Co must comply with the CMA's guidance on fee-setting.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage explicitly states that the CMA guidance applies to all firms operating in England and Wales, and Bennett & Co operates exclusively in that jurisdiction. Therefore, the firm must comply with the guidance. This follows logically and necessarily from the premises."
+    },
+    {
+      "id": "watson-glaser-23",
+      "subtype": "Recognition of Assumptions",
+      "passage": "The managing partner stated: 'We should implement a mandatory remote working policy two days per week to reduce our office overhead costs and improve work-life balance for our staff.'",
+      "question": "The managing partner assumes that reducing office overhead costs and improving work-life balance are compatible objectives.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The managing partner proposes one policy (remote working two days per week) as a solution to achieve two stated benefits: reduced overhead and improved work-life balance. By recommending a single policy to address both objectives, the managing partner implicitly assumes these goals do not conflict and can both be achieved through this measure."
+    },
+    {
+      "id": "watson-glaser-24",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A senior associate told a junior colleague: 'You should not attend the client networking event on Friday evening because attendance is not mandatory and you have already worked 50 hours this week.'",
+      "question": "The senior associate assumes that avoiding non-mandatory activities is the best way to manage fatigue.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The senior associate recommends not attending the event based on two concrete factors: it is not mandatory and the colleague has already worked long hours. The statement does not assume anything about what is 'best' for managing fatigue generally. The associate is simply applying specific logic to this situation without making a broader claim about fatigue management methods."
+    },
+    {
+      "id": "watson-glaser-25",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All lawyers in the UK must comply with the Solicitors Regulation Authority (SRA) Standards and Regulations. Premise 2: Sarah is a qualified solicitor working in the UK.",
+      "question": "Sarah must comply with the SRA Standards and Regulations.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a classic deductive argument using the logical form: All A must do X. Sarah is A. Therefore, Sarah must do X. Since Sarah is explicitly stated to be a qualified solicitor in the UK, and all such lawyers must comply with SRA standards, the conclusion necessarily follows with certainty."
+    },
+    {
+      "id": "watson-glaser-26",
+      "subtype": "Deduction",
+      "passage": "Premise 1: If a client disputes an invoice, the matter must be reviewed by the billing manager before any recovery action is taken. Premise 2: Clifton Associates received a dispute from Client Z regarding invoice INV-2847.",
+      "question": "Clifton Associates must review invoice INV-2847 with the billing manager before pursuing recovery action.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The premises establish a conditional rule (if dispute, then review required) and confirm that the condition is met (Client Z disputed the invoice). Therefore, the consequence must follow: the invoice must be reviewed with the billing manager before recovery action. The logic is deductively sound."
+    },
+    {
+      "id": "watson-glaser-27",
+      "subtype": "Interpretation",
+      "passage": "A legal practice management study surveyed 200 UK law firms of varying sizes. The study found that 78% of firms experienced increased client demand for fixed-fee services in the past 12 months. Firms citing 'operational efficiency improvements' showed a 34% higher adoption rate of fixed-fee offerings than those citing 'cost pressure only.' Smaller firms (under 50 lawyers) adopted fixed-fee services at twice the rate of larger firms (200+ lawyers). The researchers concluded that market demand is shifting toward fixed-fee models.",
+      "question": "The shift toward fixed-fee services is driven primarily by smaller firms seeking operational efficiency.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "While the passage shows that smaller firms adopt fixed-fee services at twice the rate of larger firms, and that efficiency-minded firms adopt at higher rates than cost-pressure firms, this does not establish that the overall market shift is 'primarily' driven by smaller firms. The study found that 78% of all firms (large and small) experienced increased client demand, suggesting clients are driving the shift, not firm initiative. The data shows a pattern in adoption rates but does not support the specific causal claim proposed."
+    },
+    {
+      "id": "watson-glaser-28",
+      "subtype": "Interpretation",
+      "passage": "Westley & Partners LLP introduced a new diversity training programme in January. The programme involved six hours of mandatory training for all staff and monthly diversity working groups. Six months later, the firm conducted an anonymous staff survey. 62% of respondents agreed that 'the firm is genuinely committed to diversity and inclusion.' This represents a 14 percentage-point increase from a similar survey conducted two years prior. However, among the firm's paralegal and junior associate cohort (grades 1–3), only 44% agreed with the statement, compared to 89% among senior associates and partners.",
+      "question": "The diversity training programme has been more effective at influencing senior staff perceptions than junior staff perceptions.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage provides survey data showing that 89% of senior associates and partners agreed the firm is committed to diversity, while only 44% of junior staff agreed. Since the training programme was introduced six months before the survey and both groups received the same training, the stark difference in perception between cohorts indicates the programme has been more effective at shifting senior staff views. This is a direct inference from the comparative data presented."
+    },
+    {
+      "id": "watson-glaser-29",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Should law firms implement mandatory continuing professional development (CPD) quotas above the current regulatory minimum?",
+      "question": "Argument: Lawyers who undertake more CPD hours become more knowledgeable and skilled, which benefits clients.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "While the argument establishes a logical chain (more CPD → more knowledge/skill → client benefit), it does not directly address whether *mandatory* quotas above the regulatory minimum are necessary or appropriate. The argument assumes without evidence that the current regulatory minimum is insufficient, and does not consider whether voluntary CPD, market incentives, or specialist certification might achieve the same outcome. It is also not relevant that additional learning is beneficial in the abstract; the question asks whether mandatory firm-level quotas should exceed regulatory requirements. The argument is too general and does not grapple with the specific policy question."
+    },
+    {
+      "id": "watson-glaser-30",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Should commercial law firms be required by regulators to publish their associate attrition rates annually?",
+      "question": "Argument: Publishing associate attrition rates would enable candidates to make more informed decisions about which firms to join, potentially attracting candidates to firms with lower attrition and better working conditions.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This argument is strong because it: (1) is directly relevant to the regulatory proposal (publication of attrition data); (2) identifies an important real-world consequence (candidate choice and firm competitiveness); and (3) establishes a logical causal chain based on reasonable assumptions (transparency → informed choice → market accountability). The argument does not rely on emotion or trivial considerations, and it addresses a substantive reason why the regulation might be beneficial. It is both materially relevant and logically sound."
+    },
+    {
+      "id": "watson-glaser-31",
+      "subtype": "Inference",
+      "passage": "Last year, Morrison & Associates increased its partner compensation by 12% and hired 15 new associates. This year, the firm's revenue declined by 8% due to reduced client spending on litigation services. The firm's overhead costs increased by 6% due to expansion of its London office. The managing partner has announced a hiring freeze effective immediately.",
+      "question": "The firm's profitability has decreased this year compared to last year.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "Revenue declined 8% whilst partner compensation increased 12% and overhead increased 6%. This strongly suggests profitability has decreased, but we lack explicit profit or cost figures, so 'Probably True' is more accurate than 'True'. We cannot be certain without complete financial data."
+    },
+    {
+      "id": "watson-glaser-32",
+      "subtype": "Inference",
+      "passage": "The Legal Services Board has published new guidelines requiring all law firms with more than 50 partners to implement mandatory training on unconscious bias. The training must be completed within 12 months. Firms that fail to comply will face regulatory sanctions including fines and suspension of their practising certificate.",
+      "question": "Some law firms will not complete the unconscious bias training within the deadline.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "Whilst the passage states a clear deadline with serious penalties, it does not explicitly confirm that all firms will comply. Given the history of regulatory non-compliance across industries, it is 'Probably True' that at least some firms will miss the deadline, but we have insufficient data to say it is certainly true."
+    },
+    {
+      "id": "watson-glaser-33",
+      "subtype": "Recognition of Assumptions",
+      "passage": "The recruitment partner at Clyde & Grey has stated: 'We should implement psychometric testing in our graduate recruitment process because it will identify candidates with stronger analytical skills.'",
+      "question": "Current recruitment methods at Clyde & Grey do not effectively identify candidates with strong analytical skills.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The partner proposes adding psychometric testing to identify candidates with stronger analytical skills. This logically assumes that existing methods are insufficient for this purpose. If current methods already identified such candidates effectively, there would be no reason to implement additional testing."
+    },
+    {
+      "id": "watson-glaser-34",
+      "subtype": "Recognition of Assumptions",
+      "passage": "The Finance Director of a commercial law firm argued: 'We cannot afford to maintain our pro bono practice at current levels. We need to reduce pro bono hours by 40% to improve our profit margins.'",
+      "question": "Reducing pro bono hours will result in increased billable hours and revenue.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The director assumes that reducing pro bono will improve profit margins, but this assumes only that resources are freed up. The argument does not assume that these freed resources will necessarily be converted into billable work. The assumption is about capacity reallocation, not explicitly about increased billable hours."
+    },
+    {
+      "id": "watson-glaser-35",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All barristers who are silks have been in practice for at least 15 years. Premise 2: James is a silk. Conclusion: James has been in practice for at least 15 years.",
+      "question": "James has been in practice for at least 15 years.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a valid deductive argument. Premise 1 establishes that all silks have 15+ years of practice. Premise 2 states James is a silk. Therefore, by logical necessity, James must have been in practice for at least 15 years. The conclusion follows with certainty."
+    },
+    {
+      "id": "watson-glaser-36",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All contracts that lack consideration are unenforceable. Premise 2: This agreement has consideration. Conclusion: This agreement is enforceable.",
+      "question": "This agreement is enforceable.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The conclusion does not follow. Premise 1 only tells us that contracts WITHOUT consideration are unenforceable. Premise 2 tells us this agreement HAS consideration. However, having consideration is necessary but not sufficient for enforceability—other factors (offer, acceptance, intention to create legal relations) are also required. The conclusion is too broad."
+    },
+    {
+      "id": "watson-glaser-37",
+      "subtype": "Interpretation",
+      "passage": "A study by the Law Society analysed fee-earner productivity across 200 UK law firms over three years. The study found that firms implementing remote working policies saw an average 18% increase in billable hours per fee-earner in the first year after implementation. However, firms that maintained mandatory office attendance saw a 3% increase in billable hours over the same period. The study controlled for firm size, practice area, and client type. A spokesperson noted that the data 'clearly demonstrates that flexible working arrangements enhance productivity in legal services.'",
+      "question": "Remote working policies are an effective way to increase productivity in law firms.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage presents empirical evidence from a controlled study of 200 firms over three years showing that remote working policies correlated with 18% productivity increases versus 3% for office-based firms. With controls for confounding variables, the data strongly supports the conclusion that remote working is an effective productivity measure. The conclusion follows from the evidence presented."
+    },
+    {
+      "id": "watson-glaser-38",
+      "subtype": "Interpretation",
+      "passage": "A major commercial law firm conducted an internal survey of 400 associates. The survey asked: 'Do you feel supported in your career development at this firm?' 62% of male associates answered 'yes', whilst only 44% of female associates answered 'yes'. The firm's HR manager stated: 'This disparity is due to fewer opportunities for women in senior practice areas, which limits their visibility and advancement prospects.'",
+      "question": "Female associates at this firm have fewer opportunities in senior practice areas than male associates.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "Whilst the survey shows a disparity in perceptions of support (62% vs 44%), this does not prove the HR manager's explanation is true. The disparity could be explained by perceptions, communication differences, mentoring availability, unconscious bias, or other factors. The conclusion attributes a specific cause to the disparity, but the passage provides only the disparity itself, not evidence of actual opportunity differences. The conclusion goes beyond what the evidence supports."
+    },
+    {
+      "id": "watson-glaser-39",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Should law firms be required to publish their diversity statistics annually?",
+      "question": "Publishing diversity statistics will make it easier for underrepresented groups to identify law firms with better diversity records, enabling more informed career choices.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a strong argument. It is directly relevant to the proposal (publishing diversity statistics), it is based on a logical chain of reasoning (transparency enables informed choice), and it addresses a meaningful consequence (career decision-making for minorities). It is neither trivial nor emotionally driven; it identifies a concrete benefit to the proposal."
+    },
+    {
+      "id": "watson-glaser-40",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Should law firms reduce their billable hours targets to improve work-life balance for fee-earners?",
+      "question": "If law firms reduce billable hours targets, some junior lawyers might find it harder to gain experience and develop their technical skills because they will spend less time on client work.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "Whilst the argument is logically coherent, it is relatively weak as a reason against reducing billable hours targets. The argument assumes that quantity of hours equals quality of experience, which is disputed in professional development literature. Moreover, it does not address the counterbalancing benefit (work-life balance), making it one-sided. It is a possible concern but lacks the strength and weight to be a strong argument against the proposal."
+    },
+    {
+      "id": "watson-glaser-41",
+      "subtype": "Inference",
+      "passage": "Last year, the merger between Clifford Chance and a mid-tier European firm was completed, expanding the firm's presence in Berlin, Munich, and Frankfurt. The merger took 18 months to complete and required regulatory approval in three jurisdictions. Post-merger integration costs totalled £4.2 million. Following the merger, the firm's revenue in Germany increased by 23% in the first year.",
+      "question": "The merger is likely to be considered financially successful by Clifford Chance's leadership.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "A 23% revenue increase in Germany within one year following a merger, despite £4.2m integration costs, suggests positive returns. However, the passage does not provide absolute profit figures, return on investment metrics, or the firm's own assessment of success. The inference is probable but not certain because we lack information about whether the £4.2m cost exceeded or was offset by the revenue gain."
+    },
+    {
+      "id": "watson-glaser-42",
+      "subtype": "Inference",
+      "passage": "The Legal Services Board published a report on diversity in the UK legal profession. The report found that 68% of senior partners at large law firms are male, 72% attended Russell Group universities, and only 14% come from working-class backgrounds. The report notes that these figures have remained largely unchanged over the past decade despite numerous diversity initiatives.",
+      "question": "Current diversity initiatives at large law firms have failed to meaningfully improve social mobility.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "Whilst the passage indicates that working-class representation (14%) has remained static despite initiatives, the passage does not specify what 'meaningful improvement' would constitute, nor does it explain whether initiatives are recent or well-resourced. The passage also does not distinguish between diversity initiatives' quality or scope. The lack of change suggests limited success, but insufficient data exists to definitively conclude that initiatives have 'failed'."
+    },
+    {
+      "id": "watson-glaser-43",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A senior partner at a commercial law firm stated: 'We must implement a four-day working week for all associates to remain competitive in talent retention. Our rivals are already offering flexible arrangements.'",
+      "question": "The senior partner assumes that flexible working arrangements are a primary factor influencing associate retention decisions.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The partner's argument that a four-day week is necessary to 'remain competitive in talent retention' and references competitors offering flexible arrangements. This logic assumes that associates are choosing or would choose firms based on working-hour flexibility. If working hours were not a material retention factor, the premise of the argument would collapse. The assumption is logically necessary to support the conclusion."
+    },
+    {
+      "id": "watson-glaser-44",
+      "subtype": "Recognition of Assumptions",
+      "passage": "The managing partner of a mid-market firm announced: 'We will achieve a 15% profit increase this year because we have just hired three senior partners from a rival firm, each bringing substantial client books.'",
+      "question": "The managing partner assumes that client relationships will transfer to the new firm with the departing partners.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The managing partner predicts profit increase based on the senior partners bringing 'substantial client books.' This prediction logically assumes that clients will follow the partners to the new firm. If clients remained with the original firm or transferred elsewhere, the anticipated profit increase would not materialise. The assumption is essential to the reasoning."
+    },
+    {
+      "id": "watson-glaser-45",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All firms regulated by the Solicitors Regulation Authority must comply with money laundering regulations. Premise 2: Harrison & Associates is a firm regulated by the Solicitors Regulation Authority.",
+      "question": "Harrison & Associates must comply with money laundering regulations.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a valid categorical syllogism. Premise 1 establishes that all SRA-regulated firms must comply with money laundering rules (universal statement). Premise 2 states Harrison & Associates is SRA-regulated (specific instance). The conclusion necessarily follows: Harrison & Associates must comply. The logical structure is sound regardless of any external facts."
+    },
+    {
+      "id": "watson-glaser-46",
+      "subtype": "Deduction",
+      "passage": "Premise 1: If a lawyer acts without proper authority, their conduct breaches the SRA Standards. Premise 2: Lawyer X acted without proper authority when drafting a will without the client's explicit consent.",
+      "question": "Lawyer X's conduct breached the SRA Standards.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a valid modus ponens argument. Premise 1 establishes the conditional: acting without authority → breach of SRA Standards. Premise 2 confirms the antecedent (Lawyer X acted without authority). Therefore, the consequent must be true: the conduct breached SRA Standards. The conclusion logically follows with certainty."
+    },
+    {
+      "id": "watson-glaser-47",
+      "subtype": "Interpretation",
+      "passage": "A government consultation paper on proposed regulatory changes states: 'Current regulations place an undue burden on small and medium-sized firms, with compliance costs averaging £180,000 annually. Large firms distribute these costs across many fee-earners, whereas SME law firms cannot. Evidence shows that 34% of SME firms have reduced headcount in the past two years, citing regulatory burden as a primary reason. The Government recognises that excessive regulation may harm market competition and consumer choice.'",
+      "question": "The Government intends to reduce regulatory requirements for SME law firms.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage explicitly states the Government 'recognises that excessive regulation may harm competition and consumer choice', acknowledges disproportionate burden on SMEs, and cites evidence of market harm (headcount reductions). The entire passage structure—identifying the problem, quantifying impact, and framing it as harmful to competition—strongly indicates the Government's intention to reduce requirements. This conclusion follows beyond reasonable doubt from the evidence presented."
+    },
+    {
+      "id": "watson-glaser-48",
+      "subtype": "Interpretation",
+      "passage": "A law firm's internal audit report found: 'Client satisfaction scores have declined from 4.7/5.0 last year to 4.3/5.0 this year. This correlates with a 28% increase in average case duration. However, the number of complaints rose only marginally, from 2.1% to 2.4%. The partner responsible for client relations was absent for six months on secondment. No other staffing changes occurred during this period.'",
+      "question": "The absence of the partner responsible for client relations directly caused the decline in satisfaction scores.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "Whilst the partner's absence correlates temporally with the satisfaction decline, the passage does not establish causation. The report identifies case duration as also increasing, which could independently affect satisfaction. The passage explicitly avoids claiming direct causation—it merely notes correlation. To conclude direct causation from correlation alone, without ruling out alternative factors (case complexity, staffing elsewhere), exceeds what the evidence permits."
+    },
+    {
+      "id": "watson-glaser-49",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should law firms be required to publish individual fee earner billing rates on their websites?",
+      "question": "Argument: Publishing billing rates would reduce client confusion about likely costs and allow better informed purchasing decisions, thereby improving market efficiency.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a strong argument. It identifies a concrete benefit (reduced client confusion, better purchasing decisions), explains the mechanism (transparency enabling informed choice), and ties this to a widely recognised economic principle (market efficiency). The argument is directly relevant to the proposal and rests on reasonable assumptions about information asymmetry. It presents both importance and logical coherence."
+    },
+    {
+      "id": "watson-glaser-50",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should law firms implement mandatory pro bono work requirements for all associates?",
+      "question": "Argument: Associates enjoy pro bono work because it provides experience with different client types and builds their skillset in a practical setting.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "This argument is weak in relation to the proposal. Whilst it identifies a potential personal benefit to associates (skill development), it does not address whether mandatory requirements are justified or whether voluntary approaches would provide the same benefits. The argument also does not address competing concerns such as opportunity cost, potential associate dissatisfaction with mandates, or whether the firm's business case for pro bono work is sound. It speaks to an incidental benefit rather than the core justification for mandatory requirements."
+    },
+    {
+      "id": "watson-glaser-51",
+      "subtype": "Inference",
+      "passage": "A commercial property development company completed its acquisition of a 15-acre site in Greater Manchester in Q3 2024. The company's previous three acquisitions, all completed within 18 months, were in the South East. The Manchester site cost £8.2 million, compared to an average of £14.5 million for the South East properties. The company's Chief Financial Officer stated that the firm is 'strategically repositioning its portfolio to access emerging markets with lower entry costs.'",
+      "question": "The company's South East properties are now less strategically important to the firm's long-term plans.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The passage shows the company is expanding into new markets at lower cost, but provides no information about whether the strategic importance of South East properties has decreased. The company may be pursuing both regions. The statement cannot be determined from the passage alone."
+    },
+    {
+      "id": "watson-glaser-52",
+      "subtype": "Inference",
+      "passage": "Between 2019 and 2024, the UK legal services market experienced two distinct periods. From 2019–2021, the sector contracted by 3.2% annually due to pandemic-related disruptions. However, from 2022–2024, firms reported average revenue growth of 7.8% year-on-year. Senior associates at mid-tier firms saw salary increases averaging 12% per annum during this recovery period. Demand for dispute resolution and restructuring work exceeded capacity at most major practices.",
+      "question": "Law firms in the UK experienced uninterrupted profitability across the entire 2019–2024 period.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "D",
+      "explanation": "The passage explicitly states the sector contracted by 3.2% annually from 2019–2021. Contraction strongly suggests reduced profitability during that period. The statement claims profitability was uninterrupted, which contradicts the evidence of contraction. While some firms may have remained profitable, the sector-wide contraction makes the blanket statement probably false."
+    },
+    {
+      "id": "watson-glaser-53",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A law firm's managing partner announces: 'We must invest in AI-powered legal research tools immediately, or we will lose our competitive advantage within two years.'",
+      "question": "Competitors will adopt AI-powered legal research tools.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The speaker's claim that 'we will lose competitive advantage' if we do not invest in AI presupposes that others will invest in it. If competitors were not adopting or planning to adopt these tools, the firm's failure to do so would not result in lost competitive advantage. The assumption is logically necessary to support the argument."
+    },
+    {
+      "id": "watson-glaser-54",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A commercial real estate firm reports to its board: 'Our transaction fees increased 8% this year despite a 3% decline in the total number of deals closed. This demonstrates that our client base values our service quality and is willing to pay premium rates.'",
+      "question": "Higher transaction fees were the sole driver of the reported revenue increase.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The statement focuses on transaction fees increasing and attributes this to client perception of value. However, it does not assume that fee increases were the sole driver of any overall revenue increase. The speaker may acknowledge other revenue sources or factors. The word 'sole' makes this assumption stronger than what the passage claims, so it is not necessarily made."
+    },
+    {
+      "id": "watson-glaser-55",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All mergers and acquisitions in the financial sector that are valued above £500 million must obtain approval from the Financial Conduct Authority. Premise 2: The proposed merger between TechBank plc and FinanceCore Ltd is valued at £720 million.",
+      "question": "The proposed merger between TechBank plc and FinanceCore Ltd must obtain approval from the Financial Conduct Authority.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "Premise 1 establishes a universal rule: all deals >£500m in the financial sector require FCA approval. Premise 2 states the merger is £720 million. Since £720m exceeds £500m, and both entities operate in the financial sector (implied by the context of merger and FCA jurisdiction), the conclusion necessarily follows."
+    },
+    {
+      "id": "watson-glaser-56",
+      "subtype": "Deduction",
+      "passage": "Premise 1: No law firm that makes redundancies can be awarded the 'Best Employer' certification that year. Premise 2: Harrison & Co. Law made redundancies in 2024.",
+      "question": "Harrison & Co. Law was not awarded the 'Best Employer' certification in 2024.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "Premise 1 establishes a rule: if a firm makes redundancies, then it cannot receive the certification. Premise 2 confirms the antecedent (Harrison & Co. made redundancies). By logical deduction, the conclusion (it was not awarded the certification) must follow."
+    },
+    {
+      "id": "watson-glaser-57",
+      "subtype": "Interpretation",
+      "passage": "A government audit of 50 UK law firms examined compliance with the Proceeds of Crime Act (POCA). The audit found that 34 firms had submitted accurate Suspicious Activity Reports (SARs) within required timeframes. Twelve firms submitted SARs but with delays averaging 8 business days beyond the deadline. Four firms had no SAR submissions in the audit period despite handling client transactions flagged in internal risk assessments as potentially suspicious. The audit report noted that none of the firms faced enforcement action at the time of publication, but recommended the regulator monitor the four non-compliant firms closely.",
+      "question": "The majority of audited firms fully complied with POCA reporting requirements.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "34 out of 50 firms (68%) submitted accurate SARs within required timeframes. This represents a clear majority. The passage provides concrete evidence that more than half of audited firms fully complied. The conclusion follows directly from this factual data."
+    },
+    {
+      "id": "watson-glaser-58",
+      "subtype": "Interpretation",
+      "passage": "A boutique M&A advisory firm reported that 70% of its deal pipeline in Q1 2024 comprised technology sector transactions, whereas in Q1 2023, technology represented only 35% of the pipeline. The firm's managing director attributed this shift to 'increased client appetite for technology investments post-AI hype.' However, the firm also hired three new technology specialists in late 2023, the only sector-specific hires made that year. Industry data shows that M&A activity in the technology sector grew 15% year-on-year, while overall deal volumes across all sectors grew 6%.",
+      "question": "The firm's increased focus on technology deals is exclusively due to client demand shifts.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "While the managing director attributes the shift to client appetite, the passage presents alternative explanations: the firm hired three technology specialists in late 2023, which would naturally increase capacity to handle such deals. Additionally, technology sector M&A grew faster than overall market growth, suggesting industry tailwinds. The conclusion that the shift is 'exclusively' due to client demand cannot follow when other factors (hiring, market trends) likely contributed."
+    },
+    {
+      "id": "watson-glaser-59",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should large law firms be required to adopt blended fee models (combining hourly rates, fixed fees, and outcomes-based fees) rather than relying primarily on hourly billing?",
+      "question": "Argument: Blended fee models reduce transparency because clients receive invoices with multiple fee types, making it harder to understand total costs compared to traditional hourly billing.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "This argument is weak because it mischaracterises the transparency issue. Blended models, when properly structured, can offer greater transparency by setting fixed fees upfront and clarifying outcomes-based components before work begins. The argument confuses complexity with lack of transparency. Additionally, it ignores that hourly billing can lack transparency due to time recording practices and scope creep. The argument is based on an unsupported assumption rather than substantive analysis of the actual policy question."
+    },
+    {
+      "id": "watson-glaser-60",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should the UK legal profession impose mandatory ethics training for all in-house counsel working in private equity and venture capital firms?",
+      "question": "Argument: Mandatory ethics training would protect deal participants and portfolio companies by ensuring in-house counsel understand their obligations regarding conflicts of interest, disclosure, and fiduciary duties in high-risk transactions—areas where inadequate legal governance has historically contributed to compliance failures and shareholder losses.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This argument is strong. It identifies a specific, important policy objective (protecting deal participants and portfolio companies), provides concrete areas where in-house counsel need guidance (conflicts, disclosure, fiduciary duties), and grounds the argument in evidence of real problems (historical compliance failures and shareholder losses). The argument directly addresses the merits of the proposal and explains why the measure would be beneficial. It is neither trivial nor purely emotional."
+    },
+    {
+      "id": "watson-glaser-61",
+      "subtype": "Inference",
+      "passage": "Last year, a mid-market UK law firm increased its hourly billing rates by 8% across all practice areas. Despite this increase, the firm's total revenue grew by only 3%. The firm's senior partners attributed the modest revenue growth to reduced client spending on legal services due to economic uncertainty. However, the firm's utilization rates—the percentage of billable hours recorded by lawyers—remained stable at 72% throughout the year.",
+      "question": "The law firm's client base likely decreased in volume during the year in question.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The firm raised rates by 8% but revenue grew only 3%, and utilization stayed at 72%. If the client base had remained the same size, revenue should have increased closer to 8%. The fact that revenue growth lagged significantly behind the rate increase, combined with partners citing reduced client spending, suggests clients either spent less or the firm lost some clients. However, we cannot be certain of the exact cause (e.g., fewer clients vs. existing clients using less), so 'Probably True' is the most justified inference from the passage alone."
+    },
+    {
+      "id": "watson-glaser-62",
+      "subtype": "Inference",
+      "passage": "A commercial law firm opened a new office in Edinburgh six months ago. The Edinburgh office has 12 qualified lawyers and 8 support staff. Three of the qualified lawyers transferred from the firm's London headquarters, while the remaining nine were hired locally. The office has already secured two major corporate clients, each with multi-year retainer agreements.",
+      "question": "The Edinburgh office is currently operating at full profitability.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "True"
+        },
+        {
+          "letter": "B",
+          "text": "Probably True"
+        },
+        {
+          "letter": "C",
+          "text": "Insufficient Data"
+        },
+        {
+          "letter": "D",
+          "text": "Probably False"
+        },
+        {
+          "letter": "E",
+          "text": "False"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The passage confirms the office has secured two major clients with retainer agreements and has deployed 12 lawyers and 8 support staff. However, it provides no information about operating costs, overhead expenses, profitability targets, time-to-profitability benchmarks, or actual revenue generated. We cannot determine profitability status from the information given, so the answer is 'Insufficient Data'."
+    },
+    {
+      "id": "watson-glaser-63",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A senior partner states: 'We must implement mandatory diversity training for all fee-earners by next quarter. Research shows that firms with formal diversity initiatives achieve higher employee retention rates.'",
+      "question": "The partner assumes that implementing mandatory diversity training will improve the firm's employee retention rates.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The partner's reasoning connects two statements: (1) research shows formal diversity initiatives correlate with higher retention, and (2) we should implement mandatory diversity training. To make this argument logically, the partner must assume that diversity training is the type of 'formal diversity initiative' that will produce the higher retention rates mentioned in the research. Without this assumption, implementing the training would not follow rationally from the cited research. The assumption is clearly embedded in the argument's logic."
+    },
+    {
+      "id": "watson-glaser-64",
+      "subtype": "Recognition of Assumptions",
+      "passage": "A managing partner proposes: 'We should reduce our annual partner retreat from three days to one day. This will free up partners' time to focus on fee-earning work and client relationships during peak business periods.'",
+      "question": "The managing partner assumes that a one-day retreat will be less disruptive to client-facing work than a three-day retreat.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Assumption Made"
+        },
+        {
+          "letter": "B",
+          "text": "Assumption Not Made"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The partner's proposal is justified on the grounds that reducing the retreat will free up time for fee-earning and client work. This argument necessarily assumes that a shorter retreat creates less disruption or loss of billable/client-facing time compared to a longer one. Without this assumption—i.e., if a one-day retreat were equally disruptive—the proposal would not logically follow from the stated benefit. The assumption is implicit but essential to the argument."
+    },
+    {
+      "id": "watson-glaser-65",
+      "subtype": "Deduction",
+      "passage": "Premise 1: All fee-earners at the firm are required to record a minimum of 1,400 billable hours per year. Premise 2: Sarah is a fee-earner at the firm. Premise 3: Sarah recorded 1,250 billable hours last year.",
+      "question": "Sarah failed to meet the firm's minimum billable hours requirement last year.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The premises establish: (1) All fee-earners must record a minimum of 1,400 hours (universal rule), (2) Sarah is a fee-earner (she falls under this rule), and (3) Sarah recorded 1,250 hours. Since Sarah recorded 1,250 hours and the requirement is 1,400 hours, she fell 150 hours short. The conclusion necessarily follows from the premises with logical certainty."
+    },
+    {
+      "id": "watson-glaser-66",
+      "subtype": "Deduction",
+      "passage": "Premise 1: Partners who have been with the firm for 10 years or more are eligible for the enhanced profit-sharing scheme. Premise 2: Michael has been with the firm for 12 years. Premise 3: Some partners in the enhanced scheme receive bonuses above their profit share.",
+      "question": "Michael receives a bonus above his profit share.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "We can establish that Michael is eligible for the enhanced scheme (he meets the 10-year requirement). However, Premise 3 states only that 'some' partners in the scheme receive bonuses above their profit share, not 'all' partners. Being eligible or even being in the scheme does not guarantee Michael receives such a bonus. The conclusion does not follow with certainty; it is merely possible."
+    },
+    {
+      "id": "watson-glaser-67",
+      "subtype": "Interpretation",
+      "passage": "A law firm conducted an exit interview survey of 150 solicitors who left the firm over the past two years. The survey results showed that 58% of departing solicitors cited 'work-life balance concerns' as a primary reason for leaving, 42% cited 'limited partnership progression opportunities,' and 31% cited 'compensation below market rate.' Respondents could select multiple reasons. Follow-up qualitative interviews with 20 departing solicitors revealed that those citing work-life balance typically mentioned excessive billable hour targets and weekend work expectations as specific grievances.",
+      "question": "The firm's billable hour targets are set above the level that departing solicitors consider acceptable.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The passage establishes that 58% cited work-life balance as a primary reason for leaving. The follow-up qualitative interviews reveal that those raising work-life balance concerns specifically identified 'excessive billable hour targets' and 'weekend work expectations' as grievances. The evidence indicates that the current billable hour targets are viewed as excessive and unacceptable by departing staff, supporting the conclusion beyond reasonable doubt. The data directly links the targets to departure decisions and negative perception."
+    },
+    {
+      "id": "watson-glaser-68",
+      "subtype": "Interpretation",
+      "passage": "An analysis of a corporate law firm's client retention data shows that 87% of client relationships that lasted five years or longer involved a dedicated relationship partner assigned to manage the account. In contrast, only 41% of client relationships that ended within two years had a dedicated partner assignment. The firm's client services department noted that dedicated partners typically conduct quarterly business reviews with clients and proactively identify emerging legal needs.",
+      "question": "Assigning a dedicated partner to manage a client account is the primary driver of long-term client retention at the firm.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Conclusion Follows"
+        },
+        {
+          "letter": "B",
+          "text": "Conclusion Does Not Follow"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "While the data shows a strong correlation between dedicated partner assignment and long-term retention (87% vs 41%), correlation does not prove causation. The passage does not establish that the partner assignment causes retention; it is possible that the firm assigns dedicated partners to accounts it believes are most important or most likely to succeed, and the account quality itself—not the partner—drives retention. The data is consistent with dedication causing retention but does not prove it is the 'primary driver.' The conclusion goes beyond what the evidence supports."
+    },
+    {
+      "id": "watson-glaser-69",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should law firms be required to disclose their gender pay gap to prospective employees?",
+      "question": "Argument: Requiring firms to disclose their gender pay gap would discourage highly talented women from applying, as they may fear working in an unequal environment.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "This argument is weak for two reasons: (1) It is based on unsupported speculation about women's behaviour (no evidence is provided that disclosure would discourage applications), and (2) it conflates a symptom with the problem. If a firm has a significant gender pay gap, disclosing it allows prospective female employees to make an informed decision; it does not create the inequity. The argument actually undermines its own position—disclosure would likely enable talented women to avoid inequitable firms, which is a benefit of transparency. The argument lacks empirical support and relies on emotional reasoning rather than logical relevance to the disclosure question."
+    },
+    {
+      "id": "watson-glaser-70",
+      "subtype": "Evaluation of Arguments",
+      "passage": "Question: Should law firms be permitted to charge contingency fees in commercial disputes between businesses (currently restricted in England and Wales)?",
+      "question": "Argument: Contingency fees should be permitted in commercial disputes because they would align the financial incentives of lawyers with their clients' interests and potentially reduce excessive legal costs in commercial matters.",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Argument Strong"
+        },
+        {
+          "letter": "B",
+          "text": "Argument Weak"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "This is a strong argument because it: (1) identifies a directly relevant benefit (alignment of incentives and cost reduction), (2) addresses the core regulatory question (whether permitting contingency fees is justified), (3) relies on sound economic logic (aligned incentives reduce over-lawyering and inefficiency), and (4) is based on established legal and economic principles rather than speculation. The argument provides a material reason that directly bears on the policy question. While one could counter-argue that contingency fees create other problems, this particular argument is both logically sound and substantively important to the decision."
+    }
+  ],
+  "lastRefreshed": "2026-03-05"
+}

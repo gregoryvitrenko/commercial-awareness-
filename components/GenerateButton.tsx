@@ -14,8 +14,17 @@ export function GenerateButton({ onGenerated }: GenerateButtonProps) {
   const handleGenerate = async () => {
     setStatus('loading');
     setMessage('');
+
+    // Generation calls 8 Tavily queries + Claude synthesis — allow up to 5 minutes.
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5 * 60 * 1000);
+
     try {
-      const res = await fetch('/api/generate', { method: 'POST' });
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
       const data = await res.json();
       if (!res.ok) {
         setStatus('error');
@@ -28,8 +37,13 @@ export function GenerateButton({ onGenerated }: GenerateButtonProps) {
       // Reload page after short delay to show new briefing
       setTimeout(() => window.location.reload(), 1200);
     } catch (e) {
+      clearTimeout(timeout);
       setStatus('error');
-      setMessage(e instanceof Error ? e.message : 'Unknown error');
+      if (e instanceof DOMException && e.name === 'AbortError') {
+        setMessage('Timed out after 5 minutes — check server logs');
+      } else {
+        setMessage(e instanceof Error ? e.message : 'Unknown error');
+      }
     }
   };
 

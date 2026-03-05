@@ -1,0 +1,531 @@
+{
+  "date": "2026-03-04",
+  "generatedAt": "2026-03-05T03:19:59.997Z",
+  "questions": [
+    {
+      "id": "1-1",
+      "storyId": "1",
+      "question": "According to the briefing, what was the exact announced M&A deal value for EMEA targets in 2025?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "US$818.9 billion"
+        },
+        {
+          "letter": "B",
+          "text": "US$939.9 billion"
+        },
+        {
+          "letter": "C",
+          "text": "US$739.1 billion"
+        },
+        {
+          "letter": "D",
+          "text": "US$665.9 billion"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that announced M&A deal value for EMEA targets reached approximately US$939.9 billion in 2025, representing a 27.2% increase from 2024. The other figures represent European-only value (US$818.9bn) and prior-year comparisons."
+    },
+    {
+      "id": "1-2",
+      "storyId": "1",
+      "question": "Which practice group capability is explicitly cited as the most competitive advantage for US firms in the 2026 European M&A pipeline?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Equity capital markets and IPO structuring"
+        },
+        {
+          "letter": "B",
+          "text": "Private credit facility structuring and leveraged finance"
+        },
+        {
+          "letter": "C",
+          "text": "Regulatory approval work across EU jurisdictions"
+        },
+        {
+          "letter": "D",
+          "text": "Public-to-private transactions and takeover panel expertise"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's talking point explicitly states that private credit has displaced syndicated bank debt as the dominant financing channel, and that 'the legal fees will flow along the financing structure', giving Kirkland and Latham a competitive advantage over Magic Circle firms whose heritage is more equity-oriented."
+    },
+    {
+      "id": "1-3",
+      "storyId": "1",
+      "question": "What percentage of PE respondents in Deloitte's 2026 M&A Trends Survey expect to increase both deal counts and aggregate value in 2026?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "75%"
+        },
+        {
+          "letter": "B",
+          "text": "85%"
+        },
+        {
+          "letter": "C",
+          "text": "90%"
+        },
+        {
+          "letter": "D",
+          "text": "95%"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing directly states: 'Deloitte's 2026 M&A Trends Survey found that 90% of PE respondents expect to increase both deal counts and aggregate value in 2026, driven partly by a backlog of deferred exits and mounting LP pressure on funds to return liquidity.'"
+    },
+    {
+      "id": "2-1",
+      "storyId": "2",
+      "question": "How much does Generate Biomedicines plan to raise in its US IPO according to the briefing?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Approximately US$300 million"
+        },
+        {
+          "letter": "B",
+          "text": "Approximately US$400 million"
+        },
+        {
+          "letter": "C",
+          "text": "Approximately US$500 million"
+        },
+        {
+          "letter": "D",
+          "text": "Approximately US$600 million"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that Generate Biomedicines filed plans on 23 February 2026 to raise approximately US$400 million in its initial public offering, with the mandate led by Goodwin Procter and Latham & Watkins."
+    },
+    {
+      "id": "2-2",
+      "storyId": "2",
+      "question": "Which firm is identified as having the most active life sciences capital markets practice globally, based on its role in the Generate Biomedicines IPO?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Goodwin Procter"
+        },
+        {
+          "letter": "B",
+          "text": "Latham & Watkins"
+        },
+        {
+          "letter": "C",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "D",
+          "text": "Herbert Smith Freehills"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's Why It Matters section states: 'Latham & Watkins is the standout beneficiary here — its life sciences capital markets practice is among the most active globally, and leading a $400 million biotech IPO reinforces its position as the go-to firm for founder-led, VC-backed biotech issuers.'"
+    },
+    {
+      "id": "2-3",
+      "storyId": "2",
+      "question": "According to the briefing, what framework is the FCA specifically using to compete for high-growth biotech issuers in the UK?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The Innovative Finance ISA (IFISA) framework"
+        },
+        {
+          "letter": "B",
+          "text": "The PISCES framework and reformed UK listing rules"
+        },
+        {
+          "letter": "C",
+          "text": "The Regulatory Technical Standards for equity issuance"
+        },
+        {
+          "letter": "D",
+          "text": "The Capital Requirements Directive framework"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states in the UK Firms section: 'The FCA's PISCES framework and the reformed UK listing rules are specifically designed to compete for exactly this category of high-growth issuer.'"
+    },
+    {
+      "id": "3-1",
+      "storyId": "3",
+      "question": "What is the deal value for Hogan Lovells' advisory work on SES's acquisition of Intelsat?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "US$2.5 billion"
+        },
+        {
+          "letter": "B",
+          "text": "US$2.8 billion"
+        },
+        {
+          "letter": "C",
+          "text": "US$3.1 billion"
+        },
+        {
+          "letter": "D",
+          "text": "US$3.5 billion"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing clearly states that Hogan Lovells has advised SES on its US$3.1 billion acquisition of Intelsat, described as a 'transformational' transaction in the satellite communications infrastructure sector."
+    },
+    {
+      "id": "3-2",
+      "storyId": "3",
+      "question": "According to the briefing, which regulatory bodies will most likely be involved in reviewing the SES-Intelsat acquisition?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The FCA and the European Banking Authority"
+        },
+        {
+          "letter": "B",
+          "text": "The SEC and the Federal Reserve"
+        },
+        {
+          "letter": "C",
+          "text": "CFIUS, the FCC, and European regulatory authorities"
+        },
+        {
+          "letter": "D",
+          "text": "The FTC and the Department of Justice Antitrust Division"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that the transaction 'would require regulatory clearance from multiple jurisdictions given Intelsat's extensive US government contract book and the national security sensitivity of satellite communications infrastructure — likely involving review by the Committee on Foreign Investment in the United States (CFIUS) and the Federal Communications Commission (FCC)' alongside European requirements."
+    },
+    {
+      "id": "3-3",
+      "storyId": "3",
+      "question": "Why does the briefing identify Hogan Lovells as having a 'decisive advantage' on the SES-Intelsat transaction?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It has the largest satellite and telecommunications practice in Europe"
+        },
+        {
+          "letter": "B",
+          "text": "Its dual US-UK structure enables simultaneous CFIUS, FCC, and European regulatory navigation"
+        },
+        {
+          "letter": "C",
+          "text": "It has direct relationships with all four acquiring companies mentioned in the deal"
+        },
+        {
+          "letter": "D",
+          "text": "It advised on all previous major satellite consolidations in the sector"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's Why It Matters section explicitly states: 'Hogan Lovells is the named adviser here and its dual US-UK structure gives it a decisive advantage on transactions requiring simultaneous CFIUS, FCC, and European regulatory navigation — the precise combination this deal demands.'"
+    },
+    {
+      "id": "4-1",
+      "storyId": "4",
+      "question": "According to the briefing, what is the specific serial number of the CMA sustainability agreement approval discussed?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The second informal approval"
+        },
+        {
+          "letter": "B",
+          "text": "The third informal approval"
+        },
+        {
+          "letter": "C",
+          "text": "The fourth informal approval"
+        },
+        {
+          "letter": "D",
+          "text": "The fifth informal approval"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing opens with: 'The UK Competition and Markets Authority has issued its fourth informal approval under UK competition law of a sustainability agreement between competitors, according to the McGuireWoods European Competition Law Newsletter for March 2026.'"
+    },
+    {
+      "id": "4-2",
+      "storyId": "4",
+      "question": "On what date did the UK government publish its consultation paper 'Refining Our Competition Regime'?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "15 December 2025"
+        },
+        {
+          "letter": "B",
+          "text": "20 January 2026"
+        },
+        {
+          "letter": "C",
+          "text": "1 February 2026"
+        },
+        {
+          "letter": "D",
+          "text": "15 March 2026"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states: 'the UK government published a significant consultation paper on 20 January 2026 titled 'Refining Our Competition Regime: Driving Growth and Enhancing Competition for Businesses and Consumers', which proposes reforms targeting CMA accountability in merger and markets decisions.'"
+    },
+    {
+      "id": "4-3",
+      "storyId": "4",
+      "question": "According to the briefing's talking point, what is the commercially significant implication of the CMA's fourth sustainability agreement approval?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "It signals that all competitor collaboration is now presumptively lawful under Chapter I"
+        },
+        {
+          "letter": "B",
+          "text": "It confirms the regulator will provide meaningful comfort to businesses cooperating on environmental goals proactively engaging with the CMA"
+        },
+        {
+          "letter": "C",
+          "text": "It eliminates the boundary between permissible collaboration and Chapter I infringement"
+        },
+        {
+          "letter": "D",
+          "text": "It requires all sustainability cooperation agreements to be filed with the government consultation"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's talking point states: 'The CMA's fourth sustainability agreement approval is a quiet but commercially significant development: it confirms that the regulator is willing to provide meaningful comfort to businesses cooperating on environmental goals, and that companies which engage proactively with the CMA's guidance process can manage their competition law exposure even in legally novel territory.'"
+    },
+    {
+      "id": "5-1",
+      "storyId": "5",
+      "question": "Approximately how many claimants are involved in the Pan-NOx Dieselgate litigation according to the briefing?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Over 500,000 claimants"
+        },
+        {
+          "letter": "B",
+          "text": "Over 1 million claimants"
+        },
+        {
+          "letter": "C",
+          "text": "Over 1.6 million claimants"
+        },
+        {
+          "letter": "D",
+          "text": "Over 2 million claimants"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that the Pan-NOx litigation involves 'over 1.6 million claimants' alleging that vehicle manufacturers used unlawful 'defeat devices' to manipulate emissions tests, making it one of the largest consumer group actions in English legal history."
+    },
+    {
+      "id": "5-2",
+      "storyId": "5",
+      "question": "According to the Solomonic data cited in the briefing, what was the year-on-year percentage increase in claims issued in UK courts in 2025?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5% increase"
+        },
+        {
+          "letter": "B",
+          "text": "8% increase"
+        },
+        {
+          "letter": "C",
+          "text": "10% increase"
+        },
+        {
+          "letter": "D",
+          "text": "15% increase"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states: 'Early 2026 data from Solomonic shows that 12,301 claims were issued in UK courts in 2025, compared to 11,165 in 2024 — a 10% increase confirming the litigation market's growth trajectory.'"
+    },
+    {
+      "id": "5-3",
+      "storyId": "5",
+      "question": "According to the briefing, what cost management pressure is creating a particular competitive advantage for certain litigation firms in mega-group actions like Pan-NOx?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Litigation funders now require firms to use only AI-assisted document review"
+        },
+        {
+          "letter": "B",
+          "text": "Courts are actively cutting costs budgets by more than half, requiring efficient litigation infrastructure"
+        },
+        {
+          "letter": "C",
+          "text": "The Conditional Fee Agreement regime has been eliminated for group actions"
+        },
+        {
+          "letter": "D",
+          "text": "Claimant solicitors must now use purely in-house resources without external counsel"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's talking point states: 'What makes it commercially distinctive for law firms is the cost management pressure: courts are actively cutting costs budgets by more than half, which means that only firms with highly efficient litigation infrastructure and strong project management capability can profitably run these matters.'"
+    },
+    {
+      "id": "6-1",
+      "storyId": "6",
+      "question": "Which country has Hogan Lovells advised on a landmark mineral rights agreement, according to the briefing?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Poland"
+        },
+        {
+          "letter": "B",
+          "text": "Ukraine"
+        },
+        {
+          "letter": "C",
+          "text": "Moldova"
+        },
+        {
+          "letter": "D",
+          "text": "Lithuania"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states: 'Hogan Lovells has advised Ukraine on a landmark mineral rights agreement with the United States', described as reflecting the growing use of natural resource agreements as instruments of geopolitical alignment and reconstruction financing."
+    },
+    {
+      "id": "6-2",
+      "storyId": "6",
+      "question": "According to the briefing, which treaty or agreement mechanism is explicitly excluded from the 2026 UK-EU TCA review?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Trade in services"
+        },
+        {
+          "letter": "B",
+          "text": "Investment and non-conforming measures"
+        },
+        {
+          "letter": "C",
+          "text": "Financial services"
+        },
+        {
+          "letter": "D",
+          "text": "Sanitary and phytosanitary standards"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states: 'The Parliamentary Research Briefing confirms that the TCA review does not extend to financial services — a point of significant practical importance for London's financial sector, which remains outside the TCA framework and dependent on equivalence decisions and third-country access regimes.'"
+    },
+    {
+      "id": "6-3",
+      "storyId": "6",
+      "question": "According to the briefing's talking point, what is the commercial significance of the UK financial sector's position in the TCA review?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Financial services will be granted preferential access under a new equivalence regime"
+        },
+        {
+          "letter": "B",
+          "text": "London's financial sector will continue to operate outside any preferential trade framework with the EU indefinitely, sustaining regulatory access advisory demand"
+        },
+        {
+          "letter": "C",
+          "text": "Financial services are now covered under Article 126 of the TCA"
+        },
+        {
+          "letter": "D",
+          "text": "UK banks will gain automatic third-country access through the revised TCA"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's talking point states: 'The TCA review's explicit exclusion of financial services is equally significant: it confirms that London's financial sector will continue to operate outside any preferential trade framework with the EU indefinitely, sustaining demand for regulatory access advice that is unlikely to disappear regardless of how UK-EU relations evolve.'"
+    },
+    {
+      "id": "7-1",
+      "storyId": "7",
+      "question": "According to Clio's Legal Trends Report cited in the briefing, what percentage of US lawyers now report using AI in their practice?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Approximately 50%"
+        },
+        {
+          "letter": "B",
+          "text": "Close to 70%"
+        },
+        {
+          "letter": "C",
+          "text": "Close to 80%"
+        },
+        {
+          "letter": "D",
+          "text": "Approximately 90%"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states: 'According to Clio's Legal Trends Report cited in JD Supra's AI Legal Compliance analysis, close to 80% of lawyers in the United States now report using AI in their practice — an increase of nearly 60 percentage points compared to just two years ago.'"
+    },
+    {
+      "id": "7-2",
+      "storyId": "7",
+      "question": "Which three California statutes simultaneously came into force on 1 January 2026 according to the briefing?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The TFAIA (SB 53), AB 2013, and SB 942"
+        },
+        {
+          "letter": "B",
+          "text": "The GDPR Alignment Act, AB 2013, and SB 942"
+        },
+        {
+          "letter": "C",
+          "text": "The TFAIA (SB 53), the Data Privacy Act, and the Digital Markets Act"
+        },
+        {
+          "letter": "D",
+          "text": "The Consumer Privacy Act, AB 2013, and the Digital Services Act"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The briefing states: 'From 1 January 2026, three California statutes have simultaneously come into force: the California Transparency in Frontier Artificial Intelligence Act (TFAIA/SB 53), which imposes oversight and reporting requirements on frontier AI developers; the California Generative AI: Training Data Transparency Act (AB 2013); and the California AI Content Transparency Act (SB 942).'"
+    },
+    {
+      "id": "7-3",
+      "storyId": "7",
+      "question": "According to the briefing's talking point, what is the most commercially significant regulatory development regarding AI for firms with US-European client bases?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "The EU AI Act is more stringent than all US state laws combined"
+        },
+        {
+          "letter": "B",
+          "text": "The collision between five or more concurrent US state AI statutes, a federal preemption signal, and EU obligations creates a multi-jurisdictional compliance problem"
+        },
+        {
+          "letter": "C",
+          "text": "US state laws will eventually preempt the EU AI Act framework"
+        },
+        {
+          "letter": "D",
+          "text": "The White House Executive Order creates a unified federal AI framework that eliminates state variation"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing's talking point states: 'The more interesting regulatory story for commercial lawyers is not the EU AI Act in isolation but the collision between five or more concurrent US state AI statutes, a federal preemption signal, and EU obligations — a multi-jurisdictional compliance problem that will generate significant advisory fees for the TMT and regulatory practices of every firm with a US-European client base.'"
+    }
+  ]
+}

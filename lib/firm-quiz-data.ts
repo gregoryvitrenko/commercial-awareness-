@@ -1,6 +1,7 @@
 /**
  * Firm compatibility quiz — free, public, viral acquisition tool.
- * 10 weighted questions → firm tier recommendation + 3 specific firms.
+ * Short format: 10 questions (~2 min). Long format: 15 questions (~5 min).
+ * Ranking mechanic: options ranked in preference order; higher ranks score more.
  * No AI calls — everything is static scoring.
  */
 
@@ -183,7 +184,7 @@ export const FIRM_RECS: Record<FirmTierKey, FirmRecommendation[]> = {
 export interface QuizOption {
   label: string;
   scores: Record<FirmTierKey, number>;
-  /** Optional practice area tag used for firm-level recommendation */
+  /** Optional practice area tag — used from rank-1 answer for firm recommendation */
   practiceTag?: PracticeTag;
 }
 
@@ -194,6 +195,7 @@ export interface QuizQuestion {
 }
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  // ── Short format (Q1–10) ──────────────────────────────────────────────────
   {
     id: 1,
     question: 'What matters most to you when choosing a firm?',
@@ -292,7 +294,63 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: 'Adaptable, globally-minded, and culturally aware — I want variety', scores: { 'magic-circle': 0, 'silver-circle': 0, 'us-firms': 0, international: 3, boutique: 0 } },
     ],
   },
+
+  // ── Long-format additional questions (Q11–15) ─────────────────────────────
+  {
+    id: 11,
+    question: 'Which legal skill do you most want to develop?',
+    options: [
+      { label: 'Negotiation — finding the deal that works for everyone', scores: { 'magic-circle': 2, 'silver-circle': 2, 'us-firms': 2, international: 1, boutique: 0 }, practiceTag: 'ma' },
+      { label: 'Advocacy and argument — persuading courts or tribunals', scores: { 'magic-circle': 1, 'silver-circle': 2, 'us-firms': 1, international: 1, boutique: 3 }, practiceTag: 'disputes' },
+      { label: 'Technical legal analysis — getting the details exactly right', scores: { 'magic-circle': 3, 'silver-circle': 1, 'us-firms': 2, international: 1, boutique: 1 } },
+      { label: 'Regulatory navigation — interpreting rules and managing compliance risk', scores: { 'magic-circle': 1, 'silver-circle': 1, 'us-firms': 0, international: 2, boutique: 3 }, practiceTag: 'regulatory' },
+    ],
+  },
+  {
+    id: 12,
+    question: 'What would make you most proud at your year-end review?',
+    options: [
+      { label: 'I closed a landmark deal that made the financial press', scores: { 'magic-circle': 2, 'silver-circle': 1, 'us-firms': 3, international: 1, boutique: 0 }, practiceTag: 'ma' },
+      { label: 'I won a case that set a meaningful legal precedent', scores: { 'magic-circle': 1, 'silver-circle': 2, 'us-firms': 1, international: 1, boutique: 3 }, practiceTag: 'disputes' },
+      { label: 'I built real relationships with clients who trust me', scores: { 'magic-circle': 0, 'silver-circle': 3, 'us-firms': 0, international: 1, boutique: 2 } },
+      { label: 'I advised across three continents on complex cross-border work', scores: { 'magic-circle': 1, 'silver-circle': 0, 'us-firms': 0, international: 3, boutique: 0 } },
+    ],
+  },
+  {
+    id: 13,
+    question: 'Which story would you most want to be involved in?',
+    options: [
+      { label: 'A hostile takeover of a FTSE 100 company — defending the board', scores: { 'magic-circle': 3, 'silver-circle': 1, 'us-firms': 2, international: 0, boutique: 0 }, practiceTag: 'ma' },
+      { label: 'A billion-dollar private equity mega-buyout with complex financing', scores: { 'magic-circle': 1, 'silver-circle': 1, 'us-firms': 3, international: 0, boutique: 0 }, practiceTag: 'pe' },
+      { label: 'A landmark international arbitration between two sovereign states', scores: { 'magic-circle': 1, 'silver-circle': 2, 'us-firms': 1, international: 3, boutique: 2 }, practiceTag: 'disputes' },
+      { label: 'A major regulatory investigation into a global tech platform', scores: { 'magic-circle': 2, 'silver-circle': 1, 'us-firms': 1, international: 1, boutique: 2 }, practiceTag: 'regulatory' },
+    ],
+  },
+  {
+    id: 14,
+    question: 'How do you feel about specialising early in your career?',
+    options: [
+      { label: 'I\'m ready to go deep — I already know what I want to do', scores: { 'magic-circle': 0, 'silver-circle': 0, 'us-firms': 3, international: 0, boutique: 2 } },
+      { label: 'I\'d like breadth first — then specialise once I\'ve explored', scores: { 'magic-circle': 3, 'silver-circle': 2, 'us-firms': 0, international: 1, boutique: 0 } },
+      { label: 'I want to be the best generalist in the room — breadth is my edge', scores: { 'magic-circle': 2, 'silver-circle': 2, 'us-firms': 0, international: 2, boutique: 0 } },
+      { label: 'Specialist over time, but in a niche I\'m genuinely passionate about', scores: { 'magic-circle': 0, 'silver-circle': 1, 'us-firms': 1, international: 0, boutique: 3 } },
+    ],
+  },
+  {
+    id: 15,
+    question: 'Honestly, what draws you most to a training contract?',
+    options: [
+      { label: 'The prestige — I want the brand and the network it brings', scores: { 'magic-circle': 3, 'silver-circle': 1, 'us-firms': 2, international: 0, boutique: 0 } },
+      { label: 'The compensation — I want to be rewarded for my work', scores: { 'magic-circle': 1, 'silver-circle': 0, 'us-firms': 3, international: 0, boutique: 0 } },
+      { label: 'The quality of work — I want the best matters, full stop', scores: { 'magic-circle': 2, 'silver-circle': 2, 'us-firms': 2, international: 1, boutique: 1 } },
+      { label: 'The culture — I want somewhere I actually enjoy being', scores: { 'magic-circle': 0, 'silver-circle': 3, 'us-firms': 0, international: 1, boutique: 3 } },
+    ],
+  },
 ];
+
+// Convenience exports for format filtering
+export const SHORT_QUESTIONS = QUIZ_QUESTIONS.slice(0, 10);
+export const LONG_QUESTIONS = QUIZ_QUESTIONS; // all 15
 
 // ─── Scoring engine ───────────────────────────────────────────────────────────
 
@@ -309,8 +367,16 @@ export interface QuizResult {
   recommendedFirms: FirmRecommendation[];
 }
 
-export function calculateResult(answers: number[]): QuizResult {
-  // Sum scores across all answers
+/**
+ * Calculate result from ranked answers.
+ * answers[i] = array of option indices in rank order (rank 1 first).
+ * activeQuestions = the subset of questions used (SHORT or LONG).
+ * Higher-ranked options contribute more to the score via linear decay.
+ */
+export function calculateResult(
+  answers: number[][],
+  activeQuestions: QuizQuestion[],
+): QuizResult {
   const scores: Record<FirmTierKey, number> = {
     'magic-circle': 0,
     'silver-circle': 0,
@@ -319,42 +385,58 @@ export function calculateResult(answers: number[]): QuizResult {
     boutique: 0,
   };
 
-  // Collect practice area tags from answers
+  // Collect practice area tags from each question's top-ranked answer only
   const selectedTags: PracticeTag[] = [];
 
-  for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
-    const optionIdx = answers[i];
-    if (optionIdx === undefined || optionIdx === -1) continue;
-    const option = QUIZ_QUESTIONS[i].options[optionIdx];
-    if (!option) continue;
+  for (let i = 0; i < activeQuestions.length; i++) {
+    const ranked = answers[i] ?? [];
+    const question = activeQuestions[i];
+    const numOptions = question.options.length;
 
-    for (const tier of ALL_TIERS) {
-      scores[tier] += option.scores[tier] ?? 0;
-    }
+    ranked.forEach((optionIdx, rankIdx) => {
+      const option = question.options[optionIdx];
+      if (!option) return;
 
-    if (option.practiceTag) {
-      selectedTags.push(option.practiceTag);
+      // Rank 1 (rankIdx=0) → multiplier 1.0; last rank → multiplier 1/numOptions
+      const multiplier = (numOptions - rankIdx) / numOptions;
+
+      for (const tier of ALL_TIERS) {
+        scores[tier] += (option.scores[tier] ?? 0) * multiplier;
+      }
+    });
+
+    // Only take practice tag from the top-ranked (rank 1) answer
+    const topOptionIdx = ranked[0];
+    if (topOptionIdx !== undefined) {
+      const topOption = question.options[topOptionIdx];
+      if (topOption?.practiceTag) {
+        selectedTags.push(topOption.practiceTag);
+      }
     }
   }
 
-  // Rank tiers by score (descending), with tie-breaking by tier order
+  // Rank tiers by score (descending)
   const ranking = ALL_TIERS
-    .map((tier) => ({ tier: TIER_RESULTS[tier], score: scores[tier] }))
+    .map((tier) => ({ tier: TIER_RESULTS[tier], score: Math.round(scores[tier] * 10) / 10 }))
     .sort((a, b) => b.score - a.score);
 
   const topTier = ranking[0].tier;
 
-  // Pick 3 recommended firms from the top tier
-  // Prioritise firms whose practice tags overlap with the user's selections
+  // Pick 3 recommended firms from the top tier, boosted by practice tag overlap
   const tierFirms = FIRM_RECS[topTier.key] ?? [];
-
-  const scored = tierFirms.map((firm) => {
-    const tagOverlap = firm.tags.filter((t) => selectedTags.includes(t)).length;
-    return { firm, tagOverlap };
-  });
-
+  const scored = tierFirms.map((firm) => ({
+    firm,
+    tagOverlap: firm.tags.filter((t) => selectedTags.includes(t)).length,
+  }));
   scored.sort((a, b) => b.tagOverlap - a.tagOverlap);
   const recommendedFirms = scored.slice(0, 3).map((s) => s.firm);
 
-  return { topTier, scores, ranking, recommendedFirms };
+  return {
+    topTier,
+    scores: Object.fromEntries(
+      Object.entries(scores).map(([k, v]) => [k, Math.round(v * 10) / 10])
+    ) as Record<FirmTierKey, number>,
+    ranking,
+    recommendedFirms,
+  };
 }

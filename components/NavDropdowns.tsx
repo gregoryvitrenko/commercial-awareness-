@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Newspaper, Headphones, BookOpen, Building2, Archive,
-  PenLine, GraduationCap, Bookmark, ChevronDown, MessageSquare, Compass,
+  PenLine, GraduationCap, Bookmark, ChevronDown, MessageSquare, Compass, Scale,
 } from 'lucide-react';
 
 type NavItem = { label: string; href: string; Icon: React.ElementType };
@@ -33,6 +33,7 @@ const NAV_GROUPS: NavGroup[] = [
       { label: 'Tests', href: '/tests', Icon: GraduationCap },
       { label: 'Interview Prep', href: '/interview', Icon: MessageSquare },
       { label: 'Firm Fit Quiz', href: '/firm-fit', Icon: Compass },
+      { label: 'Area Fit Quiz', href: '/area-fit', Icon: Scale },
     ],
   },
 ];

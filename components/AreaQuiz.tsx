@@ -6,40 +6,38 @@ import {
   ArrowRight,
   ArrowLeft,
   RotateCcw,
-  Building2,
+  Scale,
   CheckCircle2,
-  Trophy,
+  Star,
   Share2,
-  Sparkles,
-  Lock,
-  Zap,
   BookOpen,
 } from 'lucide-react';
 import {
-  SHORT_QUESTIONS,
-  LONG_QUESTIONS,
-  calculateResult,
-  type QuizResult,
-  type QuizQuestion,
-} from '@/lib/firm-quiz-data';
+  AREA_QUESTIONS,
+  calculateAreaResult,
+  type AreaResult,
+  type AreaQuestion,
+} from '@/lib/area-quiz-data';
 
-// ─── Colour config ────────────────────────────────────────────────────────────
+// ─── Colour config ─────────────────────────────────────────────────────────────
+// Maps the area color token (from AREA_DESCRIPTIONS) to Tailwind classes.
 
-const TIER_COLORS: Record<string, {
-  bg: string; border: string; badge: string; text: string; accent: string; dot: string; ring: string;
+const AREA_COLORS: Record<string, {
+  bg: string; border: string; accent: string; dot: string;
 }> = {
-  blue:   { bg: 'bg-blue-50 dark:bg-blue-950/30',   border: 'border-blue-200 dark:border-blue-800',   badge: 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300',     text: 'text-blue-700 dark:text-blue-300',   accent: 'text-blue-600 dark:text-blue-400',   dot: 'bg-blue-500',   ring: 'ring-blue-500/30' },
-  violet: { bg: 'bg-violet-50 dark:bg-violet-950/30', border: 'border-violet-200 dark:border-violet-800', badge: 'bg-violet-100 dark:bg-violet-900/50 text-violet-700 dark:text-violet-300', text: 'text-violet-700 dark:text-violet-300', accent: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-500', ring: 'ring-violet-500/30' },
-  emerald:{ bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200 dark:border-emerald-800', badge: 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300', text: 'text-emerald-700 dark:text-emerald-300', accent: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500', ring: 'ring-emerald-500/30' },
-  teal:   { bg: 'bg-teal-50 dark:bg-teal-950/30',   border: 'border-teal-200 dark:border-teal-800',   badge: 'bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300',     text: 'text-teal-700 dark:text-teal-300',   accent: 'text-teal-600 dark:text-teal-400',   dot: 'bg-teal-500',   ring: 'ring-teal-500/30' },
-  rose:   { bg: 'bg-rose-50 dark:bg-rose-950/30',   border: 'border-rose-200 dark:border-rose-800',   badge: 'bg-rose-100 dark:bg-rose-900/50 text-rose-700 dark:text-rose-300',     text: 'text-rose-700 dark:text-rose-300',   accent: 'text-rose-600 dark:text-rose-400',   dot: 'bg-rose-500',   ring: 'ring-rose-500/30' },
+  blue:   { bg: 'bg-blue-50 dark:bg-blue-950/30',   border: 'border-blue-200 dark:border-blue-800',   accent: 'text-blue-600 dark:text-blue-400',   dot: 'bg-blue-500' },
+  violet: { bg: 'bg-violet-50 dark:bg-violet-950/30', border: 'border-violet-200 dark:border-violet-800', accent: 'text-violet-600 dark:text-violet-400', dot: 'bg-violet-500' },
+  orange: { bg: 'bg-orange-50 dark:bg-orange-950/30', border: 'border-orange-200 dark:border-orange-800', accent: 'text-orange-600 dark:text-orange-400', dot: 'bg-orange-500' },
+  emerald:{ bg: 'bg-emerald-50 dark:bg-emerald-950/30', border: 'border-emerald-200 dark:border-emerald-800', accent: 'text-emerald-600 dark:text-emerald-400', dot: 'bg-emerald-500' },
+  amber:  { bg: 'bg-amber-50 dark:bg-amber-950/30',  border: 'border-amber-200 dark:border-amber-800',  accent: 'text-amber-600 dark:text-amber-400',  dot: 'bg-amber-500' },
+  rose:   { bg: 'bg-rose-50 dark:bg-rose-950/30',   border: 'border-rose-200 dark:border-rose-800',   accent: 'text-rose-600 dark:text-rose-400',   dot: 'bg-rose-500' },
+  teal:   { bg: 'bg-teal-50 dark:bg-teal-950/30',   border: 'border-teal-200 dark:border-teal-800',   accent: 'text-teal-600 dark:text-teal-400',   dot: 'bg-teal-500' },
+  indigo: { bg: 'bg-indigo-50 dark:bg-indigo-950/30', border: 'border-indigo-200 dark:border-indigo-800', accent: 'text-indigo-600 dark:text-indigo-400', dot: 'bg-indigo-500' },
 };
 
 // ─── Intro screen ─────────────────────────────────────────────────────────────
 
-function IntroScreen({ onStart }: { onStart: (format: 'short' | 'long') => void }) {
-  const [selected, setSelected] = useState<'short' | 'long'>('short');
-
+function IntroScreen({ onStart }: { onStart: () => void }) {
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col">
 
@@ -58,7 +56,7 @@ function IntroScreen({ onStart }: { onStart: (format: 'short' | 'long') => void 
         <div className="w-full max-w-md text-center">
 
           <div className="w-14 h-14 rounded-2xl bg-stone-900 dark:bg-stone-100 flex items-center justify-center mx-auto mb-6">
-            <Building2 size={24} className="text-stone-50 dark:text-stone-900" />
+            <Scale size={24} className="text-stone-50 dark:text-stone-900" />
           </div>
 
           <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
@@ -66,43 +64,15 @@ function IntroScreen({ onStart }: { onStart: (format: 'short' | 'long') => void 
           </p>
 
           <h2 className="font-serif text-3xl font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-3">
-            Which type of law firm suits you?
+            Which area of law suits you?
           </h2>
 
           <p className="text-[14px] text-stone-500 dark:text-stone-400 leading-relaxed mb-8 max-w-sm mx-auto">
-            Rank options in order of preference. Get a personalised firm tier recommendation and 3 specific firm suggestions.
+            10 questions. Rank options in order of preference to discover which practice area matches your interests, working style, and ambitions.
           </p>
 
-          {/* Format selector */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            {([
-              { key: 'short' as const, Icon: Zap,      label: 'Quick',    sub: '10 questions · ~2 min' },
-              { key: 'long'  as const, Icon: BookOpen,  label: 'In-depth', sub: '15 questions · ~5 min' },
-            ]).map(({ key, Icon, label, sub }) => (
-              <button
-                key={key}
-                onClick={() => setSelected(key)}
-                className={`flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 transition-all ${
-                  selected === key
-                    ? 'border-stone-900 dark:border-stone-100 bg-stone-900 dark:bg-stone-100'
-                    : 'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 hover:border-stone-400 dark:hover:border-stone-500'
-                }`}
-              >
-                <Icon size={18} className={selected === key ? 'text-stone-50 dark:text-stone-900' : 'text-stone-400 dark:text-stone-500'} />
-                <div>
-                  <p className={`text-[13px] font-semibold ${selected === key ? 'text-stone-50 dark:text-stone-900' : 'text-stone-800 dark:text-stone-200'}`}>
-                    {label}
-                  </p>
-                  <p className={`text-[11px] mt-0.5 ${selected === key ? 'text-stone-300 dark:text-stone-600' : 'text-stone-400 dark:text-stone-500'}`}>
-                    {sub}
-                  </p>
-                </div>
-              </button>
-            ))}
-          </div>
-
           <button
-            onClick={() => onStart(selected)}
+            onClick={onStart}
             className="w-full max-w-xs mx-auto py-3 rounded-xl bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 text-[14px] font-sans font-medium hover:opacity-80 transition-opacity flex items-center justify-center gap-2"
           >
             Start quiz
@@ -132,7 +102,7 @@ function QuestionScreen({
 }: {
   questionIndex: number;
   total: number;
-  question: QuizQuestion;
+  question: AreaQuestion;
   rankedOptions: number[];
   onToggleRank: (idx: number) => void;
   onNext: () => void;
@@ -145,7 +115,6 @@ function QuestionScreen({
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col">
 
-      {/* Progress bar */}
       <div className="h-[3px] bg-stone-200 dark:bg-stone-800">
         <div
           className="h-full bg-stone-900 dark:bg-stone-100 transition-all duration-300"
@@ -156,7 +125,6 @@ function QuestionScreen({
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
 
-          {/* Question counter + instruction */}
           <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1 text-center">
             {questionIndex + 1} of {total}
           </p>
@@ -164,12 +132,10 @@ function QuestionScreen({
             Rank in order of preference — tap to assign
           </p>
 
-          {/* Question */}
           <h2 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight text-center mb-8 leading-snug">
             {question.question}
           </h2>
 
-          {/* Options */}
           <div className="space-y-3 mb-6">
             {question.options.map((option, i) => {
               const rankIdx = rankedOptions.indexOf(i);
@@ -201,14 +167,12 @@ function QuestionScreen({
             })}
           </div>
 
-          {/* Progress hint */}
           <p className="text-center text-[11px] text-stone-400 dark:text-stone-500 mb-4">
             {allRanked
               ? 'All ranked — ready to continue'
               : `${rankedOptions.length} of ${question.options.length} ranked`}
           </p>
 
-          {/* Navigation */}
           <div className="flex items-center justify-between">
             <button
               onClick={onPrev}
@@ -237,16 +201,16 @@ function QuestionScreen({
 
 // ─── Results screen ───────────────────────────────────────────────────────────
 
-function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: () => void }) {
+function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: () => void }) {
   const [copied, setCopied] = useState(false);
-  const colors = TIER_COLORS[result.topTier.color] ?? TIER_COLORS.blue;
+  const colors = AREA_COLORS[result.topArea.color] ?? AREA_COLORS.blue;
   const maxScore = Math.max(...Object.values(result.scores));
 
   function handleShare() {
-    const url = window.location.origin + '/firm-fit';
-    const text = `I got "${result.topTier.name}" on the law firm compatibility quiz! Which type of firm suits you?`;
+    const url = window.location.origin + '/area-fit';
+    const text = `I got "${result.topArea.key}" on the area of law quiz! Which practice area suits you?`;
     if (navigator.share) {
-      navigator.share({ title: 'Firm Fit Quiz', text, url }).catch(() => {});
+      navigator.share({ title: 'Area of Law Quiz', text, url }).catch(() => {});
     } else {
       navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
         setCopied(true);
@@ -271,19 +235,19 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
 
       <main className="flex-1 max-w-lg mx-auto px-4 sm:px-6 py-10 w-full">
 
-        {/* Trophy */}
+        {/* Result hero */}
         <div className="text-center mb-6">
           <div className={`w-14 h-14 rounded-2xl ${colors.bg} ${colors.border} border flex items-center justify-center mx-auto mb-4`}>
-            <Trophy size={24} className={colors.accent} />
+            <Star size={24} className={colors.accent} />
           </div>
           <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
             Your best fit
           </p>
           <h2 className="font-serif text-3xl font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-2">
-            {result.topTier.name}
+            {result.topArea.key}
           </h2>
           <p className="text-[14px] text-stone-500 dark:text-stone-400 leading-relaxed max-w-sm mx-auto">
-            {result.topTier.tagline}
+            {result.topArea.tagline}
           </p>
         </div>
 
@@ -291,21 +255,21 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
         <div className="rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden mb-6">
           <div className="px-5 py-3 border-b border-stone-100 dark:border-stone-800">
             <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
-              Your compatibility scores
+              Your area compatibility scores
             </p>
           </div>
           <div className="px-5 py-4 space-y-3">
-            {result.ranking.map(({ tier, score }) => {
-              const tc = TIER_COLORS[tier.color] ?? TIER_COLORS.blue;
+            {result.ranking.map(({ area, score }) => {
+              const ac = AREA_COLORS[area.color] ?? AREA_COLORS.blue;
               const pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
               return (
-                <div key={tier.key}>
+                <div key={area.key}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[12px] font-medium text-stone-700 dark:text-stone-300">{tier.name}</span>
-                    <span className={`font-mono text-[10px] ${tc.accent}`}>{score}</span>
+                    <span className="text-[12px] font-medium text-stone-700 dark:text-stone-300">{area.key}</span>
+                    <span className={`font-mono text-[10px] ${ac.accent}`}>{score}</span>
                   </div>
                   <div className="h-2 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
-                    <div className={`h-full rounded-full ${tc.dot} transition-all duration-500`} style={{ width: `${pct}%` }} />
+                    <div className={`h-full rounded-full ${ac.dot} transition-all duration-500`} style={{ width: `${pct}%` }} />
                   </div>
                 </div>
               );
@@ -313,19 +277,25 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
           </div>
         </div>
 
-        {/* About your result */}
+        {/* About the area */}
         <div className={`rounded-xl border ${colors.border} ${colors.bg} px-5 py-5 mb-6`}>
           <p className={`font-mono text-[10px] tracking-widest uppercase ${colors.accent} mb-3`}>
-            About {result.topTier.name}
+            About {result.topArea.key}
           </p>
           <p className="text-[13px] text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
-            {result.topTier.description}
+            {result.topArea.description}
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div>
-              <p className="text-[11px] font-medium text-stone-700 dark:text-stone-300 mb-2">Strengths</p>
+              <p className="text-[11px] font-medium text-stone-700 dark:text-stone-300 mb-2">What lawyers in this area do</p>
+              <p className="text-[12px] text-stone-500 dark:text-stone-400 leading-relaxed">
+                {result.topArea.whatLawyersDo}
+              </p>
+            </div>
+            <div>
+              <p className="text-[11px] font-medium text-stone-700 dark:text-stone-300 mb-2">Key skills</p>
               <ul className="space-y-1.5">
-                {result.topTier.strengths.map((s, i) => (
+                {result.topArea.skills.map((s, i) => (
                   <li key={i} className="flex items-start gap-2 text-[11px] text-stone-500 dark:text-stone-400">
                     <CheckCircle2 size={10} className="flex-shrink-0 mt-0.5 text-emerald-500" />
                     {s}
@@ -333,54 +303,31 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
                 ))}
               </ul>
             </div>
-            <div>
-              <p className="text-[11px] font-medium text-stone-700 dark:text-stone-300 mb-2">Consider</p>
-              <ul className="space-y-1.5">
-                {result.topTier.tradeoffs.map((t, i) => (
-                  <li key={i} className="flex items-start gap-2 text-[11px] text-stone-500 dark:text-stone-400">
-                    <span className="flex-shrink-0 w-2 h-2 rounded-full bg-amber-400 dark:bg-amber-500 mt-1" />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </div>
 
-        {/* Recommended firms */}
+        {/* Primer link */}
         <div className="rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden mb-6">
           <div className="px-5 py-3 border-b border-stone-100 dark:border-stone-800 flex items-center gap-2">
-            <Sparkles size={12} className={colors.accent} />
+            <BookOpen size={12} className={colors.accent} />
             <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
-              Firms to explore
+              Go deeper
             </p>
           </div>
-          <div className="divide-y divide-stone-100 dark:divide-stone-800">
-            {result.recommendedFirms.map((firm) => (
-              <Link
-                key={firm.slug}
-                href={`/firms/${firm.slug}`}
-                className="flex items-start gap-3 px-5 py-4 hover:bg-stone-50 dark:hover:bg-stone-800/40 transition-colors group"
-              >
-                <Building2 size={14} className={`flex-shrink-0 mt-0.5 ${colors.accent}`} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-medium text-stone-900 dark:text-stone-50 group-hover:underline underline-offset-2">{firm.name}</p>
-                  <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">{firm.reason}</p>
-                </div>
-                <ArrowRight size={12} className="flex-shrink-0 mt-1 text-stone-300 dark:text-stone-600 group-hover:text-stone-500 dark:group-hover:text-stone-400 transition-colors" />
-              </Link>
-            ))}
-          </div>
-          <div className="px-5 py-3 border-t border-stone-100 dark:border-stone-800 bg-stone-50 dark:bg-stone-800/30">
-            <Link
-              href="/firms"
-              className="flex items-center justify-center gap-2 text-[12px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
-              <Lock size={10} />
-              Explore all 38 firm profiles
-              <ArrowRight size={12} />
-            </Link>
-          </div>
+          <Link
+            href={`/primers/${result.topArea.primerSlug}`}
+            className="flex items-center justify-between px-5 py-4 hover:bg-stone-50 dark:hover:bg-stone-800/40 transition-colors group"
+          >
+            <div>
+              <p className="text-[13px] font-medium text-stone-900 dark:text-stone-50 group-hover:underline underline-offset-2">
+                Read the {result.topArea.key} primer
+              </p>
+              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-0.5">
+                Background, key terms, and interview questions for this area
+              </p>
+            </div>
+            <ArrowRight size={13} className="flex-shrink-0 text-stone-300 dark:text-stone-600 group-hover:text-stone-500 dark:group-hover:text-stone-400 transition-colors" />
+          </Link>
         </div>
 
         {/* Share + retake */}
@@ -403,9 +350,9 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
 
         {/* CTA */}
         <div className="mt-8 rounded-xl bg-stone-900 dark:bg-stone-100 px-5 py-5 text-center">
-          <p className="text-[14px] font-medium text-stone-50 dark:text-stone-900 mb-2">Want the full picture?</p>
+          <p className="text-[14px] font-medium text-stone-50 dark:text-stone-900 mb-2">Ready to go further?</p>
           <p className="text-[12px] text-stone-300 dark:text-stone-600 mb-4">
-            Access interview packs, detailed firm profiles, daily quizzes, aptitude tests, and more.
+            Daily briefings, firm interview packs, aptitude tests, a daily quiz, and more — all built for TC applicants.
           </p>
           <Link
             href="/upgrade"
@@ -425,24 +372,16 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
 
 type Stage = 'intro' | 'questions' | 'results';
 
-export function FirmQuiz() {
+export function AreaQuiz() {
   const [stage, setStage] = useState<Stage>('intro');
-  const [format, setFormat] = useState<'short' | 'long'>('short');
   const [currentQ, setCurrentQ] = useState(0);
-  // answers[i] = array of option indices in rank order (first element = rank 1)
-  const [answers, setAnswers] = useState<number[][]>([]);
-  const [result, setResult] = useState<QuizResult | null>(null);
+  // answers[i] = array of option indices in rank order (rank 1 first)
+  const [answers, setAnswers] = useState<number[][]>(
+    Array(AREA_QUESTIONS.length).fill(null).map(() => [])
+  );
+  const [result, setResult] = useState<AreaResult | null>(null);
 
-  const activeQuestions = format === 'short' ? SHORT_QUESTIONS : LONG_QUESTIONS;
-  const total = activeQuestions.length;
-
-  function handleStart(f: 'short' | 'long') {
-    const qs = f === 'short' ? SHORT_QUESTIONS : LONG_QUESTIONS;
-    setFormat(f);
-    setAnswers(Array(qs.length).fill(null).map(() => []));
-    setCurrentQ(0);
-    setStage('questions');
-  }
+  const total = AREA_QUESTIONS.length;
 
   const handleToggleRank = useCallback((optionIdx: number) => {
     setAnswers((prev) => {
@@ -450,10 +389,8 @@ export function FirmQuiz() {
       const ranked = next[currentQ] ?? [];
       const existingIdx = ranked.indexOf(optionIdx);
       if (existingIdx !== -1) {
-        // De-rank: remove it; options that were ranked after it shift up
         ranked.splice(existingIdx, 1);
       } else {
-        // Rank: append to end (gets next available rank number)
         ranked.push(optionIdx);
       }
       next[currentQ] = ranked;
@@ -463,12 +400,12 @@ export function FirmQuiz() {
 
   function handleNext() {
     const ranked = answers[currentQ] ?? [];
-    if (ranked.length !== activeQuestions[currentQ].options.length) return;
+    if (ranked.length !== AREA_QUESTIONS[currentQ].options.length) return;
     if (currentQ < total - 1) {
       setCurrentQ(q => q + 1);
       window.scrollTo(0, 0);
     } else {
-      const r = calculateResult(answers, activeQuestions);
+      const r = calculateAreaResult(answers);
       setResult(r);
       setStage('results');
       window.scrollTo(0, 0);
@@ -482,19 +419,19 @@ export function FirmQuiz() {
   function handleRestart() {
     setStage('intro');
     setCurrentQ(0);
-    setAnswers([]);
+    setAnswers(Array(AREA_QUESTIONS.length).fill(null).map(() => []));
     setResult(null);
     window.scrollTo(0, 0);
   }
 
-  if (stage === 'intro') return <IntroScreen onStart={handleStart} />;
+  if (stage === 'intro') return <IntroScreen onStart={() => setStage('questions')} />;
   if (stage === 'results' && result) return <ResultsScreen result={result} onRestart={handleRestart} />;
 
   return (
     <QuestionScreen
       questionIndex={currentQ}
       total={total}
-      question={activeQuestions[currentQ]}
+      question={AREA_QUESTIONS[currentQ]}
       rankedOptions={answers[currentQ] ?? []}
       onToggleRank={handleToggleRank}
       onNext={handleNext}

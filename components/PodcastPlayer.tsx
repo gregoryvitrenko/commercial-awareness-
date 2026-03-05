@@ -102,9 +102,18 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
       throw new Error(`ElevenLabs error ${res.status}: ${text.slice(0, 120)}`);
     }
 
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const audio = new Audio(url);
+    // Production returns { url } JSON (Blob CDN), dev returns raw MP3 binary
+    let audioUrl: string;
+    const contentType = res.headers.get('content-type') ?? '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      audioUrl = data.url;
+    } else {
+      const blob = await res.blob();
+      audioUrl = URL.createObjectURL(blob);
+    }
+
+    const audio = new Audio(audioUrl);
     audioRef.current = audio;
 
     audio.ontimeupdate = () => {
@@ -119,14 +128,14 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
       updateStatus('idle');
       setProgress(0);
       audioRef.current = null;
-      URL.revokeObjectURL(url);
+      if (audioUrl.startsWith('blob:')) URL.revokeObjectURL(audioUrl);
       setAudioReady(true);
     };
     audio.onerror = () => {
       updateStatus('error');
       setErrorMsg('Audio playback failed.');
       audioRef.current = null;
-      URL.revokeObjectURL(url);
+      if (audioUrl.startsWith('blob:')) URL.revokeObjectURL(audioUrl);
     };
 
     audio.playbackRate = speedRef.current;
@@ -333,15 +342,29 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
         setErrorMsg('Download failed — try playing the audio first.');
         return;
       }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `commercial-awareness-${briefing.date}.mp3`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      const contentType = res.headers.get('content-type') ?? '';
+      if (contentType.includes('application/json')) {
+        // Production: got Blob CDN URL — trigger download via link
+        const data = await res.json();
+        const a = document.createElement('a');
+        a.href = data.url;
+        a.download = `folio-${briefing.date}.mp3`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        // Dev: got raw MP3 binary
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `folio-${briefing.date}.mp3`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
       setAudioReady(true);
     } catch {
       setErrorMsg('Download failed.');

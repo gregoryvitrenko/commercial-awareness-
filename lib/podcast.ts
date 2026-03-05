@@ -1,26 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
-import fs from 'fs';
-import path from 'path';
 import type { Briefing } from '@/lib/types';
-
-const DATA_DIR = path.join(process.cwd(), 'data', 'briefings');
-
-function scriptFile(date: string): string {
-  return path.join(DATA_DIR, `${date}-podcast.txt`);
-}
-
-export function getCachedScript(date: string): string | null {
-  try {
-    return fs.readFileSync(scriptFile(date), 'utf-8');
-  } catch {
-    return null;
-  }
-}
-
-export function saveScript(date: string, script: string): void {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(scriptFile(date), script, 'utf-8');
-}
+import { getCachedScript, saveScript } from '@/lib/podcast-storage';
 
 /**
  * Generates a podcast script for the given briefing and saves it to disk.
@@ -28,7 +8,7 @@ export function saveScript(date: string, script: string): void {
  * No-ops if a cached script already exists for that date.
  */
 export async function generateAndSavePodcastScript(briefing: Briefing): Promise<string> {
-  const cached = getCachedScript(briefing.date);
+  const cached = await getCachedScript(briefing.date);
   if (cached) return cached;
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -106,6 +86,6 @@ One to Follow: ${briefing.oneToFollow}`;
   const script = block.type === 'text' ? block.text : '';
   if (!script) throw new Error('Script generation returned empty');
 
-  saveScript(briefing.date, script);
+  await saveScript(briefing.date, script);
   return script;
 }

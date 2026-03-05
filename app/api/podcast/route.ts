@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { getBriefing, getTodayDate } from '@/lib/storage';
 import { isValidDate } from '@/lib/security';
-import { getCachedScript, generateAndSavePodcastScript } from '@/lib/podcast';
+import { generateAndSavePodcastScript } from '@/lib/podcast';
+import { getCachedScript } from '@/lib/podcast-storage';
 import { isSubscribed } from '@/lib/subscription';
 import { checkRateLimit } from '@/lib/rate-limit';
 
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
   const hasElevenLabs = !!process.env.ELEVENLABS_API_KEY;
 
   // ── Return cached script immediately — no Claude call, no ElevenLabs charge ──
-  const cached = getCachedScript(targetDate);
+  const cached = await getCachedScript(targetDate);
   if (cached) {
     return NextResponse.json({ script: cached, hasElevenLabs });
   }

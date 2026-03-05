@@ -31,17 +31,17 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
 
-        {/* Row 1: Brand left · date + auth right */}
-        <div className="flex items-center justify-between py-3">
-          <Link href="/" className="group">
-            <h1 className="font-serif text-[22px] sm:text-[26px] font-bold tracking-tight text-stone-900 dark:text-stone-50 group-hover:opacity-75 transition-opacity">
+        {/* Row 1: date left · brand centre · auth right */}
+        <div className="grid grid-cols-3 items-center py-3">
+          <span className="hidden sm:block font-mono text-[11px] text-stone-400 dark:text-stone-500 tracking-wide">
+            {formatShortDate(displayDate)}
+          </span>
+          <Link href="/" className="group flex justify-center">
+            <h1 className="font-serif text-[32px] sm:text-[38px] font-bold tracking-tight text-stone-900 dark:text-stone-50 group-hover:opacity-75 transition-opacity">
               Folio
             </h1>
           </Link>
-          <div className="flex items-center gap-3">
-            <span className="hidden sm:block font-mono text-[11px] text-stone-400 dark:text-stone-500 tracking-wide">
-              {formatShortDate(displayDate)}
-            </span>
+          <div className="flex items-center gap-3 justify-end">
             <ThemeToggle />
             <AuthButtons />
           </div>

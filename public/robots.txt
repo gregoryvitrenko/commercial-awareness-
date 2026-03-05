@@ -4,6 +4,8 @@ Allow: /$
 Allow: /upgrade
 Allow: /sign-in
 Allow: /sign-up
+Allow: /terms
+Allow: /privacy
 
 # Block premium content routes from indexing
 Disallow: /quiz

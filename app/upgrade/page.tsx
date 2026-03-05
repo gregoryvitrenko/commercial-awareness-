@@ -7,8 +7,8 @@ import { CheckCircle2 } from 'lucide-react';
 
 const PREMIUM_FEATURES = [
   'In-depth articles — structured talking points so you always have something sharp to say',
-  'Daily quiz — 21 questions to lock in the facts before your application',
-  'Firm profiles — deadlines, salaries & culture notes for 37 City firms',
+  'Daily quiz — 24 questions to lock in the facts before your application',
+  'Firm interview packs — talking points, practice Qs & "why this firm?" crib sheet for 38 firms',
   'Sector Primers — deep-dive explainers on M&A, Capital Markets, Disputes & more',
   'Audio briefing — listen on your commute, arrive at the interview informed',
   'Full archive + bookmarks — build your commercial knowledge base over time',

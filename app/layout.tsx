@@ -3,6 +3,7 @@ import { Playfair_Display, Inter, JetBrains_Mono } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Providers } from './providers';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { SiteFooter } from '@/components/SiteFooter';
 import './globals.css';
 
 const inter = Inter({
@@ -26,8 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Commercial Awareness Daily',
   description:
-    'Daily commercial awareness briefing for LLB students targeting Magic Circle, Silver Circle, and elite US law firms.',
-  robots: 'noindex, nofollow', // Personal tool — keep private
+    'Daily commercial awareness briefings for LLB students targeting Magic Circle, Silver Circle, and elite US law firms. Stories, quiz, firm profiles, and audio — every morning.',
 };
 
 export const viewport: Viewport = {
@@ -52,7 +52,10 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <body className="bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-sans min-h-screen transition-colors duration-200">
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <SiteFooter />
+          </Providers>
           <ScrollToTop />
         </body>
       </html>

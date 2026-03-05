@@ -22,40 +22,46 @@ export function TabBar({ presentTopics, activeTopic }: TabBarProps) {
   const isAll = displayActive === 'all';
 
   return (
-    <div className="flex items-end overflow-x-auto no-scrollbar border-b border-stone-200 dark:border-stone-800 mb-6 -mx-4 sm:-mx-6 px-4 sm:px-6">
-      <Link
-        href="/"
-        onClick={() => setPending('all')}
-        className={`flex-shrink-0 px-3 py-2.5 text-[11px] font-sans font-semibold tracking-[0.1em] uppercase border-b-2 -mb-px transition-colors whitespace-nowrap
-          ${isAll
-            ? 'border-stone-900 dark:border-stone-100 text-stone-900 dark:text-stone-100'
-            : 'border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300'
-          }`}
-      >
-        All
-      </Link>
-      {presentTopics.map(topic => {
-        const styles = TOPIC_STYLES[topic];
-        const slug = TOPIC_SLUGS[topic];
-        const isActive = displayActive === topic;
-        return (
-          <Link
-            key={topic}
-            href={`/topic/${slug}`}
-            onClick={() => setPending(topic)}
-            className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2.5 text-[11px] font-sans font-semibold tracking-[0.1em] uppercase border-b-2 -mb-px transition-colors whitespace-nowrap
-              ${isActive
-                ? `border-stone-900 dark:border-stone-100 ${styles.label}`
-                : 'border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300'
-              }`}
-          >
-            <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-            {topic}
-          </Link>
-        );
-      })}
-      {/* Trailing spacer — padding-right doesn't expand scroll area in overflow containers on Safari/Firefox */}
-      <span className="flex-shrink-0 w-4 sm:w-6" aria-hidden="true" />
+    // Outer wrapper: negative margin bleeds to page edge; relative for gradient overlay
+    <div className="relative -mx-4 sm:-mx-6 mb-6">
+      <div className="flex items-end overflow-x-auto no-scrollbar border-b border-stone-200 dark:border-stone-800 px-4 sm:px-6">
+        <Link
+          href="/"
+          onClick={() => setPending('all')}
+          className={`flex-shrink-0 px-2.5 py-2.5 text-[11px] font-sans font-semibold tracking-[0.04em] uppercase border-b-2 -mb-px transition-colors whitespace-nowrap
+            ${isAll
+              ? 'border-stone-900 dark:border-stone-100 text-stone-900 dark:text-stone-100'
+              : 'border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300'
+            }`}
+        >
+          All
+        </Link>
+        {presentTopics.map(topic => {
+          const styles = TOPIC_STYLES[topic];
+          const slug = TOPIC_SLUGS[topic];
+          const isActive = displayActive === topic;
+          return (
+            <Link
+              key={topic}
+              href={`/topic/${slug}`}
+              onClick={() => setPending(topic)}
+              className={`flex-shrink-0 flex items-center gap-1 px-2.5 py-2.5 text-[11px] font-sans font-semibold tracking-[0.04em] uppercase border-b-2 -mb-px transition-colors whitespace-nowrap
+                ${isActive
+                  ? `border-stone-900 dark:border-stone-100 ${styles.label}`
+                  : 'border-transparent text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300'
+                }`}
+            >
+              <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
+              {topic}
+            </Link>
+          );
+        })}
+        {/* Trailing spacer — ensures last tab can be scrolled fully into view
+            (padding-right alone doesn't expand scroll area in overflow containers) */}
+        <span className="flex-shrink-0 w-6 sm:w-8" aria-hidden="true" />
+      </div>
+      {/* Gradient fade on right edge — indicates tabs are horizontally scrollable */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-stone-50 dark:from-stone-950 to-transparent" />
     </div>
   );
 }

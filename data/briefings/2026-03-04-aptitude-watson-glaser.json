@@ -1,0 +1,224 @@
+[
+  {
+    "id": "watson-glaser-1",
+    "subtype": "Inference",
+    "passage": "Last year, the firm's billable hours increased by 12% whilst the number of fee-earners remained constant. This year, despite hiring five additional associates, billable hours have risen by only 3%. The firm's managing partner attributed this slowdown to a decline in client spending across the sector.",
+    "question": "The firm's productivity per fee-earner has decreased since last year.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "Probably True"
+      },
+      {
+        "letter": "C",
+        "text": "Insufficient Data"
+      },
+      {
+        "letter": "D",
+        "text": "Probably False"
+      },
+      {
+        "letter": "E",
+        "text": "False"
+      }
+    ],
+    "correctLetter": "B",
+    "explanation": "Last year, billable hours grew 12% with no additional staff. This year, with 5 new associates added, billable hours grew only 3%. This strongly suggests that the average output per fee-earner has fallen (the new associates contributed less than proportional output, or existing staff became less productive). However, we do not know the exact number of fee-earners in the base, so we cannot be absolutely certain—thus 'Probably True' is the most accurate answer."
+  },
+  {
+    "id": "watson-glaser-2",
+    "subtype": "Inference",
+    "passage": "A commercial law practice conducted a client satisfaction survey. 87% of clients rated the firm's service as 'good' or 'excellent'. Of those dissatisfied clients, the most common complaint was slow turnaround on document reviews. The firm recently invested in document automation software to address this issue.",
+    "question": "The firm expects client satisfaction ratings to improve in the next survey.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "True"
+      },
+      {
+        "letter": "B",
+        "text": "Probably True"
+      },
+      {
+        "letter": "C",
+        "text": "Insufficient Data"
+      },
+      {
+        "letter": "D",
+        "text": "Probably False"
+      },
+      {
+        "letter": "E",
+        "text": "False"
+      }
+    ],
+    "correctLetter": "C",
+    "explanation": "While the firm has invested in automation to address the slowdown complaint, the passage does not state what the firm expects or whether the software will actually resolve the issue effectively. We do not know if the technology will be successfully implemented, adopted by staff, or whether it will genuinely improve turnaround times. Thus, there is insufficient data to infer the firm's expectations."
+  },
+  {
+    "id": "watson-glaser-3",
+    "subtype": "Recognition of Assumptions",
+    "passage": "The senior partner remarked: 'We must implement a strict two-week deadline for all partner sign-off on client invoices, otherwise we will damage client relationships.'",
+    "question": "The partner assumes that delays in invoice sign-off have previously harmed client relationships.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Assumption Made"
+      },
+      {
+        "letter": "B",
+        "text": "Assumption Not Made"
+      }
+    ],
+    "correctLetter": "A",
+    "explanation": "The partner's statement uses a conditional warning: imposing a deadline is necessary to avoid damaging relationships. This assumes that slow sign-off either has damaged relationships in the past, or is perceived as a risk because delays are known to be problematic. Without this assumption (that delays/slow processes harm relationships), there would be no logical reason to impose the deadline as a preventative measure."
+  },
+  {
+    "id": "watson-glaser-4",
+    "subtype": "Recognition of Assumptions",
+    "passage": "The finance director proposed: 'We should move all contract reviews to our Mumbai office to reduce costs and improve efficiency.'",
+    "question": "The finance director assumes that the Mumbai office has sufficient capacity to absorb the additional work.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Assumption Made"
+      },
+      {
+        "letter": "B",
+        "text": "Assumption Not Made"
+      }
+    ],
+    "correctLetter": "A",
+    "explanation": "By proposing that contract reviews be moved to Mumbai to improve efficiency, the director implicitly assumes that the Mumbai office can handle the workload. If the office were fully stretched or lacked capacity, moving work there would not improve efficiency—it would cause delays. The proposal only makes logical sense if there is spare capacity available."
+  },
+  {
+    "id": "watson-glaser-5",
+    "subtype": "Deduction",
+    "passage": "All retained clients receive a quarterly business review meeting. Harrison & Co is a retained client. Therefore, Harrison & Co receives a quarterly business review meeting.",
+    "question": "Harrison & Co receives a quarterly business review meeting.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Conclusion Follows"
+      },
+      {
+        "letter": "B",
+        "text": "Conclusion Does Not Follow"
+      }
+    ],
+    "correctLetter": "A",
+    "explanation": "This is a straightforward deductive syllogism. Premise 1: All retained clients receive quarterly business reviews (universal rule). Premise 2: Harrison & Co is a retained client (specific fact). Conclusion: Harrison & Co receives quarterly business reviews. The conclusion necessarily and logically follows from the premises; it is a valid deduction."
+  },
+  {
+    "id": "watson-glaser-6",
+    "subtype": "Deduction",
+    "passage": "If a law firm has fewer than 50 fee-earners, it must use a shared workspace arrangement or open a second office. Baker LLP has fewer than 50 fee-earners. Therefore, Baker LLP uses a shared workspace arrangement.",
+    "question": "Baker LLP uses a shared workspace arrangement.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Conclusion Follows"
+      },
+      {
+        "letter": "B",
+        "text": "Conclusion Does Not Follow"
+      }
+    ],
+    "correctLetter": "B",
+    "explanation": "The rule states that Baker must use EITHER a shared workspace OR open a second office (disjunctive requirement). We know Baker has fewer than 50 fee-earners, so one of these two options must be true—but the premises do not tell us which one. Baker LLP could have opened a second office instead of using shared workspace. Therefore, the conclusion that it uses shared workspace does not necessarily follow."
+  },
+  {
+    "id": "watson-glaser-7",
+    "subtype": "Interpretation",
+    "passage": "The firm's 2024 annual report shows that partner drawings averaged £420,000, with the highest-earning partner drawing £680,000 and the lowest earning £180,000. Equity partner profits are distributed according to a formula based on origination, seniority, and billable hours. The report notes that partners' personal client lists account for 65% of the firm's revenue.",
+    "question": "The variation in partner earnings is primarily driven by differences in seniority.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Conclusion Follows"
+      },
+      {
+        "letter": "B",
+        "text": "Conclusion Does Not Follow"
+      }
+    ],
+    "correctLetter": "B",
+    "explanation": "The passage states that distributions are based on 'origination, seniority, and billable hours'—a combined formula with three factors. The passage also reveals that 65% of firm revenue comes from personal client lists, which suggests origination and client relationships are crucial. We cannot determine from the evidence whether seniority is the primary driver; the distribution formula is multifactorial. The variation could be primarily driven by origination, billable hours, or a combination—we do not have sufficient evidence to conclude it is primarily seniority."
+  },
+  {
+    "id": "watson-glaser-8",
+    "subtype": "Interpretation",
+    "passage": "Between 2022 and 2024, the firm's female partner count increased from 8 to 14 out of a total of 45 partners. During the same period, the firm's revenue grew by 22% and profit per partner increased by 15%. The managing partner stated: 'The increase in diversity has strengthened our market position and client relationships.' No specific data linking diversity to revenue or profit metrics was provided in the report.",
+    "question": "The firm's financial growth is directly attributable to its increase in female partners.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Conclusion Follows"
+      },
+      {
+        "letter": "B",
+        "text": "Conclusion Does Not Follow"
+      }
+    ],
+    "correctLetter": "B",
+    "explanation": "While the passage shows both an increase in female partners and financial growth occurring in the same period, correlation does not establish causation. The managing partner made an assertion about the benefit ('strengthened our market position'), but the passage explicitly states that 'no specific data linking diversity to revenue or profit metrics was provided.' Without causal evidence, empirical analysis, or controlled data, we cannot conclude that the financial growth is directly attributable to the increase in female partners. Many other factors could explain the growth."
+  },
+  {
+    "id": "watson-glaser-9",
+    "subtype": "Evaluation of Arguments",
+    "passage": "Should UK law firms be required by the Solicitors Regulation Authority (SRA) to publish salary bands for all positions?",
+    "question": "Publishing salary bands would reduce the firm's ability to negotiate individual salaries and incentivise high performers with discretionary pay increases.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Argument Strong"
+      },
+      {
+        "letter": "B",
+        "text": "Argument Weak"
+      }
+    ],
+    "correctLetter": "A",
+    "explanation": "This is a strong argument against the proposal. It directly addresses the competitive and recruitment implications of publishing salary bands, identifies a concrete business concern (loss of negotiation flexibility), and raises a relevant economic incentive question (how discretionary pay would work). The argument is both materially important (affects hiring and retention strategies) and directly relevant to the regulatory question at hand."
+  },
+  {
+    "id": "watson-glaser-10",
+    "subtype": "Evaluation of Arguments",
+    "passage": "Should law firms increase their investment in artificial intelligence and legal tech to automate routine legal work?",
+    "question": "Some of the firm's competitors are already investing in AI, so the firm should do the same to keep up.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Argument Strong"
+      },
+      {
+        "letter": "B",
+        "text": "Argument Weak"
+      }
+    ],
+    "correctLetter": "B",
+    "explanation": "This argument relies on competitive mimicry ('keeping up') without addressing the substantive merits of the proposal—cost-benefit analysis, client demand, efficiency gains, regulatory risk, or return on investment. It is an appeal to competitive pressure rather than a reasoned case for or against the investment. While competitive positioning may be a minor consideration, following competitors without evaluating the firm's specific circumstances and needs is a weak argumentative foundation."
+  },
+  {
+    "id": "watson-glaser-11",
+    "subtype": "Evaluation of Arguments",
+    "passage": "Should the firm introduce a mandatory four-day working week for all fee-earners?",
+    "question": "A four-day week would reduce office energy costs because staff would be present fewer days, which would directly reduce the firm's carbon footprint and operating expenses.",
+    "options": [
+      {
+        "letter": "A",
+        "text": "Argument Strong"
+      },
+      {
+        "letter": "B",
+        "text": "Argument Weak"
+      }
+    ],
+    "correctLetter": "A",
+    "explanation": "This is a strong argument in favour. It identifies two concrete, material benefits that are directly relevant to the proposal: reduced operating costs and environmental sustainability. Both outcomes are logically plausible (fewer people in office = lower utilities and carbon emissions) and economically significant for a law firm's bottom line and corporate positioning. The argument addresses substantive concerns—not emotion or speculation—and ties operational changes to measurable business outcomes."
+  }
+]

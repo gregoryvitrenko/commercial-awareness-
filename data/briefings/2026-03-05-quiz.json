@@ -1,0 +1,606 @@
+{
+  "date": "2026-03-05",
+  "generatedAt": "2026-03-05T13:39:28.712Z",
+  "questions": [
+    {
+      "id": "1-1",
+      "storyId": "1",
+      "question": "What is the approximate value of Coller Capital's assets under management that EQT is acquiring?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Approximately $30 billion"
+        },
+        {
+          "letter": "B",
+          "text": "Approximately $50 billion"
+        },
+        {
+          "letter": "C",
+          "text": "Approximately $75 billion"
+        },
+        {
+          "letter": "D",
+          "text": "Approximately $100 billion"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that EQT's acquisition of Coller Capital brings 'approximately $50 billion of assets under management' onto EQT's platform. This is the headline metric defining the transaction's scale in the secondaries market."
+    },
+    {
+      "id": "1-2",
+      "storyId": "1",
+      "question": "According to Shoosmiths' 2026 PE outlook cited in the briefing, which transaction type is expected to have a record-breaking year?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Sponsor-to-sponsor secondaries purchases"
+        },
+        {
+          "letter": "B",
+          "text": "GP-led continuation funds"
+        },
+        {
+          "letter": "C",
+          "text": "Leveraged buyout recapitalizations"
+        },
+        {
+          "letter": "D",
+          "text": "Cross-border fund mergers"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing identifies that Shoosmiths' 2026 PE outlook expects GP-led continuation funds to have a 'record-breaking year', which is the strategic rationale for EQT's acquisition of Coller Capital's secondaries capability. This deal directly positions EQT to capture that transaction wave."
+    },
+    {
+      "id": "1-3",
+      "storyId": "1",
+      "question": "Which firm is identified in the briefing as having 'deep relationships with Nordic and Swedish PE houses including EQT' and a funds practice spanning GP-led secondaries structures?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "B",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "C",
+          "text": "Herbert Smith Freehills"
+        },
+        {
+          "letter": "D",
+          "text": "Slaughter and May"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing explicitly states that Linklaters is a natural candidate because it has 'deep relationships with Nordic and Swedish PE houses including EQT, and its funds and asset management practice spans the GP-led secondaries structures at the heart of this deal.' This positioning reflects Linklaters' structural advantage on Nordic PE mandates."
+    },
+    {
+      "id": "2-1",
+      "storyId": "2",
+      "question": "What is the sterling value of Valterra Platinum's listing on the London Stock Exchange?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "£5.2 billion"
+        },
+        {
+          "letter": "B",
+          "text": "£7.5 billion"
+        },
+        {
+          "letter": "C",
+          "text": "£10.3 billion"
+        },
+        {
+          "letter": "D",
+          "text": "£12.8 billion"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing opens by stating that Valterra Platinum 'completed a £7.5 billion listing on the London Stock Exchange's Main Market following its demerger from Anglo American plc.' This figure is central to understanding the transaction's significance for the LSE's recent listing reform."
+    },
+    {
+      "id": "2-2",
+      "storyId": "2",
+      "question": "Which firm is confirmed as the adviser to Valterra Platinum on this listing transaction?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Freshfields Bruckhaus Deringer"
+        },
+        {
+          "letter": "B",
+          "text": "Linklaters"
+        },
+        {
+          "letter": "C",
+          "text": "Macfarlanes"
+        },
+        {
+          "letter": "D",
+          "text": "Slaughter and May"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states directly that 'Macfarlanes' acting as adviser on the transaction,' and later confirms in the Why It Matters section that 'Macfarlanes has the direct mandate on this transaction and its capital markets practice is confirmed as advising Valterra Platinum.' This is a Silver Circle lead mandate rather than Magic Circle."
+    },
+    {
+      "id": "2-3",
+      "storyId": "2",
+      "question": "According to the City of London Law Society, revised specimen documents relating to Admission Conditions and Further Terms of the Offer for Takeover Code purposes were published on which date?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "24 February 2026"
+        },
+        {
+          "letter": "B",
+          "text": "26 February 2026"
+        },
+        {
+          "letter": "C",
+          "text": "1 March 2026"
+        },
+        {
+          "letter": "D",
+          "text": "5 March 2026"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing specifies that 'on 26 February 2026, the City of London Law Society published revised specimen documents relating to Admission Conditions and Further Terms of the Offer for Takeover Code purposes.' A trainee on this deal would need to track these updated templates to ensure Valterra's documentation remained compliant."
+    },
+    {
+      "id": "3-1",
+      "storyId": "3",
+      "question": "On what date did GlobalCapital report that private credit players were pushing back after Blue Owl Capital cast doubt on the sector's near-term expansion prospects?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "1 March 2026"
+        },
+        {
+          "letter": "B",
+          "text": "3 March 2026"
+        },
+        {
+          "letter": "C",
+          "text": "5 March 2026"
+        },
+        {
+          "letter": "D",
+          "text": "8 March 2026"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that GlobalCapital reported 'on 3 March 2026' that 'private credit players are pushing back after Blue Owl Capital cast doubt on the sector's near-term expansion prospects.' This date also coincides with MUFG's hire from Crédit Agricole."
+    },
+    {
+      "id": "3-2",
+      "storyId": "3",
+      "question": "According to the Citizens Financial survey cited in the briefing, what percentage of middle-market executives and PE professionals expect M&A volumes to increase in 2026?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "42%"
+        },
+        {
+          "letter": "B",
+          "text": "58%"
+        },
+        {
+          "letter": "C",
+          "text": "68%"
+        },
+        {
+          "letter": "D",
+          "text": "74%"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing explicitly states that 'The Citizens Financial survey cited in Private Equity Wire found that 58% of middle-market executives and PE professionals expect M&A volumes to increase in 2026 after a 2025 dominated by large-cap transactions — rising deal flow directly drives leveraged finance origination.' This is the pipeline signal that leveraged finance desks are positioning around."
+    },
+    {
+      "id": "3-3",
+      "storyId": "3",
+      "question": "The DLA Piper Private Credit Academy has framed its curriculum around comparing which two market segments?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Private equity and private credit"
+        },
+        {
+          "letter": "B",
+          "text": "Syndicated loans and direct lending"
+        },
+        {
+          "letter": "C",
+          "text": "Private credit and syndicated loan deal terms"
+        },
+        {
+          "letter": "D",
+          "text": "Bank loans and bond issuance"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that 'The DLA Piper Private Credit Academy — scheduled for delivery with speakers including Partner Alan Rockwell and Partner Maria Cornilsen — has explicitly framed its curriculum around comparing private credit and syndicated loan deal terms, confirming that the practical convergence and divergence of these two markets is a live issue for practitioners.' This convergence is the defining structural question for leveraged finance lawyers in 2026."
+    },
+    {
+      "id": "4-1",
+      "storyId": "4",
+      "question": "On what date did the White House announce the voluntary pledge from major technology companies to self-fund AI data centre power costs?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "28 February 2026"
+        },
+        {
+          "letter": "B",
+          "text": "2 March 2026"
+        },
+        {
+          "letter": "C",
+          "text": "4 March 2026"
+        },
+        {
+          "letter": "D",
+          "text": "6 March 2026"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing explicitly states that 'On 4 March 2026, the White House announced that major technology companies had signed a voluntary pledge committing to cover the costs of powering their AI data centres themselves.' This is the foundational date for understanding the transactional impetus the pledge creates."
+    },
+    {
+      "id": "4-2",
+      "storyId": "4",
+      "question": "According to PwC's UK M&A analysis cited in the briefing, which factor is identified as a driver of rising UK deal values in 2025 through large-scale infrastructure demand?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Renewable energy project development"
+        },
+        {
+          "letter": "B",
+          "text": "AI infrastructure build-out"
+        },
+        {
+          "letter": "C",
+          "text": "Digital transformation investments"
+        },
+        {
+          "letter": "D",
+          "text": "Data centre acquisitions"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing notes that 'The signatories include companies at the centre of the accelerating AI infrastructure build-out — the same investment wave that PwC's UK M&A analysis identifies as a driver of rising UK deal values in 2025 through large-scale infrastructure demand.' This trend is the broader context for understanding why the White House pledge will catalyse significant transactional work."
+    },
+    {
+      "id": "4-3",
+      "storyId": "4",
+      "question": "Which three transaction types are identified in the briefing as those that technology companies will need to execute at scale to honour the White House pledge?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Grid connection contracts, power generation permits, and environmental assessments"
+        },
+        {
+          "letter": "B",
+          "text": "Power purchase agreements, grid connection contracts, and on-site generation structures"
+        },
+        {
+          "letter": "C",
+          "text": "Power purchase agreements, renewable energy credits, and grid interconnection fees"
+        },
+        {
+          "letter": "D",
+          "text": "On-site generation structures, battery storage arrangements, and transmission upgrades"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing explicitly states that 'For energy lawyers, the pledge creates a transactional impetus — companies that have committed to self-funding power will need to execute power purchase agreements, grid connection contracts, on-site generation structures, and potentially battery storage arrangements at scale and speed.' These are the core transaction types energy project finance practices will be executing."
+    },
+    {
+      "id": "5-1",
+      "storyId": "5",
+      "question": "On what date did the European Commission open a formal investigation under the Foreign Subsidies Regulation into Goldwind?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "February 2026"
+        },
+        {
+          "letter": "B",
+          "text": "Early 2026 (escalation from April 2024 information requests)"
+        },
+        {
+          "letter": "C",
+          "text": "March 2026"
+        },
+        {
+          "letter": "D",
+          "text": "April 2026"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that 'The Goldwind investigation was initiated in April 2024 via requests for information to companies active in the EU wind sector, and the Commission's decision to escalate to a formal investigation signals that the FSR is becoming an active enforcement mechanism.' The formal investigation escalation occurred in early 2026, as indicated by the March 2026 McGuireWoods newsletter reporting."
+    },
+    {
+      "id": "5-2",
+      "storyId": "5",
+      "question": "Under the Foreign Subsidies Regulation, which of the following is NOT identified as a remedy available to the European Commission?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Divestiture"
+        },
+        {
+          "letter": "B",
+          "text": "Financial redress"
+        },
+        {
+          "letter": "C",
+          "text": "Behavioural commitments"
+        },
+        {
+          "letter": "D",
+          "text": "Criminal prosecution of company officers"
+        }
+      ],
+      "correctLetter": "D",
+      "explanation": "The briefing states that 'Under the FSR, the Commission has power to investigate financial contributions granted by non-EU governments — principally China — to companies operating in the EU, and can impose remedies including divestiture or financial redress.' The remedies section also notes 'behavioural commitments, structural measures, and financial contributions' as options, but criminal prosecution is not mentioned as an FSR remedy."
+    },
+    {
+      "id": "5-3",
+      "storyId": "5",
+      "question": "Which firm is identified in the briefing as having 'a dominant Brussels competition practice' and being 'consistently mandated on novel EU enforcement initiatives', making it 'the leading US firm for FSR defence work'?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Davis Polk"
+        },
+        {
+          "letter": "B",
+          "text": "Skadden"
+        },
+        {
+          "letter": "C",
+          "text": "Cleary Gottlieb"
+        },
+        {
+          "letter": "D",
+          "text": "Sullivan & Cromwell"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing explicitly states that 'Cleary Gottlieb has a dominant Brussels competition practice and is consistently mandated on novel EU enforcement initiatives, making it the leading US firm for FSR defence work.' This positioning reflects Cleary's early investment in building FSR capability before the regulation entered force."
+    },
+    {
+      "id": "6-1",
+      "storyId": "6",
+      "question": "In the case Mariana v BHP Group, under which legal system did the UK High Court find BHP liable for the 2015 Fundão tailings dam collapse?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "English law"
+        },
+        {
+          "letter": "B",
+          "text": "Brazilian law"
+        },
+        {
+          "letter": "C",
+          "text": "International environmental law"
+        },
+        {
+          "letter": "D",
+          "text": "Common law principles of nuisance"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing clearly states that 'The UK High Court has found BHP liable under Brazilian law for the 2015 collapse of the Fundão tailings dam in Brazil.' This application of foreign law is the landmark aspect of the ruling, confirming that English courts are willing to apply foreign law to hold UK parent companies liable for overseas subsidiary conduct."
+    },
+    {
+      "id": "6-2",
+      "storyId": "6",
+      "question": "Approximately how many cubic metres of mining waste was released by the Fundão dam collapse?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "20 million cubic metres"
+        },
+        {
+          "letter": "B",
+          "text": "40 million cubic metres"
+        },
+        {
+          "letter": "C",
+          "text": "60 million cubic metres"
+        },
+        {
+          "letter": "D",
+          "text": "90 million cubic metres"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing specifies that 'The Fundão dam collapse released approximately 60 million cubic metres of mining waste, destroyed the town of Bento Rodrigues, and contaminated the Rio Doce river for hundreds of kilometres.' This scale of environmental damage is the basis for potential substantial quantum liability."
+    },
+    {
+      "id": "6-3",
+      "storyId": "6",
+      "question": "According to TLT's Disputes Outlook 2026 cited in the briefing, what is identified as one of the most significant structural trends shaping commercial disputes this year?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Increased use of international arbitration over litigation"
+        },
+        {
+          "letter": "B",
+          "text": "Group litigation in England and Wales"
+        },
+        {
+          "letter": "C",
+          "text": "Rise of artificial intelligence in document review"
+        },
+        {
+          "letter": "D",
+          "text": "Shift towards alternative dispute resolution mechanisms"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that TLT's Disputes Outlook 2026 identifies 'group litigation in England and Wales' as 'one of the most significant structural trends shaping commercial disputes this year, driven by claimant law firms, litigation funders, and evolving court strategies.' The Mariana v BHP case exemplifies this trend."
+    },
+    {
+      "id": "7-1",
+      "storyId": "7",
+      "question": "How many FSR investigations focused on Chinese entities has the European Commission opened as of the briefing date?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "One"
+        },
+        {
+          "letter": "B",
+          "text": "Two"
+        },
+        {
+          "letter": "C",
+          "text": "Three"
+        },
+        {
+          "letter": "D",
+          "text": "Four"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that the Goldwind investigation 'is the second FSR investigation focused on a Chinese entity, reinforcing the pattern that the Commission views the FSR primarily as a tool to address Chinese state subsidies flowing into strategically sensitive EU sectors.' The emphasis on 'second' confirms this is the second such probe."
+    },
+    {
+      "id": "7-2",
+      "storyId": "7",
+      "question": "Through which subsidiary is Goldwind, a Chinese wind turbine manufacturer, active in the EU according to the briefing?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Goldwind Europe Ltd"
+        },
+        {
+          "letter": "B",
+          "text": "Vensys"
+        },
+        {
+          "letter": "C",
+          "text": "Siemens Gamesa (licensed operations)"
+        },
+        {
+          "letter": "D",
+          "text": "Vestas EU Holdings"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing explicitly states that Goldwind is 'active in the production and sale of wind turbines and related services in the EU through its subsidiary Vensys.' This corporate structure is relevant to understanding how the FSR enforcement operates against foreign-controlled EU entities."
+    },
+    {
+      "id": "7-3",
+      "storyId": "7",
+      "question": "Which regulatory measure, cited alongside the FSR in the briefing, does the Trade Policy Committee (Deputies) agenda for 5 March 2026 reference as part of the EU's layered regulatory exposure for Chinese wind turbine manufacturers?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "EU anti-dumping Regulation (EU) 2016/1036"
+        },
+        {
+          "letter": "B",
+          "text": "EU anti-subsidy Directive (EU) 2015/645"
+        },
+        {
+          "letter": "C",
+          "text": "Trade Facilitation Regulation (EU) 2020/1174"
+        },
+        {
+          "letter": "D",
+          "text": "Customs Union Code (EU) 2021/952"
+        }
+      ],
+      "correctLetter": "A",
+      "explanation": "The briefing states that 'Mayer Brown's Europe Daily News of 4 March 2026 notes that the Trade Policy Committee (Deputies) agenda for 5 March 2026 includes items under EU anti-dumping Regulation (EU) 2016/1036, reflecting the active use of the EU's trade defence toolkit in parallel with the FSR.' This creates layered enforcement exposure for Goldwind."
+    },
+    {
+      "id": "8-1",
+      "storyId": "8",
+      "question": "On what date did Attorney General Pam Bondi establish the Department of Justice's AI Litigation Task Force?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "5 January 2026"
+        },
+        {
+          "letter": "B",
+          "text": "9 January 2026"
+        },
+        {
+          "letter": "C",
+          "text": "15 January 2026"
+        },
+        {
+          "letter": "D",
+          "text": "20 January 2026"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing explicitly states that 'Attorney General Pam Bondi established the Department of Justice's AI Litigation Task Force on 9 January 2026, tasked with challenging state AI laws in federal court.' This is the key date marking the beginning of the Trump administration's pre-emption strategy."
+    },
+    {
+      "id": "8-2",
+      "storyId": "8",
+      "question": "By what date must the Federal Trade Commission deliver its policy statement setting out the Commission's position on the application of Section 5 of the FTC Act to AI models?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "28 February 2026"
+        },
+        {
+          "letter": "B",
+          "text": "11 March 2026"
+        },
+        {
+          "letter": "C",
+          "text": "1 April 2026"
+        },
+        {
+          "letter": "D",
+          "text": "15 April 2026"
+        }
+      ],
+      "correctLetter": "B",
+      "explanation": "The briefing states that 'The second major federal AI regulatory milestone is a policy statement from the Federal Trade Commission due by 11 March 2026, setting out the Commission's position on the application of Section 5 of the FTC Act — prohibiting unfair and deceptive acts or practices — to AI models.' This deadline is a key marker for compliance planning."
+    },
+    {
+      "id": "8-3",
+      "storyId": "8",
+      "question": "According to the National Law Review analysis cited in the briefing, which state is identified as the most active jurisdiction in passing new AI laws?",
+      "options": [
+        {
+          "letter": "A",
+          "text": "Texas"
+        },
+        {
+          "letter": "B",
+          "text": "New York"
+        },
+        {
+          "letter": "C",
+          "text": "California"
+        },
+        {
+          "letter": "D",
+          "text": "Illinois"
+        }
+      ],
+      "correctLetter": "C",
+      "explanation": "The briefing states that 'The National Law Review's analysis of new state AI laws identifies California as the most active jurisdiction, with pending bills requiring covered providers of AI-generated content with over 1 million monthly visitors to provide clear disclosures, offer users opt-in AI labelling tools, and provide AI detection capabilities.' This makes California a critical jurisdiction for AI compliance mapping."
+    }
+  ]
+}

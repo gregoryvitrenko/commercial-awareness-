@@ -43,12 +43,20 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
 
       <header className="border-b border-stone-200 dark:border-stone-800">
         <div className="h-[3px] bg-stone-900 dark:bg-stone-100" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 text-[12px] font-sans text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+          >
+            <ArrowLeft size={14} />
+            Home
+          </Link>
           <Link href="/">
             <h1 className="font-serif text-[22px] sm:text-[28px] font-bold tracking-tight text-stone-900 dark:text-stone-50 hover:opacity-75 transition-opacity">
               Commercial Awareness
             </h1>
           </Link>
+          <div className="w-[52px]" />
         </div>
       </header>
 
@@ -224,12 +232,20 @@ function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: (
 
       <header className="border-b border-stone-200 dark:border-stone-800">
         <div className="h-[3px] bg-stone-900 dark:bg-stone-100" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 text-[12px] font-sans text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+          >
+            <ArrowLeft size={14} />
+            Home
+          </Link>
           <Link href="/">
             <h1 className="font-serif text-[22px] sm:text-[28px] font-bold tracking-tight text-stone-900 dark:text-stone-50 hover:opacity-75 transition-opacity">
               Commercial Awareness
             </h1>
           </Link>
+          <div className="w-[52px]" />
         </div>
       </header>
 

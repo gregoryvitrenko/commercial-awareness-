@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ThemeToggle } from './ThemeToggle';
 import { AuthButtons } from './AuthButtons';
-import { Archive, PenLine, Bookmark, Building2, BookOpen, Newspaper, Headphones, GraduationCap } from 'lucide-react';
+import { NavDropdowns } from './NavDropdowns';
 
 interface HeaderProps {
   date: string;
@@ -20,7 +20,6 @@ function formatShortDate(dateStr: string): string {
   });
 }
 
-const NAV_LINK = 'flex items-center gap-1.5 flex-1 justify-center py-2 text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-stone-400 dark:text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors';
 
 export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
   const displayDate = archiveDate ?? date;
@@ -63,40 +62,7 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
               </Link>
             </>
           ) : (
-            <>
-              <Link href="/" className={NAV_LINK}>
-                <Newspaper size={11} />
-                Briefing
-              </Link>
-              <Link href="/quiz" className={NAV_LINK}>
-                <PenLine size={11} />
-                Quiz
-              </Link>
-              <Link href="/saved" className={NAV_LINK}>
-                <Bookmark size={11} />
-                Bookmarks
-              </Link>
-              <Link href="/firms" className={NAV_LINK}>
-                <Building2 size={11} />
-                Firms
-              </Link>
-              <Link href="/primers" className={NAV_LINK}>
-                <BookOpen size={11} />
-                Primers
-              </Link>
-              <Link href="/archive" className={NAV_LINK}>
-                <Archive size={11} />
-                Archive
-              </Link>
-              <Link href="/tests" className={NAV_LINK}>
-                <GraduationCap size={11} />
-                Tests
-              </Link>
-              <Link href="/podcast" className={NAV_LINK}>
-                <Headphones size={11} />
-                Podcast
-              </Link>
-            </>
+            <NavDropdowns />
           )}
         </div>
 

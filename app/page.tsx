@@ -3,7 +3,6 @@ import { Header } from '@/components/Header';
 import { BriefingView } from '@/components/BriefingView';
 import { GenerateButton } from '@/components/GenerateButton';
 import { LandingHero } from '@/components/LandingHero';
-import { UpgradeBanner } from '@/components/UpgradeBanner';
 import { getSubscriptionStatus } from '@/lib/paywall';
 import { auth } from '@clerk/nextjs/server';
 
@@ -25,7 +24,7 @@ export default async function HomePage() {
     return (
       <>
         <Header date={today} />
-        {subscriptionStatus === 'unauthenticated' && <LandingHero />}
+        {(subscriptionStatus === 'unauthenticated' || subscriptionStatus === 'free') && <LandingHero />}
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-24 flex flex-col items-center text-center gap-10">
           <div className="space-y-4">
             <p className="text-[10px] tracking-[0.25em] uppercase text-stone-400 dark:text-stone-500 font-sans">
@@ -50,8 +49,7 @@ export default async function HomePage() {
   return (
     <>
       <Header date={today} />
-      {subscriptionStatus === 'unauthenticated' && <LandingHero />}
-      {subscriptionStatus === 'free' && <UpgradeBanner />}
+      {(subscriptionStatus === 'unauthenticated' || subscriptionStatus === 'free') && <LandingHero />}
       {isStale && (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-5">
           <div className="flex items-center justify-between gap-4 px-4 py-3 rounded-sm bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30">

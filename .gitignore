@@ -30,6 +30,9 @@ data/subscriptions.json
 data/bookmarks.json
 data/comments.json
 
+# Generated firm interview packs (AI-generated cache; production uses Redis)
+data/firms/
+
 # Generated briefing cache (optional — uncomment to exclude)
 # data/briefings/*.json
 # data/briefings/*-quiz.json

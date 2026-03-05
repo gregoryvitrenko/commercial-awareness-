@@ -65,7 +65,7 @@ export default function UpgradePage() {
               £4 / month
             </h2>
             <p className="text-[14px] text-zinc-500 dark:text-zinc-400">
-              The fastest way to become the candidate who actually knows their stuff.
+              Turn today&apos;s deals into confident interview answers in 10 minutes a day.
             </p>
           </div>
 

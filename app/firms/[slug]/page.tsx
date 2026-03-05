@@ -13,6 +13,8 @@ import {
   Newspaper,
   Heart,
   GraduationCap,
+  MessageSquare,
+  HelpCircle,
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { getFirmBySlug } from '@/lib/firms-data';
@@ -20,6 +22,7 @@ import { getDiversitySchemes } from '@/lib/diversity-data';
 import { requireSubscription } from '@/lib/paywall';
 import { listBriefings, getBriefing, getTodayDate } from '@/lib/storage';
 import { TOPIC_STYLES, type FirmTier, type DiversitySchemeType } from '@/lib/types';
+import { getFirmInterviewPack, type FirmInterviewPack } from '@/lib/firm-pack';
 
 export const dynamic = 'force-dynamic';
 
@@ -145,19 +148,40 @@ export default async function FirmProfilePage({
     ...firm.aliases.map((a) => a.toLowerCase()),
   ]);
 
-  type StoryWithDate = { id: string; topic: string; headline: string; date: string };
+  type StoryWithDate = {
+    id: string;
+    topic: string;
+    headline: string;
+    date: string;
+    talkingPoint: string;
+    firms: string[];
+  };
   const recentStories: StoryWithDate[] = briefings
     .flatMap((b) =>
       b
-        ? b.stories.map((s) => ({ id: s.id, topic: s.topic, headline: s.headline, date: b.date }))
+        ? b.stories.map((s) => ({
+            id: s.id,
+            topic: s.topic,
+            headline: s.headline,
+            date: b.date,
+            talkingPoint: s.talkingPoint ?? '',
+            firms: s.firms ?? [],
+          }))
         : []
     )
-    .filter((s) => {
-      const fullStory = briefings
-        .find((b) => b?.date === s.date)
-        ?.stories.find((st) => st.id === s.id);
-      return fullStory?.firms?.some((f) => aliasSet.has(f.toLowerCase()));
-    });
+    .filter((s) => s.firms.some((f) => aliasSet.has(f.toLowerCase())));
+
+  // ── Interview Pack: 10 practice questions, cached per firm ────────────────
+  let interviewPack: FirmInterviewPack | null = null;
+  try {
+    interviewPack = await getFirmInterviewPack(
+      firm,
+      recentStories.map((s) => s.headline),
+    );
+  } catch {
+    // Non-fatal — page renders without questions if generation fails
+    interviewPack = null;
+  }
 
   const tierAccent = TIER_LEFT_BORDER[firm.tier];
   const tierText   = TIER_STAT_TEXT[firm.tier];
@@ -500,6 +524,89 @@ export default async function FirmProfilePage({
                   );
                 })}
               </div>
+            )}
+          </SectionCard>
+
+          {/* ── News Talking Points ──────────────────────────────────────────── */}
+          {recentStories.length > 0 && (
+            <SectionCard accent={tierAccent}>
+              <SectionHeading icon={<MessageSquare size={13} />} label="Interview Talking Points" />
+              <p className="text-[12px] text-stone-400 dark:text-stone-500 mb-4 leading-relaxed">
+                These are the interview angles on recent stories mentioning {firm.shortName}. Each
+                one gives you a ready-made observation to deploy when an interviewer asks{' '}
+                &ldquo;What&apos;s caught your attention in the news recently?&rdquo;
+              </p>
+              <div className="space-y-4">
+                {recentStories
+                  .filter((s) => s.talkingPoint)
+                  .map((story) => {
+                    const styles =
+                      TOPIC_STYLES[story.topic as keyof typeof TOPIC_STYLES] ??
+                      TOPIC_STYLES['International'];
+                    return (
+                      <div
+                        key={`tp-${story.date}-${story.id}`}
+                        className="border-l-2 border-stone-200 dark:border-stone-700 pl-4"
+                      >
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className={`inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
+                          <p className="text-[10px] font-mono text-stone-400 dark:text-stone-500 uppercase tracking-widest">
+                            {formatDisplayDate(story.date)} · {story.topic}
+                          </p>
+                        </div>
+                        <p className="text-[11px] font-medium text-stone-500 dark:text-stone-400 leading-snug mb-1.5">
+                          {story.headline}
+                        </p>
+                        <p className="text-[14px] text-stone-700 dark:text-stone-300 leading-[1.7]">
+                          {story.talkingPoint}
+                        </p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </SectionCard>
+          )}
+
+          {/* ── Practice Interview Questions ──────────────────────────────────── */}
+          <SectionCard accent={tierAccent}>
+            <SectionHeading icon={<HelpCircle size={13} />} label="Practice Interview Questions" />
+            <p className="text-[12px] text-stone-400 dark:text-stone-500 mb-5 leading-relaxed">
+              10 questions tailored to {firm.shortName} — drawn from the firm&apos;s profile,
+              practice areas, and recent news. Try answering each one aloud before reading on.
+            </p>
+
+            {interviewPack && interviewPack.practiceQuestions.length > 0 ? (
+              <ol className="space-y-4">
+                {interviewPack.practiceQuestions.map((question, i) => (
+                  <li
+                    key={i}
+                    className="flex gap-4 group"
+                  >
+                    <span
+                      className={`shrink-0 font-mono text-[11px] font-bold tracking-tight mt-0.5 ${tierText} opacity-70`}
+                    >
+                      Q{i + 1}
+                    </span>
+                    <p className="text-[14px] text-stone-700 dark:text-stone-300 leading-[1.7]">
+                      {question}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p className="text-[13px] text-stone-400 dark:text-stone-500 italic">
+                Interview questions are being generated — refresh the page in a moment.
+              </p>
+            )}
+
+            {interviewPack && (
+              <p className="text-[10px] font-mono text-stone-300 dark:text-stone-600 mt-6">
+                Generated {new Date(interviewPack.generatedAt).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })} · refreshes weekly
+              </p>
             )}
           </SectionCard>
 

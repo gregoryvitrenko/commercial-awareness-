@@ -307,130 +307,173 @@ export function QuizInterface({ date, initialQuiz, storyMeta }: QuizInterfacePro
 
     return (
       <div>
-        <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
+        <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-4">
           {alreadyDone ? 'Completed' : isToday ? "Today's quiz" : 'Practice quiz'}
         </h3>
 
-        {/* ── Streak badge (today only) ──────────────────────────────────── */}
-        {isToday && streakCount > 0 && (
-          <div className="mb-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40">
-            <Flame className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
-            <span className="text-[12px] font-mono font-semibold text-amber-700 dark:text-amber-400">
-              {streakCount}-day streak
-            </span>
-            {streakDone && (
-              <span className="text-[10px] font-mono text-amber-500 dark:text-amber-500 ml-0.5">
-                · done today ✓
-              </span>
-            )}
-          </div>
-        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-        <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-          {/* ── Daily (streak) mode ──────────────────────────────────────── */}
-          <div className="relative px-5 py-5 border-b border-zinc-100 dark:border-zinc-800">
-            <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-amber-400 dark:bg-amber-500/70" />
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <Flame className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 flex-shrink-0" />
+          {/* ── Daily (streak) card ───────────────────────────────────────── */}
+          <div
+            onClick={() => !streakDone && fetchAndStart('streak', false)}
+            className={`group relative flex flex-col rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/8 dark:hover:shadow-amber-500/5 hover:-translate-y-0.5 ${!streakDone ? 'cursor-pointer' : ''}`}
+          >
+            {/* Amber top bar */}
+            <div className="h-[3px] bg-amber-400 dark:bg-amber-500/80 flex-shrink-0" />
+
+            {/* Hover tint layer */}
+            <div className="pointer-events-none absolute inset-0 bg-amber-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity" />
+
+            <div className="relative flex flex-col flex-1 px-5 pt-5 pb-5 gap-4">
+              {/* Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Flame className="w-4 h-4 text-amber-500 dark:text-amber-400 flex-shrink-0" />
                   <span className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-900 dark:text-zinc-100">
                     Daily
                   </span>
                   <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
-                    {streakCount_} questions
+                    {streakCount_}q
                   </span>
                 </div>
-                <p className="text-[12px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                {isToday && streakDone && (
+                  <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+                    ✓ done today
+                  </span>
+                )}
+              </div>
+
+              {/* Hero: streak number */}
+              <div className="flex items-end gap-3 min-h-[52px]">
+                {isToday && streakCount > 0 ? (
+                  <>
+                    <span className="text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-none">
+                      {streakCount}
+                    </span>
+                    <div className="pb-1 leading-tight">
+                      <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-amber-500 dark:text-amber-400">day</p>
+                      <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-amber-500 dark:text-amber-400">streak</p>
+                    </div>
+                  </>
+                ) : (
+                  <span className="text-[13px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                    {streakDone
+                      ? "Done for today — come back tomorrow to keep your streak."
+                      : "One question per practice area. Keeps your streak alive."}
+                  </span>
+                )}
+              </div>
+
+              {/* Subtitle (only when streak number is shown) */}
+              {isToday && streakCount > 0 && (
+                <p className="text-[12px] text-zinc-500 dark:text-zinc-400 leading-relaxed -mt-1">
                   {streakDone
-                    ? "Done for today — come back tomorrow to keep your streak."
+                    ? "Done for today — come back tomorrow."
                     : "One question per practice area. Keeps your streak alive."}
                 </p>
-              </div>
-            </div>
-
-            {errorMsg && (
-              <p className="mt-2 text-[12px] font-mono text-rose-500 dark:text-rose-400">
-                {errorMsg}
-              </p>
-            )}
-
-            <div className="flex items-center gap-3 flex-wrap mt-3">
-              {uiState === 'loading' && quizMode === 'streak' ? (
-                <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-[13px] font-sans font-medium">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating…
-                </div>
-              ) : streakDone ? (
-                <>
-                  {missedCount > 0 && (
-                    <button
-                      onClick={() => fetchAndStart('streak', true)}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-[13px] font-sans font-medium hover:opacity-80 transition-opacity"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" />
-                      Retry {missedCount} missed
-                    </button>
-                  )}
-                  <button
-                    onClick={() => fetchAndStart('streak', false)}
-                    className="px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 text-[13px] font-sans hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
-                  >
-                    Retake daily quiz
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => fetchAndStart('streak', false)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-[13px] font-sans font-medium hover:opacity-80 transition-opacity"
-                >
-                  <Flame className="w-3.5 h-3.5 text-amber-400" />
-                  {quiz ? 'Start daily quiz →' : 'Generate & start →'}
-                </button>
               )}
+
+              {errorMsg && (
+                <p className="text-[12px] font-mono text-rose-500 dark:text-rose-400">
+                  {errorMsg}
+                </p>
+              )}
+
+              {/* Actions — pinned to bottom */}
+              <div className="flex items-center gap-2 flex-wrap mt-auto">
+                {uiState === 'loading' && quizMode === 'streak' ? (
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 text-white text-[13px] font-sans font-medium">
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    Generating…
+                  </div>
+                ) : streakDone ? (
+                  <>
+                    {missedCount > 0 && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); fetchAndStart('streak', true); }}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[13px] font-sans font-medium hover:opacity-80 transition-opacity"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                        Retry {missedCount} missed
+                      </button>
+                    )}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); fetchAndStart('streak', false); }}
+                      className="px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 text-[13px] font-sans hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
+                    >
+                      Retake
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); fetchAndStart('streak', false); }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 dark:bg-amber-500 dark:hover:bg-amber-600 text-white text-[13px] font-sans font-medium transition-colors"
+                  >
+                    <Flame className="w-3.5 h-3.5" />
+                    {quiz ? 'Start daily quiz →' : 'Generate & start →'}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
-          {/* ── Deep practice mode ───────────────────────────────────────── */}
-          <div className="relative px-5 py-5">
-            <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-violet-400 dark:bg-violet-500/70" />
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <Zap className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400 flex-shrink-0" />
-                  <span className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-900 dark:text-zinc-100">
-                    Deep practice
-                  </span>
-                  <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
-                    {deepCount} questions
-                  </span>
-                </div>
-                <p className="text-[12px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                  All 3 questions per practice area. Full recall drill.
-                </p>
-              </div>
-            </div>
+          {/* ── Deep practice card ────────────────────────────────────────── */}
+          <div
+            onClick={() => fetchAndStart('deep', false)}
+            className="group relative flex flex-col rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-violet-500/8 dark:hover:shadow-violet-500/5 hover:-translate-y-0.5"
+          >
+            {/* Violet top bar */}
+            <div className="h-[3px] bg-violet-400 dark:bg-violet-500/80 flex-shrink-0" />
 
-            <div className="flex items-center gap-3 flex-wrap mt-3">
-              {uiState === 'loading' && quizMode === 'deep' ? (
-                <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-[13px] font-sans font-medium">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Generating…
+            {/* Hover tint layer */}
+            <div className="pointer-events-none absolute inset-0 bg-violet-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity" />
+
+            <div className="relative flex flex-col flex-1 px-5 pt-5 pb-5 gap-4">
+              {/* Header */}
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-violet-500 dark:text-violet-400 flex-shrink-0" />
+                <span className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-900 dark:text-zinc-100">
+                  Deep Practice
+                </span>
+              </div>
+
+              {/* Hero: question count */}
+              <div className="flex items-end gap-3 min-h-[52px]">
+                <span className="text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-none">
+                  {deepCount}
+                </span>
+                <div className="pb-1 leading-tight">
+                  <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">full</p>
+                  <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">questions</p>
                 </div>
-              ) : (
-                <button
-                  onClick={() => fetchAndStart('deep', false)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-[13px] font-sans hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
-                >
-                  <Zap className="w-3.5 h-3.5 text-violet-500 dark:text-violet-400" />
-                  {quiz ? 'Start deep practice →' : 'Generate & start →'}
-                </button>
-              )}
+              </div>
+
+              <p className="text-[12px] text-zinc-500 dark:text-zinc-400 leading-relaxed -mt-1">
+                All 3 questions per practice area. Full recall drill.
+              </p>
+
+              {/* Action */}
+              <div className="mt-auto">
+                {uiState === 'loading' && quizMode === 'deep' ? (
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-500 text-white text-[13px] font-sans font-medium">
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    Generating…
+                  </div>
+                ) : (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); fetchAndStart('deep', false); }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-500 hover:bg-violet-600 dark:bg-violet-500 dark:hover:bg-violet-600 text-white text-[13px] font-sans font-medium transition-colors"
+                  >
+                    <Zap className="w-3.5 h-3.5" />
+                    {quiz ? 'Start deep practice →' : 'Generate & start →'}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-3">
+        <div className="mt-4">
           <Link
             href="/"
             className="text-[12px] text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"

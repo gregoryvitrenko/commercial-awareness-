@@ -24,6 +24,10 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+// Force all pages to render dynamically — @clerk/nextjs references `window`
+// during static generation which causes build failures.
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Folio — Legal prep, done properly.',
   description:

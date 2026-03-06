@@ -1,6 +1,6 @@
 End the current session by completing the full end-of-session protocol:
 
-1. Update `/Users/gregoryvitrenko/.claude/projects/-Users-gregoryvitrenko-Documents-CommercialAwareness/memory/MEMORY.md` to reflect ALL changes made this session. Be thorough — add new features, update existing entries, remove anything outdated. This is non-negotiable.
+1. Update `/Users/gregoryvitrenko/.claude/projects/-Users-gregoryvitrenko-Documents-Folio/memory/MEMORY.md` to reflect ALL changes made this session. Be thorough — add new features, update existing entries, remove anything outdated. This is non-negotiable.
 
 2. Run `git add -u` then `git add` any new untracked files that belong in the repo (exclude data/subscriptions.json, data/bookmarks.json, data/comments.json, .env.local, and other gitignored files).
 
@@ -18,7 +18,7 @@ Do not skip any step. Do not ask for confirmation before starting — just execu
 **QUICK START — paste this at the start of your next session:**
 
 ```
-We're working on Commercial Awareness Daily (Next.js 15, TypeScript, Tailwind). Last session: [1-sentence summary of what was done]. Current state: [1 sentence on where things stand]. Next up: [the most logical next task or what was left unfinished]. Anything I should know before we start?
+We're working on Folio (folioapp.co.uk — Next.js 15, TypeScript, Tailwind). Last session: [1-sentence summary of what was done]. Current state: [1 sentence on where things stand]. Next up: [the most logical next task or what was left unfinished]. Anything I should know before we start?
 ```
 ---
 

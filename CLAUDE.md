@@ -1,7 +1,7 @@
-# Commercial Awareness Daily — Project Brief
+# Folio — Project Brief
 
 ## What this is
-A daily commercial awareness briefing tool for UK law students targeting Magic Circle and US firm training contracts. Subscription product at £4/month. Built by the owner (LLB student) who will handle marketing via LinkedIn, university law societies, and peer networks.
+A daily briefing tool for UK law students targeting Magic Circle and US firm training contracts. Subscription product at £4/month. Built by the owner (LLB student) who will handle marketing via LinkedIn, university law societies, and peer networks.
 
 ## Product vision
 Clean, newspaper-style design (light mode default, dark opt-in). The free tier is genuinely good — compelling enough that users clearly see the value in upgrading. The quiz and audio briefing are the two premium features most likely to convert free users.

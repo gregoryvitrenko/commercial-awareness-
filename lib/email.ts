@@ -174,7 +174,7 @@ function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string):
           <tr>
             <td style="background:#ffffff;padding:36px 36px 28px;border-left:1px solid #e4e4e7;border-right:1px solid #e4e4e7;">
               <h1 style="margin:0 0 4px;font-size:20px;font-weight:700;color:#09090b;line-height:1.3;">
-                Your week in commercial awareness
+                Your weekly Folio briefing
               </h1>
               <p style="margin:0 0 24px;font-size:13px;color:#a1a1aa;font-family:'Courier New',monospace;letter-spacing:0.04em;">
                 ${weekLabel}

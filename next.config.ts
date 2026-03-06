@@ -72,6 +72,16 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Proxy Clerk Frontend API through our domain to avoid Cloudflare Error 1000
+  // (cross-account CNAME conflict when both our domain and Clerk use Cloudflare).
+  async rewrites() {
+    return [
+      {
+        source: '/__clerk/:path*',
+        destination: 'https://frontend-api.clerk.services/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

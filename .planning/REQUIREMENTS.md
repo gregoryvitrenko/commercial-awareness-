@@ -18,7 +18,7 @@
 
 ### Content Surfaces
 
-- [ ] **CONT-01**: `StoryCard` component polished with design tokens (type scale, radius, spacing)
+- [x] **CONT-01**: `StoryCard` component polished with design tokens (type scale, radius, spacing)
 - [ ] **CONT-02**: Article view (`ArticleStory`) polished with design tokens — typography hierarchy consistent
 - [x] **CONT-03**: `BriefingView` (homepage grid) polished with design tokens
 - [x] **CONT-04**: `hover:opacity-80` pattern replaced with semantic hover states across all interactive components (border colour shift for cards, background shift for buttons, underline for links)
@@ -86,7 +86,7 @@
 | TOKENS-03 | Phase 1 | Complete |
 | SHELL-01 | Phase 2 | Complete |
 | SHELL-02 | Phase 2 | Complete |
-| CONT-01 | Phase 3 | Pending |
+| CONT-01 | Phase 3 | Complete |
 | CONT-02 | Phase 3 | Pending |
 | CONT-03 | Phase 3 | Complete |
 | CONT-04 | Phase 3 | Complete |

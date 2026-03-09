@@ -29,7 +29,16 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --radius: 0.25rem;
+
+    /* Design token layer — additive, distinct names from shadcn vars */
+    --paper: hsl(40 20% 98%);   /* warm off-white — light mode page background */
+
+    /* Semantic radius tokens (direct values, not calc chains) */
+    --radius-card:   0.125rem;  /* 2px — nearly flat, editorial */
+    --radius-chrome: 0.25rem;   /* 4px — badges, UI chrome elements */
+    --radius-pill:   9999px;    /* pill / tag / chip */
+    --radius-input:  0.25rem;   /* 4px — form fields */
   }
 
   html {

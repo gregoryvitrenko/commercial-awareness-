@@ -215,7 +215,7 @@ function TopicRow({
     <div className="flex items-center justify-between px-5 py-4">
       <div className="flex items-center gap-2.5 min-w-0">
         <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-        <span className={`text-[10px] font-mono font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
+        <span className={`text-label font-mono font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
           {topic}
         </span>
         <div className="flex items-center gap-1 ml-2">
@@ -234,7 +234,7 @@ function TopicRow({
           })}
         </div>
       </div>
-      <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 flex-shrink-0">
+      <span className="text-label font-mono text-stone-400 dark:text-stone-500 flex-shrink-0">
         {correct}/{questions.length}
       </span>
     </div>
@@ -438,7 +438,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
 
     return (
       <div>
-        <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-4">
+        <h3 className="section-label mb-4">
           {alreadyDone ? 'Completed' : isToday ? "Today's quiz" : 'Practice quiz'}
         </h3>
 
@@ -451,29 +451,29 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           const best = topicEntries[0];
 
           return (
-            <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-5 py-4 mb-3">
+            <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 px-5 py-4 mb-3">
               {/* Summary row */}
               <div className="flex items-center gap-2 mb-3">
-                <BarChart3 className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 flex-shrink-0" />
-                <span className="font-mono text-[10px] font-semibold tracking-[0.15em] uppercase text-zinc-500 dark:text-zinc-400">
+                <BarChart3 className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500 flex-shrink-0" />
+                <span className="font-mono text-label font-semibold tracking-[0.15em] uppercase text-stone-500 dark:text-stone-400">
                   Lifetime Stats
                 </span>
               </div>
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 mb-4">
                 <div>
-                  <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">{stats.total}</span>
-                  <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 ml-1.5">answered</span>
+                  <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">{stats.total}</span>
+                  <span className="text-label font-mono text-stone-400 dark:text-stone-500 ml-1.5">answered</span>
                 </div>
                 <div>
-                  <span className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">{overallPct}%</span>
-                  <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 ml-1.5">accuracy</span>
+                  <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">{overallPct}%</span>
+                  <span className="text-label font-mono text-stone-400 dark:text-stone-500 ml-1.5">accuracy</span>
                 </div>
                 {best && (
                   <div>
-                    <span className={`text-[11px] font-mono font-semibold ${TOPIC_STYLES[best[0]].label}`}>
+                    <span className={`text-label font-mono font-semibold ${TOPIC_STYLES[best[0]].label}`}>
                       {best[0]}
                     </span>
-                    <span className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 ml-1">
+                    <span className="text-label font-mono text-stone-400 dark:text-stone-500 ml-1">
                       {Math.round((best[1].correct / best[1].total) * 100)}% — strongest
                     </span>
                   </div>
@@ -488,10 +488,10 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                     return (
                       <div key={topic} className="flex items-center gap-3">
                         <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${TOPIC_STYLES[topic].dot}`} />
-                        <span className={`text-[10px] font-mono font-medium tracking-wide w-[100px] truncate flex-shrink-0 ${TOPIC_STYLES[topic].label}`}>
+                        <span className={`text-label font-mono font-medium tracking-wide w-[100px] truncate flex-shrink-0 ${TOPIC_STYLES[topic].label}`}>
                           {topic}
                         </span>
-                        <div className="flex-1 h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+                        <div className="flex-1 h-1.5 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
                               pct >= 80 ? 'bg-emerald-500 dark:bg-emerald-400' :
@@ -501,7 +501,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                             style={{ width: `${pct}%` }}
                           />
                         </div>
-                        <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 w-[32px] text-right flex-shrink-0">
+                        <span className="text-label font-mono text-stone-400 dark:text-stone-500 w-[32px] text-right flex-shrink-0">
                           {pct}%
                         </span>
                       </div>
@@ -518,7 +518,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           {/* ── Daily (streak) card ───────────────────────────────────────── */}
           <div
             onClick={() => !streakDone && fetchAndStart('streak', false)}
-            className={`group relative flex flex-col rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/8 dark:hover:shadow-amber-500/5 hover:-translate-y-0.5 ${!streakDone ? 'cursor-pointer' : ''}`}
+            className={`group relative flex flex-col rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-amber-500/8 dark:hover:shadow-amber-500/5 hover:-translate-y-0.5 ${!streakDone ? 'cursor-pointer' : ''}`}
           >
             {/* Amber top bar */}
             <div className="h-[3px] bg-amber-400 dark:bg-amber-500/80 flex-shrink-0" />
@@ -531,20 +531,20 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Flame className="w-4 h-4 text-amber-500 dark:text-amber-400 flex-shrink-0" />
-                  <span className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-900 dark:text-zinc-100">
+                  <span className="text-label font-mono font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
                     Daily
                   </span>
-                  <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
+                  <span className="text-label font-mono text-stone-400 dark:text-stone-500">
                     {streakCount_}q
                   </span>
                   {isToday && streakCount > 0 && (
-                    <span className="text-[10px] font-mono text-amber-500 dark:text-amber-400">
+                    <span className="text-label font-mono text-amber-500 dark:text-amber-400">
                       · 🔥{streakCount}
                     </span>
                   )}
                 </div>
                 {isToday && streakDone && (
-                  <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+                  <span className="text-label font-mono text-emerald-600 dark:text-emerald-400 font-medium">
                     ✓ done today
                   </span>
                 )}
@@ -557,7 +557,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                 if (!displayResult) {
                   return (
                     <div className="flex items-end min-h-[52px]">
-                      <span className="text-[13px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                      <span className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed">
                         One question per practice area. Keeps your streak alive.
                       </span>
                     </div>
@@ -573,25 +573,25 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                   ? 'text-emerald-500 dark:text-emerald-400'
                   : trend === '↓'
                   ? 'text-rose-500 dark:text-rose-400'
-                  : 'text-zinc-400 dark:text-zinc-500';
+                  : 'text-stone-400 dark:text-stone-500';
                 return (
                   <>
                     <div className="flex items-end gap-3 min-h-[52px]">
-                      <span className="text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-none">
+                      <span className="text-5xl font-bold text-stone-900 dark:text-stone-50 tracking-tight leading-none">
                         {pct}%
                       </span>
                       <div className="pb-1 leading-tight">
-                        <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-amber-500 dark:text-amber-400">
+                        <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-amber-500 dark:text-amber-400">
                           {displayResult.score}/{displayResult.total}
                         </p>
                         {trend && (
-                          <p className={`text-[10px] font-mono font-semibold tracking-[0.14em] uppercase ${trendColor}`}>
+                          <p className={`text-label font-mono font-semibold tracking-[0.14em] uppercase ${trendColor}`}>
                             {trend} trend
                           </p>
                         )}
                       </div>
                     </div>
-                    <p className="text-[12px] text-zinc-500 dark:text-zinc-400 leading-relaxed -mt-1">
+                    <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed -mt-1">
                       {streakResult
                         ? (streakDone ? 'Done for today — come back tomorrow.' : 'Today\'s score')
                         : 'Beat it today →'}
@@ -601,7 +601,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               })()}
 
               {errorMsg && (
-                <p className="text-[12px] font-mono text-rose-500 dark:text-rose-400">
+                <p className="text-caption font-mono text-rose-500 dark:text-rose-400">
                   {errorMsg}
                 </p>
               )}
@@ -609,7 +609,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               {/* Actions — pinned to bottom */}
               <div className="flex items-center gap-2 flex-wrap mt-auto">
                 {uiState === 'loading' && quizMode === 'streak' ? (
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 text-white text-[13px] font-sans font-medium">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-amber-500 text-white text-caption font-sans font-medium">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     Generating…
                   </div>
@@ -623,7 +623,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                           if (streakResult) setPreviousResult(streakResult);
                           fetchAndStart('streak', true);
                         }}
-                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[13px] font-sans font-medium hover:opacity-80 transition-opacity"
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-caption font-sans font-medium hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
                         Retry {missedCount} missed
@@ -631,7 +631,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                     )}
                     <button
                       onClick={(e) => { e.stopPropagation(); fetchAndStart('streak', false); }}
-                      className="px-4 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 text-[13px] font-sans hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
+                      className="px-4 py-2.5 rounded-card border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-caption font-sans hover:text-stone-900 dark:hover:text-stone-100 hover:border-stone-400 dark:hover:border-stone-500 transition-colors"
                     >
                       Retake
                     </button>
@@ -639,7 +639,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                 ) : (
                   <button
                     onClick={(e) => { e.stopPropagation(); fetchAndStart('streak', false); }}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 dark:bg-amber-500 dark:hover:bg-amber-600 text-white text-[13px] font-sans font-medium transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-amber-500 hover:bg-amber-600 dark:bg-amber-500 dark:hover:bg-amber-600 text-white text-caption font-sans font-medium transition-colors"
                   >
                     <Flame className="w-3.5 h-3.5" />
                     {quiz ? 'Start daily quiz →' : 'Generate & start →'}
@@ -652,7 +652,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           {/* ── Deep practice card ────────────────────────────────────────── */}
           <div
             onClick={() => fetchAndStart('deep', false)}
-            className="group relative flex flex-col rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-violet-500/8 dark:hover:shadow-violet-500/5 hover:-translate-y-0.5"
+            className="group relative flex flex-col rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-violet-500/8 dark:hover:shadow-violet-500/5 hover:-translate-y-0.5"
           >
             {/* Violet top bar */}
             <div className="h-[3px] bg-violet-400 dark:bg-violet-500/80 flex-shrink-0" />
@@ -664,34 +664,34 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               {/* Header */}
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-violet-500 dark:text-violet-400 flex-shrink-0" />
-                <span className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-900 dark:text-zinc-100">
+                <span className="text-label font-mono font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
                   Deep Practice
                 </span>
               </div>
 
               {/* Hero: firm countdown or question count */}
               <div className="flex items-end gap-3 min-h-[52px]">
-                <span className="text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight leading-none">
+                <span className="text-5xl font-bold text-stone-900 dark:text-stone-50 tracking-tight leading-none">
                   {countdown ? countdown.daysLeft : deepCount}
                 </span>
                 <div className="pb-1 leading-tight">
                   {countdown ? (
                     <>
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">days to</p>
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400 max-w-[88px] truncate">
+                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">days to</p>
+                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400 max-w-[88px] truncate">
                         {countdown.shortName}
                       </p>
                     </>
                   ) : (
                     <>
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">full</p>
-                      <p className="text-[10px] font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">questions</p>
+                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">full</p>
+                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-violet-500 dark:text-violet-400">questions</p>
                     </>
                   )}
                 </div>
               </div>
 
-              <p className="text-[12px] text-zinc-500 dark:text-zinc-400 leading-relaxed -mt-1">
+              <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed -mt-1">
                 {countdown
                   ? `${countdown.label} deadline — keep prepping daily.`
                   : 'All 3 questions per practice area. Full recall drill.'}
@@ -700,14 +700,14 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               {/* Action */}
               <div className="mt-auto">
                 {uiState === 'loading' && quizMode === 'deep' ? (
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-500 text-white text-[13px] font-sans font-medium">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-violet-500 text-white text-caption font-sans font-medium">
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                     Generating…
                   </div>
                 ) : (
                   <button
                     onClick={(e) => { e.stopPropagation(); fetchAndStart('deep', false); }}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-500 hover:bg-violet-600 dark:bg-violet-500 dark:hover:bg-violet-600 text-white text-[13px] font-sans font-medium transition-colors"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-violet-500 hover:bg-violet-600 dark:bg-violet-500 dark:hover:bg-violet-600 text-white text-caption font-sans font-medium transition-colors"
                   >
                     <Zap className="w-3.5 h-3.5" />
                     {quiz ? 'Start deep practice →' : 'Generate & start →'}
@@ -721,7 +721,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
         <div className="mt-4">
           <Link
             href="/"
-            className="text-[12px] text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+            className="text-caption text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             ← Back to briefing
           </Link>
@@ -757,17 +757,17 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       <div className="space-y-8">
         {/* Score card */}
         <div>
-          <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
+          <h3 className="section-label mb-3">
             Results
           </h3>
-          <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+          <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden">
             <div className="px-5 py-6 flex items-center gap-5">
-              <Trophy className={`w-9 h-9 flex-shrink-0 ${pct >= 80 ? 'text-amber-500' : pct >= 60 ? 'text-zinc-400' : 'text-zinc-300 dark:text-zinc-600'}`} />
+              <Trophy className={`w-9 h-9 flex-shrink-0 ${pct >= 80 ? 'text-amber-500' : pct >= 60 ? 'text-stone-400' : 'text-stone-300 dark:text-stone-600'}`} />
               <div className="min-w-0 flex-1">
-                <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+                <p className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">
                   {score} / {total}
                 </p>
-                <p className="text-[13px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                <p className="text-caption text-stone-500 dark:text-stone-400 mt-0.5">
                   {pct >= 90
                     ? 'Excellent — interview-ready recall.'
                     : pct >= 70
@@ -782,9 +782,9 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
             {/* Streak earned banner */}
             {justEarnedStreak > 0 && (
               <div className="px-5 pb-5">
-                <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-900/15 border border-amber-200 dark:border-amber-800/30">
+                <div className="flex items-center gap-2 px-4 py-3 rounded-card bg-amber-50 dark:bg-amber-900/15 border border-amber-200 dark:border-amber-800/30">
                   <Flame className="w-4 h-4 text-amber-500 dark:text-amber-400 flex-shrink-0" />
-                  <p className="text-[13px] text-amber-800 dark:text-amber-200">
+                  <p className="text-caption text-amber-800 dark:text-amber-200">
                     <span className="font-semibold">{justEarnedStreak}-day streak!</span>
                     {justEarnedStreak === 1
                       ? ' First daily quiz done — come back tomorrow.'
@@ -798,10 +798,10 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
 
         {/* Per-topic breakdown */}
         <div>
-          <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
+          <h3 className="section-label mb-3">
             By practice area
           </h3>
-          <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden divide-y divide-zinc-100 dark:divide-zinc-800">
+          <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden divide-y divide-stone-100 dark:divide-stone-800">
             {storyMeta.map((meta) => {
               const qs = byStory[meta.id] ?? [];
               if (qs.length === 0) return null;
@@ -822,7 +822,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           {missedCount > 0 && (
             <button
               onClick={() => fetchAndStart(quizMode, true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-[13px] font-sans font-medium hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2 px-4 py-2 rounded-chrome bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 text-caption font-sans font-medium hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Retry {missedCount} missed
@@ -831,7 +831,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           {quizMode === 'streak' && (
             <button
               onClick={() => fetchAndStart('deep', false)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-violet-200 dark:border-violet-800/50 text-violet-700 dark:text-violet-400 text-[13px] font-sans hover:bg-violet-50 dark:hover:bg-violet-900/10 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-chrome border border-violet-200 dark:border-violet-800/50 text-violet-700 dark:text-violet-400 text-caption font-sans hover:bg-violet-50 dark:hover:bg-violet-900/10 transition-colors"
             >
               <Zap className="w-3.5 h-3.5" />
               Deep practice
@@ -839,7 +839,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           )}
           <Link
             href="/"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 text-[13px] font-sans hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-chrome border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-caption font-sans hover:text-stone-900 dark:hover:text-stone-100 hover:border-stone-400 dark:hover:border-stone-500 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Back to briefing
@@ -862,10 +862,10 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
 
   function optionStyle(letter: 'A' | 'B' | 'C' | 'D'): string {
     const base =
-      'w-full text-left px-4 py-3.5 rounded-xl border text-[14px] font-sans leading-snug transition-colors';
+      'w-full text-left px-4 py-3.5 rounded-card border text-caption font-sans leading-snug transition-colors';
 
     if (!isAnswered) {
-      return `${base} border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 cursor-pointer`;
+      return `${base} border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 hover:border-stone-400 dark:hover:border-stone-500 hover:bg-stone-50 dark:hover:bg-stone-800/40 cursor-pointer`;
     }
 
     if (letter === currentQ.correctLetter) {
@@ -876,7 +876,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       return `${base} border-rose-400 dark:border-rose-500 bg-rose-50 dark:bg-rose-900/20 text-rose-900 dark:text-rose-100 cursor-default`;
     }
 
-    return `${base} border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-400 dark:text-zinc-500 cursor-default opacity-60`;
+    return `${base} border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-400 dark:text-stone-500 cursor-default opacity-60`;
   }
 
   return (
@@ -886,17 +886,17 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 tracking-wide">
+            <span className="text-label font-mono text-stone-400 dark:text-stone-500 tracking-wide">
               {currentIndex + 1} / {activeQuestions.length}
               {isRetry && ' · retry mode'}
             </span>
             {quizMode === 'streak' ? (
-              <span className="flex items-center gap-1 text-[10px] font-mono text-amber-500 dark:text-amber-400">
+              <span className="flex items-center gap-1 text-label font-mono text-amber-500 dark:text-amber-400">
                 <Flame className="w-2.5 h-2.5" />
                 daily
               </span>
             ) : (
-              <span className="flex items-center gap-1 text-[10px] font-mono text-violet-500 dark:text-violet-400">
+              <span className="flex items-center gap-1 text-label font-mono text-violet-500 dark:text-violet-400">
                 <Zap className="w-2.5 h-2.5" />
                 deep
               </span>
@@ -904,12 +904,12 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           </div>
           <Link
             href="/"
-            className="text-[10px] font-sans text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
+            className="text-label font-sans text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             ← briefing
           </Link>
         </div>
-        <div className="h-0.5 bg-zinc-200 dark:bg-zinc-800 rounded-full">
+        <div className="h-0.5 bg-stone-200 dark:bg-stone-800 rounded-full">
           <div
             className={`h-full rounded-full transition-all duration-300 ${
               quizMode === 'streak'
@@ -925,18 +925,18 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       {meta && (
         <div className="flex items-center gap-2 mb-3">
           <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-          <span className={`text-[10px] font-mono font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
+          <span className={`text-label font-mono font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
             {meta.topic}
           </span>
-          <span className="text-zinc-300 dark:text-zinc-700 text-[10px]">·</span>
-          <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-sans truncate">
+          <span className="text-stone-300 dark:text-stone-700 text-label">·</span>
+          <span className="text-label text-stone-500 dark:text-stone-400 font-sans truncate">
             {meta.headline}
           </span>
         </div>
       )}
 
       {/* Question */}
-      <h2 className="font-serif text-[20px] sm:text-[22px] font-bold leading-snug text-zinc-900 dark:text-zinc-50 tracking-tight mb-6">
+      <h2 className="font-serif text-subheading sm:text-xl font-bold leading-snug text-stone-900 dark:text-stone-50 tracking-tight mb-6">
         {currentQ.question}
       </h2>
 
@@ -948,7 +948,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
             onClick={() => handleSelect(opt.letter)}
             className={optionStyle(opt.letter)}
           >
-            <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500 mr-2.5">
+            <span className="font-mono text-label text-stone-400 dark:text-stone-500 mr-2.5">
               {opt.letter}
             </span>
             {opt.text}
@@ -958,7 +958,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
 
       {/* Feedback */}
       {isAnswered && (
-        <div className={`flex items-start gap-3 px-4 py-3.5 rounded-xl mb-6 border ${
+        <div className={`flex items-start gap-3 px-4 py-3.5 rounded-card mb-6 border ${
           isCorrect
             ? 'bg-emerald-50 dark:bg-emerald-900/15 border-emerald-200 dark:border-emerald-800/40'
             : 'bg-rose-50 dark:bg-rose-900/15 border-rose-200 dark:border-rose-800/40'
@@ -967,7 +967,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
             ? <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
             : <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 flex-shrink-0 mt-0.5" />
           }
-          <p className={`text-[13px] leading-relaxed ${
+          <p className={`text-caption leading-relaxed ${
             isCorrect
               ? 'text-emerald-800 dark:text-emerald-200'
               : 'text-rose-800 dark:text-rose-200'
@@ -983,7 +983,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
         <button
           onClick={handleNext}
           disabled={!isAnswered}
-          className="px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 text-[13px] font-sans font-medium hover:opacity-80 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+          className="px-4 py-2 rounded-chrome bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 text-caption font-sans font-medium hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
         >
           {currentIndex + 1 === activeQuestions.length ? 'See results →' : 'Next →'}
         </button>

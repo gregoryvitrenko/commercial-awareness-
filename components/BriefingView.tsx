@@ -14,14 +14,14 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
     <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-10">
 
       {/* Strapline — always visible, orients new visitors */}
-      <p className="font-sans text-[13px] text-stone-400 dark:text-stone-500 mb-8 leading-relaxed">
+      <p className="font-sans text-caption text-stone-400 dark:text-stone-500 mb-8 leading-relaxed">
         Daily commercial law briefings for future City trainees — curated stories, talking points, and firm intelligence, every morning.
       </p>
 
       {/* Start Here callouts — guide non-subscribers to high-value content */}
       {!subscribed && (
         <div className="mb-8">
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
+          <p className="section-label mb-3">
             Start here
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -29,7 +29,7 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
               href="/primers"
               className="group block px-4 py-3 border border-stone-200 dark:border-stone-800 rounded-sm hover:border-stone-400 dark:hover:border-stone-600 transition-colors"
             >
-              <span className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 block mb-1">
+              <span className="section-label block mb-1">
                 Sector Primers
               </span>
               <p className="text-[13px] font-semibold text-stone-800 dark:text-stone-100 group-hover:text-stone-900 dark:group-hover:text-stone-50 leading-snug">
@@ -40,7 +40,7 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
               href="/firms"
               className="group block px-4 py-3 border border-stone-200 dark:border-stone-800 rounded-sm hover:border-stone-400 dark:hover:border-stone-600 transition-colors"
             >
-              <span className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 block mb-1">
+              <span className="section-label block mb-1">
                 Firm Profiles
               </span>
               <p className="text-[13px] font-semibold text-stone-800 dark:text-stone-100 group-hover:text-stone-900 dark:group-hover:text-stone-50 leading-snug">
@@ -61,7 +61,7 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
         <section className="mb-12">
           <div className="flex items-center gap-4 mb-6">
             <div className="h-px flex-1 bg-stone-200 dark:bg-stone-800" />
-            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-stone-400 dark:text-stone-500 font-sans flex-shrink-0">
+            <span className="text-label font-sans font-semibold tracking-[0.2em] uppercase text-stone-400 dark:text-stone-500 flex-shrink-0">
               Bigger Picture
             </span>
             <div className="h-px flex-1 bg-stone-200 dark:bg-stone-800" />
@@ -77,13 +77,13 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
       {!subscribed && (
         <section className="mb-10">
           <div className="border border-stone-200 dark:border-stone-800 rounded-sm px-6 py-7 text-center">
-            <p className="font-mono text-[9px] tracking-[0.22em] uppercase text-stone-400 dark:text-stone-500 mb-3">
+            <p className="section-label mb-3">
               Subscriber access
             </p>
-            <h3 className="font-serif text-[22px] font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-2 leading-snug">
+            <h3 className="font-serif text-heading font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-2 leading-snug">
               You&apos;ve read today&apos;s headlines.
             </h3>
-            <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed mb-5 max-w-sm mx-auto">
+            <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed mb-5 max-w-sm mx-auto">
               Turn them into confident interview answers — with full analysis, firm intelligence, and daily practice.
             </p>
 
@@ -97,7 +97,7 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
               ].map(({ icon: Icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-700"
+                  className="inline-flex items-center gap-1.5 text-label font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 border border-stone-200 dark:border-stone-700"
                 >
                   <Icon size={11} className="text-stone-400 dark:text-stone-500" />
                   {label}
@@ -108,7 +108,7 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 href="/upgrade"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 text-[13px] font-medium hover:opacity-80 transition-opacity"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 text-[13px] font-medium hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors"
               >
                 Subscribe — £4 / month →
               </Link>
@@ -125,7 +125,7 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
 
       {/* Footer */}
       <footer className="pt-6 border-t border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-        <p className="font-mono text-[10px] text-stone-400 dark:text-stone-600 tracking-wide">
+        <p className="section-label text-stone-400 dark:text-stone-600">
           Updated{' '}
           {new Date(briefing.generatedAt).toLocaleTimeString('en-GB', {
             hour: '2-digit',

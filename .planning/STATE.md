@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Phase 3 context gathered
-last_updated: "2026-03-09T22:05:23.992Z"
+stopped_at: Completed 03-content-surfaces-01-PLAN.md
+last_updated: "2026-03-09T22:23:12.382Z"
 last_activity: 2026-03-09 — Roadmap created; 21 v1 requirements mapped across 5 phases
 progress:
   total_phases: 5
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 5
   percent: 0
 ---
 
@@ -53,6 +53,8 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-design-tokens P01 | 4 | 5 tasks | 2 files |
 | Phase 02-shell P01 | 2 | 2 tasks | 2 files |
 | Phase 02-shell P02 | 3 | 2 tasks | 2 files |
+| Phase 03-content-surfaces P03 | 3 | 2 tasks | 3 files |
+| Phase 03-content-surfaces P01 | 3 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -71,6 +73,13 @@ Recent decisions affecting current work:
 - [Phase 02-shell]: text-label used for all 10-11px mono/sans labels in header and nav triggers, bundling size and letterSpacing
 - [Phase 02-shell]: Sticky footer: body flex flex-col + main flex-1 + footer mt-auto pattern established
 - [Phase 02-shell]: Footer link order locked: Feedback · Terms · Privacy · Contact · LinkedIn; mailto links no target=_blank, LinkedIn target=_blank
+- [Phase 03-content-surfaces]: Bigger Picture divider uses text-label + font-sans (NOT .section-label) — sans-serif with custom tracking-[0.2em], distinct from mono section labels
+- [Phase 03-content-surfaces]: Button hover: hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors established as the codebase standard (never hover:opacity)
+- [Phase 03-content-surfaces]: Logo/wordmark hover: group-hover:text-stone-600 dark:group-hover:text-stone-400 transition-colors (colour-shift, not opacity) — resolves Phase 2 deferral
+- [Phase 03-content-surfaces]: text-article token (1.75rem/28px) added to tailwind.config.ts for ArticleStory component in 03-02
+- [Phase 03-content-surfaces]: StoryCard: text-subheading + font-bold for headlines (subheading token is 500fw, card headlines must be 700fw)
+- [Phase 03-content-surfaces]: StoryCard topic labels: text-label + explicit tracking-[0.12em], NOT .section-label (font-mono incompatible)
+- [Phase 03-content-surfaces]: Border hover added to StoryCard: hover:border-stone-300 dark:hover:border-stone-600 alongside bg shift
 
 ### Pending Todos
 
@@ -85,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T22:05:23.960Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-content-surfaces/03-CONTEXT.md
+Last session: 2026-03-09T22:23:12.377Z
+Stopped at: Completed 03-content-surfaces-01-PLAN.md
+Resume file: None

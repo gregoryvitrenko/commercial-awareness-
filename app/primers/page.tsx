@@ -21,11 +21,11 @@ export default async function PrimersPage() {
           <h2 className="text-lg font-bold text-stone-900 dark:text-stone-50 tracking-tight">
             Sector Primers
           </h2>
-          <span className="font-mono text-[10px] text-stone-400 dark:text-stone-500 tracking-widest uppercase bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded">
+          <span className="font-mono text-[10px] text-stone-400 dark:text-stone-500 tracking-widest uppercase bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded-chrome">
             {PRIMERS.length} topics
           </span>
         </div>
-        <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed mb-8 max-w-2xl">
+        <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed mb-8 max-w-2xl">
           Everything you need to understand the core practice areas of commercial law — written for
           interview prep, not textbooks.
         </p>

@@ -42,7 +42,11 @@ Plans:
   1. The header renders using design tokens for typography and spacing — the existing thick top rule and mono label pattern are preserved, not replaced
   2. A site footer appears on every page with working links: feedback, terms/privacy, contact/LinkedIn
   3. The footer never overlaps page content — the `flex flex-col min-h-screen` + `flex-1` layout pattern is in place and verified at mobile viewport (375px)
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Migrate Header.tsx and NavDropdowns.tsx to design tokens (text-display, text-label, bg-paper)
+- [ ] 02-02-PLAN.md — Complete SiteFooter.tsx with five links and fix sticky-footer layout in app/layout.tsx
 
 ### Phase 3: Content Surfaces
 **Goal**: The 8 story cards, full article view, and briefing grid feel premium and typographically consistent — the editorial register is real, not aspirational
@@ -86,7 +90,7 @@ Phases execute in strict dependency order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Design Tokens | 1/1 | Complete   | 2026-03-09 |
-| 2. Shell | 0/TBD | Not started | - |
+| 2. Shell | 0/2 | Not started | - |
 | 3. Content Surfaces | 0/TBD | Not started | - |
 | 4. Conversion Surfaces | 0/TBD | Not started | - |
 | 5. Utility Pages + Analytics | 0/TBD | Not started | - |

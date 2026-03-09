@@ -48,7 +48,7 @@ const NAV_GROUPS: NavGroup[] = [
 ];
 
 const TRIGGER_CLS =
-  'flex items-center gap-1 px-5 py-2 text-[11px] font-sans font-semibold tracking-[0.1em] uppercase text-stone-400 dark:text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors';
+  'flex items-center gap-1 px-5 py-2 text-label font-sans font-semibold uppercase text-stone-400 dark:text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors';
 
 export function NavDropdowns() {
   const [open, setOpen] = useState<string | null>(null);
@@ -86,7 +86,7 @@ export function NavDropdowns() {
           </button>
 
           {open === group.label && (
-            <div className="absolute top-full left-0 z-50 min-w-[152px] rounded-b-xl rounded-tr-xl bg-stone-50 dark:bg-stone-950 border border-t-0 border-stone-200 dark:border-stone-800 shadow-lg shadow-stone-200/50 dark:shadow-stone-950/50 py-1 overflow-hidden">
+            <div className="absolute top-full left-0 z-50 min-w-[152px] rounded-b-xl rounded-tr-xl bg-paper border border-t-0 border-stone-200 dark:border-stone-800 shadow-lg shadow-stone-200/50 dark:shadow-stone-950/50 py-1 overflow-hidden">
               {group.items.map((item) => (
                 <Link
                   key={item.href}

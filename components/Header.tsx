@@ -38,8 +38,8 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
             {formatShortDate(displayDate)}
           </span>
           <Link href="/" className="group flex items-center justify-center gap-2.5">
-            <FolioMark size={34} className="text-stone-900 dark:text-stone-50 group-hover:opacity-75 transition-opacity flex-shrink-0" />
-            <h1 className="font-serif text-display tracking-tight text-stone-900 dark:text-stone-50 group-hover:opacity-75 transition-opacity">
+            <FolioMark size={34} className="text-stone-900 dark:text-stone-50 group-hover:text-stone-600 dark:group-hover:text-stone-400 transition-colors flex-shrink-0" />
+            <h1 className="font-serif text-display tracking-tight text-stone-900 dark:text-stone-50 group-hover:text-stone-600 dark:group-hover:text-stone-400 transition-colors">
               Folio
             </h1>
           </Link>

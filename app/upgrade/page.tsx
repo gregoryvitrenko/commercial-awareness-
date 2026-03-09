@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@clerk/nextjs';
 import { CheckCircle2 } from 'lucide-react';
 import { SiteFooter } from '@/components/SiteFooter';
+import { track } from '@vercel/analytics';
 
 const PREMIUM_FEATURES = [
   'Walk into interviews with a point of view — full analysis and structured talking points for every deal',
@@ -20,7 +21,12 @@ export default function UpgradePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    track('upgrade_view');
+  }, []);
+
   async function handleUpgrade() {
+    track('checkout_click');
     if (!isSignedIn) {
       window.location.href = '/sign-up';
       return;

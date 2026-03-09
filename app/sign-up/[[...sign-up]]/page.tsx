@@ -1,7 +1,20 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
+import { track } from '@vercel/analytics';
 import { SignUp } from '@clerk/nextjs';
 import Link from 'next/link';
 
 export default function SignUpPage() {
+  const { isSignedIn } = useUser();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      track('free_signup');
+    }
+  }, [isSignedIn]);
+
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col">
       {/* Minimal header */}

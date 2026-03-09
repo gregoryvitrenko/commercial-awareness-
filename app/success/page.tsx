@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
 import { Suspense } from 'react';
+import { track } from '@vercel/analytics';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -20,6 +21,12 @@ function SuccessContent() {
     const timer = setTimeout(() => setVerified(true), 1500);
     return () => clearTimeout(timer);
   }, [sessionId]);
+
+  useEffect(() => {
+    if (verified === true) {
+      track('subscription_activated');
+    }
+  }, [verified]);
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col">

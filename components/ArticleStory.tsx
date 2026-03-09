@@ -32,7 +32,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
       <div className="flex items-center justify-between gap-2 mb-5">
         <div className="flex items-center gap-2">
           <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-          <span className={`text-[10px] font-sans font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
+          <span className={`text-label font-sans font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
             {story.topic}
           </span>
         </div>
@@ -50,7 +50,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
       </div>
 
       {/* Headline */}
-      <h2 className="font-serif text-[26px] sm:text-[32px] font-bold leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-6">
+      <h2 className="font-serif text-article leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-6">
         {story.headline}
       </h2>
 
@@ -61,7 +61,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
 
       {/* Why it matters */}
       <div className="mb-8">
-        <p className={`text-[10px] font-sans font-semibold tracking-[0.15em] uppercase mb-5 ${styles.label}`}>
+        <p className={`text-label font-sans font-semibold tracking-[0.15em] uppercase mb-5 ${styles.label}`}>
           Why it matters to law firms
         </p>
 
@@ -70,28 +70,28 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
             {/* UK Firms / US Firms — side by side on md+ */}
             <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
               <div>
-                <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2.5">
+                <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2.5">
                   UK Firms
                 </p>
-                <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+                <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75]">
                   {renderBold(story.whyItMatters.ukFirms)}
                 </p>
               </div>
               <div className="md:border-l md:border-stone-150 md:dark:border-stone-800 md:pl-8">
-                <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2.5">
+                <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2.5">
                   US Firms in London
                 </p>
-                <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+                <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75]">
                   {renderBold(story.whyItMatters.usFirms)}
                 </p>
               </div>
             </div>
             {/* On the Ground — full width */}
             <div className="mt-6 pt-6 border-t border-stone-100 dark:border-stone-800">
-              <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2.5">
+              <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2.5">
                 On the Ground
               </p>
-              <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+              <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75]">
                 {renderBold(story.whyItMatters.onTheGround)}
               </p>
             </div>
@@ -106,7 +106,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
 
       {/* Talking points */}
       <div className="mb-8">
-        <p className={`text-[10px] font-sans font-semibold tracking-[0.15em] uppercase mb-5 ${styles.label}`}>
+        <p className={`text-label font-sans font-semibold tracking-[0.15em] uppercase mb-5 ${styles.label}`}>
           Interview talking points
         </p>
 
@@ -115,12 +115,12 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
             {/* Soundbite */}
             <div className="rounded-lg bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 px-5 py-4">
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
+                <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
                   Soundbite
                 </p>
                 <CopyButton text={stripBold(story.talkingPoints.soundbite)} />
               </div>
-              <p className="font-serif text-[17px] font-semibold text-stone-900 dark:text-stone-100 leading-snug">
+              <p className="font-serif text-subheading font-semibold text-stone-900 dark:text-stone-100 leading-snug">
                 {renderBold(story.talkingPoints.soundbite)}
               </p>
             </div>
@@ -128,12 +128,12 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
             {/* Partner answer */}
             <div className="rounded-lg bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 px-5 py-4">
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
+                <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
                   Partner-length answer
                 </p>
                 <CopyButton text={stripBold(story.talkingPoints.partnerAnswer)} />
               </div>
-              <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+              <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75]">
                 {renderBold(story.talkingPoints.partnerAnswer)}
               </p>
             </div>
@@ -141,12 +141,12 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
             {/* Full commercial */}
             <div className="rounded-lg bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 px-5 py-4">
               <div className="flex items-center justify-between gap-2 mb-2">
-                <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
+                <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
                   Full commercial answer
                 </p>
                 <CopyButton text={stripBold(story.talkingPoints.fullCommercial)} />
               </div>
-              <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+              <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75]">
                 {renderBold(story.talkingPoints.fullCommercial)}
               </p>
             </div>
@@ -167,7 +167,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
       {/* Sources */}
       {story.sources && story.sources.length > 0 && (
         <div className="mb-0">
-          <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2">
+          <p className="text-label font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 mb-2">
             Sources
           </p>
           <ul className="space-y-1">

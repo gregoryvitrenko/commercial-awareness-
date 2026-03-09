@@ -50,6 +50,10 @@ async function handler(request: NextRequest) {
     }
     headers.set('Clerk-Proxy-Url', `${url.origin}/__clerk`);
     headers.set('X-Forwarded-Host', url.host);
+    // Clerk requires the secret key when requests come through a proxy
+    if (process.env.CLERK_SECRET_KEY) {
+      headers.set('Clerk-Secret-Key', process.env.CLERK_SECRET_KEY);
+    }
 
     const res = await fetch(target, {
       method: request.method,

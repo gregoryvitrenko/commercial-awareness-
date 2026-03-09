@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03-content-surfaces-02-PLAN.md
-last_updated: "2026-03-09T22:32:48.849Z"
+stopped_at: Completed 04-conversion-surfaces-02-PLAN.md
+last_updated: "2026-03-09T23:03:38.846Z"
 last_activity: 2026-03-09 — Roadmap created; 21 v1 requirements mapped across 5 phases
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 9
+  completed_plans: 8
   percent: 0
 ---
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03-content-surfaces P03 | 3 | 2 tasks | 3 files |
 | Phase 03-content-surfaces P01 | 3 | 2 tasks | 2 files |
 | Phase 03-content-surfaces P02 | 2 | 1 tasks | 1 files |
+| Phase 04-conversion-surfaces P02 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,8 @@ Recent decisions affecting current work:
 - [Phase 03-content-surfaces]: StoryCard topic labels: text-label + explicit tracking-[0.12em], NOT .section-label (font-mono incompatible)
 - [Phase 03-content-surfaces]: Border hover added to StoryCard: hover:border-stone-300 dark:hover:border-stone-600 alongside bg shift
 - [Phase 03-content-surfaces]: text-article token (28px) replaces responsive headline pair in ArticleStory; text-[16px] locked for summary/legacy body; font-semibold kept explicitly on soundbite (subheading token is 500fw)
+- [Phase 04-conversion-surfaces]: LandingHero CTA hover: hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors (not hover:opacity) — consistent with Phase 3 standard
+- [Phase 04-conversion-surfaces]: Hero headline text-3xl sm:text-4xl left unchanged — no clean single-token mapping for the 30/36px responsive pair
 
 ### Pending Todos
 
@@ -96,6 +99,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T22:28:17.561Z
-Stopped at: Completed 03-content-surfaces-02-PLAN.md
+Last session: 2026-03-09T23:03:38.841Z
+Stopped at: Completed 04-conversion-surfaces-02-PLAN.md
 Resume file: None

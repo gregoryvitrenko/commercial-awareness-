@@ -102,5 +102,5 @@ Phases execute in strict dependency order: 1 → 2 → 3 → 4 → 5
 | 1. Design Tokens | 1/1 | Complete   | 2026-03-09 |
 | 2. Shell | 2/2 | Complete   | 2026-03-09 |
 | 3. Content Surfaces | 2/3 | Complete    | 2026-03-09 |
-| 4. Conversion Surfaces | 0/3 | Not started | - |
+| 4. Conversion Surfaces | 2/3 | In Progress|  |
 | 5. Utility Pages + Analytics | 0/TBD | Not started | - |

@@ -29,7 +29,7 @@
 - [ ] **CONV-01**: Upgrade page palette aligned from `zinc-*` to `stone-*` to match the rest of the product
 - [ ] **CONV-02**: Upgrade page copy rewritten — outcome-framed ("walk into interviews knowing the market") not capability-framed ("get access to the quiz")
 - [ ] **CONV-03**: Social proof slots added to upgrade page (placeholders for student count + testimonials, wired up when real data exists)
-- [ ] **CONV-04**: `LandingHero` CTA border radius corrected to match the token system (currently `rounded-xl`, inconsistent with rest of app)
+- [x] **CONV-04**: `LandingHero` CTA border radius corrected to match the token system (currently `rounded-xl`, inconsistent with rest of app)
 
 ### Utility Pages
 
@@ -94,7 +94,7 @@
 | CONV-01 | Phase 4 | Pending |
 | CONV-02 | Phase 4 | Pending |
 | CONV-03 | Phase 4 | Pending |
-| CONV-04 | Phase 4 | Pending |
+| CONV-04 | Phase 4 | Complete |
 | UTIL-01 | Phase 5 | Pending |
 | UTIL-02 | Phase 5 | Pending |
 | UTIL-03 | Phase 5 | Pending |

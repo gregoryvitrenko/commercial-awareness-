@@ -30,6 +30,16 @@ const config: Config = {
   				'monospace'
   			]
   		},
+  		fontSize: {
+  			// Semantic type scale — use theme.extend (NOT theme) to preserve all Tailwind defaults
+  			// Array format: [size, { lineHeight, fontWeight?, letterSpacing? }]
+  			display:    ['2.25rem',   { lineHeight: '1.2',  fontWeight: '700' }],   // 36px — page-level hero
+  			heading:    ['1.5rem',    { lineHeight: '1.25', fontWeight: '600' }],   // 24px — section headings
+  			subheading: ['1.125rem',  { lineHeight: '1.35', fontWeight: '500' }],   // 18px — subsection headings
+  			body:       ['0.9375rem', { lineHeight: '1.6'  }],                      // 15px — body copy
+  			caption:    ['0.8125rem', { lineHeight: '1.4'  }],                      // 13px — secondary text
+  			label:      ['0.625rem',  { lineHeight: '1', letterSpacing: '0.1em', fontWeight: '500' }], // 10px — mono labels
+  		},
   		animation: {
   			'fade-in': 'fadeIn 0.4s ease-out'
   		},

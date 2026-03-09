@@ -90,7 +90,13 @@ Plans:
   2. Heading patterns are uniform across all utility pages — the same icon + bold title + count badge pattern from design principles is applied everywhere
   3. Vercel Analytics is active on production and recording page views — the dashboard shows traffic data
   4. Conversion funnel events fire correctly: free sign-up, upgrade page view, checkout click, and subscription activation are all tracked and visible in Vercel Analytics
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Migrate Archive and Quiz pages to stone tokens (UTIL-01, UTIL-03)
+- [ ] 05-02-PLAN.md — Migrate Firms, Tests, and Primers pages to stone tokens (UTIL-02, UTIL-04, UTIL-05)
+- [ ] 05-03-PLAN.md — Install @vercel/analytics and add four conversion funnel events (ANLYT-01, ANLYT-02)
+- [ ] 05-04-PLAN.md — Production deploy and visual + analytics verification checkpoint
 
 ## Progress
 
@@ -103,4 +109,4 @@ Phases execute in strict dependency order: 1 → 2 → 3 → 4 → 5
 | 2. Shell | 2/2 | Complete   | 2026-03-09 |
 | 3. Content Surfaces | 2/3 | Complete    | 2026-03-09 |
 | 4. Conversion Surfaces | 2/3 | Complete    | 2026-03-09 |
-| 5. Utility Pages + Analytics | 0/TBD | Not started | - |
+| 5. Utility Pages + Analytics | 0/4 | Not started | - |

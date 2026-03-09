@@ -39,6 +39,7 @@ const config: Config = {
   			body:       ['0.9375rem', { lineHeight: '1.6'  }],                      // 15px — body copy
   			caption:    ['0.8125rem', { lineHeight: '1.4'  }],                      // 13px — secondary text
   			label:      ['0.625rem',  { lineHeight: '1', letterSpacing: '0.1em', fontWeight: '500' }], // 10px — mono labels
+  			article:    ['1.75rem',   { lineHeight: '1.2', fontWeight: '700' }],                       // 28px — article-level headline
   		},
   		animation: {
   			'fade-in': 'fadeIn 0.4s ease-out'

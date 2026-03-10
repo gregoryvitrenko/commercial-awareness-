@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { isSubscribed } from '@/lib/subscription';
-import { hasCapacity, getMonthlyUsage, recordUsage } from '@/lib/char-usage';
-import { isValidDate, isWhitelistedVoiceId, sanitizeUpstreamError } from '@/lib/security';
+import { isValidDate, isWhitelistedVoiceId } from '@/lib/security';
 import { checkRateLimit } from '@/lib/rate-limit';
-import {
-  getAudioUrl,
-  getAudioBuffer,
-  audioExists,
-  saveAudio,
-  getCachedScript,
-} from '@/lib/podcast-storage';
+import { getAudioUrl, getAudioBuffer, audioExists } from '@/lib/podcast-storage';
+import { generateAndCachePodcastAudio } from '@/lib/podcast-audio';
 
 export const maxDuration = 120;
 
@@ -113,86 +107,25 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // ── Script must already be generated (via /api/podcast POST) ──
-  const script = await getCachedScript(date);
-  if (!script) {
-    return NextResponse.json(
-      { error: 'Script not found. Call /api/podcast first to generate the script.' },
-      { status: 404 }
-    );
-  }
-
-  // ── Monthly character budget check ──
-  const charCount = script.length;
-  if (!(await hasCapacity(charCount))) {
-    const { used, limit } = await getMonthlyUsage();
-    console.warn(`[podcast-audio] Monthly quota reached: ${used.toLocaleString()} / ${limit.toLocaleString()} chars used.`);
-    return NextResponse.json(
-      { error: 'Monthly audio generation quota reached. Please try again next month.' },
-      { status: 429 }
-    );
-  }
-
-  // ── API key required only for live ElevenLabs generation ──
-  const apiKey = process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
-    console.error('[podcast-audio] ELEVENLABS_API_KEY is not configured.');
-    return NextResponse.json({ error: 'Audio generation is currently unavailable.' }, { status: 500 });
-  }
-
-  // ── Call ElevenLabs ──
-  const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${resolvedVoiceId}`, {
-    method: 'POST',
-    headers: {
-      'xi-api-key': apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      text: script,
-      model_id: 'eleven_multilingual_v2',
-      voice_settings: {
-        stability: 0.75,
-        similarity_boost: 0.80,
-        style: 0.25,
-        use_speaker_boost: true,
-      },
-    }),
-  });
-
-  if (!res.ok) {
-    console.error(`[podcast-audio] ElevenLabs error ${res.status}:`, await res.text());
-    return NextResponse.json(
-      { error: sanitizeUpstreamError(res.status) },
-      { status: res.status >= 500 ? 502 : res.status }
-    );
-  }
-
-  // ── Save and return ──
-  const audioBuffer = Buffer.from(await res.arrayBuffer());
+  // ── Generate or serve cached (shared helper handles budget, ElevenLabs, Blob) ──
   try {
-    await recordUsage(charCount);
+    const { url } = await generateAndCachePodcastAudio(date, resolvedVoiceId);
+    if (!url) {
+      return NextResponse.json(
+        { error: 'Monthly audio generation quota reached. Please try again next month.' },
+        { status: 429 }
+      );
+    }
+    return NextResponse.json({ url });
   } catch (err) {
-    console.error('[podcast-audio] Failed to record char usage (Redis not configured?):', err);
+    const error = err as Error;
+    if (error.message?.startsWith('No podcast script')) {
+      return NextResponse.json(
+        { error: 'Script not found. Call /api/podcast first to generate the script.' },
+        { status: 404 }
+      );
+    }
+    console.error('[podcast-audio] Generation failed:', error.message);
+    return NextResponse.json({ error: 'Audio generation failed. Please try again.' }, { status: 502 });
   }
-
-  let savedUrl: string | null = null;
-  try {
-    savedUrl = await saveAudio(date, resolvedVoiceId, audioBuffer);
-  } catch (err) {
-    console.error('[podcast-audio] Failed to save audio (Blob not configured?):', err);
-  }
-
-  if (savedUrl) {
-    // Production: return Blob URL
-    return NextResponse.json({ url: savedUrl });
-  }
-
-  // Dev or failed save: return buffer directly
-  return new Response(audioBuffer, {
-    headers: {
-      'Content-Type': 'audio/mpeg',
-      'Content-Length': String(audioBuffer.length),
-      'Cache-Control': 'public, max-age=86400',
-    },
-  });
 }

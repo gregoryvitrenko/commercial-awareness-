@@ -129,4 +129,4 @@ Phases execute in strict dependency order: 1 → 2 → 3 → 4 → 5
 | 3. Content Surfaces | 2/3 | Complete    | 2026-03-09 |
 | 4. Conversion Surfaces | 2/3 | Complete    | 2026-03-09 |
 | 5. Utility Pages + Analytics | 3/4 | In Progress|  |
-| 6. Bug Fixes + Content Quality | 2/4 | In Progress|  |
+| 6. Bug Fixes + Content Quality | 3/4 | In Progress|  |

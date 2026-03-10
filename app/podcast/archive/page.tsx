@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { listPodcastDates, getTodayDate } from '@/lib/storage';
+import { getTodayDate } from '@/lib/storage';
+import { listPodcastDatesWithStatus } from '@/lib/podcast-storage';
 import { Header } from '@/components/Header';
 import { Headphones, ChevronRight } from 'lucide-react';
 import { requireSubscription } from '@/lib/paywall';
@@ -17,13 +18,15 @@ function formatDisplayDate(dateStr: string): string {
   });
 }
 
-function groupByMonth(dates: string[]): Record<string, string[]> {
-  const groups: Record<string, string[]> = {};
-  for (const date of dates) {
-    const [year, month] = date.split('-');
+function groupByMonth(
+  episodes: Array<{ date: string; hasAudio: boolean }>
+): Record<string, Array<{ date: string; hasAudio: boolean }>> {
+  const groups: Record<string, Array<{ date: string; hasAudio: boolean }>> = {};
+  for (const episode of episodes) {
+    const [year, month] = episode.date.split('-');
     const key = `${year}-${month}`;
     if (!groups[key]) groups[key] = [];
-    groups[key].push(date);
+    groups[key].push(episode);
   }
   return groups;
 }
@@ -37,8 +40,8 @@ function formatMonthHeading(key: string): string {
 export default async function PodcastArchivePage() {
   await requireSubscription();
   const today = getTodayDate();
-  const dates = await listPodcastDates();
-  const groups = groupByMonth(dates);
+  const episodes = await listPodcastDatesWithStatus();
+  const groups = groupByMonth(episodes);
   const monthKeys = Object.keys(groups).sort((a, b) => b.localeCompare(a));
 
   return (
@@ -51,11 +54,11 @@ export default async function PodcastArchivePage() {
             Podcast Archive
           </h2>
           <span className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500 tracking-widest uppercase bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
-            {dates.length} episode{dates.length !== 1 ? 's' : ''}
+            {episodes.length} episode{episodes.length !== 1 ? 's' : ''}
           </span>
         </div>
 
-        {dates.length === 0 ? (
+        {episodes.length === 0 ? (
           <div className="text-center py-20 space-y-2">
             <p className="text-sm text-zinc-500 dark:text-zinc-400">No archived episodes yet.</p>
             <Link
@@ -73,29 +76,45 @@ export default async function PodcastArchivePage() {
                   {formatMonthHeading(monthKey)}
                 </h3>
                 <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden divide-y divide-zinc-100 dark:divide-zinc-800">
-                  {groups[monthKey].map((date) => {
+                  {groups[monthKey].map(({ date, hasAudio }) => {
                     const isToday = date === today;
-                    return (
-                      <Link
-                        key={date}
-                        href={isToday ? '/podcast' : `/podcast/${date}`}
-                        className="flex items-center justify-between px-5 py-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group"
-                      >
-                        <div className="flex items-baseline gap-3 min-w-0">
-                          <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate group-hover:text-zinc-700 dark:group-hover:text-zinc-50">
-                            {formatDisplayDate(date)}
-                          </span>
-                          {isToday && (
-                            <span className="shrink-0 font-mono text-[10px] tracking-widest uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-                              Today
+                    const playable = hasAudio || isToday;
+                    if (playable) {
+                      return (
+                        <Link
+                          key={date}
+                          href={isToday ? '/podcast' : `/podcast/${date}`}
+                          className="flex items-center justify-between px-5 py-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors group"
+                        >
+                          <div className="flex items-baseline gap-3 min-w-0">
+                            <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate group-hover:text-zinc-700 dark:group-hover:text-zinc-50">
+                              {formatDisplayDate(date)}
                             </span>
-                          )}
-                        </div>
-                        <ChevronRight
-                          size={14}
-                          className="shrink-0 text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-500 dark:group-hover:text-zinc-400 transition-colors"
-                        />
-                      </Link>
+                            {isToday && (
+                              <span className="shrink-0 font-mono text-[10px] tracking-widest uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                                Today
+                              </span>
+                            )}
+                          </div>
+                          <ChevronRight
+                            size={14}
+                            className="shrink-0 text-zinc-300 dark:text-zinc-600 group-hover:text-zinc-500 dark:group-hover:text-zinc-400 transition-colors"
+                          />
+                        </Link>
+                      );
+                    }
+                    return (
+                      <div
+                        key={date}
+                        className="flex items-center justify-between px-5 py-4"
+                      >
+                        <span className="text-sm font-medium text-zinc-400 dark:text-zinc-600">
+                          {formatDisplayDate(date)}
+                        </span>
+                        <span className="font-mono text-[10px] tracking-widest uppercase text-zinc-300 dark:text-zinc-600">
+                          No audio
+                        </span>
+                      </div>
                     );
                   })}
                 </div>

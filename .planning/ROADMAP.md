@@ -127,7 +127,7 @@ Plans:
 
 **Milestone Goal:** Expand content depth (more firms, events, primer interview prep), fix the mobile experience, and add engagement/retention features (digest, podcast archive) — positioning Folio for a marketing push to law societies and LinkedIn.
 
-- [ ] **Phase 7: Mobile + Header Polish** - Fix header scroll background, mobile navigation, and story card layout at 375px
+- [x] **Phase 7: Mobile + Header Polish** - Fix header scroll background, mobile navigation, and story card layout at 375px (completed 2026-03-10)
 - [ ] **Phase 8: Firms Expansion** - Add 8 new firm profiles (Baker McKenzie, Jones Day, Mayer Brown, DLA Piper, Eversheds Sutherland, CMS, Addleshaw Goddard, Pinsent Masons) with manually verified TC data
 - [ ] **Phase 9: Podcast Archive** - Configure Vercel Blob storage and activate the podcast archive listing page
 - [ ] **Phase 10: Primer Interview Questions** - Add 3-5 manually authored interview questions with Commercial Reasoning answer skeletons to each of the 8 sector primers
@@ -219,7 +219,7 @@ v1.0 phases (1-6) complete. v1.1 phases execute in numeric order: 7 → 8 → 9 
 | 4. Conversion Surfaces | v1.0 | 3/3 | Complete | 2026-03-09 |
 | 5. Utility Pages + Analytics | v1.0 | 4/4 | Complete | 2026-03-10 |
 | 6. Bug Fixes + Content Quality | v1.0 | 4/4 | Complete | 2026-03-10 |
-| 7. Mobile + Header Polish | 2/3 | In Progress|  | - |
+| 7. Mobile + Header Polish | 3/3 | Complete   | 2026-03-10 | - |
 | 8. Firms Expansion | v1.1 | 0/? | Not started | - |
 | 9. Podcast Archive | v1.1 | 0/? | Not started | - |
 | 10. Primer Interview Questions | v1.1 | 0/? | Not started | - |

@@ -15,7 +15,7 @@
 ### Mobile & Header
 
 - [x] **MOBILE-01**: Header has a persistent opaque background on scroll — no content bleed-through when scrolling past page content
-- [ ] **MOBILE-02**: Mobile navigation is touch-usable at 375px viewport — correct tap targets, dropdown menus function on touch
+- [x] **MOBILE-02**: Mobile navigation is touch-usable at 375px viewport — correct tap targets, dropdown menus function on touch
 - [x] **MOBILE-03**: Story cards lay out correctly on 375px viewport — no overflow, readable text, no broken layout
 
 ### Firms Expansion
@@ -135,7 +135,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | MOBILE-01 | Phase 7 | Complete |
-| MOBILE-02 | Phase 7 | Pending |
+| MOBILE-02 | Phase 7 | Complete |
 | MOBILE-03 | Phase 7 | Complete |
 | FIRMS-01 | Phase 8 | Pending |
 | FIRMS-02 | Phase 8 | Pending |

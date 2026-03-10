@@ -24,13 +24,15 @@ function buildPrompt(briefing: Briefing): string {
 ${storiesBlock}
 
 Question design rules:
-1. Q1 (Recall) — test a specific fact from the Summary: deal value, adviser name, regulatory body, timeline, financing structure, or named party. Use real figures and names from the text.
-2. Q2 (Significance) — test understanding from Why It Matters: which firm is best positioned and why, which practice group, what regulatory requirement applies.
-3. Q3 (Interview angle) — test analytical framing from Talking Point: which observation best captures the commercial significance, what the so-what is for law firms.
+1. Q1 (Commercial Inference) — test whether the student can reason beyond the headline. Do NOT ask about the deal value or any fact visible in the headline alone. Instead ask: why this deal requires a specific regulatory clearance, what financing structure this type of transaction typically uses, which practice area at a Magic Circle firm would lead this mandate, or what the commercial implication is for a named party. The correct answer must require reading the summary AND thinking about it.
+
+2. Q2 (Law Firm Angle) — test understanding from Why It Matters: which UK or US firm is best positioned for this specific work and why (practice group track record, client relationship, regulatory expertise). Distractors must be real competing firms doing similar work — do not use obviously wrong firms.
+
+3. Q3 (Interview So-What) — test the commercial observation a strong candidate would make in an interview: what market trend this connects to, what a trainee would actually do day-to-day on this matter, or which observation best captures the significance for the legal industry.
 
 For each question:
-- Write 4 options (A, B, C, D). Exactly one is correct. The three distractors must be plausible — use real firm names, real regulatory bodies, slightly different figures — not obviously wrong.
-- Write an explanation of 1–2 sentences shown after the student answers. Reference the specific detail from the briefing. Help them learn, not just score.
+- Write 4 options (A, B, C, D). Exactly one is correct. Distractors must be plausible: use real law firm names (Linklaters, Freshfields, Clifford Chance, Allen & Overy, Latham & Watkins, Kirkland & Ellis, Skadden, Davis Polk), real regulatory bodies (CMA, FCA, PRA, EU Commission, SFO, Takeover Panel), real practice areas (M&A, leveraged finance, capital markets, restructuring, disputes, real estate finance). Never use obviously wrong distractors.
+- Write an explanation of 1–2 sentences shown after the student answers. Reference the specific reasoning from the briefing. Help them understand WHY, not just what the correct answer was.
 - Never use options like "None of the above" or "All of the above".
 - Never use the word "distractor" or "correct answer" in any field.
 

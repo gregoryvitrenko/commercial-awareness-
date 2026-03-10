@@ -103,11 +103,14 @@ Clean, newspaper-style design (light mode default, dark opt-in). The free tier i
 ---
 
 ## Design principles
-- Stone palette for content areas, zinc for UI chrome (archive/quiz nav cards)
-- `rounded-xl` + `border border-zinc-200 dark:border-zinc-800` for card containers
-- `font-mono text-[10px] tracking-widest uppercase text-zinc-400` for section labels
-- `divide-y divide-zinc-100 dark:divide-zinc-800` for list rows inside cards
-- Page headings: icon (lucide, size 16, text-zinc-400) + bold title + count badge
+See `docs/design.md` — the authoritative design spec. All frontend tasks must follow it. When code conflicts with the spec, treat the spec as authoritative.
+
+Summary:
+- Stone palette for content areas, zinc for UI chrome only
+- `rounded-card` (2px) for cards/sections, `rounded-chrome` (4px) for buttons/chips/inputs — never `rounded-xl`
+- `.section-label` utility class for all overline/category labels — never write raw `font-mono text-[10px] tracking-widest uppercase` inline
+- Semantic type tokens only (`text-caption`, `text-label`, etc.) — no raw pixel sizes like `text-[13px]`
+- Page headings: icon (lucide, size 16, text-stone-400) + bold title + count badge
 - No emojis. Minimal. Newspaper feel.
 
 ---

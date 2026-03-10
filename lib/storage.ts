@@ -123,7 +123,24 @@ export function getTodayDate(): string {
 
 async function redisSaveQuiz(quiz: DailyQuiz): Promise<void> {
   const redis = getRedis();
-  await redis.set(`quiz:${quiz.date}`, JSON.stringify(quiz));
+  await Promise.all([
+    redis.set(`quiz:${quiz.date}`, JSON.stringify(quiz)),
+    redis.zadd('quiz:index', {
+      score: new Date(quiz.date).getTime(),
+      member: quiz.date,
+    }),
+  ]);
+}
+
+async function redisListQuizDates(): Promise<string[]> {
+  const redis = getRedis();
+  try {
+    const dates = await redis.zrange('quiz:index', 0, -1, { rev: true });
+    if (dates && (dates as string[]).length > 0) return dates as string[];
+  } catch {
+    // quiz:index doesn't exist yet — fall through to empty list
+  }
+  return [];
 }
 
 async function redisGetQuiz(date: string): Promise<DailyQuiz | null> {
@@ -182,8 +199,7 @@ function fsListQuizDates(): string[] {
 }
 
 export async function listQuizDates(): Promise<string[]> {
-  // In Redis mode, quiz dates align with briefing dates — use briefing index.
-  if (useRedis()) return redisList();
+  if (useRedis()) return redisListQuizDates();
   return fsListQuizDates();
 }
 

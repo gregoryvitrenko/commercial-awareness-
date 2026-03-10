@@ -443,25 +443,32 @@ export default async function FirmProfilePage({
                   return new Date(y, m - 1, d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
                 };
                 const hasExact = deadline.openDate || deadline.closeDate;
+                // Closed check: ISO YYYY-MM-DD strings compare lexicographically correctly
+                const isClosed = deadline.closeDate ? deadline.closeDate < today : false;
 
                 return (
                 <div
                   key={deadline.label}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
+                  className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3${isClosed ? ' opacity-60' : ''}`}
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <p className="text-[13px] font-semibold text-stone-900 dark:text-stone-100">
+                      <p className={`text-[13px] font-semibold ${isClosed ? 'text-stone-500 dark:text-stone-400' : 'text-stone-900 dark:text-stone-100'}`}>
                         {deadline.label}
                       </p>
-                      {deadline.rolling && (
+                      {isClosed && (
+                        <span className="inline-block font-mono text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
+                          Closed
+                        </span>
+                      )}
+                      {!isClosed && deadline.rolling && (
                         <span className="inline-block text-[9px] font-sans font-semibold tracking-[0.06em] uppercase px-1.5 py-0.5 rounded-sm bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
                           Rolling
                         </span>
                       )}
                     </div>
                     {hasExact ? (
-                      <p className="text-[11px] text-stone-600 dark:text-stone-300 font-mono">
+                      <p className={`text-[11px] font-mono ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
                         {deadline.openDate && deadline.closeDate
                           ? `${fmtDate(deadline.openDate)} – ${fmtDate(deadline.closeDate)}`
                           : deadline.closeDate
@@ -477,6 +484,7 @@ export default async function FirmProfilePage({
                       </p>
                     )}
                   </div>
+                  {!isClosed && (
                   <a
                     href={deadline.applyUrl}
                     target="_blank"
@@ -486,6 +494,7 @@ export default async function FirmProfilePage({
                   >
                     Apply →
                   </a>
+                  )}
                 </div>
                 );
               })}

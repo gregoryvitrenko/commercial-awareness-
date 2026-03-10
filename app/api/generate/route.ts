@@ -3,6 +3,7 @@ import { auth } from '@clerk/nextjs/server';
 import { generateBriefing } from '@/lib/generate';
 import { saveBriefing, getBriefing, getTodayDate, getAptitudeBank, saveAptitudeBank, saveQuiz } from '@/lib/storage';
 import { generateAndSavePodcastScript } from '@/lib/podcast';
+import { generateAndCachePodcastAudio } from '@/lib/podcast-audio';
 import { generateQuiz } from '@/lib/quiz';
 import { buildAptitudeBank, BANK_TTL_DAYS } from '@/lib/aptitude';
 import { checkRateLimit } from '@/lib/rate-limit';
@@ -75,10 +76,12 @@ async function handleGenerate(request: NextRequest, force = false) {
       console.error('[generate] Quiz auto-generation failed:', err)
     );
 
-    // Auto-generate podcast script — fire-and-forget
-    generateAndSavePodcastScript(briefing).catch((err) =>
-      console.error('[generate] Podcast auto-generation failed:', err)
-    );
+    // Auto-generate podcast script then MP3 — fire-and-forget
+    generateAndSavePodcastScript(briefing)
+      .then(() => generateAndCachePodcastAudio(briefing.date))
+      .catch((err) =>
+        console.error('[generate] Podcast/audio auto-generation failed:', err)
+      );
 
     // Refresh aptitude question banks if stale (>7 days) — fire-and-forget
     void refreshStaleBanks(today);

@@ -35,6 +35,8 @@ const TIER_BADGE: Record<FirmTier, string> = {
     'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800',
   'Silver Circle':
     'bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-800',
+  'National':
+    'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800',
   'International':
     'bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800',
   'US Firms':
@@ -46,6 +48,7 @@ const TIER_BADGE: Record<FirmTier, string> = {
 const TIER_LEFT_BORDER: Record<FirmTier, string> = {
   'Magic Circle':  'border-l-blue-500 dark:border-l-blue-400',
   'Silver Circle': 'border-l-violet-500 dark:border-l-violet-400',
+  'National':      'border-l-rose-500 dark:border-l-rose-400',
   'International': 'border-l-teal-500 dark:border-l-teal-400',
   'US Firms':      'border-l-amber-500 dark:border-l-amber-400',
   'Boutique':      'border-l-emerald-500 dark:border-l-emerald-400',
@@ -54,6 +57,7 @@ const TIER_LEFT_BORDER: Record<FirmTier, string> = {
 const TIER_STAT_TEXT: Record<FirmTier, string> = {
   'Magic Circle':  'text-blue-600 dark:text-blue-400',
   'Silver Circle': 'text-violet-600 dark:text-violet-400',
+  'National':      'text-rose-600 dark:text-rose-400',
   'International': 'text-teal-600 dark:text-teal-400',
   'US Firms':      'text-amber-600 dark:text-amber-400',
   'Boutique':      'text-emerald-600 dark:text-emerald-400',

@@ -101,6 +101,7 @@ export interface Comment {
 export type FirmTier =
   | 'Magic Circle'
   | 'Silver Circle'
+  | 'National'
   | 'International'
   | 'US Firms'
   | 'Boutique';

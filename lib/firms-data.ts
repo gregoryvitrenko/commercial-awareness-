@@ -519,7 +519,7 @@ export const FIRMS: FirmProfile[] = [
     name: 'Eversheds Sutherland',
     shortName: 'Eversheds',
     aliases: ['Eversheds Sutherland', 'Eversheds', 'Eversheds-Sutherland', 'Eversheds Sutherland International'],
-    tier: 'Silver Circle',
+    tier: 'National',
     website: 'https://www.eversheds-sutherland.com',
     hq: 'London / Edinburgh',
     offices: ['London', 'Edinburgh', 'Birmingham', 'Manchester', 'Leeds', 'Bristol', 'Nottingham', 'Cardiff', 'Dublin', 'Brussels', 'Paris', 'Berlin', 'New York', 'Singapore', 'Hong Kong'],
@@ -542,7 +542,7 @@ export const FIRMS: FirmProfile[] = [
       applyUrl: 'https://www.eversheds-sutherland.com/en/uk/careers/students',
       lastVerified: '2026-03-10',
     },
-    accentColor: 'text-violet-700 dark:text-violet-400',
+    accentColor: 'text-rose-700 dark:text-rose-400',
   },
 
   {
@@ -550,7 +550,7 @@ export const FIRMS: FirmProfile[] = [
     name: 'CMS',
     shortName: 'CMS',
     aliases: ['CMS', 'CMS Cameron McKenna', 'CMS Cameron McKenna Nabarro Olswang', 'CMS UK'],
-    tier: 'Silver Circle',
+    tier: 'National',
     website: 'https://cms.law',
     hq: 'London / Vienna',
     offices: ['London', 'Edinburgh', 'Bristol', 'Manchester', 'Vienna', 'Berlin', 'Frankfurt', 'Paris', 'Brussels', 'Amsterdam', 'Madrid', 'Milan', 'Warsaw', 'Moscow', 'Dubai', 'Singapore', 'Bogotá', 'São Paulo'],
@@ -574,7 +574,7 @@ export const FIRMS: FirmProfile[] = [
       applyUrl: 'https://cmsemergingtalent.com',
       lastVerified: '2026-03-10',
     },
-    accentColor: 'text-violet-700 dark:text-violet-400',
+    accentColor: 'text-rose-700 dark:text-rose-400',
   },
 
   {
@@ -582,7 +582,7 @@ export const FIRMS: FirmProfile[] = [
     name: 'Addleshaw Goddard',
     shortName: 'Addleshaw Goddard',
     aliases: ['Addleshaw Goddard', 'Addleshaws', 'AG', 'Addleshaw', 'Addleshaw Goddard LLP'],
-    tier: 'Silver Circle',
+    tier: 'National',
     website: 'https://www.addleshawgoddard.com',
     hq: 'London / Leeds / Edinburgh',
     offices: ['London', 'Leeds', 'Edinburgh', 'Manchester', 'Glasgow', 'Aberdeen', 'Singapore', 'Hong Kong', 'Doha', 'Dubai', 'Frankfurt', 'Hamburg', 'Munich'],
@@ -605,7 +605,7 @@ export const FIRMS: FirmProfile[] = [
       applyUrl: 'https://earlycareers.addleshawgoddard.com',
       lastVerified: '2026-03-10',
     },
-    accentColor: 'text-violet-700 dark:text-violet-400',
+    accentColor: 'text-rose-700 dark:text-rose-400',
   },
 
   {
@@ -613,7 +613,7 @@ export const FIRMS: FirmProfile[] = [
     name: 'Pinsent Masons',
     shortName: 'Pinsent Masons',
     aliases: ['Pinsent Masons', 'Pinsents', 'Pinsent Masons LLP'],
-    tier: 'Silver Circle',
+    tier: 'National',
     website: 'https://www.pinsentmasons.com',
     hq: 'London / Edinburgh',
     offices: ['London', 'Edinburgh', 'Glasgow', 'Leeds', 'Manchester', 'Birmingham', 'Bristol', 'Aberdeen', 'Dublin', 'Belfast', 'Sydney', 'Melbourne', 'Singapore', 'Hong Kong', 'Dubai', 'Johannesburg', 'Cape Town', 'Munich', 'Berlin', 'Paris'],
@@ -636,7 +636,7 @@ export const FIRMS: FirmProfile[] = [
       applyUrl: 'https://www.pinsentmasons.com/careers/early-talent',
       lastVerified: '2026-03-10',
     },
-    accentColor: 'text-violet-700 dark:text-violet-400',
+    accentColor: 'text-rose-700 dark:text-rose-400',
   },
 
   // ─── Elite US (5) ─────────────────────────────────────────────────────────

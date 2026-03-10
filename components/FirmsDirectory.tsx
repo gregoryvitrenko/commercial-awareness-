@@ -5,7 +5,7 @@ import { Search, X } from 'lucide-react';
 import { FirmCard } from './FirmCard';
 import type { FirmProfile, FirmTier } from '@/lib/types';
 
-const TIER_ORDER: FirmTier[] = ['Magic Circle', 'Silver Circle', 'International', 'US Firms', 'Boutique'];
+const TIER_ORDER: FirmTier[] = ['Magic Circle', 'Silver Circle', 'National', 'International', 'US Firms', 'Boutique'];
 
 function tierId(tier: FirmTier): string {
   return 'tier-' + tier.toLowerCase().replace(/\s+/g, '-');

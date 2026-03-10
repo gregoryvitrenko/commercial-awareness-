@@ -6,6 +6,7 @@ import { getDiversitySchemes } from '@/lib/diversity-data';
 const TIER_BORDER: Record<FirmTier, string> = {
   'Magic Circle':  'border-l-blue-500 dark:border-l-blue-400',
   'Silver Circle': 'border-l-violet-500 dark:border-l-violet-400',
+  'National':      'border-l-rose-500 dark:border-l-rose-400',
   'International': 'border-l-teal-500 dark:border-l-teal-400',
   'US Firms':      'border-l-amber-500 dark:border-l-amber-400',
   'Boutique':      'border-l-emerald-500 dark:border-l-emerald-400',

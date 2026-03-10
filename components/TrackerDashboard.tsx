@@ -95,7 +95,7 @@ const ALL_STATUSES: ApplicationStatus[] = [
   'not-started', 'in-progress', 'submitted', 'interview', 'offer', 'rejected',
 ];
 
-const TIER_ORDER: FirmTier[] = ['Magic Circle', 'Silver Circle', 'International', 'US Firms', 'Boutique'];
+const TIER_ORDER: FirmTier[] = ['Magic Circle', 'Silver Circle', 'National', 'International', 'US Firms', 'Boutique'];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 

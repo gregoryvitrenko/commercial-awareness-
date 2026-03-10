@@ -44,6 +44,14 @@
 - [x] **ANLYT-01**: Vercel Analytics installed and active on production
 - [x] **ANLYT-02**: Conversion funnel events tracked: free sign-up, upgrade page view, checkout click, subscription activation
 
+### Bug Fixes & Content Quality
+
+- [x] **BUG-01**: Double footer on `/upgrade` removed — root layout provides footer; page-level SiteFooter was duplicate
+- [x] **BUG-02**: Expired firm deadlines show CLOSED badge, greyed row, strikethrough date, no Apply button
+- [x] **BUG-03**: Quiz Available list reads `quiz:index` (not briefing dates); question count badge reflects real cached data
+- [x] **QUAL-01**: `talkingPoints` prompt strengthened with BAD/GOOD contrast examples and filler-phrase ban
+- [x] **QUAL-02**: Quiz Q1 rewritten as Commercial Inference; Q2/Q3 updated; distractor guidance names real firms/regulators
+
 ## v2 Requirements
 
 ### Branding
@@ -102,10 +110,15 @@
 | UTIL-05 | Phase 5 | Complete |
 | ANLYT-01 | Phase 5 | Complete |
 | ANLYT-02 | Phase 5 | Complete |
+| BUG-01 | Phase 6 | Complete |
+| BUG-02 | Phase 6 | Complete |
+| BUG-03 | Phase 6 | Complete |
+| QUAL-01 | Phase 6 | Complete |
+| QUAL-02 | Phase 6 | Complete |
 
 **Coverage:**
-- v1 requirements: 21 total
-- Mapped to phases: 21
+- v1 requirements: 26 total
+- Mapped to phases: 26
 - Unmapped: 0 ✓
 
 ---

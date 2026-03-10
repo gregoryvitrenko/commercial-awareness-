@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Content Surfaces** - Polish StoryCard, ArticleStory, and BriefingView — the most-visited components in the product (completed 2026-03-09)
 - [x] **Phase 4: Conversion Surfaces** - Align the upgrade page and landing hero to the product's design register and rewrite copy to outcome framing (completed 2026-03-09)
 - [x] **Phase 5: Utility Pages + Analytics** - Apply established token patterns to Archive, Firms, Quiz, Tests, and Primers; install Vercel Analytics (completed 2026-03-10)
-- [ ] **Phase 6: Bug Fixes + Content Quality** - Fix production bugs found in live audit; improve talking points and quiz question quality
+- [x] **Phase 6: Bug Fixes + Content Quality** - Fix production bugs found in live audit; improve talking points and quiz question quality (completed 2026-03-10)
 
 ## Phase Details
 
@@ -129,4 +129,4 @@ Phases execute in strict dependency order: 1 → 2 → 3 → 4 → 5
 | 3. Content Surfaces | 2/3 | Complete    | 2026-03-09 |
 | 4. Conversion Surfaces | 2/3 | Complete    | 2026-03-09 |
 | 5. Utility Pages + Analytics | 3/4 | In Progress|  |
-| 6. Bug Fixes + Content Quality | 3/4 | In Progress|  |
+| 6. Bug Fixes + Content Quality | 4/4 | Complete   | 2026-03-10 |

@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
-status: ready_to_plan
-stopped_at: ""
-last_updated: "2026-03-10T00:00:00.000Z"
-last_activity: 2026-03-10 — Roadmap created for v1.1 (phases 7-12)
+status: planning
+stopped_at: Completed 07-mobile-header-polish-01-PLAN.md
+last_updated: "2026-03-10T16:14:29.698Z"
+last_activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 progress:
-  total_phases: 6
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_phases: 12
+  completed_phases: 6
+  total_plans: 20
+  completed_plans: 19
   percent: 0
 ---
 
@@ -51,6 +51,8 @@ Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 | 12. Digest Compliance | TBD | - | - |
 
 *Updated after each plan completion*
+| Phase 07-mobile-header-polish P03 | 1 | 1 tasks | 2 files |
+| Phase 07-mobile-header-polish P01 | 1 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -65,6 +67,8 @@ Recent decisions affecting current work:
 - v1.1 Roadmap: Primer interview questions must be manually authored — AI-generated questions have no edge over free resources and are explicitly out of scope in REQUIREMENTS.md
 - [Phase 06-bug-fixes-content-quality]: isClosed uses ISO string comparison (deadline.closeDate < today) — YYYY-MM-DD strings compare lexicographically so no Date parsing needed
 - [Phase 06-bug-fixes-content-quality]: BUG-01/02/03 confirmed fixed visually on production folioapp.co.uk; QUAL-01/02 prompt changes confirmed in source
+- [Phase 07-mobile-header-polish]: Two wrappers require min-w-0: the direct grid child div in StoryGrid and the outermost card div in StoryCard — both must be present for the CSS Grid overflow fix to work at 375px
+- [Phase 07-mobile-header-polish]: CSS custom property --paper stores bare HSL channels only; Tailwind hsl(var()) wrapper must not be duplicated in the variable value
 
 ### Pending Todos
 
@@ -79,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10
-Stopped at: v1.1 roadmap created (phases 7-12)
+Last session: 2026-03-10T16:14:29.691Z
+Stopped at: Completed 07-mobile-header-polish-01-PLAN.md
 Resume file: None

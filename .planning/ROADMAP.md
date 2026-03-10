@@ -219,7 +219,7 @@ v1.0 phases (1-6) complete. v1.1 phases execute in numeric order: 7 → 8 → 9 
 | 4. Conversion Surfaces | v1.0 | 3/3 | Complete | 2026-03-09 |
 | 5. Utility Pages + Analytics | v1.0 | 4/4 | Complete | 2026-03-10 |
 | 6. Bug Fixes + Content Quality | v1.0 | 4/4 | Complete | 2026-03-10 |
-| 7. Mobile + Header Polish | v1.1 | 0/3 | Not started | - |
+| 7. Mobile + Header Polish | 2/3 | In Progress|  | - |
 | 8. Firms Expansion | v1.1 | 0/? | Not started | - |
 | 9. Podcast Archive | v1.1 | 0/? | Not started | - |
 | 10. Primer Interview Questions | v1.1 | 0/? | Not started | - |

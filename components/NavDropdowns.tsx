@@ -86,18 +86,20 @@ export function NavDropdowns() {
           </button>
 
           {open === group.label && (
-            <div className="absolute top-full left-0 z-50 mt-1.5 min-w-[168px] rounded-card bg-white dark:bg-stone-950 border border-stone-200 dark:border-stone-800 shadow-md shadow-stone-900/10 dark:shadow-stone-950/80 py-1 max-h-72 overflow-y-auto">
-              {group.items.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(null)}
-                  className="flex items-center gap-2.5 px-4 py-2.5 text-[12px] font-sans text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800/60 transition-colors"
-                >
-                  <item.Icon size={12} className="flex-shrink-0 text-stone-400 dark:text-stone-500" />
-                  {item.label}
-                </Link>
-              ))}
+            <div className="absolute top-full left-0 z-50 pt-1.5">
+              <div className="min-w-[168px] rounded-card bg-white dark:bg-stone-950 border border-stone-200 dark:border-stone-800 shadow-md shadow-stone-900/10 dark:shadow-stone-950/80 py-1 max-h-72 overflow-y-auto">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(null)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-[12px] font-sans text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800/60 transition-colors"
+                  >
+                    <item.Icon size={12} className="flex-shrink-0 text-stone-400 dark:text-stone-500" />
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
         </div>

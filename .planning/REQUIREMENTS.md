@@ -134,27 +134,27 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 7 | Pending |
 | MOBILE-01 | Phase 7 | Pending |
 | MOBILE-02 | Phase 7 | Pending |
 | MOBILE-03 | Phase 7 | Pending |
 | FIRMS-01 | Phase 8 | Pending |
 | FIRMS-02 | Phase 8 | Pending |
-| PRIMER-01 | Phase 9 | Pending |
-| PRIMER-02 | Phase 9 | Pending |
-| PODCAST-01 | Phase 10 | Pending |
-| DIGEST-01 | Phase 11 | Pending |
-| DIGEST-02 | Phase 11 | Pending |
-| DIGEST-03 | Phase 11 | Pending |
-| EVT-01 | Phase 12 | Pending |
-| EVT-02 | Phase 12 | Pending |
-| EVT-03 | Phase 12 | Pending |
-| EVT-04 | Phase 12 | Pending |
+| INFRA-01 | Phase 9 | Pending |
+| PODCAST-01 | Phase 9 | Pending |
+| PRIMER-01 | Phase 10 | Pending |
+| PRIMER-02 | Phase 10 | Pending |
+| EVT-01 | Phase 11 | Pending |
+| EVT-02 | Phase 11 | Pending |
+| EVT-03 | Phase 11 | Pending |
+| EVT-04 | Phase 11 | Pending |
+| DIGEST-01 | Phase 12 | Pending |
+| DIGEST-02 | Phase 12 | Pending |
+| DIGEST-03 | Phase 12 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 16 total
-- Mapped to phases: 16 (phase numbers subject to roadmapper)
-- Unmapped: 0 ✓
+- Mapped to phases: 16
+- Unmapped: 0
 
 ### v1.0 Requirements
 
@@ -189,4 +189,4 @@
 
 ---
 *Requirements defined: 2026-03-09 (v1.0), 2026-03-10 (v1.1)*
-*Last updated: 2026-03-10 after v1.1 milestone start*
+*Last updated: 2026-03-10 after v1.1 roadmap created*

@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
-status: planning
+status: ready_to_plan
 stopped_at: ""
 last_updated: "2026-03-10T00:00:00.000Z"
-last_activity: 2026-03-10 — Milestone v1.1 started
+last_activity: 2026-03-10 — Roadmap created for v1.1 (phases 7-12)
 progress:
-  total_phases: 0
+  total_phases: 6
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -21,51 +21,36 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** Students who use Folio daily walk into TC interviews knowing what's happening in the market and how to talk about it — giving them a credible edge over unprepared candidates.
-**Current focus:** Milestone v1.1 — Content & Reach (defining requirements)
+**Current focus:** Milestone v1.1 — Content & Reach (Phase 7: Mobile + Header Polish)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-03-10 — Milestone v1.1 started
+Phase: 7 of 12 (Mobile + Header Polish)
+Plan: — (not yet planned)
+Status: Ready to plan
+Last activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 
 ## Performance Metrics
 
-**Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0 hours
+**Velocity (v1.0 reference):**
+- Total plans completed: 17 (v1.0)
+- Average duration: ~4 tasks/plan
+- Total execution time: v1.0 complete
 
-**By Phase:**
+**v1.1 By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
-
-**Recent Trend:**
-- Last 5 plans: none yet
-- Trend: -
+| 7. Mobile + Header Polish | TBD | - | - |
+| 8. Firms Expansion | TBD | - | - |
+| 9. Podcast Archive | TBD | - | - |
+| 10. Primer Interview Questions | TBD | - | - |
+| 11. Events Section | TBD | - | - |
+| 12. Digest Compliance | TBD | - | - |
 
 *Updated after each plan completion*
-| Phase 01-design-tokens P01 | 4 | 5 tasks | 2 files |
-| Phase 02-shell P01 | 2 | 2 tasks | 2 files |
-| Phase 02-shell P02 | 3 | 2 tasks | 2 files |
-| Phase 03-content-surfaces P03 | 3 | 2 tasks | 3 files |
-| Phase 03-content-surfaces P01 | 3 | 2 tasks | 2 files |
-| Phase 03-content-surfaces P02 | 2 | 1 tasks | 1 files |
-| Phase 04-conversion-surfaces P02 | 2 | 1 tasks | 1 files |
-| Phase 04-conversion-surfaces P01 | 2 | 2 tasks | 1 files |
-| Phase 04-conversion-surfaces P03 | 5 | 1 tasks | 0 files |
-| Phase 05-utility-pages-analytics P02 | 2 | 2 tasks | 3 files |
-| Phase 05-utility-pages-analytics P03 | 2 | 2 tasks | 4 files |
-| Phase 05-utility-pages-analytics P01 | 6 | 3 tasks | 3 files |
-| Phase 06-bug-fixes-content-quality P03 | 5 | 2 tasks | 2 files |
-| Phase 06-bug-fixes-content-quality P02 | 8 | 2 tasks | 2 files |
-| Phase 06-bug-fixes-content-quality P01 | 10 | 2 tasks | 2 files |
-| Phase 06-bug-fixes-content-quality P04 | 5 | 1 tasks | 0 files |
 
 ## Accumulated Context
 
@@ -74,43 +59,12 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- Roadmap: Coarse granularity applied — 5 phases retained despite coarse setting because dependency order is a hard constraint (tokens before components before pages)
-- Roadmap: Analytics (ANLYT-01, ANLYT-02) grouped with utility pages in Phase 5 — both are "apply and verify" tasks that share the same deployment window
-- [Phase 01-design-tokens]: Reduced --radius from 0.5rem to 0.25rem for flat editorial feel; rounded-sm now ~0px intentionally
-- [Phase 01-design-tokens]: Used theme.extend.fontSize to preserve all Tailwind default text-* sizes
-- [Phase 01-design-tokens]: Radius tokens use direct values not calc chains for predictability
-- [Phase 02-shell]: bg-paper replaces all bg-stone-50 dark:bg-stone-950 pairs in shell components — single dark-aware token
-- [Phase 02-shell]: text-display used for wordmark h1, removing responsive breakpoint font-size pair and redundant font-bold
-- [Phase 02-shell]: text-label used for all 10-11px mono/sans labels in header and nav triggers, bundling size and letterSpacing
-- [Phase 02-shell]: Sticky footer: body flex flex-col + main flex-1 + footer mt-auto pattern established
-- [Phase 02-shell]: Footer link order locked: Feedback · Terms · Privacy · Contact · LinkedIn; mailto links no target=_blank, LinkedIn target=_blank
-- [Phase 03-content-surfaces]: Bigger Picture divider uses text-label + font-sans (NOT .section-label) — sans-serif with custom tracking-[0.2em], distinct from mono section labels
-- [Phase 03-content-surfaces]: Button hover: hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors established as the codebase standard (never hover:opacity)
-- [Phase 03-content-surfaces]: Logo/wordmark hover: group-hover:text-stone-600 dark:group-hover:text-stone-400 transition-colors (colour-shift, not opacity) — resolves Phase 2 deferral
-- [Phase 03-content-surfaces]: text-article token (1.75rem/28px) added to tailwind.config.ts for ArticleStory component in 03-02
-- [Phase 03-content-surfaces]: StoryCard: text-subheading + font-bold for headlines (subheading token is 500fw, card headlines must be 700fw)
-- [Phase 03-content-surfaces]: StoryCard topic labels: text-label + explicit tracking-[0.12em], NOT .section-label (font-mono incompatible)
-- [Phase 03-content-surfaces]: Border hover added to StoryCard: hover:border-stone-300 dark:hover:border-stone-600 alongside bg shift
-- [Phase 03-content-surfaces]: text-article token (28px) replaces responsive headline pair in ArticleStory; text-[16px] locked for summary/legacy body; font-semibold kept explicitly on soundbite (subheading token is 500fw)
-- [Phase 04-conversion-surfaces]: LandingHero CTA hover: hover:bg-stone-700 dark:hover:bg-stone-300 transition-colors (not hover:opacity) — consistent with Phase 3 standard
-- [Phase 04-conversion-surfaces]: Hero headline text-3xl sm:text-4xl left unchanged — no clean single-token mapping for the 30/36px responsive pair
-- [Phase 04-conversion-surfaces]: Social proof block uses placeholder copy with TODO comments — update with real count and testimonial when available
-- [Phase 04-conversion-surfaces]: Free-tier note text uses text-label (10px) to keep it visually subordinate to feature items at text-caption (13px)
-- [Phase 04-conversion-surfaces]: Phase 4 verification plan (04-03): verification-only checkpoint, no code changes — all five production checks passed confirming stone palette, social proof, flat radius, and Stripe checkout
-- [Phase 05-utility-pages-analytics]: Firms page heading uses text-subheading font-bold (not text-lg) to match heading token system
-- [Phase 05-utility-pages-analytics]: Firms count badge uses section-label component class instead of repeating inline mono/label classes
-- [Phase 05-utility-pages-analytics]: Analytics placed outside Providers to avoid unnecessary re-render scope on provider state changes
-- [Phase 05-utility-pages-analytics]: checkout_click fires before the fetch() call so it records intent even if Stripe checkout fails
-- [Phase 05-utility-pages-analytics]: sign-up page converted to client component directly (Approach A) — SignUp from Clerk already works in client component files
-- [Phase 05-utility-pages-analytics]: QuizInterface hover tint overlay preserved — opacity-0 group-hover:opacity-100 on pointer-events-none divs is a CSS decoration layer, not the hover:opacity-* button pattern
-- [Phase 05-utility-pages-analytics]: rounded-2xl on streak/deep practice mode-selector cards preserved — marketing-style feature cards distinct from editorial content containers using rounded-card
-- [Phase 06-bug-fixes-content-quality]: talkingPoints soundbite: BAD/GOOD contrast example embedded inline to steer Claude away from generic filler headlines
-- [Phase 06-bug-fixes-content-quality]: Quiz Q1 renamed to Commercial Inference: explicitly forbids deal-price questions, requires reasoning beyond the headline
-- [Phase 06-bug-fixes-content-quality]: Quiz distractor guidance names specific real firms and regulatory bodies to prevent obviously-wrong options
-- [Phase 06-bug-fixes-content-quality]: quiz:index sorted set added to Redis — populated on save, empty on first deploy (no backfill). listQuizDates() now reads quiz:index not briefing:index.
-- [Phase 06-bug-fixes-content-quality]: SiteFooter removed from upgrade page — root layout already renders it for all pages
+- v1.1 Roadmap: INFRA-01 (Vercel Blob) grouped with PODCAST-01 in Phase 9 — infrastructure prerequisite and the feature it enables ship together; avoids a phase that delivers only env var setup
+- v1.1 Roadmap: Phase 12 (Digest) listed as depending on Phase 11 (Events) — events integration in digest is optional but digest ships after events to enable that integration if desired
+- v1.1 Roadmap: DIGEST-01 and DIGEST-02 are in the same phase — unsubscribe endpoint must ship in the same deployment as the first digest send (GDPR/PECR legal requirement)
+- v1.1 Roadmap: Primer interview questions must be manually authored — AI-generated questions have no edge over free resources and are explicitly out of scope in REQUIREMENTS.md
 - [Phase 06-bug-fixes-content-quality]: isClosed uses ISO string comparison (deadline.closeDate < today) — YYYY-MM-DD strings compare lexicographically so no Date parsing needed
-- [Phase 06-bug-fixes-content-quality]: BUG-01/02/03 confirmed fixed visually on production folioapp.co.uk; QUAL-01/02 prompt changes confirmed in source, quality observable on next cron
+- [Phase 06-bug-fixes-content-quality]: BUG-01/02/03 confirmed fixed visually on production folioapp.co.uk; QUAL-01/02 prompt changes confirmed in source
 
 ### Pending Todos
 
@@ -118,13 +72,13 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 3 risk: Typography changes on the 8-story homepage grid must be tested at 375px after every change — mobile is 60-70% of student traffic
-- Phase 4 risk: Any deploy touching `/upgrade` or `StoryCard.tsx` requires end-to-end Stripe checkout smoke test in incognito
-- Phase 5 dependency: Vercel Analytics install (ANLYT-01) must precede conversion event tracking (ANLYT-02)
-- Known issue: `app/api/generate/route.ts:16` has hardcoded fallback ADMIN_USER_ID — unrelated to this milestone but should be cleaned up
+- Phase 9 risk: Vercel Blob store must be created in Vercel dashboard and BLOB_READ_WRITE_TOKEN set before podcast archive ships — without it every archive play burns ~2,800 ElevenLabs chars; five users browsing 7 past episodes exhausts the 100k/month budget
+- Phase 11 risk: ical-generator package version and Europe/London TZID API must be verified at implementation time — training knowledge cutoff is August 2025
+- Phase 12 risk: Digest unsubscribe (DIGEST-02) is a legal prerequisite — must ship in same deployment as DIGEST-01; never ship digest activation without working unsubscribe
+- Known issue: `app/api/generate/route.ts:16` has hardcoded fallback ADMIN_USER_ID — unrelated to v1.1 but should be cleaned up
 
 ## Session Continuity
 
-Last session: 2026-03-10T02:59:07.619Z
-Stopped at: Completed 06-bug-fixes-content-quality-04-PLAN.md
+Last session: 2026-03-10
+Stopped at: v1.1 roadmap created (phases 7-12)
 Resume file: None

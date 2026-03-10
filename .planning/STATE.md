@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 05-utility-pages-analytics-03-PLAN.md
-last_updated: "2026-03-09T23:56:51.767Z"
+stopped_at: Completed 05-utility-pages-analytics-01-PLAN.md
+last_updated: "2026-03-09T23:59:53.425Z"
 last_activity: 2026-03-09 — Roadmap created; 21 v1 requirements mapped across 5 phases
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 13
-  completed_plans: 11
+  completed_plans: 12
   percent: 0
 ---
 
@@ -61,6 +61,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 04-conversion-surfaces P03 | 5 | 1 tasks | 0 files |
 | Phase 05-utility-pages-analytics P02 | 2 | 2 tasks | 3 files |
 | Phase 05-utility-pages-analytics P03 | 2 | 2 tasks | 4 files |
+| Phase 05-utility-pages-analytics P01 | 6 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,8 @@ Recent decisions affecting current work:
 - [Phase 05-utility-pages-analytics]: Analytics placed outside Providers to avoid unnecessary re-render scope on provider state changes
 - [Phase 05-utility-pages-analytics]: checkout_click fires before the fetch() call so it records intent even if Stripe checkout fails
 - [Phase 05-utility-pages-analytics]: sign-up page converted to client component directly (Approach A) — SignUp from Clerk already works in client component files
+- [Phase 05-utility-pages-analytics]: QuizInterface hover tint overlay preserved — opacity-0 group-hover:opacity-100 on pointer-events-none divs is a CSS decoration layer, not the hover:opacity-* button pattern
+- [Phase 05-utility-pages-analytics]: rounded-2xl on streak/deep practice mode-selector cards preserved — marketing-style feature cards distinct from editorial content containers using rounded-card
 
 ### Pending Todos
 
@@ -111,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-09T23:56:51.762Z
-Stopped at: Completed 05-utility-pages-analytics-03-PLAN.md
+Last session: 2026-03-09T23:59:53.420Z
+Stopped at: Completed 05-utility-pages-analytics-01-PLAN.md
 Resume file: None

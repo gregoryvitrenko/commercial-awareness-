@@ -33,9 +33,9 @@
 
 ### Utility Pages
 
-- [ ] **UTIL-01**: Archive page (`/archive`) applies design token system consistently
+- [x] **UTIL-01**: Archive page (`/archive`) applies design token system consistently
 - [x] **UTIL-02**: Firms page (`/firms`) applies design token system consistently
-- [ ] **UTIL-03**: Quiz page (`/quiz`) applies design token system consistently
+- [x] **UTIL-03**: Quiz page (`/quiz`) applies design token system consistently
 - [x] **UTIL-04**: Tests page (`/tests`) applies design token system consistently
 - [x] **UTIL-05**: Primers page (`/primers`) applies design token system consistently
 
@@ -95,9 +95,9 @@
 | CONV-02 | Phase 4 | Complete |
 | CONV-03 | Phase 4 | Complete |
 | CONV-04 | Phase 4 | Complete |
-| UTIL-01 | Phase 5 | Pending |
+| UTIL-01 | Phase 5 | Complete |
 | UTIL-02 | Phase 5 | Complete |
-| UTIL-03 | Phase 5 | Pending |
+| UTIL-03 | Phase 5 | Complete |
 | UTIL-04 | Phase 5 | Complete |
 | UTIL-05 | Phase 5 | Complete |
 | ANLYT-01 | Phase 5 | Complete |

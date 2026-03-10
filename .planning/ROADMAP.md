@@ -229,7 +229,7 @@ v1.0 phases (1-6) complete. v1.1 phases execute in numeric order: 7 → 8 → 9 
 | 6. Bug Fixes + Content Quality | v1.0 | 4/4 | Complete | 2026-03-10 |
 | 7. Mobile + Header Polish | 3/3 | Complete   | 2026-03-10 | - |
 | 8. Firms Expansion | 1/1 | Complete    | 2026-03-10 | - |
-| 9. Podcast Archive | v1.1 | 0/? | Not started | - |
+| 9. Podcast Archive | 1/3 | In Progress|  | - |
 | 10. Primer Interview Questions | v1.1 | 0/? | Not started | - |
 | 11. Events Section | v1.1 | 0/? | Not started | - |
 | 12. Digest Compliance + Improvements | v1.1 | 0/? | Not started | - |

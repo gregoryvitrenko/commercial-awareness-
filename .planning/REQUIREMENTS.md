@@ -10,7 +10,7 @@
 
 ### Infrastructure
 
-- [ ] **INFRA-01**: Vercel Blob storage configured — `BLOB_READ_WRITE_TOKEN` set in production (prerequisite for podcast archive activation and audio caching)
+- [x] **INFRA-01**: Vercel Blob storage configured — `BLOB_READ_WRITE_TOKEN` set in production (prerequisite for podcast archive activation and audio caching)
 
 ### Mobile & Header
 
@@ -139,7 +139,7 @@
 | MOBILE-03 | Phase 7 | Complete |
 | FIRMS-01 | Phase 8 | Complete |
 | FIRMS-02 | Phase 8 | Complete |
-| INFRA-01 | Phase 9 | Pending |
+| INFRA-01 | Phase 9 | Complete |
 | PODCAST-01 | Phase 9 | Pending |
 | PRIMER-01 | Phase 10 | Pending |
 | PRIMER-02 | Phase 10 | Pending |

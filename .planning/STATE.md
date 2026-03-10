@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
 status: planning
-stopped_at: Completed 08-01-PLAN.md (08-firms-expansion; checkpoint approved, SUMMARY.md updated)
-last_updated: "2026-03-10T17:54:50.303Z"
+stopped_at: Completed 09-01-PLAN.md (09-podcast-archive; quiz archive backfill implemented)
+last_updated: "2026-03-10T20:21:12.782Z"
 last_activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 progress:
   total_phases: 12
   completed_phases: 8
-  total_plans: 21
-  completed_plans: 21
+  total_plans: 24
+  completed_plans: 22
   percent: 0
 ---
 
@@ -55,6 +55,7 @@ Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 | Phase 07-mobile-header-polish P01 | 1 | 1 tasks | 1 files |
 | Phase 07-mobile-header-polish P02 | 1 | 2 tasks | 2 files |
 | Phase 08-firms-expansion P01 | 20 | 3 tasks | 6 files |
+| Phase 09-podcast-archive P01 | 8 | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,7 @@ Recent decisions affecting current work:
 - [Phase 08-firms-expansion]: TC salaries for CMS/Addleshaw/Pinsent Masons use conservative placeholder ~£40k-£46k pending The Trackr verification
 - [Phase 08-firms-expansion]: DLA Piper classified as US Firms tier (amber accent) to match Folio taxonomy and £130k NQ salary
 - [Phase 08-firms-expansion]: New National tier (rose accent) created for Eversheds Sutherland, CMS, Addleshaw Goddard, Pinsent Masons — user reclassified from Silver Circle during human verification; 6 components updated (lib/types.ts, lib/firms-data.ts, FirmCard, FirmsDirectory, TrackerDashboard, firm page)
+- [Phase 09-podcast-archive]: backfillQuizIndex() no-op when useRedis()=false; nx:true on zadd ensures idempotent backfill; Upstash scan cursor coerced via Number() before comparing to 0
 
 ### Pending Todos
 
@@ -90,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T17:50:00.000Z
-Stopped at: Completed 08-01-PLAN.md (08-firms-expansion; checkpoint approved, SUMMARY.md updated)
+Last session: 2026-03-10T20:21:12.777Z
+Stopped at: Completed 09-01-PLAN.md (09-podcast-archive; quiz archive backfill implemented)
 Resume file: None

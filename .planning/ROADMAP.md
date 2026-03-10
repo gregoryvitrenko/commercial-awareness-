@@ -163,7 +163,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 08-01-PLAN.md — Add 8 new FirmProfile objects to lib/firms-data.ts (Silver Circle: Eversheds Sutherland, CMS, Addleshaw Goddard, Pinsent Masons; US Firms: Baker McKenzie, Jones Day, Mayer Brown, DLA Piper) (FIRMS-01, FIRMS-02)
+- [x] 08-01-PLAN.md — Add 8 new FirmProfile objects to lib/firms-data.ts; new National tier for Eversheds/CMS/Addleshaw/Pinsent Masons; US Firms: Baker McKenzie, Jones Day, Mayer Brown, DLA Piper (FIRMS-01, FIRMS-02)
 
 ### Phase 9: Podcast Archive
 **Goal**: Podcast episodes are cached in Vercel Blob (stopping ElevenLabs character burn on every play) and subscribers can browse and play past episodes from a dedicated archive page

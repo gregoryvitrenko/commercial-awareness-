@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
 status: planning
-stopped_at: Completed 08-firms-expansion-01-PLAN.md
-last_updated: "2026-03-10T17:31:32.489Z"
+stopped_at: Completed 08-01-PLAN.md (08-firms-expansion; all 3 tasks including human verification)
+last_updated: "2026-03-10T17:50:00.000Z"
 last_activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 progress:
   total_phases: 12
@@ -54,7 +54,7 @@ Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 | Phase 07-mobile-header-polish P03 | 1 | 1 tasks | 2 files |
 | Phase 07-mobile-header-polish P01 | 1 | 1 tasks | 1 files |
 | Phase 07-mobile-header-polish P02 | 1 | 2 tasks | 2 files |
-| Phase 08-firms-expansion P01 | 4 | 2 tasks | 1 files |
+| Phase 08-firms-expansion P01 | 20 | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -75,6 +75,7 @@ Recent decisions affecting current work:
 - [Phase 08-firms-expansion]: Jones Day seats:4 with non-rotational note in intakeSizeNote
 - [Phase 08-firms-expansion]: TC salaries for CMS/Addleshaw/Pinsent Masons use conservative placeholder ~£40k-£46k pending The Trackr verification
 - [Phase 08-firms-expansion]: DLA Piper classified as US Firms tier (amber accent) to match Folio taxonomy and £130k NQ salary
+- [Phase 08-firms-expansion]: New National tier (rose accent) created for Eversheds Sutherland, CMS, Addleshaw Goddard, Pinsent Masons — user reclassified from Silver Circle during human verification; 6 components updated (lib/types.ts, lib/firms-data.ts, FirmCard, FirmsDirectory, TrackerDashboard, firm page)
 
 ### Pending Todos
 
@@ -89,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-10T17:31:32.482Z
-Stopped at: Completed 08-firms-expansion-01-PLAN.md
+Last session: 2026-03-10T17:50:00.000Z
+Stopped at: Completed 08-01-PLAN.md (08-firms-expansion; checkpoint approved, SUMMARY.md updated)
 Resume file: None

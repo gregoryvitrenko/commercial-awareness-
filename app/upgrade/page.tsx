@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useUser } from '@clerk/nextjs';
 import { CheckCircle2 } from 'lucide-react';
-import { SiteFooter } from '@/components/SiteFooter';
 import { track } from '@vercel/analytics';
 
 const PREMIUM_FEATURES = [
@@ -137,7 +136,6 @@ export default function UpgradePage() {
         </div>
       </main>
 
-      <SiteFooter />
     </div>
   );
 }

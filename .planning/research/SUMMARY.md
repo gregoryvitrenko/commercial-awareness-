@@ -1,196 +1,198 @@
 # Project Research Summary
 
-**Project:** Folio Design Lift — Premium Editorial Branding and Conversion Uplift
-**Domain:** Design system upgrade + CRO for a live niche B2C SaaS product
-**Researched:** 2026-03-09
-**Confidence:** HIGH (all research based on direct codebase audit; no external search tools used)
+**Project:** Folio v1.1 — Content & Reach
+**Domain:** Niche B2C editorial SaaS — UK law student TC preparation tool
+**Researched:** 2026-03-10
+**Confidence:** HIGH
 
 ## Executive Summary
 
-Folio is an editorially-positioned daily briefing tool for UK law students. The product direction is correct — stone/zinc palette, Playfair Display serif, newspaper layout — but the execution is not yet premium. The gap between "well-intentioned side project" and "premium editorial product" comes down to four concrete technical debts: no type scale (16 arbitrary pixel sizes in active use), no enforced border radius system (five distinct values, mixed randomly across surfaces), a palette split that is documented but not enforced (upgrade and utility pages use zinc where content pages use stone), and no semantic CSS token layer (every design change requires a grep-and-replace across 40+ component files). All four are fixable within the existing stack — no new packages, no new fonts required.
+Folio v1.1 adds six discrete features to an already-working subscription product. Research confirms the most important finding: no new npm packages are required for any of the six features, with one narrow exception. Two of the six features (weekly email digest, podcast archive) are already fully built in the codebase and are blocked only by infrastructure gaps (Vercel Blob not configured) or a missing compliance item (unsubscribe link). Two more (primer interview questions, firms expansion) are pure data-entry work with all scaffolding already in place. Only one feature — the events section — requires net-new code, and it follows established patterns already in the codebase. The one new dependency recommended is `ical-generator` for the events `.ics` export, to ensure iOS Calendar compatibility without hand-rolling RFC 5545 format.
 
-The recommended approach is a strict bottom-up build order: establish design tokens first (globals.css and tailwind.config.ts), then apply them to the shell (Header, SiteFooter), then content surfaces (StoryCard, ArticleStory, BriefingView), then conversion surfaces (LandingHero, upgrade page), and finally utility pages (archive, firms, quiz). Skipping this order and polishing components before tokens exist means making every design decision twice. On the conversion side, the upgrade page is the single highest-leverage asset and is currently weakest: no social proof, feature descriptions written as "what it does" rather than "what you say in the interview," palette mismatch from the rest of the product, and no founding story despite the owner's authenticity being a genuine competitive differentiator.
+The recommended build order is: mobile/header polish first (visible quality improvement before any marketing push), then firms expansion (pure data, no risk), then Blob setup and podcast archive activation, then primer interview questions (static data in `primers-data.ts`), then the events section (most complex net-new feature), and finally digest validation and compliance. This order ensures each phase is independently shippable and avoids dependencies — specifically, the events section must exist before it can appear in the digest, and Vercel Blob must be configured before the podcast archive ships.
 
-The critical risks are not architectural — they are process risks. A design lift on a live product with paying subscribers can silently break the Stripe checkout, collapse mobile layouts at 375px where 60-70% of student traffic arrives, or destroy the paywall gating logic while improving visual polish. Every change involving paywall-adjacent components requires an end-to-end smoke test in incognito before deploying. Social proof elements must only use real numbers — this audience (future lawyers) is credibility-aware and false claims spread rapidly through law society peer networks.
-
----
+Three risks require non-negotiable action before the relevant phases ship. First, the podcast archive must not go live without Vercel Blob configured — without it, every archive visit burns approximately 2,800 ElevenLabs characters against the 100,000/month budget, and five users browsing seven past episodes would exhaust the entire monthly quota. Second, the weekly digest must include a working unsubscribe mechanism before the first send — Folio's audience is law students learning regulatory compliance, and receiving a GDPR-non-compliant email from a legal education product is a credibility-destroying signal and a Resend account suspension risk. Third, primer interview questions must be written manually rather than AI-generated — generic TC interview questions that any student finds via a Google search destroy the feature's value proposition.
 
 ## Key Findings
 
 ### Recommended Stack
 
-No new dependencies required. All design lift work is Tailwind config extensions and CSS custom properties. The three-font stack (Playfair Display / Inter / JetBrains Mono) is correct for the editorial positioning and should not be changed. The highest-leverage change is adding a named type scale to tailwind.config.ts replacing 16 arbitrary `text-[Npx]` values — this single change is responsible for more of the "premium vs side project" perception gap than any other intervention.
+All v1.1 features are achievable within the existing dependency tree. The only new package recommended is `ical-generator` for the events `.ics` calendar export, which eliminates RFC 5545 compliance risk and iOS Calendar rejection. Everything else uses the existing Anthropic SDK (Claude Haiku for events generation and primer packs), Upstash Redis (events cache), `@vercel/blob` (already installed, needs `BLOB_READ_WRITE_TOKEN` env var configured in Vercel), Resend (digest already built), and Tailwind CSS plus existing shadcn/ui components (mobile nav, header).
 
-**Core technologies (all in use, no changes):**
-- Tailwind CSS 3.4: All styling — extend with semantic tokens, do not add packages
-- shadcn/ui (stone base): UI primitives — customise via CSS variables only, never modify component files
-- next/font/google: Font loading — existing three-font stack correct, no additions needed
+**Core technologies (existing, validated):**
+- `@anthropic-ai/sdk` — Claude Haiku for events generation; Sonnet for briefings (no change)
+- `@upstash/redis` — events cache via new `events:current` Redis key; all existing caching unchanged
+- `resend` — weekly digest (already built), welcome email
+- `@vercel/blob` — podcast MP3 caching (installed, needs `BLOB_READ_WRITE_TOKEN` in Vercel env vars)
+- Tailwind CSS v3 — all UI work including mobile responsive fixes and events city filter tabs
+- `shadcn/ui` Sheet component — mobile nav drawer if needed (already in dependency tree)
 
-**Specific config changes recommended:**
-- tailwind.config.ts: Add named `fontSize` type scale (7 semantic slots), named `borderRadius` tokens (card/chrome/pill/input), named spacing tokens
-- globals.css: Add `--paper` CSS variable (warmer than stone-50), semantic radius vars, typography scale comment contract, stone-vs-zinc rule comment
-- shadcn `--radius` variable: Reduce from `0.5rem` to `0.25rem` — removes "SaaS app" rounding from all primitives globally
+**New package (one addition):**
+- `ical-generator` — RFC 5545 compliant `.ics` export for events; eliminates iOS Calendar rejection risk
+
+**Infrastructure change (not a package):**
+- Vercel Blob Store must be created in the Vercel dashboard and `BLOB_READ_WRITE_TOKEN` added to env vars before podcast archive ships
 
 ### Expected Features
 
-All features are about improving existing features, not adding new ones. The lift is polish, trust signals, and conversion copy.
+**Must have (table stakes):**
+- Events section: event name, date, city, description, registration link, city filter tabs, `.ics` calendar download per event — free tier, no paywall
+- Weekly digest: working `List-Unsubscribe` header and dedicated unsubscribe endpoint (UK GDPR / PECR legal requirement — not optional)
+- Podcast archive: month-grouped listing of past episodes — code already complete, blocked only by Blob infra
+- Primer interview questions: 3 questions per primer (question + what they want + answer skeleton) across all 8 primers — UI already built, data missing from `primers-data.ts`
+- Firms expansion: 8 Tier 1 firms (Baker McKenzie, Jones Day, Mayer Brown, DLA Piper, Eversheds Sutherland, CMS, Addleshaw Goddard, Pinsent Masons) with manually verified TC data
 
-**Must have (table stakes for credibility):**
-- Consistent type scale applied across all components — currently absent, visually signals "prototype"
-- Coherent border radius system — currently five values with no documented rule; `rounded-xl` on editorial content cards clashes with newspaper positioning
-- Upgrade page palette alignment — currently zinc throughout while the product is stone; reads as two different products
-- Founding story copy on upgrade page — "built by an LLB student" is a genuine trust differentiator unavailable to funded competitors
-- Outcome-framed feature descriptions on upgrade page — "what you can say in the interview" not "what the feature does"
-- Personal refund guarantee — one sentence, authentic to a solo founder
+**Should have (differentiators):**
+- Events: TC-relevance badge per event; deadline proximity indicator ("Closes in 3 days"); upcoming vs. past visual treatment reusing the existing `isClosed` pattern from firm deadlines
+- Events: "last updated" timestamp visible on the page so users know when the list was generated
+- Weekly digest: dynamic subject lines tied to top story topic rather than generic date-anchored format; digest de-duplication by firm overlap and topic cap
+- Mobile: scroll-activated sticky header with `bg-stone-50/95` background (not white); topic-coloured left border on story cards; remove italic talking-point quote from story cards
 
-**Should have (conversion differentiators):**
-- Social proof elements — student count (honest numbers only), university name-tags from peer network, one outcome testimonial
-- Named author/curator attribution on briefings — "Curated by [name], LLB" builds human accountability
-- Post-quiz upgrade nudge — show one sample question before the paywall for free users
-- Visual distinction between free and premium state (warmer/richer premium register, not just "locked")
-
-**Defer to after 50+ free users exist:**
-- CRO funnel changes without a data baseline — guessing loop damages existing structure
-- Annual pricing tier — no churn data yet
-- Referral program — user base too small
-- Comments/UGC — no moderation infrastructure, distraction from core product
+**Defer to v2+:**
+- Bulk `.ics` export (all upcoming events in one file)
+- Refer-a-friend referral codes with Stripe credit (Option A forward-link CTA is sufficient for v1.1)
+- AI-generated primer questions at runtime (static data in `primers-data.ts` is the right architecture)
+- Firms PDF export
+- Cravath, Cahill Gordon, Orrick — small London TC programmes, lower demand than Tier 1 additions
 
 ### Architecture Approach
 
-The design system upgrade follows a strict dependency order: tokens must exist before components use them, components must be consistent before pages feel premium. The existing architecture has one well-functioning token system (TOPIC_STYLES in lib/types.ts) that must not be touched — it is the only coherent system in the codebase and has a safelist in tailwind.config.ts protecting it. Everything else is ad-hoc and needs systematic replacement.
+Every new feature conforms to the existing dual-backend storage pattern (`useRedis()` check in `lib/storage.ts`) and the established cron + fire-and-forget generation pattern in `app/api/generate/route.ts`. The events section is the only net-new data concern, implemented as a separate `lib/events-storage.ts` — not added to `lib/storage.ts`, which already handles briefings, quizzes, and aptitude banks and delegates podcast storage to `lib/podcast-storage.ts`. Primer interview questions are static data in `lib/primers-data.ts` — no caching, no API routes, no new infrastructure. Firms expansion is a pure data append to `lib/firms-data.ts`. The digest already works; it needs compliance additions only.
 
-**Major components and their scope in the lift:**
-
-1. `globals.css` + `tailwind.config.ts` — Foundation: define all semantic tokens before touching any component. Zero visual change at this step. Risk: Low.
-2. `components/Header.tsx` + `components/SiteFooter.tsx` — Shell: apply tokens to the chrome that appears on every page. Also implement the footer (currently in the backlog) here, using `flex flex-col min-h-screen` + `flex-1` on main.
-3. `components/StoryCard.tsx` + `components/ArticleStory.tsx` + `components/BriefingView.tsx` — Content surfaces: highest user-facing visibility. Typography changes here affect vertical rhythm across the 8-story grid — test at 375px viewport after every change.
-4. `components/LandingHero.tsx` + `app/upgrade/page.tsx` — Conversion surfaces: palette alignment (zinc to stone), heading scale, CTA radius fix (currently `rounded-xl` — the single most visually jarring inconsistency in the codebase).
-5. Utility pages (`archive`, `firms`, `quiz`, `tests`, `primers`) — Apply consistent heading pattern and palette rule. Lower visual priority, lower risk.
-
-**The one inviolable rule:** Never modify the shadcn HSL CSS variables (`--background`, `--foreground`, etc.) — they drive shadcn primitives across quiz, tracker, firm-pack, and test interfaces. Add new variables with distinct names alongside them.
+**Major components and responsibilities:**
+1. `lib/events.ts` + `lib/events-storage.ts` + `app/api/events/route.ts` — weekly Tavily (5 queries) + Claude Haiku events generation, Redis `events:current` key storage, Monday 07:00 UTC cron in `vercel.json`
+2. `lib/ics.ts` — `.ics` builder using `ical-generator` with `Europe/London` TZID; client-side Blob download (no API route needed)
+3. `lib/email.ts` + `app/api/digest/route.ts` + new `GET /api/unsubscribe` — digest already built; needs `List-Unsubscribe` header, unsubscribe endpoint, `emails.slice(0, 90)` hard cap, and de-dupe logic
+4. `lib/primers-data.ts` + `components/PrimerView.tsx` — static interview question arrays added to each of 8 primers; minor render section addition in PrimerView
+5. `lib/firms-data.ts` — static firm profile data appended for 8+ new firms; no schema changes needed
+6. `components/Header.tsx` + `components/StoryCard.tsx` + `app/page.tsx` — mobile responsive fixes and three deferred design audit items
 
 ### Critical Pitfalls
 
-1. **Token changes without auditing all consumers** — Tailwind utility classes scatter across 40+ files. A search-and-replace on `rounded-sm` or `border-stone-200` will break components you did not test. Prevention: grep every consumer before any token change; change one component at a time; test dark mode on every component touched.
+1. **Podcast archive without Vercel Blob** — every archive visit regenerates ElevenLabs audio, burning ~2,800 chars per play. Five users browsing 7 past dates wipes the entire 100,000/month budget. Prevention: configure Vercel Blob before shipping the archive page; use `?check=true` existence probe before showing a play button for past dates.
 
-2. **Typography changes that break vertical rhythm on the 8-story homepage** — Changing `leading-snug` to `leading-normal` on headlines ripples 8x per page and causes card overflow, truncation failure, or topic tabs wrapping to two lines on mobile. Prevention: test the homepage at 375px viewport width after every font change; do not change font sizes and spacing in the same commit.
+2. **Weekly digest without unsubscribe link** — UK GDPR Article 7(3) and PECR Regulation 22 require a working unsubscribe mechanism in marketing emails. Folio's audience is learning about regulatory compliance — receiving a GDPR-non-compliant email from a legal education product is a credibility-destroying signal. Spam complaints also trigger Resend account suspension, killing transactional welcome emails simultaneously. Prevention: add `List-Unsubscribe` header and `GET /api/unsubscribe` endpoint before the first Sunday cron fires.
 
-3. **Visual refactor breaking the Stripe checkout path** — Paywall components are the intersection of UI and critical business logic. A className change risks removing an onClick handler or breaking conditional rendering that gates premium content. Prevention: end-to-end checkout smoke test in incognito after every deploy touching `/upgrade`, `StoryCard.tsx`, or the mid-grid nudge. Never use the review bypass cookie during paywall UI development.
+3. **ICS export hand-rolled without RFC 5545 compliance** — iOS Calendar is the strictest parser and the most likely client for this iPhone-dominant student audience. Missing `PRODID`, unescaped special characters in `SUMMARY`, wrong line endings, or missing `TZID` produce silent import failures or wrong event times. Prevention: use `ical-generator` npm package with `Europe/London` TZID; test on a real iOS device.
 
-4. **False social proof numbers** — Law students applying to Magic Circle firms verify claims. An inflated "Join 200+ students" before that number is real will be shared in law society WhatsApp groups as a reason not to trust the product. Prevention: only ship real numbers; use qualitative quotes and "early access" framing before a real user base exists.
+4. **Stale events data shown as upcoming** — Redis cache without date-aware filtering shows past events as current. Students adding stale calendar entries for events that already happened is a trust-destroying failure. Prevention: filter `events.filter(e => new Date(e.date) >= new Date())` at render time; set 7-day Redis TTL; add explicit "future dates only" instruction to Claude prompt.
 
-5. **CRO changes without a data baseline** — Moving the upgrade CTA "because it looks better" without knowing the current conversion rate produces a guessing loop that degrades the funnel. Prevention: install Vercel Analytics before any conversion-related changes; defer CRO work until 50+ signed-up free users are observable in the funnel.
-
----
+5. **Firms expansion with unverified salary or deadline data** — NQ salary figures and application deadlines are the most scrutinised fields by the target audience and change each recruitment cycle. Incorrect data is a credibility-breaking failure. Prevention: verify each new firm against the official recruitment page or The Trackr; set `lastVerified` to the actual verification date; add only 5-8 well-verified firms at launch rather than 20 with uncertain data.
 
 ## Implications for Roadmap
 
-Based on the combined research, the design lift is a single milestone with five phases in strict dependency order. Do not reorder — earlier phases are prerequisites for later ones.
+Based on combined research, six phases are suggested in dependency order:
 
-### Phase 1: Design Tokens
-**Rationale:** No component can be polished consistently until the token contract exists. This is pure scaffolding — zero visual change, all downstream phases depend on it.
-**Delivers:** Named type scale in tailwind.config.ts, semantic radius tokens (card/chrome/pill/input), spacing tokens, `--paper` CSS variable, `--radius` reduction to 0.25rem, stone-vs-zinc rule documented in globals.css.
-**Addresses:** All four structural problems identified in ARCHITECTURE.md (palette inconsistency, radius chaos, inline typography, no semantic token layer).
-**Avoids:** Pitfall 1 (token changes without audit), Pitfall 5 (brand colour changes requiring 40+ file updates).
-**Research flag:** Standard patterns — no deeper research needed. Direct implementation from STACK.md and ARCHITECTURE.md specs.
-**Estimated effort:** 2-4 hours.
+### Phase 1: Polish and Mobile
+**Rationale:** Zero code dependencies — no other phase must complete first. Delivers visible quality improvement before any v1.1 marketing push. Includes three deferred design audit items (italic quote removal from story cards, topic-coloured left border on cards, stone-100 page background) that improve the experience for existing subscribers immediately.
+**Delivers:** Scroll-activated sticky header with correct palette (`bg-stone-50/95` not `bg-white/95`), mobile-responsive story cards, design system consistency per the deferred audit items
+**Addresses:** Mobile and header fixes feature
+**Avoids:** iOS Safari `backdrop-blur` bug (test on real iPhone); dark mode split (add `dark:bg-zinc-950/95` alongside light mode); non-button touch target failures (all interactive nav elements must be `<button>` not `<div>`)
+**Research flag:** Standard Tailwind/React patterns — no additional research phase needed
 
-### Phase 2: Shell (Header + Footer)
-**Rationale:** Header and footer appear on every page — changes here have instant site-wide effect and set the register for all subsequent work. Footer is in the active backlog and belongs here, not as an afterthought.
-**Delivers:** Consistent header token application, site footer with terms/privacy/contact/LinkedIn links, correct sticky footer layout pattern (`flex flex-col min-h-screen`).
-**Addresses:** Footer anti-pattern (Pitfall 13), mobile breakpoint risk on short pages.
-**Avoids:** Pitfall 13 (footer overlap on short pages from incorrect layout).
-**Research flag:** Standard patterns. Sticky footer layout is well-documented.
-**Estimated effort:** 2-3 hours.
+### Phase 2: Firms Expansion
+**Rationale:** Pure data work, no infrastructure risk. Can overlap with Phase 1 in calendar time but kept separate to focus effort. Start with 8 Tier 1 firms that have highest student demand. Quality over quantity — verify all salary and deadline data before writing.
+**Delivers:** 38 to approximately 46 firm profiles covering the full Magic Circle + Silver Circle + top US London TC landscape that students actually target
+**Addresses:** Firms expansion feature
+**Avoids:** Stale salary/deadline data (verify against firm websites + The Trackr); US firms without traditional TCs misrepresented (use `intakeSizeNote: 'Direct NQ hire'` or exclude); Dentons entity alias confusion (include all variant entity names in `aliases[]`, verify against existing briefing data for which variant appears in `story.firms[]`)
+**Research flag:** No code research needed — pure data entry. Human verification required per firm against official recruitment pages.
 
-### Phase 3: Content Surfaces (StoryCard + ArticleStory + BriefingView)
-**Rationale:** The 8 story cards on the homepage are the most-viewed component. Getting editorial typography right here sets the premium register that users experience on every visit.
-**Delivers:** Standardised headline scale on StoryCard, correct leading and display scale on ArticleStory, section divider refinement in BriefingView, semantic hover states replacing `hover:opacity-80`.
-**Addresses:** STACK.md type scale recommendations, ARCHITECTURE.md Problem 3 (inline typography).
-**Avoids:** Pitfall 2 (vertical rhythm breaks on 8-story grid). Test 375px viewport after every font change.
-**Research flag:** Medium complexity. Typography changes require careful testing. No additional research needed but requires discipline in the token-first update pattern (Commit 1: replace hardcoded values with tokens; Commit 2: update token values).
-**Estimated effort:** 4-6 hours.
+### Phase 3: Podcast Archive Activation
+**Rationale:** All code is already complete. The only task is infrastructure setup (Vercel Blob) plus verification that `/podcast/[date]` route exists. Activating Blob starts caching MP3s immediately, which reduces ongoing ElevenLabs character consumption — a compounding benefit that begins accumulating from the day Blob is configured.
+**Delivers:** Working podcast archive with month-grouped episode listing; MP3 caching active (stops burning ElevenLabs characters on every play request)
+**Uses:** `@vercel/blob` (already installed), `listPodcastDates()` (already wired to Blob backend)
+**Avoids:** ElevenLabs budget blowout from uncached audio — Blob must be configured before this phase ships; note the archive will only show episodes generated after Blob activation, not historical episodes
+**Research flag:** No code research needed — infrastructure task only. Verify `/podcast/[date]` route exists before marking complete.
 
-### Phase 4: Conversion Surfaces (LandingHero + Upgrade Page)
-**Rationale:** Conversion pages are the highest-leverage business surface. The upgrade page currently uses zinc palette (different visual register from the product), has no social proof, and has feature descriptions written as capability lists rather than outcome framing.
-**Delivers:** Palette alignment (zinc to stone on upgrade page), `rounded-xl` CTA fix on LandingHero, rewritten feature copy (outcome-framed), founding story paragraph, personal refund guarantee, cancel-anytime reassurance on mid-grid nudge.
-**Addresses:** FEATURES.md Priority 1 items (founding story, outcome framing, risk reversal), ARCHITECTURE.md Problem 1 (palette inconsistency on upgrade page).
-**Avoids:** Pitfall 3 (visual refactor breaking Stripe checkout). Mandatory smoke test after every deploy.
-**Research flag:** Standard patterns for copy. No research-phase needed — copy comes from FEATURES.md spec. Social proof infrastructure (student count, testimonials) deferred until real users exist.
-**Estimated effort:** 2-3 hours (excluding copy writing time).
+### Phase 4: Primer Interview Questions
+**Rationale:** Static data addition with all scaffolding already in place. `PrimerInterviewQ` interface is defined, `PrimerView.tsx` renders the section, and the `interviewQs` field is typed on the `Primer` interface. Work is writing 24 questions (3 per primer × 8 primers) and adding a minor render section to `PrimerView.tsx`.
+**Delivers:** 24 interview questions across 8 primers with structured commercial reasoning skeletons (not STAR format, which is wrong for commercial awareness questions)
+**Addresses:** Primers interview questions feature from the product backlog
+**Avoids:** Generic questions with no TC prep value — write manually, not AI-generated; quality test is "only answerable by someone who has read this primer"; use commercial reasoning skeleton format (Context / Commercial impact / Legal angle / Your view), not STAR
+**Research flag:** No technical research needed. Content quality is the only constraint.
 
-### Phase 5: Utility Pages (Archive + Firms + Quiz + Tests + Primers)
-**Rationale:** Utility pages have lower visual priority but must align with the design language established in Phases 1-4. Apply consistent heading pattern and palette rule without touching business logic.
-**Delivers:** Consistent stone heading pattern, palette audit per stone-vs-zinc rule, uniform page container pattern.
-**Addresses:** ARCHITECTURE.md Problem 1 (palette applied inconsistently across utility pages).
-**Avoids:** Pitfall 1 (token changes without audit) — apply tokens from Phase 1, do not create new values.
-**Research flag:** Standard patterns. No deeper research needed.
-**Estimated effort:** 3-4 hours across the cluster.
+### Phase 5: Events Section
+**Rationale:** Most complex net-new feature. Creates new storage and generation files following established patterns but requires more components than any other phase. Must ship before Phase 6 if digest events integration is in scope. Two-file storage split (`lib/events-storage.ts` separate from `lib/storage.ts`) is mandatory per architectural pattern.
+**Delivers:** Free-tier events listing with city filter (URL search params, not client state), `.ics` calendar export per event, weekly AI refresh via Monday 07:00 UTC cron
+**Uses:** Claude Haiku (events generation from 5 weekly Tavily queries), Redis `events:current` key (single overwrite, no date-keyed accumulation), `ical-generator` with `Europe/London` TZID, URL search params for city filter derived from available events
+**Implements:** `lib/events.ts`, `lib/events-storage.ts`, `lib/ics.ts`, `app/events/page.tsx`, `app/api/events/route.ts`, `vercel.json` weekly cron entry `{ "path": "/api/events", "schedule": "0 7 * * 1" }`
+**Avoids:** Daily event searches (use weekly-only cron, caps to ~64 Tavily queries/month); stale events display (date filter at render + 7-day Redis TTL + Claude prompt instruction); hardcoded city list (derive from available events data); events piggybacked onto daily briefing cron (separate concerns, different refresh cadence)
+**Research flag:** Verify `ical-generator` current version and `Europe/London` TZID API before implementing `lib/ics.ts` — this is the one new package in the entire v1.1 plan.
+
+### Phase 6: Digest Compliance and Improvements
+**Rationale:** Core digest already fires on Sunday 08:00 UTC cron automatically (code is complete). This phase adds the mandatory compliance item (unsubscribe mechanism), validates the digest actually fires in production, improves subject lines, and optionally integrates the events section from Phase 5.
+**Delivers:** GDPR/PECR-compliant digest with working `List-Unsubscribe` header and `/api/unsubscribe` endpoint, improved topic-led subject lines, de-duplicated story selection (de-dupe by firm overlap + topic cap), hard send cap at 90 emails, optional "upcoming events this week" section if Phase 5 is complete
+**Uses:** `lib/email.ts` (add unsubscribe link in footer, dynamic subject from top story topic), `app/api/digest/route.ts` (add `List-Unsubscribe` header, `emails.slice(0, 90)` cap, de-dupe logic), new `GET /api/unsubscribe` route, Redis `email-opt-out:{userId}` key
+**Avoids:** UK GDPR / PECR violation — unsubscribe is a legal prerequisite, not an optional enhancement; Resend 100/day silent truncation at ~100 subscribers (hard-cap at 90 with warning log when `emails.length > 90`); near-duplicate stories from the same ongoing transaction across multiple days
+**Research flag:** No technical research needed. Legal compliance requirement (unsubscribe) is clear. Verify current Resend pricing and daily limits at resend.com/pricing before shipping — training knowledge cutoff is August 2025.
 
 ### Phase Ordering Rationale
 
-- Tokens before components is a hard dependency: using `rounded-card` in a component requires the token to exist first
-- Shell before content surfaces: header changes affect every page, so establishing it cleanly first means content surface work is not contaminated by unresolved shell issues
-- Content surfaces before conversion surfaces: the upgrade page should reflect the same design register as the product — polish the product first, then align the conversion surface to match
-- Utility pages last: they are lower risk and lower priority; applying the established pattern is mechanical once Phases 1-4 are complete
-- CRO work (conversion metrics, A/B testing) is deliberately excluded from all phases: no data baseline exists yet, and guessing-loop changes degrade the existing funnel
+- Phase 1 (Polish) comes first because it has zero dependencies and delivers immediate quality improvements for existing subscribers before v1.1 is announced
+- Phase 2 (Firms) is independent data work that can overlap with Phase 1 in calendar time but is kept separate to focus effort and avoid quality shortcuts
+- Phase 3 (Podcast Archive) must happen before users are directed to the archive — the Blob configuration is a prerequisite that should not block content phases
+- Phase 4 (Primers) is independent, low-risk content work that can ship at any point; placed here because it is higher visibility than events
+- Phase 5 (Events) is the most complex net-new feature and is a soft prerequisite for digest events integration in Phase 6
+- Phase 6 (Digest) validates existing automation and adds compliance; placed last because it validates the most complex ongoing system (weekly email) and the digest improvement is enhanced (though not blocked) by Phase 5 events data
 
 ### Research Flags
 
-Phases needing no additional research (proceed directly):
-- **Phase 1:** All token decisions fully specified in STACK.md and ARCHITECTURE.md
-- **Phase 2:** Sticky footer is a standard pattern; footer content is defined in the backlog
-- **Phase 4:** Copy direction fully specified in FEATURES.md; Stripe integration untouched
-- **Phase 5:** Mechanical application of tokens from Phase 1
+Phases requiring deeper research during planning:
+- **Phase 5 (Events):** Verify `ical-generator` current version, API signature, and `Europe/London` TZID support before writing `lib/ics.ts` — this is the only new package in the plan
 
-Phases requiring careful discipline (not research, but process):
-- **Phase 3:** High risk of typography regressions on the 8-story homepage grid. Token-first update pattern is mandatory. Test at 375px viewport after every change.
-
----
+Phases with standard patterns (no additional research needed):
+- **Phase 1 (Polish):** Standard Tailwind responsive CSS and React hooks
+- **Phase 2 (Firms):** Pure data entry following established `FirmProfile` schema
+- **Phase 3 (Podcast Archive):** Infrastructure setup only — all code complete
+- **Phase 4 (Primers):** Static data addition to a known, typed interface
+- **Phase 6 (Digest):** Minor additions to an existing feature; compliance requirements are clear
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | All recommendations based on direct codebase audit. No new packages recommended — all changes are config and CSS within the existing stack. STACK.md Confidence: MEDIUM-HIGH (training knowledge + codebase analysis). |
-| Features | HIGH for codebase observations; MEDIUM for conversion patterns | Direct code reading of all conversion components. SaaS conversion patterns from training knowledge (well-established). "What UK law students respond to" is LOW confidence — should be validated with the owner's peer network before major copy investment. |
-| Architecture | HIGH | All structural findings (palette inconsistency counts, radius value counts, typography size audit) based on direct code count/audit of 14 key files. No inference involved. |
-| Pitfalls | HIGH for technical pitfalls; MEDIUM for CRO thresholds | Technical pitfalls (Tailwind token changes, dark mode gaps, Stripe regression) are direct consequences of how the tech stack works — HIGH confidence. CRO thresholds ("50 users before optimising") are judgment calls — MEDIUM confidence. |
+| Stack | HIGH | Direct codebase analysis of `package.json` and all relevant lib files; no new packages needed except `ical-generator` |
+| Features | HIGH | Two features confirmed fully built by direct code read; four others have scaffolding confirmed; firm priority list based on established UK TC domain knowledge |
+| Architecture | HIGH | All new features mirror established dual-backend storage, cron, and fire-and-forget generation patterns; direct code inspection of all integration points |
+| Pitfalls | HIGH | ElevenLabs budget risk: direct code analysis of `podcast-storage.ts` and confirmed Blob absence in MEMORY.md; GDPR requirement: clear legal standard; ICS compliance: RFC 5545 specification |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Social proof copy:** What specific outcomes resonate with UK Magic Circle TC applicants is LOW confidence from research alone. Before writing social proof copy, the owner should run a 5-person informal survey with peers ("what would make you trust a subscription product like this?"). The FEATURES.md recommendations are directionally correct but the specific language needs validation.
-
-- **Mobile layout audit:** ARCHITECTURE.md and PITFALLS.md both flag mobile as high-risk (60-70% of student traffic) but neither researcher was able to view the app in a browser to assess current mobile state. Phase 3 should begin with a dedicated mobile audit at 375px before making any typography changes.
-
-- **FolioMark at small sizes:** FEATURES.md flags that the folded-document logomark may collapse to illegible at favicon size (16x16). This should be verified before Phase 2 (shell) ships — if the favicon needs a simplified fallback (just the letter F), that decision should be made before the header polish is finalised.
-
-- **Vercel Analytics:** Pitfall 9 flags that CRO work requires a data baseline. Installing Vercel Analytics (free tier) is a prerequisite for any future Phase 4 expansion into conversion optimisation. It is not a blocker for the design lift phases but should be done in parallel.
-
----
+- **`ical-generator` current version and API:** Training knowledge cutoff is August 2025. Verify the current version, `createEvent()` API signature, and `Europe/London` TZID support at implementation time for Phase 5. This is the one new dependency and the one gap that requires fresh verification.
+- **Resend free tier limits:** Published as 100 emails/day and 3,000/month — confirmed in `digest/route.ts` comment in the codebase. Verify current pricing at resend.com/pricing before Phase 6 in case limits have changed.
+- **Vercel Blob free tier:** Published as 1GB storage and 1GB bandwidth/month — training knowledge. Verify current limits at the Vercel dashboard before Phase 3. At approximately 5MB per MP3 and daily generation, the 1GB storage threshold would be reached at around 200 episodes (approximately 6-7 months).
+- **`/podcast/[date]` route existence:** FEATURES.md notes the podcast archive links to `/podcast/${date}` for past episodes but this dynamic route may not exist. Verify before marking Phase 3 complete.
+- **Primer `interviewQs` current state:** ARCHITECTURE.md confirms `interviewQs` is currently `undefined` on all 8 primers. Verify this has not changed before starting Phase 4.
 
 ## Sources
 
-### Primary (HIGH confidence)
-- Direct codebase audit (2026-03-09): `app/globals.css`, `tailwind.config.ts`, `app/layout.tsx`, `components/Header.tsx`, `components/StoryCard.tsx`, `components/BriefingView.tsx`, `components/ArticleStory.tsx`, `components/LandingHero.tsx`, `components/SiteFooter.tsx`, `app/upgrade/page.tsx`, `app/archive/page.tsx`, `app/firms/page.tsx`, `lib/types.ts`, `components/NavDropdowns.tsx`
-- CLAUDE.md — product brief, tech stack, design principles (checked into codebase)
-- Tailwind CSS v3 documentation — type scale, spacing, border radius (training knowledge, HIGH confidence for v3 specifics)
-- WCAG 2.1 contrast ratios — 4.5:1 AA standard for normal text (HIGH confidence)
-- shadcn/ui CSS variable customisation — `--radius` token system (HIGH confidence)
+### Primary (HIGH confidence — direct codebase analysis, 2026-03-10)
+- `lib/storage.ts` — dual-backend pattern, key naming, sorted-set index structure
+- `lib/generate.ts` — Tavily 8-query pattern, Claude Sonnet usage, fire-and-forget generation
+- `lib/quiz.ts` — Claude Haiku generation pattern, JSON extraction, error handling
+- `lib/podcast.ts` + `lib/podcast-storage.ts` — Blob/FS dual backend, `listPodcastDates()`, `useBlob()` return value without BLOB_READ_WRITE_TOKEN
+- `lib/email.ts` + `app/api/digest/route.ts` — digest implementation status, `DigestStory` interface, Resend 100/day limit comment, existing digest cron schedule
+- `lib/types.ts` — `PrimerInterviewQ`, `Primer`, `LegalEvent` (not yet present), `FirmProfile`, `FirmDeadline` interfaces
+- `lib/primers-data.ts` — `PRIMERS` array structure, `interviewQs` absence confirmed
+- `lib/firms-data.ts` — existing 38 firm coverage, `FirmProfile` schema, aliases mechanism, credibility rule
+- `app/api/generate/route.ts` — cron auth pattern, fire-and-forget structure, haiku/sonnet model allocation
+- `app/podcast/archive/page.tsx` — archive page fully built and production-ready confirmed
+- `vercel.json` — existing cron entries (06:00 UTC daily generate, 08:00 UTC Sunday digest)
+- `package.json` — current dependency tree; `@vercel/blob` installed, `ical-generator` not present
 
-### Secondary (MEDIUM confidence)
-- Playfair Display typographic behaviour — editorial usage patterns (The Economist, FT Weekend), training knowledge
-- DM Mono as editorial mono alternative — training knowledge, verify against current Google Fonts before implementing
-- SaaS conversion patterns — outcome framing, social proof placement, risk reversal copy — training knowledge, well-established principles
-- Comparable niche professional tool patterns — 80,000 Hours, Bright Network, LawCareers.net (training knowledge)
+### Primary (HIGH confidence — stable technical and legal standards)
+- RFC 5545 iCalendar format specification — VCALENDAR/VEVENT structure, line folding, TZID handling, UID uniqueness requirements, iOS Calendar strictness
+- UK GDPR Article 7(3) — withdrawal of consent requirement
+- UK PECR Regulation 22 — unsolicited marketing email unsubscribe requirement
 
-### Tertiary (LOW confidence)
-- "What UK law students respond to" in conversion copy — needs owner peer network validation before major copy investment
-- CRO timing thresholds (50 users minimum) — judgment call, not a verified industry standard
-- Fiverr logo design pricing (£30-80) — may have changed since training data cutoff
+### Secondary (MEDIUM confidence — training knowledge, verify before use)
+- Resend pricing (100 emails/day, 3,000/month free tier) — confirmed in codebase comment but verify current limits at resend.com/pricing
+- Vercel Blob pricing (1GB free tier storage + bandwidth) — verify current limits at Vercel dashboard
+- iOS Calendar RFC 5545 strictness — well-documented practitioner knowledge; specific behaviour varies by iOS version
+- UK TC firm demand ranking (Baker McKenzie, Jones Day listed as Tier 1) — UK legal careers domain knowledge; cross-referenced against existing `firms-data.ts`
 
 ---
-*Research completed: 2026-03-09*
+*Research completed: 2026-03-10*
 *Ready for roadmap: yes*

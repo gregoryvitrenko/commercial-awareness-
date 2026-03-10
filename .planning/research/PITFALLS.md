@@ -1,123 +1,115 @@
 # Domain Pitfalls
 
-**Domain:** Design lift, logo/branding, and CRO work on a live SaaS product (solo developer)
-**Researched:** 2026-03-09
-**Confidence note:** Web search and Bash tools were unavailable during this research session. All findings are drawn from well-established practitioner knowledge. Each finding is confidence-labelled. No finding is stated as fact where it relies solely on unverified training data.
+**Domain:** Adding new features to a live subscription SaaS — v1.1 (Events, Digest, Podcast Archive, Primer Interview Qs, Firms Expansion, Mobile/Header)
+**Researched:** 2026-03-10
+**System:** Folio (folioapp.co.uk) — Next.js 15, Upstash Redis, ElevenLabs (100k chars/month), Tavily (1,000 searches/month), Resend (free tier), Vercel Pro
 
 ---
 
 ## Critical Pitfalls
 
-Mistakes that cause rewrites, regressions on a live product, or wasted sprints.
+Mistakes that cause budget blowouts, data loss, or rewrites.
 
 ---
 
-### Pitfall 1: Changing Design Tokens Globally Without Auditing All Consumer Components
+### Pitfall 1: Podcast Archive Triggering ElevenLabs Regeneration on Every Visit
 
-**What goes wrong:** A developer changes a core Tailwind class — e.g. switching `rounded-sm` to `rounded-xl`, or changing the stone border token — and applies it "globally" through a search-and-replace or a shared CSS variable. The change works in the 3 components they tested but silently breaks 12 others that had layout-dependent assumptions (e.g. a card inside a card where the outer radius clips the inner). On a live product, users see the regression before the developer does.
+**What goes wrong:** The podcast archive page lists past dates. A user clicks a past date. The frontend calls `POST /api/podcast-audio` with that date. Because `BLOB_READ_WRITE_TOKEN` is not set in Vercel (confirmed in PROJECT.md: "Vercel Blob not yet set up"), `useBlob()` in `podcast-storage.ts` returns `false`. The function `getAudioUrl()` returns `null`. There is no filesystem fallback on Vercel (only local dev). The route reaches the ElevenLabs API call and burns ~2,800 characters every time.
 
-**Why it happens:** Tailwind utility classes are scattered across dozens of component files. There is no single token file that enforces consistency — `cn()` calls with conditional classes make the full set of applied classes invisible at a glance. The CONVENTIONS.md already shows the bug: CLAUDE.md says `rounded-xl` but the actual codebase uses `rounded-sm`. That inconsistency exists _now_ on a production site and is a warning sign.
+**Why it happens:** The code path in `app/api/podcast-audio/route.ts` checks for cached audio in this order:
+1. Blob URL (production) — returns null because BLOB_READ_WRITE_TOKEN not set
+2. Filesystem buffer (dev only) — returns null on Vercel
+3. Calls ElevenLabs API
 
-**Consequences:** Misaligned card corners, broken dark mode rendering (dark: variants missed), topic colour badges that no longer contrast, or the podcast player breaking on mobile because its containing border-radius changed. Most are invisible in light mode but obvious in dark.
+Without Vercel Blob configured, production has no persistent MP3 cache. Every podcast request regenerates audio.
+
+**Quantified budget impact:**
+- Each regeneration: ~2,800 chars
+- Monthly ElevenLabs limit: 100,000 chars
+- Daily briefing alone: 2,800 chars × 31 days = ~86,800 chars/month
+- Remaining buffer at full usage: ~13,200 chars/month
+- A podcast archive with 7 past dates, browsed by 5 users each: 7 × 5 × 2,800 = 98,000 chars — wipes the entire monthly budget in one session
+
+**Consequences:** Monthly ElevenLabs quota exhausted mid-month. `hasCapacity()` check returns false. Current day's podcast fails for all subscribers. Revenue impact: paying subscribers lose a core premium feature.
 
 **Prevention:**
-1. Before any token change, run a global grep for the old class to find all consumers.
-2. Change one component at a time, not with search-and-replace.
-3. Resolve the `rounded-sm` / `rounded-xl` discrepancy in CONVENTIONS.md before the design lift starts — pick one value, document it, and use that as the baseline.
-4. Test dark mode on every component touched. Next.js + Tailwind dark mode requires the `dark:` variant to be explicitly added — it is never inherited.
+1. Set up Vercel Blob Store and set `BLOB_READ_WRITE_TOKEN` in Vercel env vars BEFORE shipping the podcast archive page. This is listed as a known issue in MEMORY.md — it must be resolved in v1.1, not deferred again.
+2. The archive page UI should call `GET /api/podcast-audio?date=X&check=true` (lightweight existence check) before showing a play button. If `exists: false`, show "Audio not available" rather than attempting generation.
+3. Never trigger `POST /api/podcast-audio` on archive page load — only on explicit user action (play button click).
+4. Cap archive depth: only show dates where a podcast script exists in Redis (`podcast-script:{date}` key). Past dates without scripts cannot generate audio (script is a prerequisite per the route logic).
 
-**Detection:** After any token change, view the page in both light and dark mode, and check every page that renders that component type (card, badge, section label).
+**Detection:** After shipping podcast archive, monitor Redis key `elevenlabs:chars:{YYYY-MM}` for unexpected spikes within the first 48 hours.
 
-**Phase:** Design Lift — Week 1 (foundations work). Address before any page-level polish.
+**Phase:** Podcast archive phase. Do not ship archive until Vercel Blob is configured.
 
-**Confidence:** HIGH — this is a direct consequence of how Tailwind works and is confirmed by the CONVENTIONS.md inconsistency already in the codebase.
+**Confidence:** HIGH — grounded directly in `podcast-storage.ts` code (`useBlob()` returns false without BLOB_READ_WRITE_TOKEN), the route's fallback path, and confirmed absence of Blob setup per MEMORY.md.
 
 ---
 
-### Pitfall 2: Typography Changes That Break Vertical Rhythm on Content-Heavy Pages
+### Pitfall 2: Weekly Digest Hitting Resend Free Tier Limit
 
-**What goes wrong:** The developer adjusts heading size, line-height, or font weight on one page. The change looks good in isolation. But the briefing cards, story list, quiz questions, and firm profile pages all share underlying typographic assumptions about how much vertical space text occupies. Changing `leading-snug` to `leading-normal` on headings causes cards to overflow their height constraints, truncation ellipsis to fire in wrong places, or the 8-story briefing grid to exceed viewport height.
+**What goes wrong:** The weekly digest cron runs Sunday 08:00 UTC (`"0 8 * * 0"` in vercel.json). It fetches all active Stripe subscribers and sends one email per subscriber. The Resend free tier limit is 100 emails/day (3,000/month). The current code already notes this: `// Resend free tier: 100/day` in `app/api/digest/route.ts` line 108. Once subscriber count exceeds 100, the digest fails to deliver to subscribers beyond position 100 in the list. Subscribers who paid £4/month receive no Sunday digest with no error message to them.
 
-**Why it happens:** Newspaper/editorial typography is more sensitive to vertical rhythm than standard SaaS typography. The stone/zinc palette and `divide-y` row pattern means that text overflow in one row pushes every subsequent row down. The briefing has 8 stories with excerpts — any extra line-height ripples 8× per page.
+**Why it happens:** The loop in `app/api/digest/route.ts` sends sequentially with a 100ms delay. There is no batch-size cap — it sends to every email in `emails[]`. At 101 subscribers, Resend returns a rate limit error for email 101+, the `result.success` flag is false, and `failed` increments — but subscribers never know.
 
-**Consequences:** Content truncation breaks (3-line clamp no longer matches the card height), the podcast player and quiz interface overlap content below them on mobile, or the topic filter tabs overflow onto two rows.
+**Quantified impact:** Resend free tier: 100 emails/day. At £4/month with ~10% churn, reaching 100 subscribers is achievable within 2-3 months of active marketing (LinkedIn + law societies). The digest was built assuming growth.
+
+**Consequences:** Digest silently fails for subscribers above the limit. Subscriber churn increases as paying users receive less value. Owner sees `failed` count in Vercel logs but no automated alert.
 
 **Prevention:**
-1. Lock heading/body font sizes and line-heights in a single design spec before starting. Tailwind's default scale (`text-sm`, `text-base`, `text-lg`) should map to specific roles (excerpt, headline, section label) and not be changed page-by-page.
-2. Test every typography change on the main `/` page (8 stories) and `/firms/[slug]` (most content-dense page) before declaring it done.
-3. On mobile viewport (375px) only — desktop typo often looks fine, mobile breaks.
+1. Add a hard cap in the digest route: `const emailsToSend = emails.slice(0, 90)` — leave 10 in buffer for welcome emails sent the same day.
+2. Log a warning when `emails.length > 90`: `console.warn('[digest] Approaching Resend free tier limit — consider upgrading')`.
+3. Resend paid tier is $20/month for 50k emails — upgrade when subscriber count approaches 80. This fits within the £50/month budget cap if one other free-tier service offsets it.
+4. Do not increase the 100ms delay as a mitigation — it does not solve the cap, only the rate limit within the cap.
 
-**Detection:** Check the homepage on a 375px viewport width after every typography change. If the 8-story grid still fits without overflow, the change is safe.
+**Phase:** Weekly digest phase. Add the cap during implementation.
 
-**Phase:** Design Lift — typography pass. Do not change font sizes and spacing in the same commit.
-
-**Confidence:** HIGH — established consequence of modifying typographic scale on content-dense layouts.
+**Confidence:** HIGH — Resend's 100/day free tier limit is their published pricing. The code confirms no existing cap.
 
 ---
 
-### Pitfall 3: "Polishing" the Paywall Pages While Breaking the Conversion Path
+### Pitfall 3: Tavily Search Budget Exhausted by Events Feature
 
-**What goes wrong:** The developer improves the visual design of the upgrade page, the sign-in page, or the story cards with paywall nudges. A CSS change or component refactor accidentally removes a `requireSubscription()` redirect, makes the upgrade CTA invisible in dark mode, or breaks the Stripe checkout button's `onClick` handler. The site looks better but stops converting. On a live product with real paying customers, a broken checkout is the worst possible regression.
+**What goes wrong:** The events feature adds Tavily searches to find UK legal events. If implemented as a daily cron (similar to briefing generation), it adds N more queries per run to the existing 8. The current daily briefing already consumes 8 queries × ~365 days = 2,920 searches/year against a 1,000/month (12,000/year) limit — leaving ~750/month buffer. But that buffer evaporates quickly with events searches.
 
-**Why it happens:** Paywall components (`/upgrade`, `/story/[id]` premium lock, mid-grid upgrade nudge) are the intersection of UI and critical business logic. A visual refactor that touches `className` also risks touching `onClick`, `href`, or the conditional rendering that shows/hides premium content. The review bypass cookie in `middleware.ts` makes it easy for the developer to accidentally test while bypassed — they never see the paywall state they're shipping.
+**Quantified impact:**
+- Current usage: 8 queries/day × 30 days = 240 searches/month
+- Remaining free tier: 1,000 − 240 = 760/month
+- Events with 4 queries/day: 4 × 30 = 120 additional = 360 queries/month (still within limit)
+- Events with 8 queries/day: 8 × 30 = 240 additional = 480 queries/month (still within limit)
+- Events with 8 queries/day + any debugging reruns or ad-hoc admin triggers: can breach 1,000/month
 
-**Consequences:** Stripe checkout broken → zero new subscriber revenue. Free users see premium content → subscription value destroyed. Or subtler: upgrade CTA invisible in dark mode → conversion rate halved for dark mode users who are likely the more tech-savvy segment.
+**Specific query quality problem:** Legal events search is inherently noisy. Tavily returns general "legal news" for queries like "UK legal events 2026" because events content is sparse on news sites. The 800-character content limit in `generate.ts` truncates event listings before address/date details appear. Results will contain: conference marketing fluff, past events not filtered by date, student events mixed with practitioner events, and non-London events when "UK" is queried.
 
 **Prevention:**
-1. Test the full upgrade flow end-to-end (unauthenticated → sign-up → upgrade → Stripe) after every change to any component on the `/upgrade` page or story pages.
-2. Explicitly test in dark mode.
-3. Add the upgrade page to a "smoke test checklist" that runs before every deploy involving UI changes.
-4. Never use the review bypass cookie during development of paywall-adjacent UI — disable it so you see what real users see.
+1. Run events refresh weekly (Sunday cron alongside digest), not daily. Legal events do not change daily. This caps events Tavily usage at ~16 queries/week = ~64/month.
+2. Use highly specific queries: `"law society" OR "bar council" networking London 2026 site:lawsociety.org.uk` — site-scoped queries return less noise.
+3. Hard-filter results by date: any event with a past date must be excluded at the Claude synthesis step. Add explicit instruction: "Return ONLY events with a future date. If event date cannot be determined from the source, omit it."
+4. Do not regenerate events data if the existing cache is < 7 days old — add staleness check analogous to `BANK_TTL_DAYS` in aptitude banks.
 
-**Detection:** After any deploy that touches `/upgrade`, `StoryCard.tsx`, or the mid-grid nudge component: open an incognito window, go to the homepage, and attempt to read a full article. Confirm the paywall fires and the upgrade button leads to Stripe.
+**Phase:** Events feature phase.
 
-**Phase:** All design lift phases. This is a standing constraint, not a one-time fix.
-
-**Confidence:** HIGH — broken checkout is the canonical "design lift regression" on SaaS products.
+**Confidence:** HIGH for budget arithmetic (based on published Tavily limits and current usage in code). MEDIUM for query quality prediction (based on general knowledge of web search quality for events content).
 
 ---
 
-### Pitfall 4: Solo Developer Logo Design That Looks Like a Logo
+### Pitfall 4: Stale Events Data — Past Events Shown as Current
 
-**What goes wrong:** A solo developer with no design budget tries to create a distinctive wordmark or brand mark. The result is either (a) a generic icon from a library bolted next to the product name in a standard weight, (b) an over-engineered abstract shape that looks amateur, or (c) a font-based wordmark in an inappropriate typeface that reads as "free template." None of these build trust with the target audience (competitive law students screening for quality signals).
+**What goes wrong:** Events are generated by Tavily + Claude synthesis and cached in Redis. The cache has no automatic expiry if not explicitly set. An event scheduled for "15 March 2026" is cached on 10 March. By 20 March, it is still showing on the events page as an upcoming event because the cache was not invalidated. Worse: Claude may synthesise events from source articles that pre-announce events months out, and the ICS export gives the user an already-past calendar entry.
 
-**Why it happens:** Logo design is a separate discipline from UI design. The tools available to a solo dev (Figma free tier, Canva, online generators) produce outputs that look like what they are: free-tier outputs. The temptation is to spend a week iterating in Figma on something that a professional would spend 2 days on and produce 10× better.
+**Why it happens:** Redis SET without TTL persists indefinitely. The aptitude bank pattern uses `BANK_TTL_DAYS = 7` as a staleness check, but this is an age-of-cache check, not an event-date check. An event can be "fresh" (cached yesterday) but still refer to a past occurrence.
 
-**Consequences:** A bad logo deployed on a live product is harder to change than a missing one. Users anchor on the first impression. A visually weak logo undermines the "premium editorial" positioning even if the product is excellent.
-
-**Prevention:**
-1. Use a typography-first approach: a well-chosen typeface set in the right weight IS the wordmark. For a newspaper/editorial product, this is appropriate and professional. The word "Folio" in Playfair Display (already loaded) at the right weight and tracking is a credible wordmark without any icon.
-2. If an icon/mark is needed: use geometric abstraction at small scale (the letter F stylized, not a generic briefcase or scales of justice). Test it at 16px favicon size before committing — most developer-made marks fall apart at small sizes.
-3. Do not use gradients. Do not use drop shadows. Do not add a tagline in the logo lockup.
-4. Budget constraint: Fiverr logo design for "minimal wordmark" from a specialist (not a generalist) costs £30-80 and is better than 20 hours of DIY Figma. This is within the £50/month budget for a one-time spend.
-5. If DIY: pick one of (a) pure typography or (b) a single geometric element — never both. "Folio" in Playfair Display Italic with tracked small caps is a complete solution.
-
-**Detection:** Show the logo to someone outside the project at two sizes: header size (~120px wide) and favicon size (16px). If they cannot read it cleanly at 16px, it fails.
-
-**Phase:** Logo/branding phase. Design before implementing — do not ship a placeholder and iterate on live.
-
-**Confidence:** MEDIUM — widely documented in indie hacker and solo founder communities. Specific recommendations (Playfair Display wordmark) are HIGH confidence given it is already loaded in the codebase and appropriate to the editorial positioning.
-
----
-
-### Pitfall 5: Brand Colour Changes That Require Updating 40+ Component Files
-
-**What goes wrong:** A developer decides the stone palette needs adjustment — maybe stone is too warm, or the zinc chrome feels off. They change the base colour in `tailwind.config.ts`. Because Tailwind generates utility classes at build time, the config change cascades to every component that uses `stone-*` or `zinc-*` classes. But the actual values of `stone-700` in Tailwind's default palette are fixed — you cannot "adjust" them without overriding the entire scale. The developer either overrides the scale (which then breaks the coherent step progression) or switches to a custom colour (which requires updating 40+ component files that reference `stone-` by name).
-
-**Why it happens:** Tailwind's semantic palette names (stone, zinc) are baked into component classNames, not abstracted behind CSS variables. If the design direction says "keep stone/zinc" but the specific shades need tuning, there is no clean way to do it short of a full rename or CSS variable abstraction layer.
-
-**Consequences:** Either the design lift is abandoned halfway (stone stays but the developer wanted something slightly different), or a complete palette rename takes 2-3x longer than estimated and introduces regressions.
+**Consequences:** Students add stale events to their calendar. They arrive expecting a networking event that ended last week. Trust damage is severe — the feature that was supposed to help TC prep actively misleads.
 
 **Prevention:**
-1. Before the design lift, commit to the stone/zinc palette as-is. If the goal is "better execution of the newspaper feel," that is achieved through spacing, typography, and hierarchy — not by changing the grey palette.
-2. If palette adjustment is genuinely needed, use Tailwind's `theme.extend.colors` to add a custom palette (e.g. `editorial`) as CSS custom properties, then migrate components one at a time. This is a multi-week project, not a design lift.
-3. Decision for this project: the stone/zinc palette is correct for the editorial direction. Do not change it. The lift should be in spacing, typography weight/hierarchy, and component polish — not colour.
+1. Store events as an array of objects with an explicit `eventDate: string` (ISO 8601). Before rendering on the frontend, filter: `events.filter(e => new Date(e.eventDate) >= new Date())`.
+2. Set a Redis TTL on the events cache: 7 days. Forced weekly refresh ensures events are always re-evaluated against current date.
+3. In the Claude prompt for events synthesis: "Include ONLY events with a confirmed future date. For each event, extract the exact date in YYYY-MM-DD format. If the date is ambiguous or in the past, omit the event."
+4. Add a "last updated" timestamp visible on the events page so users know when the list was generated.
 
-**Detection:** If you find yourself editing `tailwind.config.ts` during a "design lift" task, stop and ask whether this is solving a real problem or a perceived one.
+**Phase:** Events feature phase.
 
-**Phase:** Design Lift — foundations. Establish a "no palette changes" constraint before work begins.
-
-**Confidence:** HIGH — direct consequence of how Tailwind utility classes work.
+**Confidence:** HIGH — the stale data pattern is a direct consequence of Redis caching without date-aware expiry logic.
 
 ---
 
@@ -125,86 +117,118 @@ Mistakes that cause rewrites, regressions on a live product, or wasted sprints.
 
 ---
 
-### Pitfall 6: Font Loading Regressions on Deploy
+### Pitfall 5: ICS Calendar Export Generating Malformed Files
 
-**What goes wrong:** The project loads three Google Fonts via `next/font/google` in `app/layout.tsx` (Inter, Playfair Display, JetBrains Mono). A design lift often involves adding a new font weight (e.g. Playfair Display 700 italic for pull-quotes) or a new variant. If the font config in `layout.tsx` changes without also updating the CSS variable reference, the fallback font renders on production until the next full cold start. Users see the wrong font — often Times New Roman or Arial — until the font CDN warms up.
+**What goes wrong:** The `.ics` file format (iCalendar RFC 5545) has strict requirements that are easy to violate when building the export by hand: lines must not exceed 75 octets (fold with CRLF + space), `DTSTART`/`DTEND` must be in UTC format (`YYYYMMDDTHHMMSSZ`) or with `TZID` parameter, the `UID` must be globally unique per event, and the file must end with `CRLF`. A hand-rolled string template that gets these wrong produces a `.ics` file that imports silently into Google Calendar but shows the wrong time, or fails to import into Outlook, or creates duplicate events on iOS.
+
+**Specific iOS Safari risk:** iOS Calendar is the most strict iCal parser and the most likely client for this audience (students on iPhone). It rejects files where:
+- `BEGIN:VCALENDAR` is not on the first line with no BOM
+- `PRODID` field is missing
+- `VERSION:2.0` is missing
+- `SUMMARY` field contains special characters not escaped (commas, semicolons, backslashes must be escaped with `\`)
 
 **Prevention:**
-1. When adding font weights: add them to the existing `next/font/google` call in the same `subsets` array, then test with `?no-cache` in the network tab.
-2. Test font rendering in both Chrome and Safari — Safari's fallback font stacking is different.
-3. Do not add a fourth font. The three already loaded (mono, sans, serif) cover all design roles.
+1. Do not hand-roll ICS format. Use the `ical-generator` npm package (well-maintained, RFC 5545 compliant, supports timezones). This is a ~5KB dependency that eliminates all format correctness risk.
+2. Set timezone explicitly: UK events are BST (UTC+1) in summer and GMT (UTC+0) in winter. Use `Europe/London` as the `TZID`. Do not output UTC and adjust manually — daylight saving transitions are handled by the TZID system.
+3. Test the exported file by importing into Google Calendar, Outlook.com, and iOS Calendar before shipping. These three clients cover >95% of the target audience.
 
-**Phase:** Design Lift — typography pass.
+**Phase:** Events feature phase.
 
-**Confidence:** HIGH — documented Next.js font behavior.
+**Confidence:** HIGH for ICS format requirements (RFC 5545 is a standard). MEDIUM for the specific iOS strictness level (based on practitioner knowledge, not verified against current iOS version).
 
 ---
 
-### Pitfall 7: Mobile Breakpoint Blindness During Polish Work
+### Pitfall 6: Digest Email Missing Unsubscribe Mechanism — UK GDPR / PECR Risk
 
-**What goes wrong:** A developer doing visual polish works primarily on a 1440px desktop monitor. The newspaper layout looks excellent. The product ships. 60-70% of target users (law students) are on mobile — on the train, between lectures, during revision breaks. The polished headers have 4-column grids that collapse to unreadable single columns, the podcast player overlaps the story list, or the topic filter tabs scroll off-screen.
+**What goes wrong:** The current digest email in `lib/email.ts` has a footer that says "You're receiving this because you subscribe to Folio. Manage your subscription at any time from your account settings." This is not a functioning unsubscribe link — it directs users to account settings where subscription cancellation (Stripe) is conflated with email opt-out. UK GDPR and PECR require that marketing emails (which the digest is) contain a working unsubscribe mechanism that immediately honours the request.
+
+**Why this matters for this specific product:** Folio's target audience includes law students who are learning about regulatory compliance. Receiving a GDPR-non-compliant email from a legal education product is both ironic and a credibility-destroying signal.
+
+**Additional risk:** Resend's abuse team will suspend accounts that receive significant unsubscribe-by-marking-as-spam signals. If 5+ users mark the digest as spam because there is no unsubscribe link, the Resend account may be suspended — killing welcome emails (which are transactional and critical to the subscription flow) simultaneously.
+
+**What the current code lacks:**
+- No `List-Unsubscribe` header in the Resend send call
+- No dedicated unsubscribe endpoint (e.g. `GET /api/unsubscribe?token=...`)
+- No per-user email preference stored in Redis
+- Footer links to "account settings" — not a one-click unsubscribe
 
 **Prevention:**
-1. After every design change, switch to Chrome DevTools 375px viewport before committing.
-2. The 8-story briefing grid is the highest-risk area — test it at 375px on every iteration.
-3. The topic filter tab bar with 8 topics is the second highest-risk area (overflow on small screens).
+1. Add `List-Unsubscribe` and `List-Unsubscribe-Post` headers to the `resend.emails.send()` call pointing to a real endpoint.
+2. Create `GET /api/unsubscribe?userId=X&token=Y` that sets `email-opt-out:{userId}` in Redis and returns a confirmation page.
+3. In the digest route, before sending, check `email-opt-out:{email}` (or by userId if mapped) and skip opted-out subscribers.
+4. Update the footer to include a literal "Unsubscribe from this digest" link.
+5. The welcome email is transactional (triggered by subscription activation) and does not require an unsubscribe mechanism under PECR. The weekly digest is marketing and does require it.
 
-**Phase:** All design lift phases.
+**Phase:** Weekly digest phase. The unsubscribe mechanism is a prerequisite, not an enhancement.
 
-**Confidence:** HIGH — mobile traffic proportion for student products is well-established.
+**Confidence:** HIGH — UK GDPR Article 7(3) and PECR Regulation 22 requirements for email marketing unsubscribe are clear legal requirements. The codebase currently lacks them.
 
 ---
 
-### Pitfall 8: Inconsistent Spacing Scale Producing "Almost Right" Layouts
+### Pitfall 7: Primer Interview Qs Are Generic Without Firm-Level Specificity
 
-**What goes wrong:** The developer tweaks padding and margin values to improve visual breathing room. Some components get `p-6`, others `p-5`, others `p-4`. The result is close but not coherent — experienced users sense something is off but cannot name it. This is worse than a consistently tight layout because it signals "amateur polish" rather than "unfinished."
+**What goes wrong:** The `PrimerInterviewQ` type in `types.ts` (lines 206-212) has `question`, `whatTheyWant`, and `skeleton` fields. If these are AI-generated without firm-specific constraints, they will produce generic TC interview questions that appear in every "how to prepare for law firm interviews" article online. Examples: "What are the current trends in M&A?" or "Why is this practice area interesting to you?" These are the opposite of useful — every student has pre-prepared answers to these questions.
+
+**What makes primer questions valuable vs. useless:**
+- Useless: "Tell me about a recent M&A deal" (any deal works)
+- Useful: "Carlyle Group recently acquired a UK infrastructure asset — what specific regulatory hurdles under the NSI Act would a Magic Circle firm need to navigate, and which practice group at Freshfields handles NSI Act filings?" (tests connected knowledge from the briefing system)
+- Useless: "What challenges do investment banks face?" (too broad, no right answer)
+- Useful: "A client is considering issuing a Regulation S bond to tap Asian institutional investors. Walk me through the disclosure and liability regime differences between Reg S and a full SEC registration." (tests specific, learnable knowledge)
+
+**The caching strategy risk:** Primer content in `primers-data.ts` is static (hardcoded). If interview Qs are added as static data too, they go stale within one recruitment cycle (Sept-Oct each year when new TC interview formats emerge). If they are AI-generated and cached in Redis with no TTL, they persist indefinitely and quietly become outdated.
 
 **Prevention:**
-1. Before any spacing changes, define a spacing scale: base unit is `p-4` (1rem) for card padding, `gap-4` for grid gaps, `py-8` for section vertical separation. Stick to this scale across all components.
-2. Tailwind's default 4-unit scale (4, 6, 8, 10, 12) is intentionally coherent — use it, do not invent intermediate values like `p-5` or `p-7` unless there is a specific reason.
-3. Create a brief written spec: "Cards: p-4. Section gaps: gap-4. Page container: px-4 md:px-8. Top-level sections: py-8." Reference this before every spacing decision.
+1. Keep interview Qs as static data in `primers-data.ts` — this is the right architecture. The 8 primer files are already written with enough depth to support 3-5 genuinely specific questions per primer.
+2. Write questions manually (not AI-generated). The quality bar is: the question should only be answerable by someone who has done the reading in that primer. Not a general commercial awareness question.
+3. Caching strategy: static data needs no cache. Do not introduce Redis caching for primer content — it creates a staleness problem without solving anything.
+4. Do not link interview Qs to daily briefing content (too ephemeral). Link them to the structural knowledge in the primer sections (e.g. NSI Act, Takeover Code, SPA mechanics).
 
-**Phase:** Design Lift — spacing pass. Do spacing in one dedicated pass, not interleaved with typography or colour work.
+**Phase:** Primers interview Qs phase.
 
-**Confidence:** HIGH — established design principle.
+**Confidence:** HIGH for the quality assessment (grounded in TC interview preparation literature and the existing primer content depth). HIGH for the caching recommendation (direct consequence of static data architecture).
 
 ---
 
-### Pitfall 9: CRO Optimisation Decisions Made Without a Baseline
+### Pitfall 8: Firms Expansion — Stale Salary and Deadline Data at Launch
 
-**What goes wrong:** A developer with no user data looks at the homepage and decides the upgrade CTA is "too low on the page" or the paywall message is "too aggressive." They move things around based on intuition. With no baseline analytics, they cannot tell whether the change improved conversion — so they keep making changes, each one eroding the previous structure. After 4 iterations, the conversion funnel is messier than the original.
+**What goes wrong:** Adding new firms to `firms-data.ts` requires salary figures (`tcSalaryNote`, `nqSalaryNote`) and application deadlines (`FirmDeadline[]`). This data is sourced from public recruitment pages and aggregator sites (the-trackr.com, mentioned in the file header). Law firm salaries change each September-October with NQ announcement season. Deadlines shift by 2-4 weeks each cycle. A newly added firm profile with last year's salary or a deadline from the 2025 cycle will be wrong at launch.
 
-**Why it happens:** Conversion optimisation requires a baseline (what is the current conversion rate?) and a change + measurement cycle. Without either, it is not optimisation — it is guessing with extra steps. Solo developers with no user data often try to pre-optimise by copying patterns from other SaaS products without knowing whether those patterns apply to their audience or funnel structure.
+**US firms specific risk:** Many US firms with London offices run "training contract" programmes that are not actually traditional 2-year TCs — they may be called "associate programmes," "structured associate hire," or "direct entry NQ." Describing these as traditional TCs with `seats: 4` would be factually wrong and could mislead students into applying for programmes that do not match their stage.
 
-**Consequences:** The upgrade CTA gets moved 4 times, the paywall message rewritten 3 times, and the net result is that nothing is measurably better and the design is now inconsistent.
+**Dentons entity confusion:** There are multiple Dentons entities in the UK — Dentons UK and Middle East, Dentons UKMEA, and the global Dentons brand. The firm underwent a "verein" structure merger. An `aliases[]` array that includes only "Dentons" would fail to match stories that say "Dentons UKMEA" or "Dentons UK and Middle East LLP." This is not hypothetical — the existing briefing system uses `story.firms[]` to match against `aliases[]` for the firm pages sidebar.
 
 **Prevention:**
-1. Install Vercel Analytics (free tier) before any conversion-related design work. Even 20 users generate enough data to see which pages have high exit rates.
-2. For Folio specifically: the conversion path is `homepage (free user) → story card click → paywall → /upgrade → Stripe`. Instrument this funnel with a simple event-based approach (Vercel Analytics custom events or Plausible) before changing any step in it.
-3. The only safe CRO change without data is one that removes friction (e.g. fewer clicks to reach the upgrade page). Avoid changes that add complexity.
-4. Defer "conversion feature" work (listed as Active in PROJECT.md) until there are at least 50 signed-up free users and observable drop-off data.
+1. For any new firm, set `lastVerified` to the actual date you verified the data. Do not forward-date it.
+2. Add a comment in `firms-data.ts` near each new firm: `// VERIFY: salaries and deadlines for 2026-27 cycle before shipping`.
+3. For US firms without traditional TCs: either (a) document accurately with `intakeSizeNote: 'Direct NQ hire — no structured TC programme'` or (b) omit them from the launch batch and add only firms with verified TC data.
+4. For Dentons-type entities: include all variant names in `aliases[]`. Check the existing briefing data (`data/briefings/`) for which name appears in `story.firms[]` — that is the canonical match target.
+5. Cap the launch batch: add 5-8 well-verified firms rather than 20 firms with uncertain data. Accuracy > volume for this product.
 
-**Detection:** If you are making a CRO-related change and you cannot state "the metric I expect to move is X, the current value is Y," stop. The change is not evidence-based.
+**Phase:** Firms expansion phase.
 
-**Phase:** Conversion feature — explicitly deferred in PROJECT.md until user base exists. This constraint should be enforced in the roadmap.
-
-**Confidence:** MEDIUM — well-documented in CRO literature. The specific threshold (50 users) is a judgment call, not a verified number.
+**Confidence:** HIGH for the data staleness risk (salary and deadline data is time-sensitive by nature). HIGH for the Dentons alias issue (grounded in the `aliases[]` matching mechanism in `types.ts`). MEDIUM for US firm TC programme structure (based on general knowledge of US firm hiring — verify each firm before adding).
 
 ---
 
-### Pitfall 10: "Social Proof" Placeholders That Undermine Trust
+### Pitfall 9: Sticky Header CSS Specificity Conflict with Stone Palette
 
-**What goes wrong:** A developer adds a "Join 200+ students" badge or "Trusted by students at Oxford, Cambridge, LSE" copy to the landing page before those numbers are real. Law students applying to Magic Circle firms are trained to verify claims. A false or inflated social proof claim discovered by a single user will be shared in the law society Discord/WhatsApp groups that are the primary word-of-mouth channel for this product.
+**What goes wrong:** Adding a scroll-dependent background to the header requires JavaScript to detect scroll position and conditionally apply a class. The common pattern is `window.scrollY > 0 ? 'bg-white/95 backdrop-blur-sm shadow-sm' : 'bg-transparent'`. In Folio's case, the header currently renders on a `bg-stone-50` page background. When the header becomes sticky with `bg-white/95`, it will be visually lighter than the `bg-stone-50` page — visible as a slight colour mismatch at the boundary.
+
+**The dark mode split:** `bg-white/95` in light mode, but in dark mode the page is `bg-zinc-950`. A dark-mode sticky header needs `dark:bg-zinc-950/95`. If the `dark:` variant is missed, dark mode users see a white header floating over a dark page — a jarring contrast that is immediately obvious.
+
+**iOS Safari specifics:** `backdrop-filter: blur()` and `position: sticky` have known interaction bugs in older iOS Safari versions. If `backdrop-blur-sm` is applied to a sticky header, iOS Safari 15 and earlier will render the header as fully opaque (no blur) or occasionally flicker. The student demographic includes a high proportion of iPhone users, and iOS updates lag behind Safari releases — iOS 15 devices remain common.
+
+**Touch target risk:** Mobile nav dropdowns that work on hover on desktop become tap-only on mobile. If the dropdown trigger is a `<div>` or `<span>` rather than a `<button>`, it may not receive touch events correctly on iOS Safari, which has historically under-delivered tap events to non-interactive elements.
 
 **Prevention:**
-1. Never display user counts or institution claims that are not verified real numbers.
-2. For early social proof: use qualitative testimonials from real users (even 1-2 people is legitimate). A single named quote from a real student is more credible than a fake aggregate count.
-3. If there are zero testimonials, use a different trust signal: the product's output quality (show a real briefing excerpt), the pricing transparency (clear £4/month, cancel anytime), or the creator's credibility (LLB student who uses it themselves).
-4. "Early access" framing is honest and positions scarcity positively: "In early access — limited to 50 users while I refine the product."
+1. Use `bg-stone-50/95` (not `bg-white/95`) for the sticky header in light mode to match the page background. Use `dark:bg-zinc-950/95` for dark mode.
+2. Test scroll behaviour on a real iPhone in Safari (not just Chrome DevTools mobile simulator) before shipping. The DevTools simulator does not reproduce iOS Safari's `backdrop-filter` quirks.
+3. All mobile nav interactive elements must be `<button>` elements (not `<div onClick>`) to ensure iOS touch event delivery.
+4. Keep mobile nav simple: a hamburger button that shows a full-screen overlay menu, rather than hover dropdowns that require JS hover-simulation on touch devices. Dropdowns with complex hover states are a common source of "works on desktop, broken on mobile" bugs.
 
-**Phase:** Social proof — only launch when real numbers exist. This is a standing constraint.
+**Phase:** Mobile + header fixes phase.
 
-**Confidence:** HIGH — the audience (competitive law students) is highly credibility-aware. The channel (law societies, peer networks) means false claims spread fast.
+**Confidence:** HIGH for the colour mismatch (direct consequence of stone-50 page vs white header). HIGH for touch target requirement (iOS Safari behaviour with non-button elements). MEDIUM for backdrop-blur iOS Safari bug (known issue but specific behaviour depends on iOS version).
 
 ---
 
@@ -212,45 +236,49 @@ Mistakes that cause rewrites, regressions on a live product, or wasted sprints.
 
 ---
 
-### Pitfall 11: Dark Mode Coverage Gaps in New Components
+### Pitfall 10: Podcast Archive `listPodcastDates()` Requires Vercel Blob
 
-**What goes wrong:** A new visual component (pull-quote block, social proof badge, footer card) is built in light mode and looks polished. The `dark:` variant classes are forgotten or applied inconsistently. On first visit from a dark mode user, the component renders with a white background on a dark page.
+**What goes wrong:** `listPodcastDates()` in `podcast-storage.ts` uses `@vercel/blob`'s `list()` API in production to enumerate all podcast MP3 files. Without Vercel Blob configured, it falls back to filesystem — which returns zero results on Vercel (serverless functions have no persistent filesystem). The podcast archive page will render an empty list for all users.
 
-**Prevention:** Every new component built during the design lift must have both a light-mode and dark-mode check before the PR is created. Check with `prefers-color-scheme: dark` in DevTools, not just the manual toggle.
+**Prevention:** Same as Pitfall 1 — Vercel Blob must be set up before shipping the podcast archive. But note: even after Blob is set up, `listPodcastDates()` requires that MP3 files were previously saved with `saveAudio()`. Past dates' audio (before Blob was configured) will not appear in the list. The archive will only show dates after Blob activation. Do not promise users "access to all past episodes" — the earliest episode will be the day Blob was set up.
 
-**Phase:** Design Lift — all phases.
+**Phase:** Podcast archive phase.
 
-**Confidence:** HIGH.
-
----
-
-### Pitfall 12: Logo at Wrong Colour in Dark Mode
-
-**What goes wrong:** A wordmark or logomark is designed in dark ink for the light header. In dark mode, the header goes dark and the logo becomes invisible. This is the most common logo implementation mistake by developers who are not designers.
-
-**Prevention:**
-1. Design the logo as an SVG with a `currentColor` fill so it inherits the heading text colour.
-2. Test at header render in both `bg-white` and `bg-zinc-950` contexts before finalising.
-3. If the logo is a bitmap (PNG/JPG), you need two versions: one for light, one for dark. Use `next/image` with a `className="dark:invert"` filter as a stopgap, but it is not a substitute for proper two-colour asset handling.
-
-**Phase:** Logo/branding phase.
-
-**Confidence:** HIGH — direct consequence of dark mode colour handling.
+**Confidence:** HIGH — direct consequence of `useBlob()` returning false and the filesystem fallback returning empty on Vercel.
 
 ---
 
-### Pitfall 13: Footer as an Afterthought That Breaks Page Structure
+### Pitfall 11: Digest Contains Identical Stories Across Multiple Days
 
-**What goes wrong:** The site footer is in the backlog (PROJECT.md lists it as Active: "Site footer — feedback link, terms/privacy, contact/LinkedIn"). When it is added, the developer uses absolute or fixed positioning, or sets `min-height` incorrectly, which causes the footer to overlap content on short pages (e.g. the `/onboarding` page which may have minimal content). On long pages, the footer pushes the Scroll To Top button into an unclickable position.
+**What goes wrong:** The current digest logic in `app/api/digest/route.ts` takes the first 2 stories from each of the last 7 briefings. If the briefing generation on several consecutive days covered the same topic (e.g. M&A activity around a large ongoing deal), the digest will include 2-3 stories about the same underlying transaction in different framings. The `buildExclusionBlock` mechanism in `generate.ts` reduces but does not eliminate this across a full week — it only looks back 2 days.
+
+**Consequences:** A digest with near-duplicate stories looks like a broken system or a poorly curated product. For a £4/month product competing on quality, a sloppy weekly email is a churn driver.
 
 **Prevention:**
-1. Implement the footer using flexbox sticky footer pattern: `<body className="flex flex-col min-h-screen">` with `<main className="flex-1">` — footer always sticks to the bottom without overlapping.
-2. Check the footer on the shortest page in the app (likely `/upgrade` or `/onboarding`) as well as the longest (likely `/firms/[slug]`).
-3. The footer is already planned — implement it in the design lift phase so it is part of the polished first impression, not a visible "coming soon" gap.
+1. De-duplicate digest stories by `story.firms[]` array — if two stories share ≥2 firm names, keep only the more recent one.
+2. Prioritise topic variety: ensure no topic appears more than twice in the 10-story digest. After slicing to 10, sort by `topic` and apply a de-dupe pass.
+3. This does not require a code change to the generation pipeline — only to the digest assembly logic in `route.ts`.
 
-**Phase:** Design Lift — structural pass.
+**Phase:** Weekly digest phase.
 
-**Confidence:** HIGH — standard sticky footer layout pattern.
+**Confidence:** HIGH — the pattern is a direct consequence of the current assembly logic and the 2-day exclusion window in briefing generation.
+
+---
+
+### Pitfall 12: Redis Memory Pressure from Events Cache
+
+**What goes wrong:** Upstash Redis free tier has a 256MB data limit. Current usage is primarily: briefing JSON (~20-30KB each), quiz JSON (~10KB each), podcast scripts (~5KB each), aptitude banks (~50KB each), and user data (bookmarks, notes, subscription status). Estimated current footprint: 30 days × (30+10+5)KB = ~1.4MB for content + ~50KB aptitude banks + small user data. Events data (if stored as structured JSON with descriptions) could add 5-10KB per weekly refresh = low impact.
+
+**The actual risk** is not the events data itself but the briefing index growth. `briefing:index` and `quiz:index` are sorted sets that grow by 1 member per day indefinitely. At scale, the briefing JSON keys themselves accumulate: 365 days × 30KB = ~10.7MB/year. After 2 years the free tier starts to be a concern.
+
+**Prevention:**
+1. Set a TTL on briefing JSON keys: `redis.set('briefing:{date}', data, { ex: 90 * 24 * 3600 })` — 90-day rolling window. Users rarely access briefings older than 90 days (the archive is a premium feature but engagement data likely shows a long tail).
+2. Keep the sorted index (`briefing:index`) as it is — sorted set members are tiny (just date strings). Only the JSON values need TTL.
+3. For events data: use a single key `events:cache` (overwritten weekly) rather than one key per event date. This prevents unbounded key accumulation.
+
+**Phase:** Events feature phase (establish the single-key pattern from the start). Briefing TTL is a separate housekeeping task.
+
+**Confidence:** MEDIUM for the specific memory numbers (estimates based on known JSON structure sizes). HIGH for the caching pattern recommendation (single-key overwrite vs. date-keyed accumulation).
 
 ---
 
@@ -258,30 +286,38 @@ Mistakes that cause rewrites, regressions on a live product, or wasted sprints.
 
 | Phase Topic | Likely Pitfall | Mitigation |
 |-------------|---------------|------------|
-| Design token foundations | `rounded-sm` vs `rounded-xl` inconsistency causes split codebase | Audit and resolve before any other design work |
-| Typography pass | Line-height changes break card grid on 8-story homepage | Test homepage at 375px after every font change |
-| Spacing pass | Inconsistent padding values across components | Define written spacing scale, use Tailwind default steps |
-| Logo/wordmark | Logo invisible in dark mode | SVG with `currentColor`; test both modes before committing |
-| Logo/wordmark | Over-engineered mark that looks amateur | Typography-first approach: Playfair Display wordmark |
-| Paywall/upgrade UI polish | Visual refactor breaks Stripe checkout CTA | End-to-end checkout smoke test after every deploy |
-| Social proof copy | Inflated user numbers damage credibility with target audience | Only ship real numbers; use qualitative quotes for early stage |
-| CRO work | No-data guessing loop damages existing funnel | Install analytics first; defer CRO until 50+ free users |
-| Footer implementation | Flex layout missing causes footer overlap on short pages | `flex flex-col min-h-screen` + `flex-1` on main |
-| Dark mode on new components | Missing `dark:` variants | Mandatory dark mode check before every component commit |
+| Podcast archive | ElevenLabs quota burned on archive visits (no Blob cache) | Set up Vercel Blob first; use `?check=true` existence probe before play button |
+| Podcast archive | Empty archive list because Blob not set up | Blob activation required; archive only shows post-Blob dates |
+| Weekly digest | Resend free tier 100/day cap hit at ~100 subscribers | Hard-cap sends at 90; monitor and upgrade Resend at 80 subscribers |
+| Weekly digest | Missing unsubscribe link violates UK GDPR / PECR | Add `List-Unsubscribe` header and dedicated unsubscribe endpoint before first send |
+| Weekly digest | Duplicate stories across days | De-dupe by firm overlap and topic cap in digest assembly logic |
+| Events section | Tavily query budget consumed by daily event searches | Weekly-only refresh (not daily); cache with 7-day TTL |
+| Events section | Stale past events displayed as upcoming | Filter by `eventDate >= today` at render time; set 7-day Redis TTL |
+| Events section | ICS file rejected by iOS Calendar | Use `ical-generator` npm package; test on real iOS device |
+| Primer interview Qs | Generic questions that add no TC prep value | Write questions manually, not AI-generated; test: "only answerable after reading the primer" |
+| Firms expansion | Stale salary/deadline data at launch | Verify each new firm against official recruitment page; set `lastVerified` to actual date |
+| Firms expansion | US firms without traditional TCs misrepresented | Document as "direct NQ hire" or exclude; do not force-fit into TC schema |
+| Firms expansion | Dentons/multi-entity alias matching failures | Include all variant entity names in `aliases[]`; verify against existing briefing data |
+| Mobile + header | Stone-50 page vs white sticky header colour mismatch | Use `bg-stone-50/95` for header background, not `bg-white/95` |
+| Mobile + header | `backdrop-blur` iOS Safari interaction bug | Test on real iPhone Safari; fallback to solid background if blur fails |
+| Mobile + header | Mobile nav dropdowns not receiving touch events | Use `<button>` not `<div>` for all interactive nav elements |
 
 ---
 
 ## Sources
 
-**Confidence note:** Web search was unavailable during this research session. The pitfalls above are grounded in:
+**Confidence assessment by area:**
 
-- Direct codebase analysis (CONVENTIONS.md, CONCERNS.md, ARCHITECTURE.md, PROJECT.md) — HIGH confidence for Folio-specific observations
-- Established knowledge of Tailwind CSS utility class behaviour and Next.js font loading — HIGH confidence
-- General practitioner knowledge of SaaS design lift patterns and CRO methodology — MEDIUM confidence; specific thresholds (e.g. "50 users") are judgment calls
+| Area | Confidence | Basis |
+|------|------------|-------|
+| ElevenLabs / Blob / podcast archive | HIGH | Direct code analysis of `podcast-storage.ts`, `char-usage.ts`, `podcast-audio/route.ts`; confirmed Blob not set up in MEMORY.md |
+| Resend free tier limits | HIGH | Documented in `digest/route.ts` comment (`// Resend free tier: 100/day`); standard published pricing |
+| Tavily budget arithmetic | HIGH | 8 queries/day confirmed in `generate.ts`; 1,000/month free tier is published pricing |
+| UK GDPR / PECR unsubscribe requirement | HIGH | Clear legal requirement; current email.ts code lacks the mechanism |
+| ICS format requirements | HIGH | RFC 5545 standard; iOS Calendar strictness is well-documented |
+| Primer question quality | HIGH | Grounded in existing primer content depth and TC interview knowledge |
+| Firms data staleness | HIGH | Direct consequence of time-sensitive salary/deadline data |
+| Redis memory | MEDIUM | Estimates based on observed JSON structure; actual file sizes not measured |
+| iOS Safari CSS behaviour | MEDIUM | Known patterns; specific version behaviour changes with iOS releases |
 
-Findings that would benefit from verification against current practitioner writing (currently LOW-MEDIUM confidence):
-- CRO timing thresholds and minimum viable sample sizes for early-stage SaaS
-- Solo developer logo tooling options and approximate costs (Fiverr pricing may have changed)
-- Current Vercel Analytics free tier event limits
-
-No finding has been stated as fact where it could not be grounded in either the codebase itself or established technical behaviour.
+**Note:** Web search was unavailable during this research session. All findings are grounded in direct codebase analysis or high-confidence established technical knowledge. No finding has been stated as fact where it relies solely on unverified training data.

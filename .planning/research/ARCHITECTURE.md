@@ -1,500 +1,593 @@
-# Architecture Patterns: Design System Lift
+# Architecture Patterns
 
-**Domain:** Design system upgrade — existing Next.js 15 + Tailwind CSS 3 app
-**Researched:** 2026-03-09
-**Overall confidence:** HIGH (based on direct code audit, not web search)
-
----
-
-## What the Code Audit Found
-
-This section documents the current state before any changes. The design direction
-(newspaper/editorial, stone/zinc palette, Playfair Display headings) is correct.
-The execution has four structural problems that prevent it feeling premium.
-
-### Problem 1: Palette Split is Inconsistently Applied (HIGH confidence)
-
-The intent from CLAUDE.md is clear: stone for content, zinc for UI chrome. In
-practice it is not enforced. Page-level audit shows 92 stone and 52 zinc
-references interleaved across app pages:
-
-- Content pages (home, story, article): `stone-*` throughout — correct
-- Utility pages (archive, firms, upgrade): `zinc-*` for everything including
-  body text and headings — inconsistent
-- The upgrade page uses `zinc-900` for headings, `zinc-500` for body text,
-  `zinc-50 dark:zinc-950` for page background — a completely different visual
-  register from the home page
-
-There is no rule enforcing which pages use which palette. Components placed on
-content pages look editorially correct; the same atoms on zinc-base utility pages
-feel disconnected.
-
-### Problem 2: Border Radius Has No System (HIGH confidence)
-
-Component-level count: `rounded-sm` (62 uses), `rounded-xl` (41 uses),
-`rounded-full` (31 uses), `rounded-lg` (15 uses), `rounded-2xl` (6 uses).
-Five radius values in active use with no documented rule for when to use each.
-
-- StoryCard: `rounded-sm` — editorial, slightly sharp
-- LandingHero recommendation block: `rounded-xl` — soft, app-like
-- NavDropdown: `rounded-b-xl rounded-tr-xl` — custom combination
-- Archive list: `rounded-xl` — app-like
-- Upgrade page: `rounded-xl` on all cards
-
-This is not random — there is a loose pattern (`rounded-sm` for editorial content
-cards, `rounded-xl` for utility/chrome containers) but it is never explicit and
-breaks down on pages like the upgrade page that use both.
-
-### Problem 3: Typography Is Inline, Not Tokenized (HIGH confidence)
-
-All font size, weight, and leading decisions are made inline in every component.
-Audit found 16 distinct numeric font sizes in component files alone:
-`text-[64px]`, `text-[38px]`, `text-[34px]`, `text-[32px]`, `text-[28px]`,
-`text-[26px]`, `text-[22px]`, `text-[21px]`, `text-[20px]`, `text-[19px]`,
-`text-[18px]`, `text-[17px]`, `text-[15px]`, `text-[13px]`, `text-[12px]`,
-`text-[11px]`, `text-[10px]`, `text-[9px]` — plus Tailwind named scales
-(`text-3xl`, `text-xl`, `text-sm`, `text-lg`).
-
-There are no semantic type roles. The display size for a story card headline and
-an article headline are different values (`text-[19px]` vs `text-[26px]`) but
-nothing makes this relationship explicit or auditable.
-
-### Problem 4: No Semantic Token Layer in CSS (HIGH confidence)
-
-`globals.css` only contains shadcn's HSL variables (`--background`,
-`--foreground`, etc.) which map approximately to stone. But nothing in the codebase
-actually uses these shadcn semantic names for layout decisions. All components
-reach directly for Tailwind utility classes like `bg-stone-50`,
-`text-stone-900`, `border-stone-200`. The CSS variable layer exists but is
-unused as a design token system.
-
-This means every design change requires a grep-and-replace across 40+ components
-rather than a single token update.
-
-### What Is Already Good (Do Not Break)
-
-- **Container width**: `max-w-5xl mx-auto px-4 sm:px-6` is used correctly and
-  consistently on all page layouts. Do not change this.
-- **Section labels**: `font-mono text-[10px] tracking-widest uppercase text-stone-400`
-  is consistent across all components. This is the most recognisably "Folio"
-  pattern.
-- **Header structure**: thick top rule + 3-column grid (date | brand | auth) +
-  nav row is solid and should not be restructured.
-- **Topic colour system**: `TOPIC_STYLES` in `lib/types.ts` is the one
-  well-defined token system in the codebase. Dot colours and label colours for
-  8 topics are consistent everywhere.
-- **Transition patterns**: `transition-colors` (91 uses) and `transition-opacity`
-  (32 uses) are consistent. Do not add animation frameworks.
-- **Font loading**: Playfair Display, Inter, JetBrains Mono loaded via
-  `next/font/google` in `app/layout.tsx` with CSS variables. This is correct.
+**Domain:** Folio v1.1 — Adding new features to an existing Next.js 15 App Router product
+**Researched:** 2026-03-10
 
 ---
 
-## Recommended Architecture for the Design Lift
+## Existing Architecture — Baseline
 
-### The Build Order
+Before describing integration points, here is the verified pattern that all six features must conform to.
 
-The build order is strictly dependency-driven. Tokens must exist before
-components can use them. Components must be consistent before pages feel premium.
+### Storage Pattern (dual-backend)
 
-```
-Step 1: Global tokens (globals.css + tailwind.config.ts)
-   └── No component changes. Pure token definitions.
+Every piece of persisted data uses the same detection logic:
 
-Step 2: Core shell (Header, SiteFooter, page container pattern)
-   └── Tokens applied. Changes affect every page immediately.
-
-Step 3: StoryCard + BriefingView (home page components)
-   └── Highest visible surface. Most user-facing.
-
-Step 4: ArticleStory (premium article view)
-   └── The "reward" view. Sets premium register.
-
-Step 5: LandingHero + upgrade page
-   └── Conversion surfaces. Polish after content is right.
-
-Step 6: Utility pages (archive, firms, quiz, tests)
-   └── Apply consistent pattern; lower visual priority.
-```
-
-Do not skip steps. Attempting to polish StoryCard before tokens are established
-means making the same decisions twice.
-
-### Component Boundaries for the Lift
-
-| Component | What to Touch | What to Leave Alone |
-|-----------|--------------|---------------------|
-| `globals.css` | Add semantic CSS custom properties for spacing, type scale, radius | shadcn HSL vars — leave as-is |
-| `tailwind.config.ts` | Extend `theme.extend` with named spacing/radius tokens that reference CSS vars | Content config, safelist, plugins |
-| `components/Header.tsx` | Typography sizing, spacing refinement | Three-column structure, sticky behaviour, thick top rule |
-| `components/StoryCard.tsx` | Radius, card shadow, typography scale, hover state | Topic colour system (uses TOPIC_STYLES — correct) |
-| `components/BriefingView.tsx` | Section divider pattern, "Start here" card style | Content layout, subscription gating |
-| `components/ArticleStory.tsx` | Heading scale, body type size/leading, section label consistency | WhyItMatters layout (already structured well) |
-| `components/LandingHero.tsx` | Heading scale, stage selector polish, CTA button | Personalised recommendation logic |
-| `app/upgrade/page.tsx` | Palette alignment (move to stone), radius audit | Checkout logic, Stripe integration |
-| Utility pages (`archive`, `firms`, `quiz`) | Apply stone heading pattern for consistency | Data fetching, business logic |
-
-### The Token Layer Pattern
-
-Add semantic CSS custom properties to `globals.css` for the three decisions that
-are currently made ad hoc across the codebase:
-
-**1. Radius tokens (what to add to `:root`)**
-
-```css
---radius-card: 2px;      /* editorial content cards — maps to rounded-sm */
---radius-chrome: 12px;   /* utility containers, dropdowns — maps to rounded-xl */
---radius-pill: 9999px;   /* status badges — maps to rounded-full */
---radius-input: 4px;     /* form inputs */
-```
-
-Register these in `tailwind.config.ts`:
-
-```ts
-borderRadius: {
-  card:   'var(--radius-card)',
-  chrome: 'var(--radius-chrome)',
-  pill:   'var(--radius-pill)',
-  input:  'var(--radius-input)',
-  // keep existing shadcn entries (lg, md, sm) unchanged
+```typescript
+function useRedis(): boolean {
+  return !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
 }
 ```
 
-This does not require changing any existing component immediately — it makes the
-system explicit so new work uses the named tokens, and existing `rounded-sm` /
-`rounded-xl` usages can be migrated incrementally.
+- Production (Vercel): Upstash Redis. Keys named `{resource}:{identifier}`. Sorted-set index named `{resource}:index` with Unix timestamp scores for ordered listing.
+- Dev (local): Filesystem under `data/briefings/` with filenames `{date}-{resource}.json`.
+- New features MUST follow this exact pattern. Any deviation creates a split codebase.
 
-**2. Typography scale (what to add to `globals.css`)**
+### Generation Pattern (cron + fire-and-forget)
 
-The in-code sizes cluster naturally into roles:
+`app/api/generate/route.ts` is the authoritative cron handler:
 
-```css
-/* Section meta labels */
---text-label:    10px;   /* font-mono tracking-widest uppercase */
+1. `generateBriefing()` — awaited (blocking, must succeed before anything else fires)
+2. `generateAndSaveQuiz(briefing)` — fire-and-forget (`.catch(console.error)`)
+3. `generateAndSavePodcastScript(briefing)` — fire-and-forget
+4. `refreshStaleBanks(today)` — fire-and-forget
 
-/* Supporting text, chips, captions */
---text-caption:  11px;
+New AI generation tasks attach here as additional fire-and-forget steps if they depend on today's briefing, or run in a separate cron if independent.
 
-/* Body prose, card excerpts */
---text-body:     13px;
+### AI Generation Pattern (haiku vs sonnet)
 
-/* Subheadings, callouts */
---text-sub:      15px;
+- `claude-sonnet-4-6` — used for briefing (large context, high quality required) and podcast script generation
+- `claude-haiku-4-5-20251001` — used for quiz, aptitude banks, firm interview packs (cost-sensitive, large batch outputs)
+- All new AI generation for cached content (not per-user, not real-time) must use `claude-haiku-4-5-20251001` to stay within Anthropic free tier
 
-/* Card headlines */
---text-heading:  20px;   /* currently 19px–22px, standardise to 20px */
+### Tavily Budget
 
-/* Article headlines */
---text-article:  28px;   /* currently 26px–32px, standardise to 28px */
+Current daily usage: 8 queries per cron run at 06:00 UTC. Free tier: 1,000 queries/month (~33/day available). Adding an events search cron would consume additional queries. See per-feature analysis below.
 
-/* Hero / display */
---text-display:  38px;
-```
+### Auth + Paywall Pattern
 
-These are not replacing Tailwind utilities in all components immediately. They
-serve as a written contract that answers "what size is a card headline?" during
-the lift. Components get updated one at a time to use the standardised size.
-
-**3. The stone-vs-zinc rule (written explicitly, not in code)**
-
-Write this rule in a comment block at the top of `globals.css` so it is visible
-to whoever edits the file:
-
-```
-stone-*  → content areas: body text, article headings, story cards,
-           briefing container, any surface that displays editorial content
-zinc-*   → UI chrome: archive lists, quiz nav cards, upgrade page,
-           onboarding, tracker — anything that is "app" not "newspaper"
-```
-
-This is currently documented in CLAUDE.md but not enforced in code. The only
-mechanical enforcement available in Tailwind 3 is ESLint + a custom lint rule —
-but for a solo project, a well-placed comment plus the code review habit is
-sufficient.
+- `requireSubscription()` in server components gates premium routes
+- Free routes call no paywall check
+- New free routes: add no import from `lib/paywall.ts`
+- New premium routes: add `await requireSubscription()` as first line of the page component
 
 ---
 
-## Key Files to Change for Maximum Impact
+## Feature 1: Events Section
 
-Listed in order of visual leverage — changing the early files visually affects
-the most surface area:
+### What already exists
 
-### 1. `app/globals.css` — Highest leverage
+Nothing. This is a net-new feature with no existing code to extend.
 
-**Why:** Loaded on every page. CSS custom properties set here affect all
-components that reference them. Changes here are instant site-wide.
+### New files
 
-**What to add:**
-- Semantic radius tokens
-- Typography scale variables
-- A brief stone-vs-zinc rule comment
+| File | Type | Purpose |
+|------|------|---------|
+| `lib/events.ts` | NEW | Tavily search for UK legal events + claude-haiku synthesis to `LegalEvent[]` JSON |
+| `lib/events-storage.ts` | NEW | Dual-backend storage for events list (Redis/FS). Mirror of how `lib/storage.ts` handles briefings. |
+| `lib/ics.ts` | NEW | Pure TypeScript .ics file builder from `LegalEvent`. No library needed. |
+| `app/events/page.tsx` | NEW | Free-tier page. Reads from events storage. City filter as URL search param. |
+| `app/api/events/route.ts` | NEW | GET (cron-triggered) + POST (admin-only manual trigger). Same auth pattern as `app/api/generate/route.ts`. |
 
-**Risk:** Low. Adding CSS variables is additive — no existing classes break.
-The only risk is a variable name collision with existing shadcn vars, which is
-avoided by using a `--folio-` prefix or distinct names (`--radius-card` vs
-`--radius`).
+### Types to add in `lib/types.ts`
 
-### 2. `tailwind.config.ts` — High leverage
+```typescript
+export interface LegalEvent {
+  id: string;
+  title: string;
+  organiser: string;       // e.g. "The Law Society", "Linklaters Graduate Recruitment"
+  date: string;            // YYYY-MM-DD (or nearest known date)
+  endDate?: string;        // for multi-day events
+  city: string;            // "London" | "Manchester" | "Edinburgh" | "Birmingham" | "Bristol" | "Online"
+  type: EventType;
+  description: string;     // 2-3 sentences on what it is and why it matters for TC applicants
+  url?: string;            // registration or info URL from Tavily results
+  free?: boolean;
+}
 
-**Why:** Extending `theme.extend` with named tokens lets components use
-`rounded-card` instead of `rounded-sm`, making the radius system explicit. The
-safelist for topic colours must not be changed.
+export type EventType =
+  | 'networking'
+  | 'open-day'
+  | 'webinar'
+  | 'careers-fair'
+  | 'workshop'
+  | 'firm-event';
 
-**What to add:**
-- `borderRadius` entries referencing CSS vars
-- Optional: custom `fontSize` entries for the type scale
+export interface EventsStore {
+  events: LegalEvent[];
+  generatedAt: string;     // ISO 8601
+  refreshedDate: string;   // YYYY-MM-DD
+}
+```
 
-**Risk:** Low if additions only. Risk increases if existing keys are modified —
-e.g. changing the `borderRadius.lg` value (used by shadcn components) would
-break all shadcn UI elements simultaneously. Only add new keys; do not modify
-existing ones.
+### Redis keys
 
-### 3. `components/StoryCard.tsx` — High leverage
+```
+events:current   → JSON string of EventsStore (single key, no sorted set needed — only one version)
+```
 
-**Why:** 8 instances on every home page load. The most-viewed component.
-StoryCard sets the editorial register that users see first.
+### FS fallback key
 
-**What to change:**
-- `rounded-sm` → `rounded-card` (once token exists)
-- Card headline size: standardise from `text-[19px] sm:text-[21px]` to the
-  type scale value
-- Hover state: current `hover:bg-stone-50` is subtle but correct — do not
-  replace with shadow-based hover
-- Consider adding a `border-l-2` accent in the topic colour on hover for a more
-  premium editorial feel (Financial Times does this)
+```
+data/briefings/events-current.json
+```
 
-**Risk:** Medium. StoryCard is a client component with topic colour logic and
-bookmark button positioning. Typography changes affect line wrapping and can
-shift the bookmark icon overlap guard (`pr-6` padding).
+### Tavily query budget
 
-### 4. `app/upgrade/page.tsx` — High leverage for conversion
+Events search requires dedicated queries — not piggybacked on the daily briefing run. Suggested query set (weekly cron, not daily):
 
-**Why:** This is the paywall destination. It currently uses `zinc-*` throughout,
-placing it in a different visual register from the content pages. A user who
-clicks "Subscribe" from an editorial stone-palette page and lands on a zinc page
-experiences a visual break in trust.
+```
+"UK law firm open days networking events [year]"
+"Magic Circle vacation scheme open days London [year]"
+"legal careers fair London [year]"
+"law society events London Manchester Edinburgh [year]"
+"UK law student networking events spring [year]"
+```
 
-**What to change:**
-- Replace `zinc-*` with `stone-*` for all text and background (page bg, card bg,
-  heading colours, body text)
-- The features card: currently `rounded-xl bg-white dark:bg-zinc-900` — should
-  become `rounded-card bg-white dark:bg-stone-900`
-- The CTA button: `bg-zinc-900` → `bg-stone-900` for consistency
+5 queries per weekly run = ~22 queries/month. Well within the 1,000/month free tier even combined with daily briefing (~176/month). See Tavily budget table at end of document.
 
-**Risk:** Low. This page has no shared components — all styling is inline JSX
-classes.
+### Cron integration
 
-### 5. `components/Header.tsx` — Moderate leverage
+Add a new weekly cron to `vercel.json`. Do NOT add to the daily `/api/generate` cron — events are weekly-refreshed content, not daily.
 
-**Why:** Appears on every page. The thick top rule (`h-[3px] bg-stone-900`) is
-the single most recognisable brand element and must be preserved.
+```json
+{ "path": "/api/events", "schedule": "0 7 * * 1" }
+```
 
-**What to change:**
-- Consider refining the logo / wordmark sizing on mobile (currently `text-[32px]`
-  drops to reading as quite large on a 375px viewport)
-- Ensure the archive nav variant uses the same mono label pattern as the main nav
+Monday 07:00 UTC gives fresh events for the week.
 
-**Risk:** Low. Structure is solid. Changes should be cosmetic sizing only.
+### .ics generation (pure TypeScript, no library)
+
+The `.ics` format is a flat text RFC 5545 file. One event per download — no bulk export needed for v1.1.
+
+```typescript
+// lib/ics.ts
+export function buildIcsFile(event: LegalEvent): string {
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+  const dtstart = event.date.replace(/-/g, '');
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Folio//Legal Events//EN',
+    'BEGIN:VEVENT',
+    `UID:folio-event-${event.id}@folioapp.co.uk`,
+    `DTSTAMP:${stamp}`,
+    `DTSTART;VALUE=DATE:${dtstart}`,
+    `SUMMARY:${event.title}`,
+    `DESCRIPTION:${event.description.replace(/\n/g, '\\n')}`,
+    `LOCATION:${event.city}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n');
+}
+```
+
+The download is implemented as a client-side Blob download (no API route needed):
+
+```typescript
+// In the events card component
+function downloadIcs(event: LegalEvent) {
+  const content = buildIcsFile(event);
+  const blob = new Blob([content], { type: 'text/calendar' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${event.id}.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+```
+
+### City filter
+
+Implement as a URL search param (`?city=London`) handled in the server component. No client state needed. Filter options derive from the `city` field values present in the events list — do not hardcode city options.
+
+### Paywall
+
+None. Events section is free tier. Do not call `requireSubscription()`.
+
+### Integration points
+
+| Connects to | How |
+|-------------|-----|
+| `lib/types.ts` | Add `LegalEvent`, `EventType`, `EventsStore` interfaces |
+| `vercel.json` | Add weekly cron entry for `/api/events` |
+| `lib/storage.ts` | No connection — use separate `lib/events-storage.ts` |
+| `app/api/generate/route.ts` | No connection — events are independent of daily briefing |
 
 ---
 
-## Patterns to Follow
+## Feature 2: Weekly Email Digest
 
-### Pattern 1: Token-First Update
+### What already exists
 
-**What:** When touching any component during the lift, replace hardcoded values
-with token references before making aesthetic changes.
+This feature is architecturally complete. All code already exists:
 
-**When:** At the start of every component update.
+- `vercel.json`: cron `GET /api/digest` at `0 8 * * 0` (Sunday 08:00 UTC) — already wired
+- `app/api/digest/route.ts`: FULLY IMPLEMENTED. Reads last 7 days of briefings, picks top 2 stories per day (capped at 10), fetches active subscriber emails from Stripe, calls `sendWeeklyDigest()` for each subscriber with a 100ms delay between sends
+- `lib/email.ts`: FULLY IMPLEMENTED. Contains `sendWeeklyDigest()` with inline HTML template (topic colour badges, week label, CTA button) and `sendWelcomeEmail()`. Uses Resend API.
+- `lib/email.ts` exports `DigestStory` interface.
 
-**Why:** Changing `rounded-sm` to `rounded-card` and simultaneously changing
-visual appearance in the same commit makes it impossible to know which change
-caused a regression.
+### Current status
 
-**Process:**
-1. Commit 1: Replace hardcoded values with token references (no visual change)
-2. Commit 2: Update the token value to achieve the new aesthetic
+The digest will run on the next Sunday cron automatically if `RESEND_API_KEY` and `STRIPE_SECRET_KEY` are set in Vercel. Both should already be set from v1.0 welcome email work. No code changes are required to ship the basic digest.
 
-This means visual regressions (if any) are isolated to Commit 2.
+### What is NOT yet done
 
-### Pattern 2: Palette Audit Before Touching a Page
+Three gaps exist, none of which block the Sunday cron from firing:
 
-**What:** Before editing any page or component, grep for `zinc-` and `stone-`
-in that file. Make a deliberate choice which to use for each element (content vs
-chrome), then apply consistently within the file.
+**Gap 1: Events section in digest (optional, Feature 1 prerequisite)**
 
-**When:** Start of every file edit in the design lift.
+The digest template in `lib/email.ts` only shows briefing stories. If Feature 1 ships, adding a short "Upcoming events this week" section to the digest adds retention value. This requires modifying `digestHtml()` in `lib/email.ts` to accept an optional events block, and modifying `app/api/digest/route.ts` to fetch events from `lib/events-storage.ts`.
 
-**Why:** The current inconsistency accumulated one file at a time. Without an
-explicit check, the next edit will add more inconsistency.
+**Gap 2: One-click unsubscribe**
 
-### Pattern 3: Do Not Touch `lib/types.ts` TOPIC_STYLES
+The current footer says "Manage your subscription from your account settings." No list-unsubscribe header is set. Resend supports RFC 2369 `List-Unsubscribe` headers. Adding `headers: { 'List-Unsubscribe': '<mailto:unsubscribe@folioapp.co.uk>' }` to the `resend.emails.send()` call satisfies deliverability requirements and reduces spam complaints. This is a one-line addition.
 
-**What:** The topic colour system (`TOPIC_STYLES`) in `lib/types.ts` is
-authoritative and used correctly across all components. It must not be merged
-into the CSS token layer or changed.
+**Gap 3: Subscriber count ceiling (future concern)**
 
-**When:** Always.
+Resend free tier: 100 emails/day. If active subscriber count exceeds 100, the Sunday cron will send 100 emails and then fail silently for the rest. Not a v1.1 concern — flag for when subscriber count approaches 80.
 
-**Why:** It is the one system that works. The safelist in `tailwind.config.ts`
-covers all the dynamic class names generated from it. Any change risks purging
-a topic colour from the build.
+### Files to modify (if events section added)
+
+| File | Change |
+|------|--------|
+| `lib/email.ts` | Add optional `events?: LegalEvent[]` param to `digestHtml()`. Render events block if provided. |
+| `app/api/digest/route.ts` | Import and call `getEvents()` from `lib/events-storage.ts`. Pass events to `sendWeeklyDigest()`. |
+
+### Build dependency
+
+Feature 2 digest already works for stories. Events section in digest depends on Feature 1 (events storage). Build Feature 1 first if digest events section is in scope.
+
+---
+
+## Feature 3: Podcast Archive
+
+### What already exists
+
+FULLY IMPLEMENTED. `app/podcast/archive/page.tsx` already exists and is production-ready:
+
+- Calls `listPodcastDates()` from `lib/storage.ts` (which re-exports from `lib/podcast-storage.ts`)
+- Groups dates by month with formatted headings
+- Links to `/podcast/${date}` for past episodes, `/podcast` for today
+- Premium-gated via `requireSubscription()`
+
+`lib/podcast-storage.ts` `listPodcastDates()` already handles both backends:
+- Vercel Blob: lists all `podcasts/*.mp3` objects, extracts YYYY-MM-DD date from pathname
+- Filesystem: scans `data/briefings/` for `*-podcast*` files
+
+### What is blocking this feature
+
+The blocker is infrastructure, not code. `BLOB_READ_WRITE_TOKEN` is not set in Vercel. Without Blob:
+- MP3s are regenerated on every `/api/podcast-audio` request (burns ElevenLabs chars)
+- No MP3 files accumulate in Blob storage
+- `listPodcastDates()` returns an empty list (Blob branch)
+- The archive page shows "No archived episodes yet"
+
+### Steps to unblock (infrastructure only)
+
+1. Create a Vercel Blob store in the Vercel dashboard (Storage tab)
+2. Add `BLOB_READ_WRITE_TOKEN` to Vercel environment variables
+3. Redeploy — next `/api/podcast-audio` request will write to Blob and be cached
+
+No code changes are needed. The archive page will populate automatically once MP3s start accumulating.
+
+### Files to modify
+
+None.
+
+### Files to create
+
+None.
+
+---
+
+## Feature 4: Primers Interview Questions
+
+### What already exists
+
+- `lib/types.ts`: `PrimerInterviewQ` interface already defined (`question`, `whatTheyWant`, `skeleton` fields)
+- `lib/types.ts`: `Primer` interface has `interviewQs?: PrimerInterviewQ[]` — optional field already typed
+- `lib/primers-data.ts`: 8 primers in `PRIMERS` array. The `interviewQs` field is currently absent (field is `undefined` on all primers)
+- `app/primers/[slug]/page.tsx`: renders `<PrimerView primer={primer} />` — no route changes needed
+- `components/PrimerView.tsx`: renders primer content — needs one new section for interview questions
+
+### Implementation approach: static data (recommended)
+
+Generate interview questions once using claude-haiku or manually, review for quality, paste directly into `lib/primers-data.ts` as static arrays. No new lib files, no API routes, no caching infrastructure.
+
+This matches the credibility rule already documented in `lib/firms-data.ts`: "no field is generated at runtime by an AI." Interview questions that are inconsistent or low-quality damage user trust. Static generation allows human review.
+
+The `PrimerInterviewQ` interface already has the right shape:
+```typescript
+interface PrimerInterviewQ {
+  question: string;        // The interview question
+  whatTheyWant: string;    // What the interviewer is assessing
+  skeleton: string;        // How to structure a strong answer (3-4 sentences)
+}
+```
+
+3 questions per primer × 8 primers = 24 question objects. These fit comfortably in `lib/primers-data.ts` without splitting files.
+
+### Files to modify
+
+| File | Change |
+|------|--------|
+| `lib/primers-data.ts` | Add `interviewQs: [...]` arrays to each of the 8 primer entries |
+| `components/PrimerView.tsx` | Add render section for `primer.interviewQs` — show if present, skip if undefined |
+
+### No new files needed
+
+No API routes, no storage, no new lib files.
+
+### Alternative (Option B: AI-generated, cached) — not recommended for v1.1
+
+If dynamic generation is needed in a later milestone:
+
+| File | Type | Purpose |
+|------|------|---------|
+| `lib/primer-questions.ts` | NEW | claude-haiku generation for 3 questions per primer (mirrors `lib/quiz.ts` pattern) |
+| `lib/storage.ts` | MODIFY | Add `savePrimerQuestions()` / `getPrimerQuestions()` with Redis key `primer-questions:{slug}` |
+
+Defer this until there is a clear reason to regenerate questions dynamically.
+
+---
+
+## Feature 5: Firms Expansion
+
+### What already exists
+
+- `lib/firms-data.ts`: 38 firms across 5 tiers (Magic Circle 5, Silver Circle 6, US Firms 10, International 8, Boutique 9). Each is a `FirmProfile` object with full typing.
+- `lib/types.ts`: `FirmProfile` interface covers all expected fields. Optional fields (`forageUrl`, `assessments`) can be omitted for new entries.
+- Firm pages (`app/firms/page.tsx`, `app/firms/[slug]/page.tsx`) dynamically render whatever is in `FIRMS` — no routing changes needed.
+
+### What needs to happen
+
+Add firm objects to the `FIRMS` array in `lib/firms-data.ts`. No new infrastructure.
+
+### TypeScript interface coverage
+
+The existing `FirmProfile` interface covers all new firm types. Key fields for new US/Silver Circle entrants:
+
+- `aliases[]` — critical for briefing story matching. `story.firms[]` values are matched against `aliases` to link stories to firm profiles. New firms must include all name variants that the AI might generate (e.g. "Sullivan & Cromwell", "S&C", "Sullivan Cromwell").
+- `tier: FirmTier` — `'US Firms'` for US entrants. Current US firms include Kirkland, Latham, Skadden, Davis Polk, Paul Weiss, Weil, Cleary, Hogan Lovells, A&O Shearman (dual-listed), White & Case.
+- `lastVerified` — must be set to the date the firm entry is added. Do not leave blank.
+
+No interface changes needed unless a firm requires a completely new field type.
+
+### Accuracy constraint
+
+The `lastVerified` field on each `trainingContract` is the credibility signal. For new firms, set to the date they are added. Salary figures and deadline dates must come from public sources (The Trackr, firm official websites) — not AI-generated. Stale or incorrect salary data is a trust-breaker for the target audience.
+
+### Files to modify
+
+| File | Change |
+|------|--------|
+| `lib/firms-data.ts` | Add new `FirmProfile` objects to `FIRMS` array |
+
+### No new files needed
+
+---
+
+## Feature 6: Mobile + Header Fixes
+
+### What already exists
+
+- `components/Header.tsx` — main nav header
+- `components/StoryCard.tsx` — story cards on homepage
+- Various nav/layout components
+
+### Scope
+
+Pure CSS and component-level changes. No new infrastructure, no new API routes, no new lib files, no storage changes.
+
+### Known items from design audit (2026-03-10 session)
+
+Three changes were identified and deferred to this feature:
+
+1. Remove italic talking-point quote from story cards (low-value content, clutters card)
+2. Apply topic-colored left border on story cards (same pattern as firms list rows)
+3. Stone-100 page background vs white cards for hierarchy (currently flat stone-50 everywhere)
+
+These are all in `components/StoryCard.tsx` and potentially `app/page.tsx`.
+
+### Files likely to modify
+
+| File | Change |
+|------|--------|
+| `components/Header.tsx` | Scroll background (sticky header needs `bg-white/95 dark:bg-zinc-950/95 backdrop-blur` on scroll), mobile nav |
+| `components/StoryCard.tsx` | Remove italic quote, add topic-colored left border, mobile layout at 375px |
+| `app/page.tsx` | Page background color change (stone-50 → stone-100 if hierarchy change proceeds) |
+
+---
+
+## Recommended Build Order
+
+This order minimises blocking dependencies and allows each feature to ship independently:
+
+```
+1. Mobile + header fixes (Feature 6)
+   No dependencies. Delivers visible polish before marketing push.
+   Includes three deferred design audit items from prior session.
+
+2. Firms expansion (Feature 5)
+   No dependencies. Pure data work.
+   Risk: time cost of researching 30-50 firm profiles accurately.
+
+3. Podcast archive (Feature 3)
+   Code complete — infrastructure task only (Blob store setup).
+   Unblocks ElevenLabs character savings once Blob caching is active.
+
+4. Primers interview questions (Feature 4)
+   Static data approach: generate once, paste in.
+   Small render change in PrimerView.tsx.
+
+5. Events section (Feature 1)
+   Net-new lib + route + storage. Most complex new feature.
+   Must ship before digest events integration.
+
+6. Weekly email digest validation (Feature 2)
+   Core digest already works — validate it fires correctly on first Sunday.
+   Events section in digest can be added after Feature 1 ships.
+```
+
+---
+
+## Component Boundaries
+
+| Component | Responsibility | Communicates With |
+|-----------|---------------|-------------------|
+| `lib/events.ts` | Tavily search + claude-haiku synthesis → `LegalEvent[]` | Tavily API, Anthropic API |
+| `lib/events-storage.ts` | Persist/retrieve `EventsStore` (Redis/FS) | Upstash Redis, filesystem |
+| `lib/ics.ts` | Build `.ics` file string from `LegalEvent` | No external dependencies — pure function |
+| `app/api/events/route.ts` | Cron + admin trigger for events generation | `lib/events.ts`, `lib/events-storage.ts` |
+| `app/events/page.tsx` | Render events with city filter | `lib/events-storage.ts` |
+| `lib/email.ts` | Weekly digest HTML template + send via Resend | Resend API |
+| `app/api/digest/route.ts` | Weekly cron: collect stories, fetch subscribers, send digest | `lib/storage.ts`, `lib/email.ts`, Stripe API |
+| `lib/primers-data.ts` | Static primer content including interview Qs | None — pure data |
+| `components/PrimerView.tsx` | Render primer sections + interview Qs | `lib/primers-data.ts` (via page) |
+| `lib/firms-data.ts` | Static firm profiles | None — pure data |
+
+---
+
+## Data Flow Changes
+
+### Events (new flow)
+
+```
+Monday 07:00 UTC cron → GET /api/events
+  → lib/events.ts: 5 Tavily queries (parallel, same pattern as lib/generate.ts)
+  → lib/events.ts: claude-haiku synthesis → LegalEvent[]
+  → lib/events-storage.ts: save to Redis key "events:current"
+
+User visits /events?city=London
+  → lib/events-storage.ts: getEvents() → EventsStore
+  → Filter events by city param (server-side in page component)
+  → Render list. User clicks calendar icon → client-side Blob download from lib/ics.ts
+```
+
+### Weekly Digest (existing flow, confirmed complete)
+
+```
+Sunday 08:00 UTC cron → GET /api/digest
+  → lib/storage.ts: listBriefings() → last 7 dates
+  → lib/storage.ts: getBriefing(date) × up to 7
+  → Pick top 2 stories per day, cap at 10
+  → Stripe: list active subscriptions → subscriber emails
+  → lib/email.ts: sendWeeklyDigest(email, stories, weekLabel) × N emails via Resend
+  → 100ms delay between each send to stay within Resend rate limits
+```
+
+### Primers (static, no new data flow)
+
+```
+Build time: lib/primers-data.ts PRIMERS array includes interviewQs[]
+
+User visits /primers/[slug]
+  → getPrimerBySlug(slug) reads PRIMERS array (in-memory, no I/O)
+  → PrimerView.tsx renders sections + keyTerms + interviewQs (if present)
+```
+
+---
+
+## Tavily Query Budget Impact
+
+| Cron | Frequency | Queries/Run | Queries/Month |
+|------|-----------|-------------|---------------|
+| Daily briefing (`/api/generate`) | ~22 weekdays/month | 8 | ~176 |
+| Events (`/api/events`) | 4 Mondays/month | 5 | 20 |
+| **Total** | — | — | **~196/month** |
+| Free tier limit | — | — | 1,000/month |
+| Headroom | — | — | ~80% unused |
+
+Budget is not a concern for v1.1.
+
+---
+
+## Redis Key Inventory (after v1.1)
+
+| Key Pattern | Content | Status |
+|-------------|---------|--------|
+| `briefing:{YYYY-MM-DD}` | `Briefing` JSON | Existing |
+| `briefing:index` | Sorted set of dates | Existing |
+| `quiz:{YYYY-MM-DD}` | `DailyQuiz` JSON | Existing |
+| `quiz:index` | Sorted set of dates | Existing |
+| `podcast-script:{YYYY-MM-DD}` | TTS script text | Existing |
+| `aptitude-bank:{type}` | `AptitudeBankStore` JSON | Existing |
+| `subscription:{userId}` | subscription status | Existing |
+| `elevenlabs:chars:{YYYY-MM}` | char usage count | Existing |
+| `bookmark:{userId}:{date}:{storyId}` | bookmark flag | Existing |
+| `note:{userId}:{date}:{storyId}` | note text | Existing |
+| `events:current` | `EventsStore` JSON | Feature 1 (new) |
+
+No sorted-set index needed for events — only one current snapshot is ever stored.
 
 ---
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Rewriting Component Logic While Restyling
+### Anti-Pattern 1: Piggybacking Events Queries onto Daily Briefing Cron
 
-**What:** Changing data fetching, event handlers, or conditional rendering
-during a visual edit.
+**What:** Adding event search queries to the 8 existing Tavily queries in `lib/generate.ts`.
+**Why bad:** Events are weekly-refresh content. Adding them to the daily cron wastes Tavily quota, bloats the Claude prompt, and couples two independent concerns. The briefing prompt already uses 16,000 max_tokens — adding events context risks truncation.
+**Instead:** Separate weekly cron for `/api/events` with its own Tavily calls and its own Claude call.
 
-**Why bad:** Causes non-visual regressions (auth, subscription gating, bookmark
-state) that appear visually fine but break functionality.
+### Anti-Pattern 2: Per-User AI Generation for Primer Questions
 
-**Instead:** One concern per PR. Style-only changes in isolation from logic changes.
+**What:** Generating primer interview Qs at request time per user visit.
+**Why bad:** Expensive (haiku still costs tokens per call), introduces page load latency, and produces inconsistent output per user. The quiz uses a cached generation pattern precisely to avoid this.
+**Instead:** Generate once as static data in `lib/primers-data.ts`, serve from memory.
 
-### Anti-Pattern 2: Adding a Shadow System
+### Anti-Pattern 3: Adding Events Storage to `lib/storage.ts`
 
-**What:** Adding `box-shadow` or `drop-shadow` utilities to cards to achieve a
-premium look.
+**What:** Adding `saveEvents()` / `getEvents()` functions to the existing `lib/storage.ts`.
+**Why bad:** `lib/storage.ts` already handles briefings, quizzes, and aptitude banks, and delegates podcast storage to `lib/podcast-storage.ts`. Adding events makes it a God module. The existing pattern for new storage concerns is a separate file.
+**Instead:** `lib/events-storage.ts` as a standalone dual-backend storage file.
 
-**Why bad:** Shadows conflict with the newspaper/editorial aesthetic. The
-current design uses borders (`border border-stone-200`) to define card
-boundaries, which is the correct editorial pattern. FT, Bloomberg, The Economist
-use ruled lines not shadows.
+### Anti-Pattern 4: Hardcoding City Options in Events Filter
 
-**Instead:** Refine border weight and colour. A `border-stone-300` on hover
-instead of `border-stone-200` is sufficient interactive feedback.
+**What:** `const CITIES = ['London', 'Manchester', 'Birmingham', ...]` as a static constant.
+**Why bad:** Events storage may not have events in every city on every refresh. Empty filter options confuse users. The set of available cities drifts from the hardcoded list.
+**Instead:** Derive city options from `events.map(e => e.city)` deduplicated and sorted, filtered to only show cities with at least one event in the current store.
 
-### Anti-Pattern 3: Changing the shadcn CSS Variable Definitions
+### Anti-Pattern 5: Sending Full Digest Without Rate Limit Awareness
 
-**What:** Modifying the HSL values in the `:root` and `.dark` blocks in
-`globals.css` (the `--background`, `--foreground`, `--card` etc. variables).
-
-**Why bad:** These drive shadcn/ui components. Changing them risks breaking the
-quiz, tracker, firm-pack, and test interfaces which use shadcn primitives
-(ScrollArea, Sheet, Dialog, etc.).
-
-**Instead:** Add new semantic variables with distinct names alongside the
-existing ones. Never modify existing variable values.
-
-### Anti-Pattern 4: Global CSS Class Overrides
-
-**What:** Adding `.card {}` or `.btn {}` style rules to `globals.css` or a
-new CSS file to apply styles globally.
-
-**Why bad:** Tailwind projects rely on utility composition. Global classes
-create specificity conflicts that produce silent breakage in dark mode,
-responsive variants, and hover states.
-
-**Instead:** Use `@layer components` in `globals.css` only for multi-property
-patterns that appear identically in 6+ places (e.g. the mono section label).
-Even then, prefer a small React component (`<SectionLabel>`) over a CSS class.
-
-### Anti-Pattern 5: Dark Mode Assumptions
-
-**What:** Testing design changes in light mode only.
-
-**Why bad:** Almost every class in this codebase has a paired `dark:` variant.
-A change to `bg-white` that looks correct in light mode will leave the dark
-mode counterpart `dark:bg-stone-900` untouched, creating an inconsistency.
-
-**Instead:** All design changes must be verified in both modes. The ThemeToggle
-is always visible in the header — use it on every component edit.
+**What:** Sending to all subscribers in a tight loop as subscriber count grows.
+**Already partially mitigated:** `app/api/digest/route.ts` has a 100ms delay between sends for lists > 10 subscribers.
+**Remaining risk:** Resend free tier is 100 emails/day. At > 100 subscribers the Sunday cron silently truncates. Not a v1.1 concern — flag when subscriber count approaches 80.
+**Future mitigation:** Upgrade to Resend paid tier (~£8/mo) or use Resend Broadcasts feature (bulk send, handles rate limits internally).
 
 ---
 
 ## Scalability Considerations
 
-This is a solo-operated product with a £50/month budget cap. The design system
-needs to be maintainable by one person with no design tool budget. That shapes
-the architecture:
-
-| Concern | Approach |
-|---------|----------|
-| Token management | CSS custom properties in globals.css, not a design tokens JSON file or separate package |
-| Documentation | Comments in globals.css and tailwind.config.ts, not a Storybook |
-| Dark mode | Tailwind `dark:` variants — already the pattern. No CSS-in-JS needed. |
-| Component library | shadcn/ui for interactive primitives, custom for editorial display components. Do not add Radix primitives that are not already in use. |
-| Type scale enforcement | Convention + code review. ESLint plugin for Tailwind exists but adds configuration overhead not justified for solo work. |
-
----
-
-## Phase Structure Recommendation
-
-Based on the architecture, the design lift should be a single milestone with
-these phases in strict sequence:
-
-**Phase 1: Tokens (globals.css + tailwind.config.ts)**
-- Write the radius token system
-- Write the type scale variables
-- Write the stone-vs-zinc comment rule
-- Zero visual change — this is scaffolding only
-- Time estimate: 2–4 hours
-- Risk: Low
-
-**Phase 2: Shell (Header + SiteFooter + page container)**
-- Apply tokens to Header (sizing refinements)
-- Verify consistent page container pattern across all pages
-- Time estimate: 2–3 hours
-- Risk: Low
-
-**Phase 3: Content surfaces (StoryCard + BriefingView + ArticleStory)**
-- These are the editorial core. Highest visual impact.
-- StoryCard: radius token, headline scale
-- ArticleStory: heading scale, body leading
-- BriefingView: section divider refinement, "Start here" card
-- Time estimate: 4–6 hours
-- Risk: Medium (typography changes affect layout)
-
-**Phase 4: Conversion surfaces (LandingHero + upgrade page)**
-- Palette alignment on upgrade page (zinc → stone)
-- LandingHero heading scale and CTA refinement
-- Time estimate: 2–3 hours
-- Risk: Low
-
-**Phase 5: Utility pages (archive, firms, quiz, tests, primers)**
-- Apply consistent page heading pattern
-- Audit and align palette per the stone-vs-zinc rule
-- Time estimate: 3–4 hours per cluster of pages
-- Risk: Low (no shared component changes)
-
----
-
-## Risk Areas
-
-| Area | Risk | Mitigation |
-|------|------|-----------|
-| shadcn CSS variable modification | HIGH — breaks all shadcn components silently | Add only new vars; never modify existing HSL values |
-| StoryCard typography changes | MEDIUM — affects bookmark icon positioning (pr-6 guard) | Test headline wrapping at multiple lengths after change |
-| tailwind.config.ts safelist | MEDIUM — removing or changing safelist breaks topic colours at runtime | Treat safelist as read-only; only add to it |
-| Dark mode verification | MEDIUM — changes to background/text classes must be paired | Test toggle on every component after edit |
-| upgrade page palette change | LOW — isolated file, no shared components | Verify Stripe checkout flow still launches after edit |
+| Concern | Now (<100 subscribers) | At 500 | At 2,000 |
+|---------|------------------------|--------|----------|
+| Digest send volume | Fine — Resend free (100/day) | Resend paid tier required | Resend paid + batching or Broadcasts |
+| Redis events key | Single key, ~10-50KB | Same | Same |
+| ElevenLabs chars | 100k/month, ~2.8k/episode | Same once Blob caching is active | Move to Pro tier if revenue justifies |
+| Tavily queries | ~196/month, ~80% headroom | Same | Same |
+| Vercel cron concurrency | 3 crons, no schedule overlap | Same | Same |
 
 ---
 
 ## Sources
 
-All findings based on direct code audit of the Folio codebase (2026-03-09).
+All findings based on direct code inspection of the Folio codebase (2026-03-10).
 
-Key files audited:
-- `app/globals.css` — current CSS variable state
-- `tailwind.config.ts` — token and colour configuration
-- `app/layout.tsx` — font loading, body baseline
-- `components/Header.tsx` — shell pattern
-- `components/StoryCard.tsx` — content card pattern
-- `components/BriefingView.tsx` — page composition
-- `components/ArticleStory.tsx` — premium content pattern
-- `components/LandingHero.tsx` — conversion pattern
-- `components/NavDropdowns.tsx` — interactive chrome
-- `components/SiteFooter.tsx` — chrome footer
-- `app/upgrade/page.tsx` — paywall conversion page
-- `app/archive/page.tsx` — utility page pattern
-- `app/firms/page.tsx` — utility page pattern
-- `lib/types.ts` — TOPIC_STYLES token system
-
-Confidence: HIGH for all structural findings (based on direct code count/audit).
-No web search was available during this research session — patterns and
-recommendations draw from training knowledge of Tailwind CSS 3 + Next.js 15
-design system conventions (August 2025 cutoff).
+Files inspected:
+- `lib/storage.ts` — dual-backend pattern, key naming, sorted-set index pattern
+- `lib/generate.ts` — Tavily query pattern (8 parallel queries), Claude sonnet usage
+- `lib/quiz.ts` — haiku generation pattern, JSON extraction, error handling
+- `lib/podcast.ts` — script generation via Claude sonnet
+- `lib/podcast-storage.ts` — Blob/FS dual backend, `listPodcastDates()` implementation
+- `lib/email.ts` — `DigestStory` interface, `digestHtml()`, `sendWeeklyDigest()`, Resend usage
+- `lib/types.ts` — `PrimerInterviewQ`, `Primer`, `FirmProfile`, `FirmDeadline` interfaces
+- `lib/primers-data.ts` — `PRIMERS` array structure and `interviewQs` field absence
+- `lib/firms-data.ts` — `FirmProfile` shape, aliases array, credibility rule comment
+- `app/api/generate/route.ts` — cron auth pattern, fire-and-forget, admin check
+- `app/api/digest/route.ts` — full digest implementation, Stripe subscriber loop
+- `app/podcast/archive/page.tsx` — already-complete archive page
+- `app/primers/[slug]/page.tsx` — route structure, `requireSubscription()` usage
+- `vercel.json` — existing cron entries (06:00 daily generate, 08:00 Sunday digest)
+- `.planning/PROJECT.md` — v1.1 requirements and constraints

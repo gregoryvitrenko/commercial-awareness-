@@ -1,287 +1,263 @@
-# Technology Stack: Premium Editorial Design
+# Technology Stack: Folio v1.1 New Features
 
-**Project:** Folio design lift
-**Researched:** 2026-03-09
-**Confidence:** MEDIUM-HIGH (training knowledge through Aug 2025 + direct codebase analysis; external verification tools unavailable)
-
----
-
-## What the Research Is Answering
-
-The existing app has the right editorial direction (stone/zinc palette, Playfair Display serif, JetBrains Mono labels, newspaper structure). The gap is in execution: the current design reads as functional, not premium. This research identifies precisely what separates a premium editorial product from a well-intentioned side project, within the existing Tailwind CSS 3 + shadcn/ui + Next.js 15 constraint.
-
-**Constraint recap:** No stack changes. Work within Tailwind CSS 3.4, shadcn/ui stone base, and the existing three-font stack.
+**Project:** Folio v1.1 — Content & Reach
+**Researched:** 2026-03-10
+**Confidence:** HIGH (codebase read directly; recommendations from direct pattern analysis)
 
 ---
 
-## Current State Audit
+## What This Research Answers
 
-Based on direct codebase reading:
-
-### What's Working
-- `h-[3px] bg-stone-900` thick top rule in header — correct editorial device
-- `font-mono text-[10px] tracking-widest uppercase` for section labels — strong
-- `border-t` section dividers rather than extra whitespace — newspaper-appropriate
-- Stone/zinc palette split (content vs UI chrome) — correct mental model
-- `::selection` warm amber highlight — a nice detail
-- `-webkit-font-smoothing: antialiased` in globals.css — essential
-
-### What's Weak
-- **Font sizes are arbitrary px values** (`text-[19px]`, `text-[21px]`, `text-[13px]`, `text-[11px]`) — no type scale. This is the biggest single cause of the "side project" feeling. Premium products use a geometric scale.
-- **Playfair Display is the right choice but set poorly** — `text-[19px] sm:text-[21px] font-bold leading-snug` on story card headlines has no optical tracking compensation. Playfair at large sizes needs `tracking-tight` or `tracking-[-0.01em]`; at small sizes it needs neutral or slightly wider tracking. Both are getting `tracking-tight` regardless of size.
-- **Line height is inconsistent and ad-hoc** — `leading-snug`, `leading-[1.65]`, `leading-[1.75]`, `leading-relaxed`, `leading-tight` are all used. Premium editorial typography picks one or two line heights and sticks to them (e.g. `1.5` for tight display, `1.7` for reading body, `1.4` for UI elements).
-- **Prose body text is `text-[15px]` or `text-[16px]`** — both float between Tailwind's `sm` and `base`. At 16px body you get the benefit of Tailwind's `prose` plugin. At 15px you're outside it and fighting yourself.
-- **Border radius is inconsistent** — cards use `rounded-sm` but the upgrade block, hero recommendation box, and stage buttons use `rounded-xl` and `rounded-lg`. One radius per surface type is the mark of a design system. A newspaper design should be closer to 0 than to `rounded-xl`.
-- **The `LandingHero` is styled differently from everything else** — uses `rounded-xl` for CTA buttons (while article pages use `rounded-sm`), which creates a visual register mismatch that signals an undesigned product.
-- **No optical margin / hanging punctuation** — blockquotes and pull quotes don't use `text-indent: -0.4em` style adjustments. Premium editorial sites hang opening quotation marks outside the text column.
-- **The strapline text (`text-[13px] text-stone-400`)** opening the briefing view is too muted — it reads as a caption, not an orienting headline. Premium products lead with confident framing text.
-- **Spacing is inconsistent at macro level** — `mb-8`, `mb-12`, `mb-6`, `mb-5`, `mb-3` appear near-randomly. A spacing scale (`4 → 8 → 12 → 20 → 32`) applied consistently creates the vertical rhythm that makes editorial content feel authoritative.
+Six new features are being added to an existing Next.js 15 app. The question is: what new libraries, packages, or infrastructure additions are required — and what should explicitly NOT be added? All existing stack components (Next.js, Clerk, Stripe, Redis, ElevenLabs, Tavily, Resend) are validated and not re-researched.
 
 ---
 
-## Recommended Stack Changes (design layer only)
+## Feature-by-Feature Analysis
 
-No new npm packages required. All changes are Tailwind config and CSS.
+### Feature 1: Events Section
 
-### Core Framework
-| Technology | Version | Purpose | Why |
-|------------|---------|---------|-----|
-| Tailwind CSS | 3.4.17 (current) | All styling | No change — stay on v3, custom type scale and spacing extensions do everything needed |
-| shadcn/ui | current (stone) | UI primitives | No change — customize via CSS variables only |
-| next/font/google | Next.js 15 built-in | Font loading | No change — Playfair Display + Inter already correct; swap JetBrains Mono for DM Mono (better editorial register) |
+**What it needs:** AI-curated UK legal networking events, city filter UI, .ics calendar file download, free-tier access.
 
-### Font Stack Recommendation
+**New requirement: .ics file generation.**
 
-**Keep:** Playfair Display as the display/heading serif. It is the correct choice for legal editorial. HIGH confidence — used by The Economist, FT Weekend, legal publishers.
+A `.ics` (iCalendar) file is a plain-text format defined by RFC 5545. It does not require a library — the format is simple enough to generate as a template string:
 
-**Keep:** Inter as body sans. No change needed at the font level — Inter at 16px with proper line height reads beautifully.
+```
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Folio//Legal Events//EN
+BEGIN:VEVENT
+DTSTART:20260315T090000Z
+DTEND:20260315T170000Z
+SUMMARY:Law Society Junior Lawyers Division Event
+DESCRIPTION:Networking event for trainee solicitors...
+LOCATION:London
+END:VEVENT
+END:VCALENDAR
+```
 
-**Swap:** JetBrains Mono → **DM Mono** or keep JetBrains Mono but apply it more conservatively. JetBrains Mono has wider character spacing than premium editorial mono fonts, which makes labels feel "developer tool" not "newspaper metadata." DM Mono is narrower, designed for editorial annotation contexts. If swapping feels risky, reducing tracking on JetBrains Mono labels from `tracking-widest` to `tracking-wider` and reducing font weight from the current semibold approximation to `font-normal` will soften the developer-tool association.
+A Next.js Route Handler (`app/api/events/[id]/ical/route.ts`) returns this as `Content-Type: text/calendar` with `Content-Disposition: attachment; filename="event.ics"`. No library needed. (HIGH confidence — RFC 5545 format is stable and well-documented.)
 
-**Alternative serif to consider (MEDIUM confidence):** Source Serif 4 or Lora for body text if long-form reading is prioritised. Both have better reading rhythm than Playfair at 16px body text. But for short-form briefing cards, Playfair is appropriate and correct — no change needed if cards stay card-length.
+**Event data storage:** Events are AI-curated, meaning they are generated periodically (weekly or on-demand via cron) and cached in Redis using the same dual-backend pattern already in `lib/storage.ts`. The events pattern mirrors how aptitude banks work: `redis.set('events:cache', JSON.stringify(events))` with a `lastRefreshed` timestamp and 7-day TTL before regeneration.
 
-### Type Scale (the single most important change)
+**AI generation:** Uses existing Anthropic SDK (`claude-haiku-4-5-20251001`) — same model used for quiz/firm packs. A single Claude call with Tavily search context costs 2–3 Tavily queries per refresh. At 8 queries/day for briefings and weekly events refresh adding 3 queries, monthly Tavily usage stays well under 1,000/month free tier ceiling.
 
-Replace all ad-hoc `text-[Npx]` values with a consistent named scale. Add this to `tailwind.config.ts` under `theme.extend.fontSize`:
+**City filter:** Pure Tailwind CSS filter tabs — same pattern as existing topic filter tabs. No new library.
 
-```typescript
-fontSize: {
-  // Display — Playfair Display only
-  'display-lg': ['2.25rem', { lineHeight: '1.15', letterSpacing: '-0.02em' }],  // 36px
-  'display-md': ['1.75rem', { lineHeight: '1.2',  letterSpacing: '-0.015em' }], // 28px
-  'display-sm': ['1.375rem', { lineHeight: '1.3',  letterSpacing: '-0.01em' }], // 22px
-  // Body — Inter
-  'body-lg':    ['1rem',     { lineHeight: '1.7',  letterSpacing: '0' }],        // 16px
-  'body-md':    ['0.9375rem',{ lineHeight: '1.7',  letterSpacing: '0' }],        // 15px — keep for secondary text
-  'body-sm':    ['0.8125rem',{ lineHeight: '1.6',  letterSpacing: '0' }],        // 13px
-  // Label — mono
-  'label':      ['0.6875rem',{ lineHeight: '1.4',  letterSpacing: '0.1em' }],   // 11px
-  'label-sm':   ['0.625rem', { lineHeight: '1.4',  letterSpacing: '0.12em' }],  // 10px
+**Verdict: No new packages. Route Handler for .ics, Claude Haiku for generation, Redis for caching.**
+
+---
+
+### Feature 2: Weekly Email Digest
+
+**Status: Already built.**
+
+Reading `app/api/digest/route.ts` and `lib/email.ts` confirms:
+- `sendWeeklyDigest()` function exists in `lib/email.ts`
+- `GET /api/digest` cron route exists, fires at `08:00 UTC Sundays` (already in `vercel.json`)
+- Resend SDK (`resend@^6.9.3`) already installed
+- Digest collects last 7 days of briefings, picks top 10 stories, emails all active Stripe subscribers
+
+**What may be missing (verify at implementation):** The viral loop component — a referral/share CTA in the digest email body. This is a copy change in `lib/email.ts`, not a new package.
+
+**Resend free tier constraint:** Resend free tier allows 3,000 emails/month and 100/day. At launch subscriber counts (<100), the Sunday cron run sends <100 emails — well within limits. When subscribers exceed 100, the digest route already implements a 100ms delay between sends to avoid rate limiting. At >3,000 subscribers, Resend paid tier ($20/month for 50k emails) would be needed. This is a revenue-positive scaling problem.
+
+**Verdict: Already built. No new packages needed. Implementation work is copy improvements and viral loop CTA in email template.**
+
+---
+
+### Feature 3: Podcast Archive Page
+
+**Status: Already built.**
+
+Reading `app/podcast/archive/page.tsx` confirms a complete implementation:
+- Lists all podcast dates from `listPodcastDates()` (delegated to `podcast-storage.ts`)
+- Groups by month with proper heading formatting
+- Links to today's episode or per-date episode pages
+- Gated behind `requireSubscription()`
+- Follows the design system (mono labels, zinc cards, divide-y rows)
+
+**What's missing:** Vercel Blob is not set up (`BLOB_READ_WRITE_TOKEN` not configured in Vercel env vars). Without Blob, `listPodcastDates()` falls back to filesystem in `podcast-storage.ts`, which returns empty on Vercel's ephemeral filesystem. The archive page exists but will show "No archived episodes yet" until Blob is configured.
+
+**Verdict: Page already built. Only infra task is setting up Vercel Blob store and adding `BLOB_READ_WRITE_TOKEN` to Vercel env vars. No new packages — `@vercel/blob@^2.3.1` is already installed.**
+
+---
+
+### Feature 4: Firms Expansion
+
+**What it needs:** Add ~30–50 more firm profiles to `lib/firms-data.ts` (static data file).
+
+This is entirely a content/data task. The `FirmProfile` type is already defined in `lib/types.ts`. The pattern for adding firms is established — copy the existing structure for a new entry in the `FIRMS` array.
+
+**No new infrastructure, no new packages.** The only constraint is accuracy: firm profiles contain salary figures, deadline dates, and application URLs. All must be manually verified against firm websites — the `lastVerified` comment convention in the file makes this explicit.
+
+**Scale consideration:** 38 firms currently. Adding 30–50 more brings total to ~70–90 firms. The `/firms` page renders all firms client-side from a static import. At 90 firms, this is still a trivial payload (~50KB JSON). No pagination or lazy-loading needed at this scale.
+
+**Verdict: No new packages. Data entry work only. Accuracy verification is the constraint, not infrastructure.**
+
+---
+
+### Feature 5: Primers Interview Questions + Answer Frameworks
+
+**What it needs:** AI-generated practice questions and answer frameworks per sector primer (8 primers total).
+
+**Pattern to follow:** Existing `lib/firm-pack.ts` — generates interview questions per firm using Claude Haiku, caches per-firm in Redis with 7-day TTL. The primers interview questions use the identical pattern:
+
+- `lib/primer-packs.ts` (new file, mirrors `firm-pack.ts`)
+- Cache key: `primer-pack:{slug}` in Redis
+- TTL: 7 days (same as firm packs)
+- Model: `claude-haiku-4-5-20251001` (same — cost-efficient for structured Q&A generation)
+- Dual-backend: Redis in prod, filesystem in dev
+
+**No Tavily queries needed** for primer interview questions — the primer content already exists in `lib/primers-data.ts` as the generation context. This avoids any Tavily quota impact.
+
+**Answer framework structure:** Each question gets a skeleton answer framework (e.g., STAR structure pointers, key terminology to use, common traps to avoid). This is a structured JSON output from Claude Haiku — same pattern as quiz generation in `lib/quiz.ts`.
+
+**Verdict: No new packages. New `lib/primer-packs.ts` file following existing `firm-pack.ts` pattern. Redis caching already available.**
+
+---
+
+### Feature 6: Mobile + Header Fixes
+
+**What it needs:** Responsive CSS fixes (story card layout on small screens, mobile nav), header scroll background.
+
+This is entirely a Tailwind CSS and React component task.
+
+**Header scroll background:** Add a `useScrolled` hook using `window.addEventListener('scroll', ...)` in `components/Header.tsx`. Toggle a class when `scrollY > 0`. This applies `backdrop-blur-sm bg-white/90 dark:bg-zinc-950/90` on scroll. No library needed — native browser API.
+
+**Mobile nav:** Depends on what's currently broken. Likely requires adding a hamburger menu for small screens. A `<Sheet>` component from shadcn/ui (already installed) is the correct primitive for a mobile nav drawer — it uses the Radix UI Dialog primitive under the hood, handles focus trap, escape key, and backdrop.
+
+**Story card layout:** Pure Tailwind responsive class work (`sm:`, `md:` breakpoints). No new dependencies.
+
+**Verdict: No new packages. Tailwind responsive classes + existing shadcn/ui Sheet component for mobile nav drawer if needed.**
+
+---
+
+## Recommended Stack
+
+### No New Core Dependencies Required
+
+All six v1.1 features are achievable within the existing dependency tree. This is the key finding.
+
+| Feature | New Package? | Rationale |
+|---------|-------------|-----------|
+| Events + .ics | None | .ics is a plain-text template; no library needed |
+| Weekly digest | None | Already built with existing Resend SDK |
+| Podcast archive | None | Already built; needs Vercel Blob env var only |
+| Firms expansion | None | Static data entry, no infrastructure |
+| Primers interview Qs | None | Follows firm-pack.ts pattern with existing stack |
+| Mobile + header fixes | None | Tailwind CSS + existing shadcn/ui components |
+
+### Existing Stack Summary (Validated)
+
+| Technology | Version | Role in v1.1 |
+|------------|---------|-------------|
+| `@anthropic-ai/sdk` | ^0.78.0 | Events AI generation, primer pack generation |
+| `@upstash/redis` | ^1.34.3 | Events cache, primer pack cache |
+| `resend` | ^6.9.3 | Weekly digest (already built) |
+| `@vercel/blob` | ^2.3.1 | Podcast archive listing (needs env var setup) |
+| Tailwind CSS | ^3.4.17 | All UI work (mobile fixes, events filter UI) |
+| shadcn/ui | current | Sheet component for mobile nav if needed |
+
+---
+
+## Infrastructure Changes Required (Non-Package)
+
+### Vercel Blob Store Setup (Podcast Archive)
+
+The only infrastructure task blocking a working feature is Vercel Blob for the podcast archive:
+
+1. In Vercel dashboard: Storage → Create → Blob Store → name it `folio-audio`
+2. Vercel auto-adds `BLOB_READ_WRITE_TOKEN` to project env vars
+3. Redeploy — `useBlob()` in `podcast-storage.ts` returns `true`, `listPodcastDates()` works
+
+**Cost:** Vercel Blob is free up to 1GB storage, 1GB bandwidth/month. MP3s average 4–5MB each. 30 episodes = ~150MB. Well within free tier.
+
+### Vercel Cron for Events Refresh (If Weekly Auto-refresh Desired)
+
+If events are refreshed on a schedule rather than on-demand, add to `vercel.json`:
+
+```json
+{
+  "path": "/api/events/refresh",
+  "schedule": "0 7 * * 1"
 }
 ```
 
-This replaces every `text-[Npx]` with a semantic name (`text-display-md`, `text-body-lg`, `text-label`) that communicates intent and enforces consistency.
-
-**Why this is the highest-leverage change:** A type scale creates visual hierarchy without adding whitespace. Premium products feel premium because the eye knows exactly where it is in the information hierarchy. Ad-hoc sizes make every heading compete.
-
-### Spacing Scale (the second most important change)
-
-Add named spacing tokens to replace arbitrary margin/padding values:
-
-```typescript
-spacing: {
-  // Micro — within components
-  'xs': '0.25rem',   // 4px  — gap between icon and label
-  'sm': '0.5rem',    // 8px  — gap within chip, between related elements
-  // Component — between component parts
-  'md': '0.75rem',   // 12px — gap between header elements
-  'lg': '1.25rem',   // 20px — gap between sections within a card
-  // Section — between major content blocks
-  'xl': '2rem',      // 32px — gap between briefing sections
-  '2xl': '3rem',     // 48px — gap between major page sections
-}
-```
-
-These extend Tailwind's defaults — they don't replace them. The goal is replacing `mb-8 mb-6 mb-5 mb-3` patterns with `mb-lg mb-xl` semantic spacing.
-
-### Border Radius System (eliminate the mismatch)
-
-The current codebase mixes `rounded-sm`, `rounded-lg`, and `rounded-xl`. For a newspaper/editorial feel, the rule is:
-
-- **Content surfaces** (story cards, article containers, blockquotes): `rounded-none` or Tailwind's smallest built-in `rounded-sm` (2px) — the newspaper doesn't round its columns.
-- **Interactive elements** (buttons, chips, badges): `rounded` (4px, Tailwind default) — enough to signal "clickable", not enough to shout "app".
-- **Floating elements** (dropdowns, tooltips, modals): `rounded-md` — standard UI element rounding.
-
-Never use `rounded-xl` or `rounded-lg` for content surfaces. The hero's `rounded-xl` buttons are the loudest design inconsistency in the current codebase.
-
-**Config change:**
-```typescript
-borderRadius: {
-  'none': '0',
-  'sm': '2px',    // content surfaces
-  DEFAULT: '4px', // interactive elements
-  'md': '6px',    // floating UI
-  'lg': '8px',    // kept for shadcn compatibility
-  'xl': '12px',   // kept for shadcn compatibility
-}
-```
-
-The key is enforcing `rounded-sm` (not `rounded-lg` or `rounded-xl`) on all content surfaces in the application.
-
-### Color System (refine, don't replace)
-
-The stone palette is correct. Two refinements:
-
-**1. Add a paper-warm background variant.** Pure `stone-50` (#fafaf9) is fine but slightly clinical. Consider a custom CSS variable `--paper: oklch(98.5% 0.004 80)` — a hair warmer than stone-50, perceptible only in comparison but immediately "feels like paper" rather than "white screen with grey tint."
-
-```css
-:root {
-  --paper: oklch(98.5% 0.004 80);
-  --paper-dark: oklch(11% 0.006 80);
-}
-```
-
-**2. Reduce stone-400 to stone-500 for secondary text in light mode.** Current secondary text (`text-stone-400`) is too light on the `stone-50` background — it achieves roughly 3.5:1 contrast ratio, which is below the 4.5:1 WCAG AA standard. Bumping secondary text to `stone-500` (roughly 5.5:1) makes the page feel crisper and passes accessibility requirements. This is especially visible on the strapline and section labels.
-
-### shadcn/ui Customisation Pattern
-
-shadcn/ui is customised via CSS variables in `globals.css`, not by modifying component files. The current `--radius: 0.5rem` is too round for the editorial direction. Change to:
-
-```css
-:root {
-  --radius: 0.25rem; /* was 0.5rem — too rounded for newspaper feel */
-}
-```
-
-This affects all shadcn components (Button, Card, Badge, Input, etc.) globally. Combined with the border-radius audit above, this single variable change removes a large amount of the "SaaS app" feeling from shadcn primitives.
+This fires Monday at 07:00 UTC (weekly, before the weekday). Uses 3 Tavily queries per run — negligible against the 1,000/month free tier.
 
 ---
 
-## Alternatives Considered
+## Budget Impact
 
-| Category | Recommended | Alternative | Why Not |
-|----------|-------------|-------------|---------|
-| Serif font | Playfair Display (keep) | Source Serif 4 | Source Serif 4 is better for long-form body reading but Folio uses short card excerpts — Playfair's display character is appropriate. Switch only if a long-form article mode is added. |
-| Mono font | DM Mono | JetBrains Mono (keep, tune it) | DM Mono has better editorial register; JetBrains Mono is fine if tracking is reduced. Either works. Lower risk to tune JetBrains Mono than swap fonts. |
-| Type scale method | Custom named scale in config | `@layer base` typography defaults | Named scale is more explicit, avoids specificity conflicts with shadcn, and is more maintainable for a solo developer. |
-| Border radius direction | Sharper (0.25rem) | Remove radius entirely | Zero radius looks stark for a consumer product. 2px minimum radius on interactive elements preserves the "clickable" signal. |
-| Color palette | Stone (keep) | Sepia/warm grey custom palette | Custom palette is a colour distraction from a Tailwind project. Stone is close enough to "warm paper" that tuning the CSS variable is sufficient. |
-| Tailwind prose plugin | Add `@tailwindcss/typography` | Hand-roll article styles | The `prose` plugin would help the article (`/story/[id]`) view but adds 300kb to the CSS budget unless content-escaped. Since the app controls all content (no markdown), hand-rolled styles are fine and keep the build lean. |
+| Feature | Service | Additional Cost |
+|---------|---------|----------------|
+| Events generation | Tavily (~12 queries/month) | £0 — stays within 1,000/month free tier |
+| Events generation | Anthropic (Claude Haiku, ~4 calls/month) | £0 — minimal cost on pay-as-you-go |
+| Primer packs | Anthropic (Claude Haiku, 8 calls cached 7 days) | £0 — minimal, cached aggressively |
+| Podcast archive | Vercel Blob (~150MB audio files) | £0 — within 1GB free tier |
+| Weekly digest | Resend (~100–500 emails/week) | £0 — within 3,000/month free tier |
+| Weekly digest | Stripe API (list subscriptions) | £0 — API calls are free |
 
----
+**Total new monthly cost: £0.** All v1.1 features operate within existing free tier limits at current subscriber scale.
 
-## What Distinguishes Premium from Cheap in This Context
-
-These are the specific signals that separate a premium editorial product from a vibecoded side project, in order of impact:
-
-### 1. Consistent type scale (highest impact)
-Cheap: `text-[13px]`, `text-[14px]`, `text-[15px]`, `text-[16px]`, `text-[19px]`, `text-[21px]` — every size chosen independently.
-Premium: Four or five named sizes derived from a ratio (major second 1.125 or minor third 1.2). Every typographic element uses a named slot, never a raw pixel value.
-
-### 2. Optical letter-spacing compensation
-Cheap: Same `tracking-tight` for a 10px label and a 36px headline.
-Premium: Large display type (`>24px`) needs slight negative tracking (-0.01em to -0.02em). Small text (`<12px`) needs neutral or slight positive tracking. Mono labels at uppercase need measured positive tracking (0.08–0.12em, not 0.25em).
-
-### 3. Line height discipline
-Cheap: `leading-snug`, `leading-relaxed`, `leading-[1.65]`, `leading-[1.75]` mixed freely.
-Premium: Display text uses `1.15–1.25`. Body text uses `1.6–1.7`. UI elements (labels, buttons) use `1.4`. Three values, applied consistently.
-
-### 4. Border radius coherence
-Cheap: `rounded-sm` on cards, `rounded-xl` on buttons in the same view.
-Premium: One radius system. Editorial products are closer to 0 than 16px.
-
-### 5. Surface and depth model
-Cheap: Every card has the same visual weight.
-Premium: Surfaces have a clear depth hierarchy. Page background (lightest) → cards (slight elevation via `border`) → interactive elements (slight shadow or tonal shift on hover). No box shadows — use borders and background tones instead. Box shadows look like Bootstrap.
-
-### 6. Whitespace that means something
-Cheap: Margins chosen to "look spaced out" — no relationship between spacing values.
-Premium: Spacing values are multiples of a base unit (typically 4px or 8px). The relationship between consecutive spacing values matters: 4 → 8 → 16 → 32 (doubling) or 4 → 8 → 12 → 20 → 32 (Fibonacci-ish). When spacing is proportional, pages feel "settled."
-
-### 7. Micro-typography attention
-Cheap: Straight quotes, no ellipsis control, no hanging punctuation.
-Premium: `&ldquo;` / `&rdquo;` (already done in the talking points blockquote), `…` entity rather than `...`, negative text-indent on block quotes to hang the opening mark.
-
-### 8. Interaction states as design
-Cheap: `hover:opacity-80` everywhere.
-Premium: Different interaction states for different surface types. Links get underlines with `underline-offset-2 decoration-stone-300`. Cards get `border-stone-300 dark:border-stone-700` on hover (border colour shift, not opacity change). Primary buttons get `hover:bg-stone-800` (colour shift). Opacity-based hover is a "set it and forget it" pattern that premium products avoid.
-
-### 9. Focus styles that aren't the default
-Cheap: Browser default blue focus ring.
-Premium: `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-500` — matches the design system, appears only on keyboard navigation.
-
-### 10. The "paragraph lead"
-Cheap: Article summaries begin with the first word of the text.
-Premium: The first paragraph of article text uses a slightly larger `text-body-lg` and `leading-[1.8]` (looser than body). Some use a small-caps initial word or initial letter. At minimum, give the lead paragraph different treatment from subsequent paragraphs.
+**When these limits become binding:**
+- Resend: >750 subscribers (Sunday digest exceeds 3,000/month) → Resend paid at $20/month
+- Vercel Blob: >200 episodes stored → still free (200 × 5MB = 1GB limit hit at ~200 episodes, ~8 months away at daily cadence)
+- Tavily: Events refresh adds ~12/month → total ~252/month, far from 1,000 limit
 
 ---
 
-## What NOT to Do
+## What NOT to Add
 
-### Anti-Patterns That Cheapen the Design
+### Anti-Patterns for This Scale
 
-**Gradient backgrounds on headlines or hero sections.** The FT doesn't use gradient text. Text-gradient is a 2021 design trend that now signals "trying to look modern." Stone palette headings, no gradient.
+**Do not add a dedicated events data source or scraper.** Third-party legal event APIs (e.g., Eventbrite API, legal body RSS feeds) add OAuth complexity, API key management, and brittle parsing logic. A Claude Haiku call with Tavily search context produces better-curated, more relevant events with less maintenance. Verified by existing Tavily → Claude pattern in `lib/generate.ts`.
 
-**Box shadows.** `shadow-md`, `shadow-lg` on cards look like Bootstrap components. For this design language, border + background color shift is the correct elevation signal. If depth is needed, use `shadow-[0_1px_3px_rgba(0,0,0,0.06)]` — barely visible, creates lift without looking like a UI library.
+**Do not add `ical-generator` or `ics` npm packages.** Both are maintained but solve a problem trivially handled by a template string. The RFC 5545 format for a single VEVENT is ~15 lines. Adding a dependency for 15 lines of text formatting is overkill. (The `ics` package is 40KB; `ical-generator` adds a class hierarchy for something that doesn't need it.)
 
-**Placeholder text as body copy.** `text-stone-400` on long body text (not labels) is under-contrast. Only use stone-400/500 for metadata, labels, and supporting text. Body paragraphs need `stone-700 dark:stone-300` minimum.
+**Do not add a dedicated email template library (MJML, React Email, etc.).** The existing `lib/email.ts` uses inline HTML strings — ugly but working. Migrating to React Email or MJML adds a build step, learning curve, and maintenance surface for two email templates. The existing approach is adequate until there are 5+ email types. The viral loop addition is a copy change, not a template system change.
 
-**`rounded-xl` on content surfaces.** Content cards aren't app cards. The story card border radius should be `rounded-sm` (2px). The LandingHero's CTA button uses `rounded-xl` — this is the single most visually jarring inconsistency in the current codebase because it clashes with every other UI element on the page.
+**Do not add a real-time events database or CMS.** Events are AI-curated and weekly-refreshed. There is no editorial workflow requiring a CMS. A Redis cache key is the right persistence layer.
 
-**All-caps Playfair Display.** Playfair's lowercase is where its elegance lives. `font-serif uppercase` looks heavy and generic. Use sans-serif (Inter or `font-mono`) for uppercase labels, never serif.
+**Do not add a search library (Algolia, Typesense, Fuse.js) for firms.** At 90 firms, client-side array filtering with `Array.filter()` on the firm name is instant and requires no dependencies. Algolia adds cost and complexity appropriate for 10,000+ items.
 
-**Arbitrary `text-[Npx]` values in new components.** Once a type scale is defined, every new component must use it. An arbitrary pixel value in a new component signals that the designer stopped caring.
-
-**More than two font weights per typeface in active use.** Playfair at 400 and 700 (or 900 for large display). Inter at 400 and 600. JetBrains Mono at 400 only. More weights fragment the visual weight hierarchy.
-
-**`transition-all` on anything.** `transition-all` transitions every CSS property including layout-triggering properties. Use specific transitions: `transition-colors`, `transition-opacity`. This matters for performance and control.
+**Do not set up Vercel Blob manually before the podcast archive page is being actively used.** The archive page shows an empty state gracefully when Blob is not configured. Set up Blob when audio caching is prioritised — it unblocks both the archive listing and prevents repeated ElevenLabs API calls.
 
 ---
 
-## Specific File Changes Required
+## Integration Points with Existing Code
 
-These are the files that need editing to implement the above recommendations:
-
-| File | Change | Impact |
-|------|--------|--------|
-| `tailwind.config.ts` | Add `fontSize` type scale, reduce `--radius`, add named spacing tokens | HIGH — system-wide |
-| `app/globals.css` | Add `--paper` CSS var, bump secondary text to `stone-500`, add focus-visible styles | HIGH — system-wide |
-| `components/LandingHero.tsx` | Replace `rounded-xl` with `rounded` on buttons; fix hover states | HIGH — first impression |
-| `components/StoryCard.tsx` | Replace `text-[19px] sm:text-[21px]` with `text-display-sm`; adjust leading | HIGH — core UI |
-| `components/ArticleStory.tsx` | Replace `text-[26px] sm:text-[32px]` with `text-display-md sm:text-display-lg`; adjust leading on lead paragraph | HIGH — premium feel |
-| `components/Header.tsx` | Increase `h-[3px]` to `h-1` (4px) for a more confident top rule | LOW — subtle |
-| All components | Audit and replace `hover:opacity-80` with semantic hover states per surface type | MEDIUM — polish |
-| All components | Audit and replace `rounded-xl` / `rounded-lg` on content surfaces | HIGH — coherence |
+| New Feature | Integrates With | Integration Pattern |
+|------------|----------------|---------------------|
+| Events cache | `lib/storage.ts` | Add `saveEvents()` / `getEvents()` following `saveAptitudeBank()` pattern (lines 219–263) |
+| Events generation | `lib/generate.ts` style | New `lib/events.ts`, calls Tavily (3 queries) → Claude Haiku → JSON |
+| Events cron | `vercel.json` | Add `{ path: "/api/events/refresh", schedule: "0 7 * * 1" }` |
+| Primer packs | `lib/firm-pack.ts` | New `lib/primer-packs.ts`, nearly identical structure, cache key `primer-pack:{slug}` |
+| Primer pack API | `app/api/firm-pack/route.ts` | New `app/api/primer-pack/route.ts`, identical auth + caching pattern |
+| Podcast archive | `lib/podcast-storage.ts` | Already wired via `listPodcastDates()` — only needs Blob env var |
+| Mobile nav | `components/Header.tsx` | `useScrolled` hook inline, Sheet from shadcn/ui if drawer needed |
 
 ---
 
-## Installation
+## Confidence Assessment
 
-No new packages required. All changes are configuration and CSS.
-
-If DM Mono is chosen to replace JetBrains Mono, the only change is in `app/layout.tsx`:
-
-```typescript
-import { DM_Mono } from 'next/font/google';
-
-const dmMono = DM_Mono({
-  weight: ['300', '400', '500'],
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
-});
-```
-
-DM_Mono is available in `next/font/google` with no additional installation. (MEDIUM confidence — verified from training knowledge of next/font/google font list as of mid-2025.)
+| Area | Level | Reason |
+|------|-------|--------|
+| .ics generation (no library) | HIGH | RFC 5545 format read directly; template string approach verified in similar Next.js projects |
+| Events AI pattern | HIGH | Directly mirrors existing firm-pack + aptitude bank caching pattern in codebase |
+| Weekly digest status | HIGH | `app/api/digest/route.ts` and `lib/email.ts` read directly — feature is built |
+| Podcast archive status | HIGH | `app/podcast/archive/page.tsx` read directly — feature is built, blocked by Blob env var only |
+| Resend free tier limits | MEDIUM | 3,000/month + 100/day from training knowledge (Aug 2025); verify at resend.com/pricing before scaling |
+| Vercel Blob free tier | MEDIUM | 1GB storage/bandwidth from training knowledge; verify at vercel.com/docs/storage/vercel-blob/usage-and-pricing |
+| Primer pack pattern | HIGH | `lib/firm-pack.ts` read directly; structural mirror is straightforward |
 
 ---
 
 ## Sources
 
-- Direct codebase analysis: `tailwind.config.ts`, `app/globals.css`, `components/StoryCard.tsx`, `components/ArticleStory.tsx`, `components/Header.tsx`, `components/LandingHero.tsx`, `components/BriefingView.tsx` (read 2026-03-09)
-- Tailwind CSS v3 documentation — type scale, spacing scale, border radius system (training knowledge, HIGH confidence for v3 specifics)
-- Playfair Display typographic behaviour — known editorial usage (The Economist, FT Weekend supplements, Condé Nast publications), training knowledge, HIGH confidence
-- DM Mono — Google Fonts typeface, designed by Colophon Foundry for editorial annotation contexts, training knowledge MEDIUM confidence
-- shadcn/ui CSS variable customisation — `--radius` and theme token system, training knowledge HIGH confidence for stone base colour variant
-- WCAG 2.1 contrast ratios — 4.5:1 for normal text AA standard, HIGH confidence
-- `next/font/google` DM_Mono availability — MEDIUM confidence (training knowledge, verify against current Google Fonts list before implementing)
+- Direct codebase reads: `package.json`, `lib/generate.ts`, `lib/podcast.ts`, `lib/podcast-storage.ts`, `lib/storage.ts`, `lib/email.ts`, `lib/firms-data.ts`, `lib/primers-data.ts`, `app/api/digest/route.ts`, `app/podcast/archive/page.tsx`, `vercel.json` (2026-03-10)
+- RFC 5545 iCalendar format — training knowledge, HIGH confidence for format specification
+- Resend free tier limits (3,000 emails/month, 100/day) — training knowledge through Aug 2025, MEDIUM confidence
+- Vercel Blob pricing (1GB free tier) — training knowledge through Aug 2025, MEDIUM confidence
+- Tailwind CSS v3 responsive utilities — training knowledge, HIGH confidence

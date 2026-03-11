@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
 status: planning
-stopped_at: Completed 11-events-section 11-03-PLAN.md
-last_updated: "2026-03-11T17:11:17.944Z"
+stopped_at: Completed 12-digest-compliance 12-01-PLAN.md
+last_updated: "2026-03-11T18:30:18.683Z"
 last_activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 progress:
   total_phases: 12
   completed_phases: 10
-  total_plans: 27
-  completed_plans: 27
+  total_plans: 30
+  completed_plans: 28
   percent: 0
 ---
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 | Phase 11-events-section P01 | 108s | 3 tasks | 3 files |
 | Phase 11-events-section P02 | 3min | 1 tasks | 1 files |
 | Phase 11-events-section P03 | 5min | 2 tasks | 5 files |
+| Phase 12-digest-compliance P01 | 8min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,8 @@ Recent decisions affecting current work:
 - [Phase 11-events-section]: No TTL on events:current Redis key — events refreshed weekly by Monday cron, stale data preferred over no data
 - [Phase 11-events-section]: Single GET handler branches on format=ics+id vs cron — consistent with codebase patterns, no requireSubscription (events free tier)
 - [Phase 11-events-section]: Events placed in Daily nav dropdown alongside Briefing and Podcast — CalendarDays icon used to avoid clash with Calendar icon for Briefings archive
+- [Phase 12-digest-compliance]: CRON_SECRET reused as HMAC signing key for unsubscribe URLs — avoids new env var, throws at build time if missing to prevent silent unsigned links
+- [Phase 12-digest-compliance]: Redis opt-out key email-opt-out:{email} has no TTL — permanent opt-out is correct GDPR behaviour; checked by Plan 02 before each digest send
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T17:08:30.670Z
-Stopped at: Completed 11-events-section 11-03-PLAN.md
+Last session: 2026-03-11T18:30:18.676Z
+Stopped at: Completed 12-digest-compliance 12-01-PLAN.md
 Resume file: None

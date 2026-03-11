@@ -8,6 +8,8 @@ Allow: /terms
 Allow: /privacy
 Allow: /firm-fit
 Allow: /area-fit
+Allow: /events
+Allow: /events/
 
 # Block premium content routes from indexing
 Disallow: /quiz

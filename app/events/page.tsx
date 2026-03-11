@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Link from 'next/link';
 import { Calendar } from 'lucide-react';
 import { getEvents } from '@/lib/events';
 import { CityFilter, EventsGrid } from './CityFilter';
@@ -13,6 +14,9 @@ export default async function EventsPage() {
   if (!store || upcoming.length === 0) {
     return (
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        <Link href="/" className="font-mono text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
+          ← Home
+        </Link>
         {/* Page heading */}
         <div className="flex items-center gap-3 mb-8">
           <Calendar size={16} className="text-stone-400" />
@@ -47,6 +51,9 @@ export default async function EventsPage() {
 
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+      <Link href="/" className="font-mono text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
+        ← Home
+      </Link>
       {/* Page heading */}
       <div className="flex items-center gap-3 mb-8">
         <Calendar size={16} className="text-stone-400" />

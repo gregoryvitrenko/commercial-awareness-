@@ -135,7 +135,7 @@ export interface DigestStory {
   date: string; // YYYY-MM-DD
 }
 
-function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string): string {
+function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string, unsubscribeUrl: string): string {
   const storyRows = stories
     .map((s) => {
       const color = TOPIC_COLORS[s.topic] ?? '#71717a';
@@ -229,7 +229,7 @@ function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string):
             <td style="background:#fafafa;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 12px 12px;padding:20px 36px;">
               <p style="margin:0;font-size:12px;color:#a1a1aa;line-height:1.6;">
                 You&rsquo;re receiving this because you subscribe to Folio.
-                Manage your subscription at any time from your account settings.
+                <a href="${unsubscribeUrl}" style="color:#71717a;text-decoration:underline;">Unsubscribe from this digest</a>
               </p>
             </td>
           </tr>
@@ -246,6 +246,8 @@ export async function sendWeeklyDigest(
   to: string,
   stories: DigestStory[],
   weekLabel: string,
+  subject: string,
+  unsubscribeUrl: string,
 ): Promise<{ success: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -259,8 +261,12 @@ export async function sendWeeklyDigest(
   const { error } = await resend.emails.send({
     from: FROM,
     to,
-    subject: `Folio Weekly Digest — ${weekLabel}`,
-    html: digestHtml(stories, siteUrl, weekLabel),
+    subject,
+    html: digestHtml(stories, siteUrl, weekLabel, unsubscribeUrl),
+    headers: {
+      'List-Unsubscribe': `<${unsubscribeUrl}>, <mailto:hello@folioapp.co.uk?subject=unsubscribe>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+    },
   });
 
   if (error) {

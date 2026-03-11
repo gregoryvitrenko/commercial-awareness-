@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
 status: planning
-stopped_at: Phase 11 context gathered
-last_updated: "2026-03-11T14:30:02.586Z"
+stopped_at: Completed 11-events-section 11-01-PLAN.md
+last_updated: "2026-03-11T17:01:41.183Z"
 last_activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 progress:
   total_phases: 12
   completed_phases: 9
-  total_plans: 24
-  completed_plans: 24
+  total_plans: 27
+  completed_plans: 25
   percent: 0
 ---
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 | Phase 07-mobile-header-polish P02 | 1 | 2 tasks | 2 files |
 | Phase 08-firms-expansion P01 | 20 | 3 tasks | 6 files |
 | Phase 09-podcast-archive P01 | 8 | 2 tasks | 2 files |
+| Phase 11-events-section P01 | 108s | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,8 @@ Recent decisions affecting current work:
 - [Phase 08-firms-expansion]: DLA Piper classified as US Firms tier (amber accent) to match Folio taxonomy and £130k NQ salary
 - [Phase 08-firms-expansion]: New National tier (rose accent) created for Eversheds Sutherland, CMS, Addleshaw Goddard, Pinsent Masons — user reclassified from Silver Circle during human verification; 6 components updated (lib/types.ts, lib/firms-data.ts, FirmCard, FirmsDirectory, TrackerDashboard, firm page)
 - [Phase 09-podcast-archive]: backfillQuizIndex() no-op when useRedis()=false; nx:true on zadd ensures idempotent backfill; Upstash scan cursor coerced via Number() before comparing to 0
+- [Phase 11-events-section]: Past events filtered at retrieval time via YYYY-MM-DD string comparison (no Redis TTL) — consistent with Phase 06 isClosed pattern
+- [Phase 11-events-section]: No TTL on events:current Redis key — events refreshed weekly by Monday cron, stale data preferred over no data
 
 ### Pending Todos
 
@@ -98,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T14:30:02.572Z
-Stopped at: Phase 11 context gathered
-Resume file: .planning/phases/11-events-section/11-CONTEXT.md
+Last session: 2026-03-11T17:01:41.176Z
+Stopped at: Completed 11-events-section 11-01-PLAN.md
+Resume file: None

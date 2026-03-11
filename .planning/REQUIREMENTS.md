@@ -41,7 +41,7 @@
 ### Events Section
 
 - [ ] **EVT-01**: `/events` page lists upcoming UK legal networking and professional events (free tier, no paywall)
-- [ ] **EVT-02**: Events AI-curated weekly via Tavily search + Claude synthesis and cached in Redis — stale/past events filtered out automatically
+- [x] **EVT-02**: Events AI-curated weekly via Tavily search + Claude synthesis and cached in Redis — stale/past events filtered out automatically
 - [ ] **EVT-03**: City filter tabs on events page (All, London, Manchester, Edinburgh, Bristol)
 - [ ] **EVT-04**: Each event has a `.ics` download button for calendar export (RFC 5545, generated as TypeScript template string — no npm package)
 
@@ -144,7 +144,7 @@
 | PRIMER-01 | Phase 10 | Complete |
 | PRIMER-02 | Phase 10 | Complete |
 | EVT-01 | Phase 11 | Pending |
-| EVT-02 | Phase 11 | Pending |
+| EVT-02 | Phase 11 | Complete |
 | EVT-03 | Phase 11 | Pending |
 | EVT-04 | Phase 11 | Pending |
 | DIGEST-01 | Phase 12 | Pending |

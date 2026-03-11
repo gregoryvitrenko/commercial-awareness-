@@ -227,6 +227,31 @@ export interface Primer {
   interviewQs?: PrimerInterviewQ[];
 }
 
+// ─── Legal Events ─────────────────────────────────────────────────────────────
+
+export type EventType = 'Networking' | 'Panel' | 'Workshop' | 'Social' | 'Career Fair';
+export type EventCity = 'London' | 'Manchester' | 'Edinburgh' | 'Bristol' | 'Other';
+
+export interface LegalEvent {
+  id: string;
+  title: string;
+  date: string;         // YYYY-MM-DD — events without a confirmed date must be dropped
+  time?: string;        // "18:30" | undefined
+  city: EventCity;
+  venue?: string;
+  organiser: string;
+  eventType: EventType;
+  eligibility: string;
+  description: string;
+  whyAttend: string;
+  sourceUrl: string;    // never undefined; fallback: "https://www.lawsociety.org.uk"
+}
+
+export interface EventsStore {
+  events: LegalEvent[];
+  generatedAt: string;  // ISO 8601
+}
+
 // ─── Topic Styles ─────────────────────────────────────────────────────────────
 
 export const TOPIC_STYLES: Record<

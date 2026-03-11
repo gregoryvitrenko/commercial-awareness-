@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Content & Reach
 status: planning
-stopped_at: Completed 11-events-section 11-01-PLAN.md
-last_updated: "2026-03-11T17:01:41.183Z"
+stopped_at: Completed 11-events-section 11-02-PLAN.md
+last_updated: "2026-03-11T17:04:11.172Z"
 last_activity: 2026-03-10 — v1.1 roadmap created; phases 7-12 defined
 progress:
   total_phases: 12
   completed_phases: 9
   total_plans: 27
-  completed_plans: 25
+  completed_plans: 26
   percent: 0
 ---
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0% (v1.1 phases)
 | Phase 08-firms-expansion P01 | 20 | 3 tasks | 6 files |
 | Phase 09-podcast-archive P01 | 8 | 2 tasks | 2 files |
 | Phase 11-events-section P01 | 108s | 3 tasks | 3 files |
+| Phase 11-events-section P02 | 3min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,7 @@ Recent decisions affecting current work:
 - [Phase 09-podcast-archive]: backfillQuizIndex() no-op when useRedis()=false; nx:true on zadd ensures idempotent backfill; Upstash scan cursor coerced via Number() before comparing to 0
 - [Phase 11-events-section]: Past events filtered at retrieval time via YYYY-MM-DD string comparison (no Redis TTL) — consistent with Phase 06 isClosed pattern
 - [Phase 11-events-section]: No TTL on events:current Redis key — events refreshed weekly by Monday cron, stale data preferred over no data
+- [Phase 11-events-section]: Single GET handler branches on format=ics+id vs cron — consistent with codebase patterns, no requireSubscription (events free tier)
 
 ### Pending Todos
 
@@ -101,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-11T17:01:41.176Z
-Stopped at: Completed 11-events-section 11-01-PLAN.md
+Last session: 2026-03-11T17:04:11.166Z
+Stopped at: Completed 11-events-section 11-02-PLAN.md
 Resume file: None

@@ -94,6 +94,10 @@ const EVENT_QUERIES = [
   'legal networking event Manchester Edinburgh Bristol students 2026',
   'UK legal careers student event workshop panel discussion 2026',
   'bar association law society student social drinks UK 2026',
+  'magic circle US law firm open day student event UK 2026',
+  'UK legal sector networking drinks reception student trainee 2026',
+  'law school careers fair recruitment event UK 2026',
+  'City law firm insight day student diversity event UK 2026',
 ];
 
 async function searchForEvents(): Promise<string> {

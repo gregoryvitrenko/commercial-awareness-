@@ -201,7 +201,12 @@ Plans:
   3. City filter tabs (All, London, Manchester, Edinburgh, Bristol) filter the listing — selecting a city shows only events in that location, with the tab derived from available events data rather than hardcoded
   4. Each event has a working `.ics` download button — tapping it produces a valid iCalendar file that imports correctly into iOS Calendar with the right date, time, and Europe/London timezone
   5. The events list updates weekly — a Monday 07:00 UTC cron refreshes the Redis `events:current` cache via Tavily search + Claude synthesis, and the page shows a "last updated" timestamp
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Add LegalEvent types to lib/types.ts; build lib/events.ts (Tavily + Haiku generation + Redis storage); add Monday cron to vercel.json (EVT-02)
+- [ ] 11-02-PLAN.md — Create app/api/events/route.ts with cron generation endpoint and .ics download endpoint (EVT-02, EVT-04)
+- [ ] 11-03-PLAN.md — Build /events listing page, CityFilter client component, /events/[id] detail page, and Events nav link (EVT-01, EVT-03)
 
 ### Phase 12: Digest Compliance + Improvements
 **Goal**: The weekly Sunday digest is GDPR/PECR compliant, confirmed firing in production, and compelling enough that subscribers open it and share it — building the referral loop that grows Folio organically

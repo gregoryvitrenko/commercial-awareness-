@@ -1,6 +1,28 @@
 import { Resend } from 'resend';
+import crypto from 'crypto';
 
 const FROM = process.env.EMAIL_FROM ?? 'Folio <hello@folioapp.co.uk>';
+
+// ── Unsubscribe HMAC helpers ───────────────────────────────────────────────────
+
+/**
+ * Returns a 64-char hex HMAC-SHA256 signature for the given email address.
+ * Used to sign and verify one-click unsubscribe URLs.
+ */
+export function signUnsubscribeToken(email: string, secret: string): string {
+  return crypto.createHmac('sha256', secret).update(email).digest('hex');
+}
+
+/**
+ * Builds a fully-qualified, HMAC-signed unsubscribe URL.
+ * Reads CRON_SECRET from env; throws if not set (prevents silent unsigned links).
+ */
+export function buildUnsubscribeUrl(email: string, siteUrl: string): string {
+  const secret = process.env.CRON_SECRET;
+  if (!secret) throw new Error('[email] CRON_SECRET env var not set — cannot build unsubscribe URL');
+  const sig = signUnsubscribeToken(email, secret);
+  return `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(email)}&sig=${sig}`;
+}
 
 function welcomeHtml(firstName: string, todayUrl: string): string {
   const name = firstName ? firstName : 'there';

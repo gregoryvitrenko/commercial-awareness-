@@ -194,6 +194,8 @@ async function searchNews(dateLabel: string): Promise<string> {
           api_key: apiKey,
           query: q,
           search_depth: 'basic', // 'advanced' is slow; basic is plenty for news
+          topic: 'news',         // news-optimised index — avoids stale evergreen pages
+          days: 1,               // only results published in the last 24 hours
           max_results: 5,
           include_answer: false,
         }),

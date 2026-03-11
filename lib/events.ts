@@ -116,6 +116,8 @@ async function searchForEvents(): Promise<string> {
           api_key: apiKey,
           query: q,
           search_depth: 'basic',
+          topic: 'news',         // news-optimised index for event announcements
+          days: 7,               // events announced in the last week
           max_results: 5,
           include_answer: false,
         }),

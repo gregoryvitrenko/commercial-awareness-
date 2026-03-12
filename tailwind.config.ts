@@ -108,6 +108,11 @@ const config: Config = {
   				'5': 'hsl(var(--chart-5))'
   			},
   			paper: 'hsl(var(--paper))',  // warm page background, responds to dark mode
+  			'oxford-blue': {
+  				DEFAULT: '#002147',
+  				light: '#1a3a5c',   /* slightly lighter for hover states */
+  				dark:  '#001530',   /* slightly deeper for dark mode */
+  			},
   		}
   	}
   },

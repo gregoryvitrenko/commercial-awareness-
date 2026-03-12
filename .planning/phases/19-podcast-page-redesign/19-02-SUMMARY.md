@@ -65,7 +65,7 @@ Each task was committed atomically:
 
 1. **Task 1: Redesign archive page with editorial episode rows** - `552ec1b` (feat)
 
-**Plan metadata:** (docs: complete plan — added after state updates)
+**Plan metadata:** `9b7d43a` (docs: complete plan)
 
 ## Files Created/Modified
 

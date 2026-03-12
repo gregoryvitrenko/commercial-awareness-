@@ -280,7 +280,9 @@ Plans:
   2. The lead story displays a large serif headline, full excerpt, and topic badge — it is visually larger and more prominent than any sidebar story
   3. The first story from today's briefing always populates the lead position — the remaining 7 stories fill the sidebar and/or below-fold grid
   4. On mobile, the layout collapses to a single column with the lead story first — the newspaper hierarchy is preserved in reading order
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 26-01-PLAN.md — NewspaperGrid component: lead story + sidebar + below-fold 3-column grid
 
 ### Phase 27: Unified Archive
 **Goal**: All past content types — briefings, quizzes, and podcasts — are accessible from a single `/archive` page organised in three columns, and the navigation archive dropdown reflects this structure
@@ -356,7 +358,7 @@ Plans:
 | 23. Events + Podcast Accent | v2 | 2/2 | Complete | 2026-03-12 |
 | 24. Interview Prep Page | v2 | 1/1 | Complete | 2026-03-12 |
 | 25. Accent + Global Headings | v3 | 0/2 | Not started | - |
-| 26. Home Newspaper Layout | v3 | 0/TBD | Not started | - |
+| 26. Home Newspaper Layout | v3 | 0/1 | Not started | - |
 | 27. Unified Archive | v3 | 0/TBD | Not started | - |
 | 28. Quiz + Podcast Heroes & Format | v3 | 0/TBD | Not started | - |
 | 29. Quiz Gamification | v3 | 0/TBD | Not started | - |

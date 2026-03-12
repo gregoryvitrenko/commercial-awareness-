@@ -181,13 +181,13 @@ export default async function QuizPage() {
             </h2>
           </div>
           {/* Hero card — no question count (briefing unavailable) */}
-          <div className="rounded-card bg-[#002147] p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+          <div className="rounded-card bg-charcoal p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
             <div>
               <p className="section-label text-stone-300 mb-2">Today&apos;s Quiz</p>
               <p className="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">{formatDisplayDate(today)}</p>
             </div>
             <div>
-              <Link href="/quiz" className="inline-flex items-center gap-2 bg-white text-[#002147] font-semibold text-sm px-5 py-3 rounded-chrome hover:bg-stone-100 transition-colors">
+              <Link href="/quiz" className="inline-flex items-center gap-2 bg-white text-charcoal font-semibold text-sm px-5 py-3 rounded-chrome hover:bg-stone-100 transition-colors">
                 Start today&apos;s quiz <ChevronRight size={14} />
               </Link>
             </div>
@@ -228,15 +228,15 @@ export default async function QuizPage() {
             {storyCount} daily · {deepCount} deep
           </span>
         </div>
-        {/* Hero card — today's date, question count, Oxford blue CTA */}
-        <div className="rounded-card bg-[#002147] p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+        {/* Hero card — today's date, question count, charcoal CTA */}
+        <div className="rounded-card bg-charcoal p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
           <div>
             <p className="section-label text-stone-300 mb-2">Today&apos;s Quiz</p>
             <p className="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">{formatDisplayDate(today)}</p>
             <p className="text-sm text-stone-300 mt-2">{storyCount} daily · {deepCount} deep practice</p>
           </div>
           <div>
-            <Link href="/quiz" className="inline-flex items-center gap-2 bg-white text-[#002147] font-semibold text-sm px-5 py-3 rounded-chrome hover:bg-stone-100 transition-colors">
+            <Link href="/quiz" className="inline-flex items-center gap-2 bg-white text-charcoal font-semibold text-sm px-5 py-3 rounded-chrome hover:bg-stone-100 transition-colors">
               Start today&apos;s quiz <ChevronRight size={14} />
             </Link>
           </div>

@@ -67,7 +67,7 @@ export function FirmsDirectory({ firms }: { firms: FirmProfile[] }) {
             onClick={() => { setActiveTier('All'); setQuery(''); }}
             className={`flex items-center gap-1.5 w-max lg:w-full text-left text-[12px] font-sans font-medium px-3 py-2 rounded-chrome transition-colors whitespace-nowrap shrink-0
               ${!isSearching && activeTier === 'All'
-                ? 'bg-oxford-blue text-white'
+                ? 'bg-charcoal text-white'
                 : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100'
               }
               ${isSearching ? 'opacity-50 pointer-events-none' : ''}`}
@@ -85,7 +85,7 @@ export function FirmsDirectory({ firms }: { firms: FirmProfile[] }) {
               onClick={() => { setActiveTier(tier); setQuery(''); }}
               className={`flex items-center gap-1.5 w-max lg:w-full text-left text-[12px] font-sans font-medium px-3 py-2 rounded-chrome transition-colors whitespace-nowrap shrink-0
                 ${!isSearching && activeTier === tier
-                  ? 'bg-oxford-blue text-white'
+                  ? 'bg-charcoal text-white'
                   : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-stone-100'
                 }
                 ${isSearching ? 'opacity-50 pointer-events-none' : ''}`}

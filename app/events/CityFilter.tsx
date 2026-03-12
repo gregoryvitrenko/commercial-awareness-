@@ -43,7 +43,7 @@ function EventCard({ event }: EventCardProps) {
       <h3 className="text-body font-semibold text-stone-900 dark:text-stone-100 mb-1 leading-snug">
         {event.title}
       </h3>
-      <p className="text-caption text-[#002147] dark:text-blue-300 font-medium mb-1">
+      <p className="text-caption text-charcoal dark:text-charcoal-light font-medium mb-1">
         {formatShortDate(event.date, event.time)}
       </p>
       <p className="text-caption text-stone-500">
@@ -94,7 +94,7 @@ export function CityFilter({ events }: CityFilterProps) {
 
   const tabBase =
     'text-label font-medium whitespace-nowrap transition-colors cursor-pointer bg-transparent border-none outline-none font-sans py-1.5 px-3 rounded-full';
-  const tabActive = 'bg-[#002147] text-white';
+  const tabActive = 'bg-charcoal text-white';
   const tabInactive =
     'text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800';
 

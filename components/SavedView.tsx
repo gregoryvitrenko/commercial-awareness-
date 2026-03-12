@@ -100,7 +100,7 @@ export function SavedView({ today }: SavedViewProps) {
                 </p>
 
                 {note && (
-                  <div className="mt-3 pl-3 border-l-2 border-[#002147] dark:border-[#002147]/60">
+                  <div className="mt-3 pl-3 border-l-2 border-charcoal dark:border-charcoal/60">
                     <p className="text-[12px] text-stone-600 dark:text-stone-400 italic leading-relaxed line-clamp-2">
                       {note}
                     </p>

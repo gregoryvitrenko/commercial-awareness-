@@ -32,7 +32,7 @@ function MidGridNudge() {
         </div>
         <Link
           href="/upgrade"
-          className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-oxford-blue text-white text-[12px] font-medium hover:bg-oxford-blue-light transition-colors"
+          className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-charcoal text-white text-[12px] font-medium hover:bg-charcoal-light transition-colors"
         >
           Subscribe — £4/mo →
         </Link>

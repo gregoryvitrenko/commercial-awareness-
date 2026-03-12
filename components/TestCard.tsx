@@ -37,7 +37,7 @@ export function TestCard({ test }: { test: TestMeta }) {
       <div className="flex-1" />
 
       {/* Oxford blue CTA */}
-      <div className="inline-flex items-center gap-2 bg-[#002147] text-white font-semibold text-sm px-5 py-3 rounded-chrome group-hover:bg-[#002d5c] transition-colors">
+      <div className="inline-flex items-center gap-2 bg-charcoal text-white font-semibold text-sm px-5 py-3 rounded-chrome group-hover:bg-charcoal-light transition-colors">
         Start practising <ChevronRight size={14} />
       </div>
     </Link>

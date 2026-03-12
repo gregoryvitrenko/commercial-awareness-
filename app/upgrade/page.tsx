@@ -148,7 +148,7 @@ export default function UpgradePage() {
               <button
                 onClick={handleUpgrade}
                 disabled={loading}
-                className="w-full py-3 rounded-chrome bg-oxford-blue text-white text-caption font-sans font-medium hover:bg-oxford-blue-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 rounded-chrome bg-charcoal text-white text-caption font-sans font-medium hover:bg-charcoal-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading
                   ? 'Redirecting to checkout…'

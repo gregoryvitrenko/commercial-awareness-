@@ -26,7 +26,7 @@ export function FirmCard({ firm }: { firm: FirmProfile }) {
       >
         {/* ── Name + HQ ───────────────────────────────── */}
         <div className="min-w-0 w-44 sm:w-52 shrink-0">
-          <p className="font-serif text-[14px] sm:text-[15px] font-semibold leading-snug text-stone-900 dark:text-stone-50 truncate group-hover:underline decoration-oxford-blue/40 dark:decoration-blue-400/40 underline-offset-2">
+          <p className="font-serif text-[14px] sm:text-[15px] font-semibold leading-snug text-stone-900 dark:text-stone-50 truncate group-hover:underline decoration-charcoal/40 dark:decoration-charcoal-light/40 underline-offset-2">
             {firm.name}
           </p>
           <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 mt-0.5">
@@ -61,7 +61,7 @@ export function FirmCard({ firm }: { firm: FirmProfile }) {
           </span>
           <ChevronRight
             size={13}
-            className="shrink-0 text-stone-300 dark:text-stone-600 group-hover:text-oxford-blue dark:group-hover:text-blue-400 transition-colors"
+            className="shrink-0 text-stone-300 dark:text-stone-600 group-hover:text-charcoal dark:group-hover:text-charcoal-light transition-colors"
           />
         </div>
       </div>

@@ -35,8 +35,8 @@
     --paper: 40 25% 97%;        /* warm cream #F9F7F2 — light mode page background */
 
     /* Semantic radius tokens (direct values, not calc chains) */
-    --radius-card:   0.125rem;  /* 2px — nearly flat, editorial */
-    --radius-chrome: 0.25rem;   /* 4px — badges, UI chrome elements */
+    --radius-card:   1.5rem;    /* 24px — rounded-3xl, premium soft cards */
+    --radius-chrome: 1rem;      /* 16px — rounded-2xl, softened chrome */
     --radius-pill:   9999px;    /* pill / tag / chip */
     --radius-input:  0.25rem;   /* 4px — form fields */
   }

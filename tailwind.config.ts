@@ -61,8 +61,8 @@ const config: Config = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)',
   			// Semantic radius tokens — reference CSS vars defined in globals.css
-  			card:   'var(--radius-card)',    // 2px — nearly flat editorial
-  			chrome: 'var(--radius-chrome)',  // 4px — badges, UI chrome
+  			card:   'var(--radius-card)',    // 24px — premium rounded (v2)
+  			chrome: 'var(--radius-chrome)',  // 16px — softened chrome (v2)
   			pill:   'var(--radius-pill)',    // 9999px — tags/chips
   			input:  'var(--radius-input)',   // 4px — form fields
   		},

@@ -495,7 +495,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                           <div
                             className={`h-full rounded-full transition-all duration-500 ${
                               pct >= 80 ? 'bg-emerald-500 dark:bg-emerald-400' :
-                              pct >= 60 ? 'bg-amber-500 dark:bg-amber-400' :
+                              pct >= 60 ? 'bg-oxford-blue/70 dark:bg-oxford-blue-light' :
                               'bg-rose-500 dark:bg-rose-400'
                             }`}
                             style={{ width: `${pct}%` }}
@@ -575,7 +575,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                         {pct}%
                       </span>
                       <div className="pb-1 leading-tight">
-                        <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-amber-400">
+                        <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-oxford-blue dark:text-oxford-blue-light">
                           {displayResult.score}/{displayResult.total}
                         </p>
                         {trend && (
@@ -753,7 +753,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           </h3>
           <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden">
             <div className="px-5 py-6 flex items-center gap-5">
-              <Trophy className={`w-9 h-9 flex-shrink-0 ${pct >= 80 ? 'text-amber-500' : pct >= 60 ? 'text-stone-400' : 'text-stone-300 dark:text-stone-600'}`} />
+              <Trophy className={`w-9 h-9 flex-shrink-0 ${pct >= 80 ? 'text-oxford-blue dark:text-oxford-blue-light' : pct >= 60 ? 'text-stone-400' : 'text-stone-300 dark:text-stone-600'}`} />
               <div className="min-w-0 flex-1">
                 <p className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">
                   {score} / {total}

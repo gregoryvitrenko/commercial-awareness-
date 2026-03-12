@@ -45,30 +45,30 @@
 
 ### Firm Profile (FIRM)
 
-- [ ] **FIRM-01**: Firm profile displays NQ salary, TC salary, intake/year, and seats in a prominent horizontal stat strip below the firm name
-- [ ] **FIRM-02**: Firm profile content sections use visually differentiated treatments — not all identical left-border cards
-- [ ] **FIRM-03**: "Why This Firm?" section uses editorial numbered callout style with large background numbers
-- [ ] **FIRM-04**: Interview questions use clean typographic numbering — no Q1/Q2 chip/box styling
+- [x] **FIRM-01**: Firm profile displays NQ salary, TC salary, intake/year, and seats in a prominent horizontal stat strip below the firm name
+- [x] **FIRM-02**: Firm profile content sections use visually differentiated treatments — not all identical left-border cards
+- [x] **FIRM-03**: "Why This Firm?" section uses editorial numbered callout style with large background numbers
+- [x] **FIRM-04**: Interview questions use clean typographic numbering — no Q1/Q2 chip/box styling
 
 ### Quiz (QUIZ)
 
-- [ ] **QUIZ-01**: Quiz mode selection (Daily vs Deep Practice) uses a clearly differentiated editorial two-panel layout
-- [ ] **QUIZ-02**: Quiz date list shows visual distinction between today, available past dates, and completed dates
+- [x] **QUIZ-01**: Quiz mode selection (Daily vs Deep Practice) uses a clearly differentiated editorial two-panel layout
+- [x] **QUIZ-02**: Quiz date list shows visual distinction between today, available past dates, and completed dates
 
 ### Firms Directory (FDIR)
 
-- [ ] **FDIR-01**: Tier section headers (Magic Circle, Silver Circle, etc.) use a full-width editorial rule treatment
+- [x] **FDIR-01**: Tier section headers (Magic Circle, Silver Circle, etc.) use a full-width editorial rule treatment
 
 ### Conversion (CONV)
 
-- [ ] **CONV-04**: Upgrade page feature grid item titles use `font-serif`
-- [ ] **CONV-05**: Upgrade page CTA panel redesigned as dark stone-900 block with border button
+- [x] **CONV-04**: Upgrade page feature grid item titles use `font-serif`
+- [x] **CONV-05**: Upgrade page CTA panel redesigned as dark stone-900 block with border button
 
 ### Podcast Page (POD)
 
-- [ ] **POD-01**: Podcast page hero redesigned as dark `bg-stone-900` immersive player block — episode title, waveform bar visualization, play button, and date badge
-- [ ] **POD-02**: Episode archive list uses editorial layout — date (day/month split) + vertical rule divider + topic chip + title + duration, with hover-reveal play button
-- [ ] **POD-03**: Current episode shows a briefing notes section below the player — numbered talking points sidebar matching the editorial numbered callout style
+- [x] **POD-01**: Podcast page hero redesigned as dark `bg-stone-900` immersive player block — episode title, waveform bar visualization, play button, and date badge
+- [x] **POD-02**: Episode archive list uses editorial layout — date (day/month split) + vertical rule divider + title + duration, with audio status indicator
+- [x] **POD-03**: Current episode shows a briefing notes section below the player — numbered talking points sidebar matching the editorial numbered callout style
 
 ## Future Requirements
 
@@ -112,18 +112,18 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GDES-03 | Phase 16 | Complete |
 | HDR-01 | Phase 16 | Complete |
 | HDR-02 | Phase 16 | Complete |
-| FIRM-01 | Phase 17 | Pending |
-| FIRM-02 | Phase 17 | Pending |
-| FIRM-03 | Phase 17 | Pending |
-| FIRM-04 | Phase 17 | Pending |
-| QUIZ-01 | Phase 18 | Pending |
-| QUIZ-02 | Phase 18 | Pending |
-| FDIR-01 | Phase 18 | Pending |
-| CONV-04 | Phase 18 | Pending |
-| CONV-05 | Phase 18 | Pending |
-| POD-01 | Phase 19 | Pending |
-| POD-02 | Phase 19 | Pending |
-| POD-03 | Phase 19 | Pending |
+| FIRM-01 | Phase 17 | Complete |
+| FIRM-02 | Phase 17 | Complete |
+| FIRM-03 | Phase 17 | Complete |
+| FIRM-04 | Phase 17 | Complete |
+| QUIZ-01 | Phase 18 | Complete |
+| QUIZ-02 | Phase 18 | Complete |
+| FDIR-01 | Phase 18 | Complete |
+| CONV-04 | Phase 18 | Complete |
+| CONV-05 | Phase 18 | Complete |
+| POD-01 | Phase 19 | Complete |
+| POD-02 | Phase 19 | Complete |
+| POD-03 | Phase 19 | Complete |
 
 **Coverage (v1.2):**
 - v1.2 requirements: 13 total

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Folio is a daily briefing tool for UK law students targeting Magic Circle and US firm training contracts. It delivers AI-generated news briefings, quizzes, firm interview packs, aptitude tests, and an audio podcast — all focused on commercial awareness. Subscription product at £4/month, built and marketed by the owner (LLB student).
+Folio is a daily briefing tool for UK law students targeting Magic Circle, Silver Circle, National, and US firm training contracts. It delivers AI-generated news briefings, quizzes, firm interview packs (46 firms), aptitude tests, sector primers with interview questions, an audio podcast, and AI-curated legal events — all focused on commercial awareness. Subscription product at £4/month with a viral referral system, built and marketed by the owner (LLB student).
 
 ## Core Value
 
@@ -18,11 +18,11 @@ Students who use Folio daily walk into TC interviews knowing what's happening in
 - ✓ Dark/light mode toggle — v1
 - ✓ Archive (past briefings, premium) — v1
 - ✓ Daily quiz (24 questions, cached, premium) — v1
-- ✓ Quiz streak (daily 🔥) + deep practice (⚡) — v1
+- ✓ Quiz streak (daily) + deep practice — v1
 - ✓ Bookmarks + notes (server-side Redis, premium) — v1
 - ✓ Podcast player (ElevenLabs Daniel voice, premium) — v1
-- ✓ Firm profiles (38 firms) + interview packs (premium) — v1
-- ✓ Sector primers (8 topics, premium) — v1
+- ✓ Firm profiles (46 firms) + interview packs (premium) — v1.1
+- ✓ Sector primers (8 topics) with interview Qs + answer skeletons (premium) — v1.1
 - ✓ Aptitude tests: Watson Glaser + SJT (premium) — v1
 - ✓ Onboarding flow — v1
 - ✓ User auth (Clerk) — v1
@@ -30,21 +30,19 @@ Students who use Folio daily walk into TC interviews knowing what's happening in
 - ✓ Welcome email (Resend) — v1
 - ✓ Contextual upgrade nudges — v1
 - ✓ Cron auto-generation (06:00 UTC daily) — v1
+- ✓ Mobile-first responsive header + hamburger nav — v1.1
+- ✓ Podcast archive + cron MP3 pre-generation — v1.1
+- ✓ AI-curated events section (city filter, .ics export, free tier) — v1.1
+- ✓ GDPR-compliant weekly digest (List-Unsubscribe, Haiku subjects) — v1.1
+- ✓ Viral referral system (codes, cookies, Stripe coupon rewards) — v1.1
 
 ### Active
 
-<!-- v1.1 — Content & Reach -->
-- [ ] Firms expansion — Add more US firms + Silver Circle coverage (static data, accuracy priority)
-- [ ] Events section — AI-curated networking/professional events, UK cities with filter, .ics export, free tier
-- [ ] Mobile + header fixes — Header scroll background, mobile nav, story card layout on small screens
-- [ ] Primers: interview Qs + answer skeletons — Practice questions + answer frameworks per sector primer
-- [ ] Podcast archive — /podcast/archive listing past audio briefings
-- [ ] Weekly email digest — Sunday Resend digest, viral loop
-
-<!-- Still pending (not yet tackled) -->
 - [ ] Logo/wordmark — proper brand mark, not just text
 - [ ] Social proof — trust signals: student count, testimonials, or credibility cues (live data when available)
 - [ ] Conversion feature — TBD once user base exists to identify the actual gap
+- [ ] Trainee experience on firm profiles — "Culture & Experience" section per firm
+- [ ] Firm interview packs: PDF export
 
 ### Out of Scope
 
@@ -52,29 +50,17 @@ Students who use Folio daily walk into TC interviews knowing what's happening in
 - Native mobile app — web-first, no revenue to justify native yet
 - Real-time features (live feed, push notifications) — complexity vs. value unclear
 - Custom Clerk production instance — requires domain transfer off Cloudflare; dev keys work fine
-- Vercel Blob audio caching — not yet set up; audio regenerates on each request (known issue)
 
-## Current Milestone: v1.1 Content & Reach
+## Current State
 
-**Goal:** Expand content depth (more firms, events, primers), fix mobile experience, and add engagement/retention features (digest, podcast archive).
-
-**Target features:**
-- Firms expansion (US + Silver Circle, static data)
-- Events section (AI-curated networking events, city filter, .ics export)
-- Mobile + header fixes
-- Primers interview Qs + answer skeletons
-- Podcast archive page
-- Weekly email digest (Resend)
-
-## Context
-
-- **Live product**: folioapp.co.uk, Vercel Pro. Auth (Clerk), payments (Stripe), Redis (Upstash), TTS (ElevenLabs) all active.
-- **v1.0 complete**: Design lift milestone shipped 2026-03-10. Stone/zinc palette, type scale, all pages on token system, analytics live.
-- **Launch promotion**: Free full access for first 15 days from launch date hardcoded in config. After that, free tier (headlines + excerpt only).
+- **v1.0 shipped:** 2026-03-10 — Design token system, editorial polish, conversion surfaces, analytics, bug fixes
+- **v1.1 shipped:** 2026-03-12 — Mobile responsive, 46 firms, podcast archive, primer interview Qs, events section, GDPR digest, referral system
+- **Live product**: folioapp.co.uk, Vercel Pro
+- **Active services**: Clerk auth, Stripe payments, Upstash Redis, ElevenLabs TTS, Tavily search, Resend email
 - **Infrastructure budget**: ~£34/month. Owner budget cap £50/month.
-- **ElevenLabs**: 100k chars/month (Creator tier). Daniel voice only. Audio not yet cached (Vercel Blob not set up).
-- **Marketing channel**: LinkedIn, university law societies, peer networks. Design lift is prerequisite for serious marketing push.
-- **Hardcoded fallback**: app/api/generate/route.ts:16 has old ADMIN_USER_ID as fallback — needs cleanup.
+- **ElevenLabs**: 100k chars/month (Creator tier). Daniel voice only. MP3s cached in Vercel Blob.
+- **Cron jobs**: Daily briefing (06:00 UTC), events (Mon + Thu 07:00 UTC), digest (Sun 08:00 UTC)
+- **Marketing channel**: LinkedIn, university law societies, peer networks. Design + content now ready for serious push.
 
 ## Constraints
 
@@ -89,12 +75,16 @@ Students who use Folio daily walk into TC interviews knowing what's happening in
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Newspaper/editorial direction for design | Matches the content (legal news briefings) and target audience (serious law students) | — Pending |
+| Newspaper/editorial direction for design | Matches the content (legal news briefings) and target audience (serious law students) | ✓ Good |
 | Daniel voice only (ElevenLabs) | Multi-voice multiplies monthly spend against 100k cap | ✓ Good |
 | Clerk dev keys (not production) | Cloudflare CNAME conflict blocks production instance; dev keys work without proxy | ✓ Good |
-| Stone/zinc Tailwind palette | Content areas (stone) vs. UI chrome (zinc) — consistent with editorial feel | — Pending |
-| Design lift before heavy marketing | Site must feel premium before driving paid signups | — Pending |
+| Stone/zinc Tailwind palette | Content areas (stone) vs. UI chrome (zinc) — consistent with editorial feel | ✓ Good |
+| Design lift before heavy marketing | Site must feel premium before driving paid signups | ✓ Good |
+| National tier (rose) for large UK firms | Distinguishes from Silver Circle; rose accent aligns with Tailwind palette | ✓ Good |
+| Events free tier (no paywall) | Growth feature — attracts users before asking for money | ✓ Good |
+| Unsubscribe keyed by email not userId | Simpler for digest route which already has emails from Stripe | ✓ Good |
+| Tavily news topic + days:1 for freshness | Prevents stale articles in daily briefings | ✓ Good |
 | Conversion feature deferred | No user data yet to identify actual friction point | — Pending |
 
 ---
-*Last updated: 2026-03-10 after v1.0 completion, v1.1 milestone started*
+*Last updated: 2026-03-12 after v1.1 milestone completion*

@@ -57,6 +57,17 @@ function formatShortDate(dateStr: string): string {
   });
 }
 
+function formatDateline(dateStr: string): string {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const d = new Date(year, month - 1, day);
+  const start = new Date(year, 0, 1);
+  const issue = Math.ceil((d.getTime() - start.getTime()) / 86400000) + 1;
+  const vol = year - 2025;
+  const dayName = d.toLocaleDateString('en-GB', { weekday: 'long' });
+  const dayMonth = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return `Vol. ${vol} · No. ${issue} · ${dayName}, ${dayMonth} · London Edition`;
+}
+
 
 export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -74,11 +85,11 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
           <span className="hidden sm:block font-sans text-label text-stone-400 dark:text-stone-500 tracking-wide">
             {formatShortDate(displayDate)}
           </span>
-          <Link href="/" className="group flex items-center justify-center gap-2.5">
-            <FolioMark size={34} className="text-stone-900 dark:text-stone-50 group-hover:text-stone-600 dark:group-hover:text-stone-400 transition-colors flex-shrink-0" />
-            <h1 className="font-serif text-display tracking-tight text-stone-900 dark:text-stone-50 group-hover:text-stone-600 dark:group-hover:text-stone-400 transition-colors">
-              Folio
-            </h1>
+          <Link href="/" aria-label="Folio" className="group no-underline flex items-center justify-center text-stone-900 dark:text-stone-50 hover:text-stone-600 dark:hover:text-stone-400 transition-colors">
+            <div className="flex items-center gap-1">
+              <FolioMark size={26} className="flex-shrink-0" />
+              <span className="font-serif text-display tracking-tight" style={{ letterSpacing: '-0.03em' }}>olio</span>
+            </div>
           </Link>
           <div className="flex items-center gap-3 justify-end">
             <ThemeToggle />
@@ -91,6 +102,13 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
+        </div>
+
+        {/* Dateline */}
+        <div className="pb-1 text-center">
+          <span className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+            {formatDateline(displayDate)}
+          </span>
         </div>
 
         {/* Row 2: Nav full-width */}

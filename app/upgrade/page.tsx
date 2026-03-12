@@ -63,7 +63,7 @@ export default function UpgradePage() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col">
+    <div className="min-h-screen bg-paper dark:bg-stone-950 flex flex-col">
       {/* Header */}
       <header className="border-b border-stone-200 dark:border-stone-800">
         <div className="h-[3px] bg-stone-900 dark:bg-stone-100" />
@@ -106,7 +106,7 @@ export default function UpgradePage() {
                 key={outcome.label}
                 className="bg-white dark:bg-stone-900 px-5 py-4"
               >
-                <p className="text-caption font-semibold text-stone-900 dark:text-stone-100 mb-1">
+                <p className="font-serif text-[15px] font-semibold text-stone-900 dark:text-stone-100 mb-1 leading-snug">
                   {outcome.label}
                 </p>
                 <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed">
@@ -116,28 +116,39 @@ export default function UpgradePage() {
             ))}
           </div>
 
-          {/* Pricing card */}
+          {/* Dark conversion panel */}
           <div className="flex flex-col gap-4">
-            <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 px-6 py-6">
-              <p className="section-label mb-2">Monthly</p>
-              <p className="font-serif text-display font-bold tracking-tight text-stone-900 dark:text-stone-50 leading-none mb-1">
+            <div className="rounded-card bg-stone-900 dark:bg-stone-950 px-6 py-7">
+              {/* Overline */}
+              <p className="section-label text-stone-400 mb-3">Monthly subscription</p>
+
+              {/* Price */}
+              <p className="font-serif text-display font-bold tracking-tight text-stone-50 leading-none mb-1">
                 £4
               </p>
-              <p className="text-caption text-stone-400 dark:text-stone-500 mb-5">
-                per month
+              <p className="text-caption text-stone-500 mb-6">
+                per month · cancel any time
               </p>
 
+              {/* Feature list */}
+              <ul className="space-y-2 mb-6">
+                {['Full article access + talking points', 'Daily quiz + firm interview packs', 'Audio briefing + full archive'].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <span className="mt-[3px] w-1 h-1 rounded-full bg-stone-500 flex-shrink-0" />
+                    <span className="text-caption text-stone-400 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
               {error && (
-                <p className="text-label font-sans text-rose-500 dark:text-rose-400 mb-3">
-                  {error}
-                </p>
+                <p className="text-label font-sans text-rose-400 mb-3">{error}</p>
               )}
 
-              {/* Amber CTA — deliberate exception to the stone-only button rule for conversion emphasis */}
+              {/* Border-style CTA button */}
               <button
                 onClick={handleUpgrade}
                 disabled={loading}
-                className="w-full py-3 rounded-chrome bg-amber-600 text-stone-50 text-caption font-sans font-medium hover:bg-amber-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3 rounded-chrome border border-stone-600 text-stone-200 text-caption font-sans font-medium hover:border-stone-400 hover:text-stone-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading
                   ? 'Redirecting to checkout…'
@@ -146,8 +157,8 @@ export default function UpgradePage() {
                   : 'Create account & subscribe →'}
               </button>
 
-              <p className="text-center text-label text-stone-400 dark:text-stone-500 mt-3">
-                Cancel any time. Billed via Stripe.
+              <p className="text-center text-label text-stone-600 mt-3">
+                Billed via Stripe · cancel any time
               </p>
             </div>
 

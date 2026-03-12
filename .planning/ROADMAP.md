@@ -7,6 +7,7 @@
 - ✅ **v1.2 Editorial Design** — Phases 13-15 (shipped 2026-03-12)
 - ✅ **v1.3 Editorial Interior** — Phases 16-19 (shipped 2026-03-12)
 - ✅ **v2 Premium Experience** — Phases 20-24 (shipped 2026-03-12)
+- 🚧 **v3 Design Refresh & Features** — Phases 25-30 (active)
 
 ## Phases
 
@@ -61,15 +62,34 @@ See phase details below for full success criteria.
 
 </details>
 
-### 🚧 v2 Premium Experience (In Progress)
+<details>
+<summary>✅ v2 Premium Experience (Phases 20-24) — SHIPPED 2026-03-12</summary>
 
-**Milestone Goal:** Shift Folio from the sharp editorial newspaper aesthetic to a softer premium rounded aesthetic — update the design system (radius token, Oxford blue accent colour) sitewide, redesign secondary pages to match, and add a new `/interview` prep page using existing firm interview question data.
+- [x] Phase 20: Design System Tokens (2/2 plans) — completed 2026-03-12
+- [x] Phase 21: Firms Directory Redesign (1/1 plans) — completed 2026-03-12
+- [x] Phase 22: Secondary Page Redesigns (2/2 plans) — completed 2026-03-12
+- [x] Phase 23: Events + Podcast Accent (2/2 plans) — completed 2026-03-12
+- [x] Phase 24: Interview Prep Page (1/1 plans) — completed 2026-03-12
 
-- [x] **Phase 20: Design System Tokens** — Rounded radius token sitewide, softened chrome elements, Oxford blue replaces amber as primary accent (completed 2026-03-12)
-- [x] **Phase 21: Firms Directory Redesign** — Two-column layout with left sidebar filters and right scrollable firm card grid (completed 2026-03-12)
-- [x] **Phase 22: Secondary Page Redesigns** — Quiz hero card, primers card grid, tests feature cards, saved card layout — all aligned to new rounded aesthetic (completed 2026-03-12)
-- [x] **Phase 23: Events + Podcast Accent** — Events rounded cards with Oxford blue active states, podcast hero Oxford blue ambient glow (completed 2026-03-12)
-- [x] **Phase 24: Interview Prep Page** — New `/interview` page aggregating firm pack and primer questions by topic, with reveal/hide model answers and category filter (completed 2026-03-12)
+See phase details below for full success criteria.
+
+</details>
+
+### 🚧 v3 Design Refresh & Features (Active)
+
+**Milestone Goal:** Align to AI Studio mockup palette (charcoal #2D3436 accent), apply consistent heading pattern sitewide, redesign briefing home page as newspaper layout, unify archive into a 3-column page, standardise podcast and quiz heroes, restructure quiz format (daily 1/topic + deep practice per area) with real Redis-persisted gamification (XP/level/streak), and add an Application Tracker.
+
+**Wave structure:**
+- Wave 1: Phase 25 (colour + heading tokens — everything else depends on this)
+- Wave 2: Phases 26, 27, 28, 30 (all parallel — independent pages/features)
+- Wave 3: Phase 29 (quiz gamification — depends on Phase 28 quiz UI)
+
+- [ ] **Phase 25: Accent + Global Headings** — Charcoal token replaces Oxford blue sitewide; consistent heading block pattern applied to all primary pages
+- [ ] **Phase 26: Home Newspaper Layout** — Briefing home page redesigned as newspaper layout with dominant lead story and sidebar
+- [ ] **Phase 27: Unified Archive** — Single `/archive` page with three columns (Briefings, Quizzes, Podcasts) and nav dropdown
+- [ ] **Phase 28: Quiz + Podcast Heroes & Format** — Standardised evergreen heroes; quiz restructured to 8 questions (1/topic) with deep practice sets
+- [ ] **Phase 29: Quiz Gamification** — XP/level/streak system persisted in Redis, displayed in quiz UI
+- [ ] **Phase 30: Application Tracker** — New `/tracker` page with full CRUD for TC application entries, Redis-persisted per user
 
 ## Phase Details
 
@@ -237,6 +257,76 @@ Plans:
 Plans:
 - [ ] 24-01-PLAN.md — Interview prep page: topic-filtered primer question bank with reveal/hide model answers
 
+### Phase 25: Accent + Global Headings
+**Goal**: The charcoal accent colour (#2D3436) is live sitewide and every primary content page displays a consistent heading block — the visual identity is reset to match the AI Studio mockup palette before any layout work begins
+**Depends on**: Nothing (Wave 1 — must run first)
+**Requirements**: DESIGN-01, DESIGN-02
+**Success Criteria** (what must be TRUE):
+  1. All CTA buttons, active states, hero backgrounds, and accent elements across every page render in charcoal (#2D3436) — no Oxford blue accent remnants visible anywhere on the site
+  2. Every primary content page (home, archive, quiz, podcast, firms, tests, primers, tracker) shows a heading block with a small uppercase overline label, large serif title, and optional description — the pattern is visually consistent across all pages
+  3. The heading block renders correctly in both light and dark modes without any colour regression
+  4. The charcoal token is registered in tailwind.config.ts and used via a named class — no hardcoded hex values scattered in component files
+**Plans**: 2 plans
+Plans:
+- [ ] 25-01-PLAN.md — Charcoal token registration + bulk oxford-blue replacement across all components/pages
+- [ ] 25-02-PLAN.md — v3 heading pattern applied to all 9 primary content pages
+
+### Phase 26: Home Newspaper Layout
+**Goal**: The briefing home page presents stories as a newspaper — the first story commands the main column as the lead, and the remaining stories occupy the sidebar and grid below
+**Depends on**: Phase 25
+**Requirements**: HOME-01, HOME-02
+**Success Criteria** (what must be TRUE):
+  1. On desktop (lg breakpoint), the home page shows an asymmetric two-column layout — a wide main column with the lead story and a narrower sidebar column with secondary stories — the newspaper structure is immediately obvious
+  2. The lead story displays a large serif headline, full excerpt, and topic badge — it is visually larger and more prominent than any sidebar story
+  3. The first story from today's briefing always populates the lead position — the remaining 7 stories fill the sidebar and/or below-fold grid
+  4. On mobile, the layout collapses to a single column with the lead story first — the newspaper hierarchy is preserved in reading order
+**Plans**: TBD
+
+### Phase 27: Unified Archive
+**Goal**: All past content types — briefings, quizzes, and podcasts — are accessible from a single `/archive` page organised in three columns, and the navigation archive dropdown reflects this structure
+**Depends on**: Phase 25
+**Requirements**: ARCH-01, ARCH-02, ARCH-03, ARCH-04
+**Success Criteria** (what must be TRUE):
+  1. The `/archive` page shows three side-by-side columns labelled Briefings, Quizzes, and Podcasts — each lists past entries in reverse-chronological order
+  2. Clicking a quiz entry in the Quizzes column navigates to `/quiz/[date]` — the quiz is playable from the archive
+  3. Clicking a podcast entry in the Podcasts column plays or navigates to that episode — the podcast column is populated from existing Blob-cached episodes
+  4. The main navigation Archive item opens a dropdown with anchor links to Briefings, Quizzes, and Podcasts sections within the unified archive page
+**Plans**: TBD
+
+### Phase 28: Quiz + Podcast Heroes & Format
+**Goal**: The podcast and quiz pages show evergreen hero sections not tied to today's specific content, and the quiz delivers exactly 8 questions (one per practice area) with per-topic deep practice sets available below
+**Depends on**: Phase 25
+**Requirements**: POD-01, QUIZ-01, QUIZ-02, QUIZ-03
+**Success Criteria** (what must be TRUE):
+  1. The podcast page hero shows "Daily Briefing Podcast" as a fixed title and an evergreen description — no story-specific headline or episode title appears in the hero
+  2. The quiz page hero shows "Today's Commercial Briefing Quiz" as a fixed card title — it does not change based on today's briefing content
+  3. Starting the daily quiz, the user receives exactly 8 questions — one drawn from each of the 8 practice areas (M&A, Capital Markets, Banking & Finance, Energy & Tech, Regulation, Disputes, International, AI & Law)
+  4. Below the daily quiz hero, the quiz page lists 8 deep practice sets (one per practice area) — each is independently enterable without completing the daily quiz first
+**Plans**: TBD
+
+### Phase 29: Quiz Gamification
+**Goal**: Users earn XP for completing quizzes, accumulate levels from XP, and maintain a daily streak — all persisted in Redis and visible in the quiz UI
+**Depends on**: Phase 28
+**Requirements**: QUIZ-04, QUIZ-05, QUIZ-06
+**Success Criteria** (what must be TRUE):
+  1. Completing the daily quiz or a deep practice set awards XP — the user sees a confirmation of XP earned immediately after quiz completion
+  2. The quiz UI shows the user's current level and a progress bar indicating XP within the current level (100 XP = 1 level) — the level display updates in real time after a completed quiz
+  3. The quiz UI shows the user's current daily streak (consecutive days with at least one completed quiz) — the streak count is visible before starting a quiz
+  4. All XP, level, and streak data is stored in Redis under per-user keys (`quiz:xp:{userId}`, `quiz:level:{userId}`, `quiz:streak:{userId}`) — refreshing the page does not reset or lose any values
+**Plans**: TBD
+
+### Phase 30: Application Tracker
+**Goal**: Users can manage their TC application pipeline in Folio — adding, viewing, updating, and deleting application entries that persist in Redis and are accessible only to subscribers
+**Depends on**: Phase 25
+**Requirements**: TRKR-01, TRKR-02, TRKR-03, TRKR-04, TRKR-05
+**Success Criteria** (what must be TRUE):
+  1. On the `/tracker` page, a user can add a new application entry with firm name, status, deadline date, and notes — the entry appears in the table immediately after saving
+  2. All application entries are displayed in a table on `/tracker`, sortable by deadline date — the user can see their entire pipeline at a glance
+  3. The user can update the status or notes of any existing entry inline or via an edit action — changes persist after page refresh
+  4. The user can delete any application entry — the entry is removed from the table and from Redis immediately
+  5. Attempting to access `/tracker` without an active subscription redirects to the upgrade page — the data is never visible to free users
+**Plans**: TBD
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -260,8 +350,14 @@ Plans:
 | 17. Firm Profile Redesign | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 18. Secondary Pages + Conversion Polish | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 19. Podcast Page Redesign | v1.3 | 2/2 | Complete | 2026-03-12 |
-| 20. Design System Tokens | 2/2 | Complete    | 2026-03-12 | - |
-| 21. Firms Directory Redesign | 1/1 | Complete   | 2026-03-12 | - |
-| 22. Secondary Page Redesigns | 2/2 | Complete   | 2026-03-12 | - |
-| 23. Events + Podcast Accent | 2/2 | Complete   | 2026-03-12 | - |
-| 24. Interview Prep Page | 1/1 | Complete   | 2026-03-12 | - |
+| 20. Design System Tokens | v2 | 2/2 | Complete | 2026-03-12 |
+| 21. Firms Directory Redesign | v2 | 1/1 | Complete | 2026-03-12 |
+| 22. Secondary Page Redesigns | v2 | 2/2 | Complete | 2026-03-12 |
+| 23. Events + Podcast Accent | v2 | 2/2 | Complete | 2026-03-12 |
+| 24. Interview Prep Page | v2 | 1/1 | Complete | 2026-03-12 |
+| 25. Accent + Global Headings | v3 | 0/2 | Not started | - |
+| 26. Home Newspaper Layout | v3 | 0/TBD | Not started | - |
+| 27. Unified Archive | v3 | 0/TBD | Not started | - |
+| 28. Quiz + Podcast Heroes & Format | v3 | 0/TBD | Not started | - |
+| 29. Quiz Gamification | v3 | 0/TBD | Not started | - |
+| 30. Application Tracker | v3 | 0/TBD | Not started | - |

@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-function useRedis(): boolean {
+function hasRedis(): boolean {
   return !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
 }
 
-function getRedis() {
-  const { Redis } = require('@upstash/redis');
+async function getRedis() {
+  const { Redis } = await import('@upstash/redis');
   return new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    url: process.env.UPSTASH_REDIS_REST_URL!,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
   });
 }
 
@@ -56,9 +56,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   }
 
   // Set opt-out key in Redis (no TTL — permanent until manually removed)
-  if (useRedis()) {
+  if (hasRedis()) {
     try {
-      const redis = getRedis();
+      const redis = await getRedis();
       await redis.set(`email-opt-out:${email.toLowerCase()}`, '1');
     } catch (err) {
       console.error('[unsubscribe] Redis set failed:', err);

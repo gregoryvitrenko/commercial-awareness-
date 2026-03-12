@@ -23,8 +23,8 @@ async function isOptedOut(email: string): Promise<boolean> {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
     return false;
   }
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { Redis } = require('@upstash/redis');
+  // Dynamic import to avoid bundling Redis in edge
+  const { Redis } = await import('@upstash/redis');
   const redis = new Redis({
     url: process.env.UPSTASH_REDIS_REST_URL,
     token: process.env.UPSTASH_REDIS_REST_TOKEN,

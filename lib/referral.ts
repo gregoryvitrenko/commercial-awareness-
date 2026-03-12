@@ -3,16 +3,15 @@ import { getSubscription } from '@/lib/subscription';
 
 // ─── Backend detection ────────────────────────────────────────────────────────
 
-function useRedis(): boolean {
+function hasRedis(): boolean {
   return !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
 }
 
-function getRedis() {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { Redis } = require('@upstash/redis');
+async function getRedis() {
+  const { Redis } = await import('@upstash/redis');
   return new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    url: process.env.UPSTASH_REDIS_REST_URL!,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
   });
 }
 
@@ -28,12 +27,12 @@ function generateCode(): string {
  * Dev fallback: deterministic SHA-256 slice (no Redis required).
  */
 export async function getOrCreateReferralCode(userId: string): Promise<string> {
-  if (!useRedis()) {
+  if (!hasRedis()) {
     // Deterministic dev fallback — no Redis required
     return crypto.createHash('sha256').update(userId).digest('hex').slice(0, 8);
   }
 
-  const redis = getRedis();
+  const redis = await getRedis();
   const existing = await redis.get(`referral-code:${userId}`);
   if (existing) return existing as string;
 
@@ -61,9 +60,8 @@ async function applyFreeMonthCoupon(referrerId: string): Promise<void> {
     return;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const Stripe = require('stripe');
-  const stripe = new Stripe(stripeKey);
+  const StripeModule = await import('stripe');
+  const stripe = new StripeModule.default(stripeKey);
 
   try {
     const coupon = await stripe.coupons.create({
@@ -94,9 +92,9 @@ export async function recordReferral(
   newUserId: string,
   referralCode: string,
 ): Promise<{ rewarded: boolean }> {
-  if (!useRedis()) return { rewarded: false };
+  if (!hasRedis()) return { rewarded: false };
 
-  const redis = getRedis();
+  const redis = await getRedis();
 
   // Look up referrer by code
   const referrerId = (await redis.get(`referral:${referralCode}`)) as string | null;

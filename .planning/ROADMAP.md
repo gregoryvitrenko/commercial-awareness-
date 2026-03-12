@@ -205,7 +205,10 @@ Plans:
   2. The primers page shows a card grid where each card displays a topic icon, title, short description, and interview question count — the user can assess what each primer covers without clicking in
   3. The tests page shows Watson Glaser and SJT as two large feature cards with description, what the test measures, and a start CTA — the current list treatment is gone
   4. The saved/bookmarks page uses a rounded card layout with Oxford blue accent elements — consistent with the new design system, not the previous sharp treatment
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 22-01-PLAN.md — Quiz hero card (Oxford blue, today's date, question count CTA) + PrimerCard topic icons and rounded-card
+- [ ] 22-02-PLAN.md — TestCard large feature card with Oxford blue CTA + SavedView rounded-card and Oxford blue accents
 
 ### Phase 23: Events + Podcast Accent
 **Goal**: The events page and podcast hero are updated to match the new rounded, Oxford blue aesthetic — completing design system alignment across all pages
@@ -258,7 +261,7 @@ Plans:
 | 18. Secondary Pages + Conversion Polish | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 19. Podcast Page Redesign | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 20. Design System Tokens | 1/2 | In Progress|  | - |
-| 21. Firms Directory Redesign | v2 | 0/TBD | Not started | - |
-| 22. Secondary Page Redesigns | v2 | 0/TBD | Not started | - |
+| 21. Firms Directory Redesign | v2 | 0/1 | Not started | - |
+| 22. Secondary Page Redesigns | v2 | 0/2 | Not started | - |
 | 23. Events + Podcast Accent | v2 | 0/2 | Not started | - |
 | 24. Interview Prep Page | v2 | 0/1 | Not started | - |

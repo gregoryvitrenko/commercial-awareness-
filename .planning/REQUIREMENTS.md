@@ -1,140 +1,100 @@
-# Requirements: Folio
+---
+milestone: v2
+milestone_name: Premium Experience
+version: 1.0
+status: active
+created: 2026-03-12
+---
 
-**Defined:** 2026-03-12
+# Requirements: v2 — Premium Experience
+
+## Milestone Goal
+
+Shift Folio from a sharp editorial newspaper aesthetic to a softer premium rounded aesthetic — update the design system (radius token, Oxford blue accent colour) sitewide, redesign secondary pages to match, and add a new `/interview` prep page using existing firm interview question data.
+
 **Core Value:** Students who use Folio daily walk into TC interviews knowing what's happening in the market and how to talk about it — giving them a credible edge over unprepared candidates.
 
-## v1.2 Requirements
+---
 
-### Typography (TYPO)
+## Requirements
 
-- [ ] **TYPO-01**: Story card headlines render in Playfair Display serif (replacing Inter sans-serif)
-- [ ] **TYPO-02**: Playfair Display headings use semibold weight (600) not bold (700)
-- [ ] **TYPO-03**: Section/topic labels display at minimum 11px (up from 10px) for legibility
-- [ ] **TYPO-04**: Body and article text renders at 16px (up from 15px)
+### ROUND — Rounded Design System
 
-### Editorial Layout (LAYOUT)
+- [ ] **ROUND-01**: The `rounded-card` design token is updated to `rounded-3xl` (24px) — all cards, panels, and UI sections adopt the new rounded aesthetic sitewide
+- [ ] **ROUND-02**: Chrome elements (buttons, chips, inputs, tabs) use `rounded-full` or `rounded-2xl` — softened from the current sharp `rounded-chrome` (4px)
 
-- [ ] **LAYOUT-01**: Home briefing opens with a lead story in large-format dominant position
-- [ ] **LAYOUT-02**: Two secondary stories appear below the lead in a 2-column row
-- [ ] **LAYOUT-03**: A visual divider separates the featured section from the remaining story grid
-- [ ] **LAYOUT-04**: Remaining stories render in a standard grid below the divider
+### COL — Colour
 
-### Spacing & Rhythm (SPACE)
+- [ ] **COL-01**: Oxford blue (`#002147`) replaces amber as the primary action/accent colour — CTA buttons, active navigation states, hero section backgrounds, and featured card accents use Oxford blue across all pages
 
-- [ ] **SPACE-01**: Vertical gap between cards/sections increases to gap-y-6 or gap-y-8
-- [ ] **SPACE-02**: Internal card element spacing increases between headline, excerpt, and meta
+### FDIR — Firms Directory
 
-### Conversion (CONV)
+- [ ] **FDIR-01**: The firms directory page uses a two-column layout — left sidebar with tier filter tabs and search input, right scrollable grid of rounded firm cards
 
-- [ ] **CONV-01**: Upgrade page layout reads as editorial/newspaper section (not SaaS pricing)
-- [ ] **CONV-02**: Upgrade page includes outcome-framed social proof section (student count + testimonial placeholders)
-- [ ] **CONV-03**: Upgrade page primary CTA uses differentiated accent colour to stand out
+### QUIZ — Quiz Page
 
-## v1.3 Requirements
+- [ ] **QUIZ-01**: The quiz page shows a prominent "Today" hero card (current date, question count, Oxford blue start CTA) as the primary visual anchor above the date archive list
 
-### Global Design (GDES)
+### PRIM — Primers Page
 
-- [x] **GDES-01**: All pages use warm paper background (`#F9F7F2`) replacing cold bg-stone-50/white
-- [x] **GDES-02**: Section label utility (`.section-label`) uses JetBrains Mono — restored after v1.2 font sweep
-- [x] **GDES-03**: Striped-F + "olio" wordmark deployed from existing codebase changes
+- [ ] **PRIM-01**: The primers page uses a card grid layout — each card shows a topic icon, title, short description, and interview question count per primer
 
-### Header (HDR)
+### TESTS — Tests Page
 
-- [x] **HDR-01**: Header shows editorial dateline (Vol. · No. · Day, Date · London Edition) in small uppercase tracking
-- [x] **HDR-02**: Folio wordmark uses tight letter-spacing (`-0.03em`) matching brand studio `.folio-wordmark` treatment
+- [ ] **TESTS-01**: The tests page shows Watson Glaser and SJT as two large feature cards with description, what the test assesses, and a start CTA — replacing the current list treatment
 
-### Firm Profile (FIRM)
+### SAVED — Saved Page
 
-- [x] **FIRM-01**: Firm profile displays NQ salary, TC salary, intake/year, and seats in a prominent horizontal stat strip below the firm name
-- [x] **FIRM-02**: Firm profile content sections use visually differentiated treatments — not all identical left-border cards
-- [x] **FIRM-03**: "Why This Firm?" section uses editorial numbered callout style with large background numbers
-- [x] **FIRM-04**: Interview questions use clean typographic numbering — no Q1/Q2 chip/box styling
+- [ ] **SAVED-01**: The saved/bookmarks page uses a card-based layout with rounded treatment and Oxford blue accents matching the new design system
 
-### Quiz (QUIZ)
+### EVENTS — Events Page
 
-- [x] **QUIZ-01**: Quiz mode selection (Daily vs Deep Practice) uses a clearly differentiated editorial two-panel layout
-- [x] **QUIZ-02**: Quiz date list shows visual distinction between today, available past dates, and completed dates
+- [ ] **EVENTS-01**: The events page card layout adopts the new rounded aesthetic and Oxford blue accent elements (active filter state, date highlight)
 
-### Firms Directory (FDIR)
+### POD — Podcast
 
-- [x] **FDIR-01**: Tier section headers (Magic Circle, Silver Circle, etc.) use a full-width editorial rule treatment
+- [ ] **POD-01**: The podcast hero player gains a subtle Oxford blue ambient glow/gradient background accent — elevating the existing two-column hero layout to a premium feel
 
-### Conversion (CONV)
+### INTVW — Interview Prep Page
 
-- [x] **CONV-04**: Upgrade page feature grid item titles use `font-serif`
-- [x] **CONV-05**: Upgrade page CTA panel redesigned as dark stone-900 block with border button
+- [ ] **INTVW-01**: A new `/interview` page exists and is accessible from main navigation
+- [ ] **INTVW-02**: The interview page aggregates questions from existing firm packs and primers, organised by topic/practice area (M&A, Banking & Finance, Capital Markets, etc.)
+- [ ] **INTVW-03**: Each question has a reveal/hide toggle that shows the model answer on interaction
+- [ ] **INTVW-04**: Users can filter questions by category — filtering to a topic shows only questions from that practice area
 
-### Podcast Page (POD)
+---
 
-- [x] **POD-01**: Podcast page hero redesigned as dark `bg-stone-900` immersive player block — episode title, waveform bar visualization, play button, and date badge
-- [x] **POD-02**: Episode archive list uses editorial layout — date (day/month split) + vertical rule divider + title + duration, with audio status indicator
-- [x] **POD-03**: Current episode shows a briefing notes section below the player — numbered talking points sidebar matching the editorial numbered callout style
+## Future Requirements (Deferred)
 
-## Future Requirements
-
-### Brand
-
-- **BRAND-01**: Typographic serif wordmark (Playfair Display) in header replaces plain text — implement after logo/mark is designed
-- **BRAND-02**: F monogram favicon — implement after logo/mark is designed
+- Social proof — student count, testimonials, or credibility cues (live data when available)
+- Trainee experience on firm profiles — "Culture & Experience" section per firm
+- Firm interview packs: PDF export
+- Briefing home page rounded aesthetic — the flat 2-column StoryGrid stays as-is (user prefers it)
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
-| Logo/mark design | Design-first: owner designs the mark outside this milestone; implementation deferred to v1.3 |
-| Dark mode overrides for new typography | Follow existing dark mode token patterns; no new dark-mode-specific work |
-| Editorial layout on archive/topic pages | Home page only for v1.2; extend in future milestone once lead story pattern is validated |
-| Real-time content metrics | No live user data yet to display |
-| Lead story hierarchy on homepage | Reverted in v1.2 — user prefers flat 2-column grid; do not re-introduce |
-| Asymmetric 8+4 column layout | Brand studio mockup reference only — not implementing lead story split |
+- Multi-voice audio — multiplies ElevenLabs spend against 100k/month cap
+- Native mobile app — web-first, no revenue to justify native yet
+- New AI-generated interview content — `/interview` uses existing firm pack + primer data only (no new AI calls)
+- Story grid layout changes — Phase 14 reverted; user prefers flat grid
+
+---
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TYPO-01 | Phase 13 | Complete |
-| TYPO-02 | Phase 13 | Complete |
-| TYPO-03 | Phase 13 | Complete |
-| TYPO-04 | Phase 13 | Complete |
-| SPACE-01 | Phase 13 | Complete |
-| SPACE-02 | Phase 13 | Complete |
-| LAYOUT-01 | Phase 14 | Reverted |
-| LAYOUT-02 | Phase 14 | Reverted |
-| LAYOUT-03 | Phase 14 | Reverted |
-| LAYOUT-04 | Phase 14 | Reverted |
-| CONV-01 | Phase 15 | Complete |
-| CONV-02 | Phase 15 | Complete |
-| CONV-03 | Phase 15 | Complete |
-| GDES-01 | Phase 16 | Complete |
-| GDES-02 | Phase 16 | Complete |
-| GDES-03 | Phase 16 | Complete |
-| HDR-01 | Phase 16 | Complete |
-| HDR-02 | Phase 16 | Complete |
-| FIRM-01 | Phase 17 | Complete |
-| FIRM-02 | Phase 17 | Complete |
-| FIRM-03 | Phase 17 | Complete |
-| FIRM-04 | Phase 17 | Complete |
-| QUIZ-01 | Phase 18 | Complete |
-| QUIZ-02 | Phase 18 | Complete |
-| FDIR-01 | Phase 18 | Complete |
-| CONV-04 | Phase 18 | Complete |
-| CONV-05 | Phase 18 | Complete |
-| POD-01 | Phase 19 | Complete |
-| POD-02 | Phase 19 | Complete |
-| POD-03 | Phase 19 | Complete |
-
-**Coverage (v1.2):**
-- v1.2 requirements: 13 total
-- Mapped to phases: 13
-- Unmapped: 0 ✓
-
-**Coverage (v1.3):**
-- v1.3 requirements: 13 total
-- Mapped to phases: 13
-- Unmapped: 0 ✓
-
----
-*Requirements defined: 2026-03-12*
-*Last updated: 2026-03-12 after v1.3 roadmap creation*
+| ROUND-01 | TBD | Pending |
+| ROUND-02 | TBD | Pending |
+| COL-01 | TBD | Pending |
+| FDIR-01 | TBD | Pending |
+| QUIZ-01 | TBD | Pending |
+| PRIM-01 | TBD | Pending |
+| TESTS-01 | TBD | Pending |
+| SAVED-01 | TBD | Pending |
+| EVENTS-01 | TBD | Pending |
+| POD-01 | TBD | Pending |
+| INTVW-01 | TBD | Pending |
+| INTVW-02 | TBD | Pending |
+| INTVW-03 | TBD | Pending |
+| INTVW-04 | TBD | Pending |

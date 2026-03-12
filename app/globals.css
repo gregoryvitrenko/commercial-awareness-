@@ -32,7 +32,7 @@
     --radius: 0.25rem;
 
     /* Design token layer — additive, distinct names from shadcn vars */
-    --paper: 40 20% 98%;        /* warm off-white — light mode page background */
+    --paper: 40 25% 97%;        /* warm cream #F9F7F2 — light mode page background */
 
     /* Semantic radius tokens (direct values, not calc chains) */
     --radius-card:   0.125rem;  /* 2px — nearly flat, editorial */
@@ -96,7 +96,7 @@
   /* Section label — canonicalises the font-mono text-[10px] tracking-widest uppercase text-stone-400
      pattern used ~77 times across components. Downstream phases consume this class. */
   .section-label {
-    @apply font-sans text-label tracking-widest uppercase text-stone-400 dark:text-stone-500;
+    @apply font-mono text-label tracking-widest uppercase text-stone-400 dark:text-stone-500;
   }
 }
 

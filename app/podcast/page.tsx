@@ -3,6 +3,7 @@ import { PodcastPlayer } from '@/components/PodcastPlayer';
 import { requireSubscription } from '@/lib/paywall';
 import { getBriefing, getLatestBriefing, getTodayDate } from '@/lib/storage';
 import { Headphones } from 'lucide-react';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,8 +32,16 @@ export default async function PodcastPage() {
   return (
     <>
       <Header date={today} />
-      <main className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
         <PodcastPlayer briefing={briefing} />
+        <div className="mt-8 pt-6 border-t border-stone-200 dark:border-stone-800">
+          <Link
+            href="/podcast/archive"
+            className="section-label text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
+          >
+            Episode archive &rarr;
+          </Link>
+        </div>
       </main>
     </>
   );

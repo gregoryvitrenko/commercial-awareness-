@@ -3,13 +3,32 @@ import { getBriefing, getLatestBriefing, getQuiz, getTodayDate, listBriefings } 
 import { Header } from '@/components/Header';
 import { QuizInterface } from '@/components/QuizInterface';
 import type { CountdownData } from '@/components/QuizInterface';
-import type { TopicCategory } from '@/lib/types';
+import type { TopicCategory, QuizQuestion } from '@/lib/types';
 import { TOPIC_STYLES } from '@/lib/types';
 import { ChevronRight, Plus } from 'lucide-react';
 import { requireSubscription } from '@/lib/paywall';
 import { auth } from '@clerk/nextjs/server';
 import { getOnboarding } from '@/lib/onboarding';
 import { FIRMS } from '@/lib/firms-data';
+
+// ── Daily question selector ────────────────────────────────────────────────────
+
+function selectDailyQuestions(
+  questions: QuizQuestion[],
+  storyMeta: Array<{ id: string; topic: TopicCategory }>,
+): QuizQuestion[] {
+  const TOPIC_ORDER: TopicCategory[] = [
+    'M&A', 'Capital Markets', 'Banking & Finance', 'Energy & Tech',
+    'Regulation', 'Disputes', 'International', 'AI & Law',
+  ];
+  const result: QuizQuestion[] = [];
+  for (const topic of TOPIC_ORDER) {
+    const topicStoryIds = storyMeta.filter((s) => s.topic === topic).map((s) => s.id);
+    const q = questions.find((q) => topicStoryIds.includes(q.storyId));
+    if (q) result.push(q);
+  }
+  return result;
+}
 
 // ── Deep practice topics ───────────────────────────────────────────────────────
 
@@ -214,6 +233,9 @@ export default async function QuizPage() {
     headline: s.headline,
   }));
 
+  const dailyQuestions = selectDailyQuestions(quiz?.questions ?? [], storyMeta);
+  const dailyQuiz = quiz ? { ...quiz, questions: dailyQuestions } : null;
+
   return (
     <>
       <Header date={briefing.date} />
@@ -287,7 +309,7 @@ export default async function QuizPage() {
         {dateList}
         <QuizInterface
           date={briefing.date}
-          initialQuiz={quiz}
+          initialQuiz={dailyQuiz}
           storyMeta={storyMeta}
           countdown={countdown}
         />

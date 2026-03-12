@@ -1,60 +1,52 @@
 'use client';
 
+import { useId } from 'react';
+
 interface FolioMarkProps {
   size?: number;
   className?: string;
 }
 
 /**
- * Folio logo mark — a folded-corner document with an F letterform.
- * Uses currentColor so it inherits text colour in both light and dark mode.
+ * Folio mark — the letter F built from parallel stripes.
+ * Vertical lines form the left stem; horizontal lines form each arm.
+ * size = rendered height; width is derived from the 3:4 aspect ratio.
+ * Uses currentColor for light/dark mode compatibility.
  */
-export function FolioMark({ size = 30, className = '' }: FolioMarkProps) {
-  const w = Math.round(size * 0.8);
+export function FolioMark({ size = 26, className = '' }: FolioMarkProps) {
+  const uid = useId();
+  const vId = `${uid}v`;
+  const hId = `${uid}h`;
+  const w = Math.round(size * 0.75); // 30:40 viewBox aspect ratio
+
   return (
     <svg
       width={w}
       height={size}
-      viewBox="0 0 24 30"
+      viewBox="0 0 30 40"
       fill="none"
       className={className}
       aria-hidden="true"
     >
-      {/* Document body with folded top-right corner */}
-      <path
-        d="M2 2H16L22 8V28H2V2Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      {/* Corner fold crease */}
-      <path
-        d="M16 2L16 8H22"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      {/* F — vertical stroke */}
-      <line
-        x1="7" y1="13" x2="7" y2="23"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-      />
-      {/* F — top bar */}
-      <line
-        x1="7" y1="13" x2="15" y2="13"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-      />
-      {/* F — middle bar (shorter) */}
-      <line
-        x1="7" y1="18" x2="13" y2="18"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-      />
+      <defs>
+        {/* Vertical stripes — left stem */}
+        <pattern id={vId} x="0" y="0" width="2.2" height="1" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="1.0" height="1" fill="currentColor" />
+        </pattern>
+        {/* Horizontal stripes — arms */}
+        <pattern id={hId} x="0" y="0" width="1" height="2.2" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="1" height="1.0" fill="currentColor" />
+        </pattern>
+      </defs>
+
+      {/* Left stem: full height */}
+      <rect x="2" y="2" width="7" height="36" fill={`url(#${vId})`} />
+
+      {/* Top arm (overlaps stem → crosshatch at junction) */}
+      <rect x="2" y="2" width="26" height="7" fill={`url(#${hId})`} />
+
+      {/* Middle arm: ~65% width, centred at ~50% of height */}
+      <rect x="2" y="16" width="18" height="7" fill={`url(#${hId})`} />
     </svg>
   );
 }

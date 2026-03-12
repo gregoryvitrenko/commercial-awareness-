@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 20-01-PLAN.md
-last_updated: "2026-03-12T22:11:14.191Z"
+stopped_at: Completed 20-02-PLAN.md
+last_updated: "2026-03-12T22:13:50.479Z"
 last_activity: 2026-03-12 — v2 roadmap written. v1.3 confirmed complete (phases 16-19).
 progress:
   total_phases: 12
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 18
-  completed_plans: 10
+  completed_plans: 11
   percent: 0
 ---
 
@@ -73,6 +73,7 @@ Progress: [░░░░░░░░░░] 0% (0/5 phases)
 - v2: Story grid (home page) stays as flat 2-column — do not touch StoryCard or StoryGrid radius in Phase 20
 - [Phase 20]: radius-card updated to 1.5rem (24px) — premium rounded-3xl aesthetic for cards
 - [Phase 20]: oxford-blue #002147 registered as Tailwind colour token with light/dark variants
+- [Phase 20]: Bookmark active state uses oxford-blue/30 border + oxford-blue/5 bg for visual legibility on light backgrounds
 
 ### Pending Todos
 
@@ -84,7 +85,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-12T22:11:14.186Z
-Stopped at: Completed 20-01-PLAN.md
+Last session: 2026-03-12T22:13:50.473Z
+Stopped at: Completed 20-02-PLAN.md
 Resume file: None
 Next action: `/gsd:plan-phase 20`

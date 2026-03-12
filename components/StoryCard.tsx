@@ -13,9 +13,10 @@ interface StoryCardProps {
   index: number;
   date: string;
   subscribed?: boolean;
+  featured?: boolean;
 }
 
-export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
+export function StoryCard({ story, date, subscribed = false, featured = false }: StoryCardProps) {
   const router = useRouter();
   const styles = TOPIC_STYLES[story.topic] ?? TOPIC_STYLES['International'];
 
@@ -56,12 +57,12 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
       </div>
 
       {/* Headline — padded right so it clears the bookmark icon */}
-      <h2 className="font-serif text-subheading font-semibold leading-snug text-stone-900 dark:text-stone-50 tracking-tight mb-4 group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2 pr-6">
+      <h2 className={`font-serif ${featured ? 'text-article' : 'text-subheading'} font-semibold leading-snug text-stone-900 dark:text-stone-50 tracking-tight mb-4 group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2 pr-6`}>
         {story.headline}
       </h2>
 
       {/* Excerpt */}
-      <p className="text-caption text-stone-500 dark:text-stone-400 leading-[1.65] line-clamp-3">
+      <p className={`text-caption text-stone-500 dark:text-stone-400 leading-[1.65]${featured ? '' : ' line-clamp-3'}`}>
         {excerpt}
       </p>
 

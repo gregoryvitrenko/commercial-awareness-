@@ -46,21 +46,55 @@ function MidGridNudge() {
 export function StoryGrid({ stories, date, subscribed = false }: StoryGridProps) {
   const presentTopics = ALL_TOPICS.filter((t: TopicCategory) => stories.some(s => s.topic === t));
 
-  // Index after which the nudge appears (0-indexed: after the 4th card)
-  const NUDGE_AFTER = 3;
+  // Split stories into editorial sections
+  const lead = stories[0] ?? null;
+  const secondary = stories.length >= 3 ? stories.slice(1, 3) : [];
+  const remaining = stories.length >= 3 ? stories.slice(3) : stories.slice(1);
 
   return (
     <div>
       <TabBar presentTopics={presentTopics} />
+
+      {lead && (
+        <>
+          {/* Lead story: featured variant on lg+, standard on mobile */}
+          <div className="mb-6">
+            <div className="hidden lg:block">
+              <div id={`story-${lead.id}`} className="min-w-0">
+                <StoryCard story={lead} index={0} date={date} subscribed={subscribed} featured />
+              </div>
+            </div>
+            <div className="lg:hidden">
+              <div id={`story-${lead.id}-mobile`} className="min-w-0">
+                <StoryCard story={lead} index={0} date={date} subscribed={subscribed} />
+              </div>
+            </div>
+          </div>
+
+          {/* Secondary row: 2-column on lg+ */}
+          {secondary.length > 0 && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {secondary.map((story, i) => (
+                <div key={story.id} id={`story-${story.id}`} className="min-w-0">
+                  <StoryCard story={story} index={i + 1} date={date} subscribed={subscribed} />
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Divider: lg+ only */}
+          <div className="hidden lg:block h-px bg-stone-200 dark:bg-stone-800 mb-6" />
+        </>
+      )}
+
+      {/* Remaining grid: standard 2-column */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {stories.map((story, i) => (
-          // `contents` makes this wrapper transparent to the grid layout,
-          // so StoryCard and MidGridNudge both become direct grid children.
+        {remaining.map((story, i) => (
           <div key={story.id} className="contents">
             <div id={`story-${story.id}`} className="min-w-0">
-              <StoryCard story={story} index={i} date={date} subscribed={subscribed} />
+              <StoryCard story={story} index={i + (stories.length >= 3 ? 3 : 1)} date={date} subscribed={subscribed} />
             </div>
-            {!subscribed && i === NUDGE_AFTER && <MidGridNudge />}
+            {!subscribed && i === 0 && <MidGridNudge />}
           </div>
         ))}
       </div>

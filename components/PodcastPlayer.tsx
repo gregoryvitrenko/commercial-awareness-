@@ -461,8 +461,6 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
   const isActive = status === 'playing' || status === 'paused';
   const isLoading = status === 'loading';
   const elapsed = duration != null ? progress * duration : null;
-  const episodeTitle = briefing.stories[0]?.headline;
-  const episodeSubtitle = briefing.stories[0]?.talkingPoints?.soundbite ?? briefing.stories[0]?.talkingPoint;
 
   // ── Helpers ───────────────────────────────────────────────────────────────
 
@@ -495,21 +493,19 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
 
             {/* Overline row */}
             <div className="flex items-center gap-3">
-              <span className="section-label bg-stone-800 text-stone-400 px-2 py-0.5">Latest Episode</span>
+              <span className="section-label bg-stone-800 text-stone-400 px-2 py-0.5">Daily Briefing</span>
               <span className="section-label text-stone-600">{formatCoverDate(briefing.date)}</span>
             </div>
 
             {/* Episode title */}
             <h1 className="font-serif text-3xl sm:text-4xl font-semibold text-stone-50 leading-tight tracking-tight">
-              {episodeTitle ?? formatCoverDate(briefing.date)}
+              Daily Briefing Podcast
             </h1>
 
             {/* Subtitle */}
-            {episodeSubtitle && (
-              <p className="text-sm text-stone-400 leading-relaxed line-clamp-2 max-w-lg">
-                {episodeSubtitle}
-              </p>
-            )}
+            <p className="text-sm text-stone-400 leading-relaxed max-w-lg">
+              A 10-minute deep dive into the day&apos;s most critical legal news and commercial trends.
+            </p>
 
             {/* Player row: button + waveform + timestamp */}
             <div className="flex items-end gap-4 pt-1">
@@ -570,7 +566,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
               <div className="absolute -bottom-5 -left-5 w-24 h-24 rounded-full border border-stone-600/40 pointer-events-none" />
 
               {/* Brand name */}
-              <span className="font-serif text-lg font-semibold text-stone-400 select-none">Folio Daily</span>
+              <span className="font-serif text-lg font-semibold text-stone-400 select-none">Folio</span>
 
               {/* Bottom labels */}
               <div className="absolute bottom-3 inset-x-0 flex justify-between px-3">

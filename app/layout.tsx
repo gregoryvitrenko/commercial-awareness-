@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Providers } from './providers';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { SiteFooter } from '@/components/SiteFooter';
+import { ReferralTracker } from '@/components/ReferralTracker';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
@@ -115,6 +116,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
           </Providers>
+          <ReferralTracker />
           <ScrollToTop />
           <Analytics />
         </body>

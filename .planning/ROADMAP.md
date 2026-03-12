@@ -178,7 +178,10 @@ Plans:
   2. Buttons, chips, tabs, and input elements are fully pill-shaped or softly rounded — no sharp square edges on any interactive chrome element
   3. All CTA buttons, active navigation states, and accent highlights render in Oxford blue (#002147) — amber is no longer present as an action colour anywhere on the site
   4. The token changes apply consistently across light and dark modes without any colour regression
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 20-01-PLAN.md — globals.css radius token update (24px cards, 16px chrome) + oxford-blue colour registration in tailwind.config.ts
+- [ ] 20-02-PLAN.md — Amber-to-oxford-blue replacement in BookmarkButton and QuizInterface (action/accent uses only)
 
 ### Phase 21: Firms Directory Redesign
 **Goal**: The firms directory is a structured browsing interface — a persistent left sidebar with tier filter tabs and search lets users narrow to what they want, while the right column shows scrollable rounded firm cards
@@ -247,7 +250,7 @@ Plans:
 | 17. Firm Profile Redesign | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 18. Secondary Pages + Conversion Polish | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 19. Podcast Page Redesign | v1.3 | 2/2 | Complete | 2026-03-12 |
-| 20. Design System Tokens | v2 | 0/TBD | Not started | - |
+| 20. Design System Tokens | v2 | 0/2 | Not started | - |
 | 21. Firms Directory Redesign | v2 | 0/TBD | Not started | - |
 | 22. Secondary Page Redesigns | v2 | 0/TBD | Not started | - |
 | 23. Events + Podcast Accent | v2 | 0/TBD | Not started | - |

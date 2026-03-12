@@ -4,7 +4,8 @@
 
 - ✅ **v1.0 Market-Ready Design Lift** — Phases 1-6 (shipped 2026-03-10)
 - ✅ **v1.1 Content & Reach** — Phases 7-12 (shipped 2026-03-12)
-- 🚧 **v1.2 Editorial Design** — Phases 13-15 (in progress)
+- ✅ **v1.2 Editorial Design** — Phases 13-15 (shipped 2026-03-12)
+- 🚧 **v1.3 Editorial Interior** — Phases 16-18 (in progress)
 
 ## Phases
 
@@ -36,13 +37,24 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
 </details>
 
-### ✅ v1.2 Editorial Design — SHIPPED 2026-03-12
+<details>
+<summary>✅ v1.2 Editorial Design (Phases 13-15) — SHIPPED 2026-03-12</summary>
 
-**Milestone Goal:** Elevate Folio's visual register from polished to genuinely editorial — serif headlines, newspaper-style layout hierarchy, tighter spacing rhythm, and a conversion-optimised upgrade page.
+- [x] Phase 13: Typography & Spacing (1/1 plans) — completed 2026-03-12
+- ~~Phase 14: Editorial Layout~~ — reverted 2026-03-12 (user preferred flat grid over lead story hierarchy)
+- [x] Phase 15: Conversion Page (1/1 plans) — completed 2026-03-12
 
-- [x] **Phase 13: Typography & Spacing** (1/1 plans) - Playfair Display serif, updated type scale sizes, and vertical rhythm improvements across the design system — completed 2026-03-12
-- ~~**Phase 14: Editorial Layout**~~ — reverted 2026-03-12 (user preferred flat grid over lead story hierarchy)
-- [x] **Phase 15: Conversion Page** (1/1 plans) - Upgrade page redesigned as editorial section with outcome framing, social proof, and amber accent CTA — completed 2026-03-12
+See phase details below for full success criteria.
+
+</details>
+
+### 🚧 v1.3 Editorial Interior (In Progress)
+
+**Milestone Goal:** Transform interior pages from a generic card-stack pattern into a genuinely editorial product — warm paper tone sitewide, newspaper masthead header with dateline, firm profile redesign with stat strip and varied section treatments, and a dark ink conversion panel on the upgrade page.
+
+- [ ] **Phase 16: Global Design + Logo + Header** - Warm paper background sitewide, JetBrains Mono section labels restored, new wordmark deployed, editorial dateline in header
+- [ ] **Phase 17: Firm Profile Redesign** - Stat strip, visually differentiated sections, editorial "Why This Firm?" callouts, clean typographic interview question numbering
+- [ ] **Phase 18: Secondary Pages + Conversion Polish** - Quiz mode two-panel layout, quiz date visual states, firms directory tier headers, upgrade page serif titles and dark CTA panel
 
 ## Phase Details
 
@@ -85,6 +97,44 @@ Plans:
 Plans:
 - [x] 15-01-PLAN.md — Editorial layout, outcome grid, pull quote, amber CTA button
 
+### Phase 16: Global Design + Logo + Header
+**Goal**: Every page carries a warm paper tone, section labels use the correct monospace typeface, the new Folio wordmark is live, and the header reads as a newspaper masthead with an editorial dateline
+**Depends on**: Phase 15
+**Requirements**: GDES-01, GDES-02, GDES-03, HDR-01, HDR-02
+**Success Criteria** (what must be TRUE):
+  1. Every page (home, article, firm, quiz, archive, etc.) has the warm cream paper background (#F9F7F2) — no cold white or stone-50 remnants visible
+  2. Section/category labels (`.section-label`) render in JetBrains Mono — visually distinct from Inter body text
+  3. The header shows the striped-F + "olio" wordmark — the new logo is live on every page, not the old plain text
+  4. The header displays a dateline line (Vol. · No. · Day, Date · London Edition) in small uppercase tracking beneath the wordmark
+  5. The Folio wordmark in the header uses tight letter-spacing (-0.03em) matching the brand studio treatment
+**Plans**: 2 plans
+Plans:
+- [ ] 16-01-PLAN.md — Warm paper CSS variable, body bg-paper, .section-label font-mono
+- [ ] 16-02-PLAN.md — Wordmark letter-spacing, editorial dateline, commit logo files
+
+### Phase 17: Firm Profile Redesign
+**Goal**: The firm profile page feels like a premium editorial dossier — a prominent data strip leads, content sections use visually varied treatments, and "Why This Firm?" reads as a crafted editorial callout rather than a generic card
+**Depends on**: Phase 16
+**Requirements**: FIRM-01, FIRM-02, FIRM-03, FIRM-04
+**Success Criteria** (what must be TRUE):
+  1. Visiting any firm profile, NQ salary, TC salary, annual intake, and seat count appear in a horizontal stat strip immediately below the firm name — scannable at a glance
+  2. The firm profile page has at least two visually distinct section treatments — not all sections use the same left-border card pattern
+  3. The "Why This Firm?" section uses editorial numbered callouts with large background numbers behind each point — clearly different from the other sections
+  4. Interview questions on the firm profile are numbered with clean typographic numbering (1., 2., 3.) — no chip or box styling around the number
+**Plans**: TBD
+
+### Phase 18: Secondary Pages + Conversion Polish
+**Goal**: The quiz entry experience, firms directory, and upgrade page all reach the editorial standard set in Phases 16-17 — distinct layouts for distinct purposes, with the upgrade page anchored by a dark conversion panel
+**Depends on**: Phase 17
+**Requirements**: QUIZ-01, QUIZ-02, FDIR-01, CONV-04, CONV-05
+**Success Criteria** (what must be TRUE):
+  1. The quiz entry page shows Daily and Deep Practice as two clearly differentiated editorial panels — the choice is visually obvious without reading the labels
+  2. The quiz date list visually distinguishes today, available past dates, and completed dates — the user can tell their completion status at a glance
+  3. Tier headers in the firms directory (Magic Circle, Silver Circle, etc.) use a full-width editorial rule treatment — clearly separating tiers, not just bold text
+  4. Upgrade page feature titles use serif font — consistent with the editorial register of the rest of the product
+  5. The upgrade page CTA panel has a dark stone-900 background with a border-style button — a strong visual anchor that ends the page with authority
+**Plans**: TBD
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -104,3 +154,6 @@ Plans:
 | 13. Typography & Spacing | v1.2 | 1/1 | Complete | 2026-03-12 |
 | 14. Editorial Layout | v1.2 | - | Reverted | 2026-03-12 |
 | 15. Conversion Page | v1.2 | 1/1 | Complete | 2026-03-12 |
+| 16. Global Design + Logo + Header | v1.3 | 0/2 | Not started | - |
+| 17. Firm Profile Redesign | v1.3 | 0/TBD | Not started | - |
+| 18. Secondary Pages + Conversion Polish | v1.3 | 0/TBD | Not started | - |

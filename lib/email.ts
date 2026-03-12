@@ -269,7 +269,7 @@ export async function sendWeeklyDigest(
   }
 
   const resend = new Resend(apiKey);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3001';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.folioapp.co.uk';
 
   const { error } = await resend.emails.send({
     from: FROM,
@@ -298,7 +298,7 @@ export async function sendWelcomeEmail(to: string, firstName?: string): Promise<
 
   const resend = new Resend(apiKey);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3001';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.folioapp.co.uk';
   const todayUrl = siteUrl;
 
   const { error } = await resend.emails.send({

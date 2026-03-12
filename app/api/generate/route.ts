@@ -14,7 +14,7 @@ export const maxDuration = 300; // 5-minute timeout for generation
 // SECURITY: Briefing generation calls Tavily + Claude + ElevenLabs TTS — costs real
 // money. Must be admin-only. Any authenticated user reaching this without the check
 // could drain API quotas intentionally or accidentally.
-const ADMIN_USER_ID = process.env.ADMIN_USER_ID ?? 'user_3AR29PSfsNfmy9wxcyjCvplC7hH';
+const ADMIN_USER_ID = process.env.ADMIN_USER_ID;
 
 async function refreshStaleBanks(today: string): Promise<void> {
   const types = ['watson-glaser', 'sjt'] as const;

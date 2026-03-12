@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Editorial Design
-status: executing
-stopped_at: Phase 13 executed
-last_updated: "2026-03-12T14:00:00.000Z"
-last_activity: 2026-03-12 — Phase 13 (Typography & Spacing) executed, all 6 requirements delivered
+status: planning
+stopped_at: Phase 14 context gathered
+last_updated: "2026-03-12T12:29:29.715Z"
+last_activity: 2026-03-12 — Phase 13 executed, type tokens + spacing updated across 4 files
 progress:
   total_phases: 3
   completed_phases: 1
@@ -73,6 +73,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T14:00:00.000Z
-Stopped at: Phase 13 executed
-Resume file: .planning/phases/13-typography-spacing/13-01-SUMMARY.md
+Last session: 2026-03-12T12:29:29.711Z
+Stopped at: Phase 14 context gathered
+Resume file: .planning/phases/14-editorial-layout/14-CONTEXT.md

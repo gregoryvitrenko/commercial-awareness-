@@ -41,7 +41,7 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 **Milestone Goal:** Elevate Folio's visual register from polished to genuinely editorial — serif headlines, newspaper-style layout hierarchy, tighter spacing rhythm, and a conversion-optimised upgrade page.
 
 - [ ] **Phase 13: Typography & Spacing** (1 plan) - Playfair Display serif, updated type scale sizes, and vertical rhythm improvements across the design system
-- [ ] **Phase 14: Editorial Layout** - Lead story + secondary row + divider + grid hierarchy on the home briefing view
+- [ ] **Phase 14: Editorial Layout** (1 plan) - Lead story + secondary row + divider + grid hierarchy on the home briefing view
 - [ ] **Phase 15: Conversion Page** - Upgrade page redesigned as editorial section with outcome framing, social proof, and accent CTA
 
 ## Phase Details
@@ -71,7 +71,7 @@ Plans:
   4. The remaining stories render in a standard grid below the divider — consistent with prior layout
 **Plans**: 1 plan
 Plans:
-- [ ] 13-01-PLAN.md — Type token updates, headline weight correction, grid and card spacing increase
+- [ ] 14-01-PLAN.md — Featured StoryCard variant + editorial layout hierarchy in StoryGrid
 
 ### Phase 15: Conversion Page
 **Goal**: The upgrade page reads as a premium editorial destination, not a SaaS pricing table — outcome framing, social proof signals, and a visually distinct CTA that earns the click
@@ -102,5 +102,5 @@ Plans:
 | 11. Events Section | v1.1 | 3/3 | Complete | 2026-03-11 |
 | 12. Digest Compliance + Improvements | v1.1 | 3/3 | Complete | 2026-03-12 |
 | 13. Typography & Spacing | v1.2 | 0/1 | Planning complete | - |
-| 14. Editorial Layout | v1.2 | 0/TBD | Not started | - |
+| 14. Editorial Layout | v1.2 | 0/1 | Planning complete | - |
 | 15. Conversion Page | v1.2 | 0/TBD | Not started | - |

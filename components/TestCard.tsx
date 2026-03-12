@@ -6,58 +6,39 @@ export function TestCard({ test }: { test: TestMeta }) {
   return (
     <Link
       href={`/tests/${test.slug}`}
-      className="group block bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-6 py-5 hover:border-stone-400 dark:hover:border-stone-600 transition-colors"
+      className="group block bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-card p-6 sm:p-8 hover:border-stone-300 dark:hover:border-stone-600 transition-colors flex flex-col"
     >
-      {/* Vendor badge */}
-      <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
-        {test.vendor}
-      </p>
+      {/* Vendor overline */}
+      <p className="section-label text-stone-400 dark:text-stone-500 mb-3">{test.vendor}</p>
 
-      {/* Title */}
-      <h2 className="font-serif text-[20px] font-bold tracking-tight text-stone-900 dark:text-stone-50 leading-snug mb-1.5 group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
-        {test.name}
-      </h2>
+      {/* Title in large serif */}
+      <h2 className="font-serif text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50 leading-snug mb-3">{test.name}</h2>
 
-      {/* Strapline */}
-      <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed mb-4">
-        {test.strapline}
-      </p>
+      {/* Description */}
+      <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed mb-4">{test.description}</p>
 
       {/* Meta row */}
       <div className="flex items-center gap-4 mb-4">
         <div className="flex items-center gap-1.5 text-[11px] text-stone-400 dark:text-stone-500">
-          <Clock size={11} />
-          <span>{test.timeNote}</span>
+          <Clock size={11} /><span>{test.timeNote}</span>
         </div>
         <div className="flex items-center gap-1.5 text-[11px] text-stone-400 dark:text-stone-500">
-          <BarChart2 size={11} />
-          <span>{test.difficulty}</span>
+          <BarChart2 size={11} /><span>{test.difficulty}</span>
         </div>
       </div>
 
-      {/* Used by */}
-      <p className="text-[11px] text-stone-400 dark:text-stone-500 mb-4">
+      {/* Used by — first 4 firms only */}
+      <p className="text-[11px] text-stone-400 dark:text-stone-500 mb-6">
         <span className="font-medium text-stone-500 dark:text-stone-400">Used by: </span>
-        {test.usedBy.slice(0, 5).join(', ')}
-        {test.usedBy.length > 5 && ` + ${test.usedBy.length - 5} more`}
+        {test.usedBy.slice(0, 4).join(', ')}{test.usedBy.length > 4 && ` + ${test.usedBy.length - 4} more`}
       </p>
 
-      {/* Subtype pills */}
-      <div className="flex flex-wrap gap-1.5 mb-4">
-        {test.subtypes.map((s) => (
-          <span
-            key={s.name}
-            className="text-[10px] px-2 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 rounded-sm"
-          >
-            {s.name}
-          </span>
-        ))}
-      </div>
+      {/* Spacer to push CTA to bottom */}
+      <div className="flex-1" />
 
-      {/* CTA */}
-      <div className="flex items-center gap-1.5 text-[12px] font-medium text-stone-700 dark:text-stone-300 group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors">
-        Start practising
-        <ChevronRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+      {/* Oxford blue CTA */}
+      <div className="inline-flex items-center gap-2 bg-[#002147] text-white font-semibold text-sm px-5 py-3 rounded-chrome group-hover:bg-[#002d5c] transition-colors">
+        Start practising <ChevronRight size={14} />
       </div>
     </Link>
   );

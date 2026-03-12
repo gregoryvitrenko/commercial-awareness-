@@ -66,7 +66,7 @@ See phase details below for full success criteria.
 **Milestone Goal:** Shift Folio from the sharp editorial newspaper aesthetic to a softer premium rounded aesthetic — update the design system (radius token, Oxford blue accent colour) sitewide, redesign secondary pages to match, and add a new `/interview` prep page using existing firm interview question data.
 
 - [x] **Phase 20: Design System Tokens** — Rounded radius token sitewide, softened chrome elements, Oxford blue replaces amber as primary accent (completed 2026-03-12)
-- [ ] **Phase 21: Firms Directory Redesign** — Two-column layout with left sidebar filters and right scrollable firm card grid
+- [x] **Phase 21: Firms Directory Redesign** — Two-column layout with left sidebar filters and right scrollable firm card grid (completed 2026-03-12)
 - [ ] **Phase 22: Secondary Page Redesigns** — Quiz hero card, primers card grid, tests feature cards, saved card layout — all aligned to new rounded aesthetic
 - [x] **Phase 23: Events + Podcast Accent** — Events rounded cards with Oxford blue active states, podcast hero Oxford blue ambient glow (completed 2026-03-12)
 - [x] **Phase 24: Interview Prep Page** — New `/interview` page aggregating firm pack and primer questions by topic, with reveal/hide model answers and category filter (completed 2026-03-12)
@@ -261,7 +261,7 @@ Plans:
 | 18. Secondary Pages + Conversion Polish | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 19. Podcast Page Redesign | v1.3 | 2/2 | Complete | 2026-03-12 |
 | 20. Design System Tokens | 2/2 | Complete    | 2026-03-12 | - |
-| 21. Firms Directory Redesign | v2 | 0/1 | Not started | - |
+| 21. Firms Directory Redesign | 1/1 | Complete   | 2026-03-12 | - |
 | 22. Secondary Page Redesigns | v2 | 0/2 | Not started | - |
 | 23. Events + Podcast Accent | 2/2 | Complete   | 2026-03-12 | - |
 | 24. Interview Prep Page | 1/1 | Complete   | 2026-03-12 | - |

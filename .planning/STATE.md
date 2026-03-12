@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 23-02-PLAN.md
-last_updated: "2026-03-12T22:26:37.125Z"
+stopped_at: Completed 21-01-PLAN.md
+last_updated: "2026-03-12T22:27:21.713Z"
 last_activity: 2026-03-12 — v2 roadmap written. v1.3 confirmed complete (phases 16-19).
 progress:
   total_phases: 12
-  completed_phases: 8
+  completed_phases: 9
   total_plans: 18
-  completed_plans: 15
+  completed_plans: 16
   percent: 0
 ---
 
@@ -78,6 +78,8 @@ Progress: [░░░░░░░░░░] 0% (0/5 phases)
 - [Phase 23-events-podcast-accent]: Events city filter: Oxford blue pill tabs replace underline active state (bg-[#002147] text-white rounded-full)
 - [Phase 23-events-podcast-accent]: Event card date accent: text-[#002147] dark:text-blue-300 font-medium for Oxford blue accent
 - [Phase 23-events-podcast-accent]: Podcast hero: Oxford blue radial glow at 35% opacity (rgba(0,33,71,0.35)) as absolute z-0 layer, content above via z-10
+- [Phase 21]: Search takes precedence over tier filter in FirmsDirectory — query active greyed-out tier buttons, all firms searched
+- [Phase 21]: [Phase 21]: Jump link anchors removed from firms directory — sidebar tier filter tabs replace navigation
 
 ### Pending Todos
 
@@ -89,7 +91,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-12T22:26:31.081Z
-Stopped at: Completed 23-02-PLAN.md
+Last session: 2026-03-12T22:27:14.994Z
+Stopped at: Completed 21-01-PLAN.md
 Resume file: None
 Next action: `/gsd:plan-phase 20`

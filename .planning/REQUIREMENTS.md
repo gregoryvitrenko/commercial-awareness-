@@ -20,12 +20,12 @@ Shift Folio from a sharp editorial newspaper aesthetic to a softer premium round
 
 ### ROUND — Rounded Design System
 
-- [ ] **ROUND-01**: The `rounded-card` design token is updated to `rounded-3xl` (24px) — all cards, panels, and UI sections adopt the new rounded aesthetic sitewide
-- [ ] **ROUND-02**: Chrome elements (buttons, chips, inputs, tabs) use `rounded-full` or `rounded-2xl` — softened from the current sharp `rounded-chrome` (4px)
+- [x] **ROUND-01**: The `rounded-card` design token is updated to `rounded-3xl` (24px) — all cards, panels, and UI sections adopt the new rounded aesthetic sitewide
+- [x] **ROUND-02**: Chrome elements (buttons, chips, inputs, tabs) use `rounded-full` or `rounded-2xl` — softened from the current sharp `rounded-chrome` (4px)
 
 ### COL — Colour
 
-- [ ] **COL-01**: Oxford blue (`#002147`) replaces amber as the primary action/accent colour — CTA buttons, active navigation states, hero section backgrounds, and featured card accents use Oxford blue across all pages
+- [x] **COL-01**: Oxford blue (`#002147`) replaces amber as the primary action/accent colour — CTA buttons, active navigation states, hero section backgrounds, and featured card accents use Oxford blue across all pages
 
 ### FDIR — Firms Directory
 
@@ -84,9 +84,9 @@ Shift Folio from a sharp editorial newspaper aesthetic to a softer premium round
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ROUND-01 | Phase 20 | Pending |
-| ROUND-02 | Phase 20 | Pending |
-| COL-01 | Phase 20 | Pending |
+| ROUND-01 | Phase 20 | Complete |
+| ROUND-02 | Phase 20 | Complete |
+| COL-01 | Phase 20 | Complete |
 | FDIR-01 | Phase 21 | Pending |
 | QUIZ-01 | Phase 22 | Pending |
 | PRIM-01 | Phase 22 | Pending |

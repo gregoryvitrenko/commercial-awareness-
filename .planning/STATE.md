@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v2
-milestone_name: Premium Experience
-status: roadmap-ready
-stopped_at: Roadmap created — ready for Phase 20 planning
-last_updated: "2026-03-12T23:00:00Z"
-last_activity: 2026-03-12 — v2 roadmap created (phases 20-24, 14 requirements mapped)
+milestone: v1.0
+milestone_name: milestone
+status: planning
+stopped_at: Completed 20-01-PLAN.md
+last_updated: "2026-03-12T22:11:14.191Z"
+last_activity: 2026-03-12 — v2 roadmap written. v1.3 confirmed complete (phases 16-19).
 progress:
-  total_phases: 5
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_phases: 12
+  completed_phases: 5
+  total_plans: 18
+  completed_plans: 10
   percent: 0
 ---
 
@@ -71,6 +71,8 @@ Progress: [░░░░░░░░░░] 0% (0/5 phases)
 - v2: Oxford blue `#002147` replaces amber as primary action/accent colour — CTA buttons, active states, hero accents
 - v2: New `/interview` page uses existing firm pack interview questions + primer questions — no new AI generation needed
 - v2: Story grid (home page) stays as flat 2-column — do not touch StoryCard or StoryGrid radius in Phase 20
+- [Phase 20]: radius-card updated to 1.5rem (24px) — premium rounded-3xl aesthetic for cards
+- [Phase 20]: oxford-blue #002147 registered as Tailwind colour token with light/dark variants
 
 ### Pending Todos
 
@@ -82,7 +84,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-12T23:00:00Z
-Stopped at: v2 roadmap created, Phase 20 ready to plan
+Last session: 2026-03-12T22:11:14.186Z
+Stopped at: Completed 20-01-PLAN.md
 Resume file: None
 Next action: `/gsd:plan-phase 20`

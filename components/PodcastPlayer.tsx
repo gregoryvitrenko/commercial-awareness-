@@ -479,8 +479,16 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
     <div className="space-y-0">
 
       {/* ── Hero block ─────────────────────────────────────────────────────── */}
-      <div className="bg-stone-900 text-stone-50">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px]">
+      <div className="relative bg-stone-900 text-stone-50 overflow-hidden">
+        {/* Oxford blue ambient glow — subtle accent layer */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background: 'radial-gradient(ellipse 70% 80% at 20% 50%, rgba(0,33,71,0.35) 0%, transparent 70%)',
+          }}
+          aria-hidden="true"
+        />
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px] relative z-10">
 
           {/* Left: episode info + player */}
           <div className="px-8 pt-8 pb-7 flex flex-col gap-4">

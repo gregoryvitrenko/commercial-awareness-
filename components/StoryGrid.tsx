@@ -52,7 +52,7 @@ export function StoryGrid({ stories, date, subscribed = false }: StoryGridProps)
   return (
     <div>
       <TabBar presentTopics={presentTopics} />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {stories.map((story, i) => (
           // `contents` makes this wrapper transparent to the grid layout,
           // so StoryCard and MidGridNudge both become direct grid children.

@@ -33,7 +33,7 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
     : plainTalkingPoint;
 
   const cardInner = (
-    <article className="relative flex flex-col bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden px-5 pt-5 pb-6 h-full transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/40 hover:border-stone-300 dark:hover:border-stone-600">
+    <article className="relative flex flex-col bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden px-5 pt-6 pb-7 h-full transition-colors hover:bg-stone-50 dark:hover:bg-stone-800/40 hover:border-stone-300 dark:hover:border-stone-600">
 
       {/* Bookmark button — top-right corner, stops link propagation */}
       <div className="absolute top-3 right-3">
@@ -48,7 +48,7 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
       </div>
 
       {/* Category label */}
-      <div className="flex items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 mb-4">
         <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
         <span className={`text-label font-sans font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
           {story.topic}
@@ -56,7 +56,7 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
       </div>
 
       {/* Headline — padded right so it clears the bookmark icon */}
-      <h2 className="font-serif text-subheading font-bold leading-snug text-stone-900 dark:text-stone-50 tracking-tight mb-3 group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2 pr-6">
+      <h2 className="font-serif text-subheading font-semibold leading-snug text-stone-900 dark:text-stone-50 tracking-tight mb-4 group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2 pr-6">
         {story.headline}
       </h2>
 
@@ -92,13 +92,13 @@ export function StoryCard({ story, date, subscribed = false }: StoryCardProps) {
 
       {/* Interview angle teaser */}
       {(story.talkingPoints || story.talkingPoint) && (
-        <p className="mt-3 pt-3 border-t border-stone-100 dark:border-stone-800 text-label italic text-stone-400 dark:text-stone-500 leading-relaxed line-clamp-2 flex-shrink-0">
+        <p className="mt-4 pt-4 border-t border-stone-100 dark:border-stone-800 text-label italic text-stone-400 dark:text-stone-500 leading-relaxed line-clamp-2 flex-shrink-0">
           &ldquo;{talkingPointTeaser}&rdquo;
         </p>
       )}
 
       {/* Read more indicator */}
-      <p className="mt-4 text-label font-sans font-medium tracking-wide text-stone-400 dark:text-stone-500 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors flex items-center gap-1.5">
+      <p className="mt-5 text-label font-sans font-medium tracking-wide text-stone-400 dark:text-stone-500 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors flex items-center gap-1.5">
         {subscribed ? (
           'Read article →'
         ) : (

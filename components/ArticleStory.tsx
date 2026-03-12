@@ -55,7 +55,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
       </h2>
 
       {/* Summary */}
-      <p className="text-[16px] text-stone-700 dark:text-stone-300 leading-[1.75] mb-8">
+      <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75] mb-8">
         {renderBold(story.summary)}
       </p>
 
@@ -98,7 +98,7 @@ export function ArticleStory({ story, date, subscribed = true, currentUserId }: 
           </div>
         ) : (
           /* Legacy plain-string format */
-          <p className="text-[16px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+          <p className="text-body text-stone-700 dark:text-stone-300 leading-[1.75]">
             {story.whyItMatters as string}
           </p>
         )}

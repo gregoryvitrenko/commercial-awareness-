@@ -1,6 +1,8 @@
 # Folio Design Spec
 
-Stack: Next.js 15 App Router, React 19, Tailwind CSS 3 (stone/zinc palette), shadcn/ui. Every component and page must strictly follow this spec. When code conflicts, treat the spec as authoritative and propose refactors. Do not invent new colors, radii, fonts, sizes, or spacing. Reference this file in all frontend tasks.
+Stack: Next.js 15 App Router, React 19, Tailwind CSS 3, shadcn/ui. Every component and page must strictly follow this spec. When code conflicts, treat the spec as authoritative. Do not invent new colors, radii, fonts, sizes, or spacing. Reference this file in all frontend tasks.
+
+*Last updated: v3 Design Refresh & Features (2026-03-12)*
 
 ---
 
@@ -14,13 +16,13 @@ Three fonts only. Never use system-ui or fallbacks directly.
 | Body copy, nav, UI | Inter | `font-sans` |
 | Labels, metadata, dates | JetBrains Mono | `font-mono` |
 
-**Ban:** Arbitrary font classes. Always use these three.
+**Ban:** Arbitrary font classes. Always use these three. Do not reintroduce `font-mono` in body/UI contexts — it belongs only on `.section-label`, dates, and metadata.
 
 ---
 
 ## Type Scale
 
-Use semantic tokens. Ban raw pixels like `text-[13px]`, `text-[10px]` — replace all violations with this scale.
+Use semantic tokens. Ban raw pixels like `text-[13px]`, `text-[10px]`.
 
 | Token | Size | Weight | Use |
 |-------|------|--------|-----|
@@ -28,9 +30,9 @@ Use semantic tokens. Ban raw pixels like `text-[13px]`, `text-[10px]` — replac
 | `text-heading` | 24px | semibold | H1/H2 section headings |
 | `text-subheading` | 18px | medium | H3, card titles |
 | `text-article` | 28px | bold | Article page headline |
-| `text-body` | 15px | normal | Paragraphs |
+| `text-body` | 16px | normal | Paragraphs (bumped from 15px in v1.2) |
 | `text-caption` | 13px | normal | Secondary text, excerpts |
-| `text-label` | 10px | semibold | Labels, badges — always with `font-mono` or `font-sans font-semibold uppercase tracking-widest` |
+| `text-label` | 11px | semibold | Labels, badges — always with `font-mono uppercase tracking-widest` |
 
 **Ban:** Arbitrary sizes. Always use tokens.
 
@@ -38,21 +40,41 @@ Use semantic tokens. Ban raw pixels like `text-[13px]`, `text-[10px]` — replac
 
 ## Colors
 
-Stone/zinc base. Use named roles. Topic accents only for dots/labels — never in layouts.
+### Base palette
 
-| Role | Light | Dark | Use |
-|------|-------|------|-----|
-| Page bg | `bg-stone-50` | `dark:bg-stone-950` | Full page |
-| Surface/card | `bg-white` | `dark:bg-stone-900` | Cards, sections |
-| Header/paper | `bg-paper` | `dark:bg-paper` | Nav, headers |
-| Border | `border-stone-200` | `dark:border-stone-800` | Edges |
-| Divider | `divide-stone-100` | `dark:divide-stone-800` | Lists |
-| Text primary | `text-stone-900` | `dark:text-stone-100` | Main copy |
-| Text secondary | `text-stone-500` | `dark:text-stone-400` | Subtext |
-| Text muted | `text-stone-400` | `dark:text-stone-500` | Labels |
-| Chip bg | `bg-stone-100` | `dark:bg-stone-800` | Tags |
-| CTA primary | `bg-stone-900 hover:bg-stone-800` | `dark:bg-stone-100 dark:hover:bg-stone-200` | Main buttons |
-| CTA text | `text-stone-50` | `dark:text-stone-900` | CTA text |
+| Role | Value | Tailwind class | Use |
+|------|-------|----------------|-----|
+| Page background | `#F9F7F2` | `bg-paper` | Every page — warm cream, not cold white |
+| Surface / card | `#FFFFFF` | `bg-white dark:bg-stone-900` | Cards, sections |
+| Ink / text | `#1A1A1A` | `text-stone-900 dark:text-stone-100` | Primary text |
+| Border | — | `border-stone-200 dark:border-stone-800` | Edges |
+| Divider | — | `divide-stone-100 dark:divide-stone-800` | Lists |
+| Text secondary | — | `text-stone-500 dark:text-stone-400` | Subtext |
+| Text muted | — | `text-stone-400 dark:text-stone-500` | Labels |
+| Chip bg | — | `bg-stone-100 dark:bg-stone-800` | Tags |
+
+### Accent (v3)
+
+The primary action/accent colour is **charcoal** (`#2D3436`) — registered as `accent` in `tailwind.config.ts`. Use for: CTA buttons, active states, hero backgrounds, highlighted elements.
+
+| Role | Class | Use |
+|------|-------|-----|
+| Accent fill | `bg-[#2D3436]` or `bg-accent` | CTA buttons, hero blocks, active tabs |
+| Accent text | `text-[#2D3436]` or `text-accent` | Accent text on light backgrounds |
+| Accent border | `border-[#2D3436]` or `border-accent` | Accent borders, note callouts |
+| Accent hover | `hover:bg-accent/90` | Button hover state |
+
+**Oxford blue (#002147) is retired as of v3.** Do not introduce new `bg-[#002147]` or `oxford-blue` usages. Existing instances should be migrated to charcoal on next touch.
+
+### CTA buttons
+
+```tsx
+// Primary (filled accent)
+<button className="px-6 py-3 rounded-chrome bg-[#2D3436] text-white text-caption font-medium hover:bg-[#2D3436]/90 transition-all duration-200">
+
+// Secondary (bordered)
+<button className="px-6 py-3 rounded-chrome border border-stone-300 dark:border-stone-700 text-caption font-medium hover:bg-stone-50 dark:hover:bg-stone-800 transition-all duration-200">
+```
 
 ### Topic accent colors (dots/labels only — never layouts)
 
@@ -73,15 +95,15 @@ Stone/zinc base. Use named roles. Topic accents only for dots/labels — never i
 
 ## Radius
 
-Semantic tokens only. Never use `rounded-sm`, `rounded-xl`, `rounded-lg`, `rounded-md` directly on new components — always use the named tokens.
+Semantic tokens only — registered via CSS variables in `globals.css` and consumed by `tailwind.config.ts`.
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `rounded-card` | 2px | Cards, sections, panels — nearly flat, editorial |
-| `rounded-chrome` | 4px | Buttons, inputs, chips |
-| `rounded-pill` | 9999px | Tags, badges with pill shape |
+| Token | CSS var | Value | Use |
+|-------|---------|-------|-----|
+| `rounded-card` | `--radius-card` | 24px (1.5rem) | Cards, sections, panels |
+| `rounded-chrome` | `--radius-chrome` | 16px (1rem) | Buttons, inputs, chips, tabs |
+| `rounded-pill` | — | 9999px | Pill tags, badges |
 
-**Ban:** `rounded-xl`. Migrate all existing violations to tokens.
+**Ban:** `rounded-sm`, `rounded-xl`, `rounded-lg`, `rounded-md` directly on new components. Always use the named tokens.
 
 ---
 
@@ -93,34 +115,33 @@ Semantic tokens only. Never use `rounded-sm`, `rounded-xl`, `rounded-lg`, `round
 - Card internal padding: `p-6`
 - Grid gap: `gap-4 lg:gap-6`
 
-### Thick top rule (mandatory on all top-level page headers)
-
-```tsx
-<div className="h-[3px] bg-stone-900 dark:bg-stone-100" />
-```
-
 ---
 
 ## Components
 
-Use these exact structures. Extend via props only — do not invent variants.
-
-### Section label
+### Section label (overline)
 
 ```tsx
 <span className="section-label">Category</span>
 ```
-Defined in `globals.css`: `font-mono text-label tracking-widest uppercase text-stone-400 dark:text-stone-500`
 
-### Page heading
+Defined in `globals.css`: `font-mono text-[11px] tracking-widest uppercase text-stone-400 dark:text-stone-500`
+
+### Page heading (v3 standard — all pages)
+
+Every primary content page uses this pattern: small overline label → large serif title → optional description. Match the AI Studio mockup heading style.
 
 ```tsx
-<div className="flex items-center gap-3 mb-6">
-  <Icon size={16} className="text-stone-400" />
-  <h2 className="text-subheading font-bold tracking-tight text-stone-900 dark:text-stone-50">Title</h2>
-  <span className="section-label px-2 py-0.5 rounded-chrome bg-stone-100 dark:bg-stone-800">Count</span>
+<div className="space-y-4 mb-12">
+  <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
+    Overline Label
+  </span>
+  <h2 className="text-5xl font-serif">Page Title</h2>
+  <p className="max-w-xl opacity-60 text-lg font-light">Optional description.</p>
 </div>
 ```
+
+**Ban:** The old icon + title + count badge pattern is retired for main page headings. Count badges may still appear in secondary contexts (e.g. filter chips).
 
 ### Section divider
 
@@ -144,12 +165,6 @@ Defined in `globals.css`: `font-mono text-label tracking-widest uppercase text-s
 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-chrome bg-stone-100 dark:bg-stone-800 text-label border border-stone-200 dark:border-stone-700 text-stone-500 dark:text-stone-400">
 ```
 
-### Primary CTA button
-
-```tsx
-<button className="inline-flex items-center gap-2 px-6 py-3 rounded-chrome bg-stone-900 dark:bg-stone-100 text-caption font-medium text-stone-50 dark:text-stone-900 hover:bg-stone-800 dark:hover:bg-stone-200 transition-all duration-200">
-```
-
 ### Callout / info box
 
 ```tsx
@@ -158,6 +173,55 @@ Defined in `globals.css`: `font-mono text-label tracking-widest uppercase text-s
   <p className="text-caption leading-relaxed text-stone-500 dark:text-stone-400">Content</p>
 </div>
 ```
+
+### Accent hero block
+
+Used for quiz hero, podcast hero, featured CTA panels:
+
+```tsx
+<div className="rounded-card bg-[#2D3436] text-white p-10 relative overflow-hidden">
+  {/* Optional ambient glow */}
+  <div className="pointer-events-none absolute inset-0 z-0" style={{ background: 'radial-gradient(ellipse 70% 80% at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 70%)' }} />
+  <div className="relative z-10">
+    {/* content */}
+  </div>
+</div>
+```
+
+---
+
+## Home Page Layout (v3)
+
+The briefing home page uses a newspaper layout on desktop. Do **not** revert to the flat 2-column grid.
+
+```
+Desktop (lg+):
+┌─────────────────────────┬──────────────────┐
+│  Lead Story (col-span-8) │ Sidebar (col-span-4) │
+│  Large serif headline    │ Secondary stories   │
+│  Full excerpt            │ (stories 2–4+)      │
+│  Topic badge             │                     │
+│  Read more link          │                     │
+└─────────────────────────┴──────────────────┘
+Mobile: Full-width single column
+```
+
+The lead story is always `stories[0]`. The sidebar shows `stories[1..n]`.
+
+---
+
+## Archive Layout (v3)
+
+The `/archive` page is a unified 3-column grid:
+
+```
+┌──────────────┬──────────────┬──────────────┐
+│  Briefings   │   Quizzes    │   Podcasts   │
+│  date list   │  date list   │  date list   │
+└──────────────┴──────────────┴──────────────┘
+```
+
+Each column links to the relevant `/{section}/[date]` route.
 
 ---
 
@@ -169,6 +233,8 @@ Defined in `globals.css`: `font-mono text-label tracking-widest uppercase text-s
 - Use `max-w-5xl mx-auto px-4 sm:px-6 lg:px-8` on every page wrapper
 - Add `transition-all duration-200` to all interactive cards and buttons
 - Use `font-serif` for headings, `font-sans` for body/UI, `font-mono` for labels/metadata
+- Use `bg-paper` (`#F9F7F2`) as the page background — never `bg-white` or `bg-stone-50` at page level
+- Use charcoal `#2D3436` for all CTA buttons and primary accent elements
 
 **Don't:**
 - Raw pixel font sizes (`text-[13px]` → `text-caption`; `text-[10px]` → `text-label`)
@@ -177,6 +243,9 @@ Defined in `globals.css`: `font-mono text-label tracking-widest uppercase text-s
 - Zinc in content areas (chrome/nav only)
 - Shadows heavier than `shadow-md`
 - Emojis anywhere in the UI
+- Oxford blue `#002147` — retired as of v3, use charcoal `#2D3436`
+- Cold white `bg-white` or `bg-stone-50` at the page level — always `bg-paper`
+- The old icon + count badge heading pattern for main page headings
 
 ---
 
@@ -188,20 +257,22 @@ Use this when giving Claude a screenshot from Mobbin, 21st.dev, or Google Stitch
 Remake this [page/component] using the attached screenshot as a layout reference.
 
 STRICTLY follow docs/design.md:
-- Colors: only named roles (no new colors)
+- Colors: paper (#F9F7F2) background, charcoal (#2D3436) accent, stone palette for content
 - Type: semantic tokens only (no text-[13px] etc.)
-- Radius: rounded-card for cards, rounded-chrome for buttons/chips
+- Radius: rounded-card (24px) for cards, rounded-chrome (16px) for buttons/chips
+- Heading: overline label + large serif title + optional description
 
 Make it:
-- Mobile-first, compact
-- Stone/zinc palette, Playfair serif for headings
-- Include the thick top rule and .section-label on all overlines
+- Mobile-first
+- Playfair serif for headings, Inter for body, JetBrains Mono for labels
+- Accent hero blocks use bg-[#2D3436] text-white
 
 Avoid:
 - rounded-xl or rounded-sm
 - Arbitrary spacing or pixel values
-- Emojis or gradients
+- Emojis or heavy gradients
 - Zinc in content areas
+- Oxford blue (#002147)
 
-Output: complete Next.js component using shadcn/ui primitives.
+Output: complete Next.js component using Tailwind CSS.
 ```

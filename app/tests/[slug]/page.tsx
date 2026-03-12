@@ -37,14 +37,14 @@ export default async function TestPage({
 
         {/* Hero */}
         <div className="mb-8 pl-5 border-l-[4px] border-l-stone-900 dark:border-l-stone-100">
-          <span className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2 block">
+          <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2 block">
             {test.vendor}
           </span>
           <h1 className="font-serif text-[28px] sm:text-[34px] font-bold tracking-tight text-stone-900 dark:text-stone-50 leading-tight mb-3">
             {test.name}
           </h1>
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-stone-400 dark:text-stone-500">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-sans text-stone-400 dark:text-stone-500">
               <Clock size={11} />
               {test.timeNote}
             </span>
@@ -79,7 +79,7 @@ export default async function TestPage({
             {/* Used by */}
             {test.usedBy.length > 0 && (
               <div>
-                <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
+                <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
                   Used by {test.usedBy.length} of 38 profiled firms
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -111,7 +111,7 @@ export default async function TestPage({
               <div className="space-y-4">
                 {test.subtypes.map((subtype, i) => (
                   <div key={subtype.name} className="flex gap-4">
-                    <span className="font-mono text-[11px] text-stone-400 dark:text-stone-500 shrink-0 mt-0.5 w-4">
+                    <span className="font-sans text-[11px] text-stone-400 dark:text-stone-500 shrink-0 mt-0.5 w-4">
                       {i + 1}
                     </span>
                     <div>
@@ -141,7 +141,7 @@ export default async function TestPage({
             <ul className="space-y-2.5">
               {test.tips.map((tip, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="font-mono text-[10px] text-stone-300 dark:text-stone-600 shrink-0 mt-0.5">
+                  <span className="font-sans text-[10px] text-stone-300 dark:text-stone-600 shrink-0 mt-0.5">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <p className="text-[13px] text-stone-600 dark:text-stone-400 leading-relaxed">

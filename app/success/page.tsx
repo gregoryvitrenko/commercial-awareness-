@@ -46,7 +46,7 @@ function SuccessContent() {
         <div className="w-full max-w-md text-center">
 
           {verified === null ? (
-            <p className="font-mono text-[11px] text-zinc-400 tracking-widest uppercase animate-pulse">
+            <p className="font-sans text-[11px] text-zinc-400 tracking-widest uppercase animate-pulse">
               Activating your subscription…
             </p>
           ) : (
@@ -55,7 +55,7 @@ function SuccessContent() {
                 <CheckCircle2 className="w-12 h-12 text-emerald-500" />
               </div>
 
-              <p className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
+              <p className="font-sans text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
                 Welcome to Premium
               </p>
 
@@ -105,7 +105,7 @@ export default function SuccessPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex items-center justify-center">
-        <p className="font-mono text-[11px] text-zinc-400 tracking-widest uppercase animate-pulse">
+        <p className="font-sans text-[11px] text-zinc-400 tracking-widest uppercase animate-pulse">
           Loading…
         </p>
       </div>

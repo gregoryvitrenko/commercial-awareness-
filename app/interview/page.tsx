@@ -57,7 +57,7 @@ export default async function InterviewPage() {
           <h2 className="text-lg font-bold text-stone-900 dark:text-stone-50 tracking-tight">
             Interview Prep
           </h2>
-          <span className="font-mono text-[10px] text-stone-400 dark:text-stone-500 tracking-widest uppercase bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded">
+          <span className="font-sans text-[10px] text-stone-400 dark:text-stone-500 tracking-widest uppercase bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded">
             {INTERVIEW_QUESTIONS.length} questions
           </span>
         </div>
@@ -80,14 +80,14 @@ export default async function InterviewPage() {
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <p className={`font-mono text-[10px] tracking-widest uppercase mb-1 ${colors.text}`}>
+                    <p className={`font-sans text-[10px] tracking-widest uppercase mb-1 ${colors.text}`}>
                       {cat.shortName}
                     </p>
                     <h3 className="font-serif text-[16px] font-bold text-stone-900 dark:text-stone-50 tracking-tight leading-snug">
                       {cat.name}
                     </h3>
                   </div>
-                  <span className={`flex-shrink-0 font-mono text-[10px] tracking-widest uppercase px-2 py-0.5 rounded ${colors.badge}`}>
+                  <span className={`flex-shrink-0 font-sans text-[10px] tracking-widest uppercase px-2 py-0.5 rounded ${colors.badge}`}>
                     {count}
                   </span>
                 </div>
@@ -114,7 +114,7 @@ export default async function InterviewPage() {
 
         {/* Tips banner */}
         <div className="mt-8 rounded-xl bg-stone-100 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 px-5 py-4">
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
             How to use this
           </p>
           <p className="text-[13px] text-stone-600 dark:text-stone-400 leading-relaxed">

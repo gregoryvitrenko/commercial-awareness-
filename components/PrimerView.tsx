@@ -26,7 +26,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
             {primer.category}
           </span>
           <span className="text-stone-300 dark:text-stone-700">·</span>
-          <div className="flex items-center gap-1 text-[10px] text-stone-400 dark:text-stone-500 font-mono">
+          <div className="flex items-center gap-1 text-[10px] text-stone-400 dark:text-stone-500 font-sans">
             <Clock size={10} />
             {primer.readTimeMinutes} min read
           </div>
@@ -47,7 +47,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
             className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-5 py-5"
           >
             <div className="flex items-center gap-2 mb-3">
-              <span className="font-mono text-[10px] text-stone-400 dark:text-stone-500 tracking-widest">
+              <span className="font-sans text-[10px] text-stone-400 dark:text-stone-500 tracking-widest">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <h2 className="text-[15px] font-bold text-stone-900 dark:text-stone-50 tracking-tight">
@@ -64,7 +64,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
         <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-5 py-5">
           <div className="flex items-center gap-2 mb-4">
             <BookOpen size={13} className="text-stone-400 dark:text-stone-500" />
-            <span className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+            <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
               Key Terms
             </span>
           </div>
@@ -86,7 +86,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
         <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-5 py-5">
           <div className="flex items-center gap-2 mb-4">
             <GraduationCap size={13} className="text-stone-400 dark:text-stone-500" />
-            <span className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+            <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
               Why This Matters for You
             </span>
           </div>
@@ -102,7 +102,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
           <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden">
             <div className="flex items-center gap-2 px-5 py-4 border-b border-stone-100 dark:border-stone-800">
               <MessageSquare size={13} className="text-stone-400 dark:text-stone-500" />
-              <span className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+              <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
                 Interview Questions
               </span>
             </div>
@@ -117,7 +117,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
                   <div>
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <Eye size={11} className="text-stone-400" />
-                      <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+                      <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
                         What they&apos;re assessing
                       </p>
                     </div>
@@ -129,7 +129,7 @@ export function PrimerView({ primer }: { primer: Primer }) {
                   <div>
                     <div className="flex items-center gap-1.5 mb-1.5">
                       <Target size={11} className="text-stone-400" />
-                      <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+                      <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
                         Answer skeleton
                       </p>
                     </div>

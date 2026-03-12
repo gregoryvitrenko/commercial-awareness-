@@ -36,7 +36,7 @@ export default async function PodcastDatePage({ params }: Params) {
       <main className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
         <Link
           href="/podcast/archive"
-          className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 font-sans text-[10px] tracking-widest uppercase text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-6"
         >
           <ChevronLeft size={11} />
           Podcast Archive

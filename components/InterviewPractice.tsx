@@ -65,7 +65,7 @@ function FrequencyBadge({ frequency }: { frequency: InterviewQuestion['frequency
     'Occasional': 'bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-500',
   };
   return (
-    <span className={`font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 rounded ${colors[frequency] ?? colors['Common']}`}>
+    <span className={`font-sans text-[9px] tracking-widest uppercase px-2 py-0.5 rounded ${colors[frequency] ?? colors['Common']}`}>
       {frequency}
     </span>
   );
@@ -79,7 +79,7 @@ function GuidancePanel({ question }: { question: InterviewQuestion }) {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <BookOpen size={12} className="text-stone-400" />
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
             Framework — {question.framework}
           </p>
         </div>
@@ -94,7 +94,7 @@ function GuidancePanel({ question }: { question: InterviewQuestion }) {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Target size={12} className="text-stone-400" />
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
             Answer structure
           </p>
         </div>
@@ -109,7 +109,7 @@ function GuidancePanel({ question }: { question: InterviewQuestion }) {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Eye size={12} className="text-stone-400" />
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
             What firms are assessing
           </p>
         </div>
@@ -129,14 +129,14 @@ function GuidancePanel({ question }: { question: InterviewQuestion }) {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Lightbulb size={12} className="text-stone-400" />
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
             Tips
           </p>
         </div>
         <ul className="space-y-1.5">
           {question.tips.map((tip, i) => (
             <li key={i} className="flex items-start gap-2 text-[13px] text-stone-600 dark:text-stone-400">
-              <span className="flex-shrink-0 w-4 text-stone-300 dark:text-stone-600 font-mono text-[11px] mt-0.5">
+              <span className="flex-shrink-0 w-4 text-stone-300 dark:text-stone-600 font-sans text-[11px] mt-0.5">
                 {i + 1}.
               </span>
               {tip}
@@ -151,7 +151,7 @@ function GuidancePanel({ question }: { question: InterviewQuestion }) {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <AlertCircle size={12} className="text-stone-400" />
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
             Common mistakes
           </p>
         </div>
@@ -203,7 +203,7 @@ export function InterviewPractice({ category, questions, date }: Props) {
         {/* Back link */}
         <Link
           href="/interview"
-          className="inline-flex items-center gap-1.5 font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors mb-6"
         >
           <ArrowLeft size={10} />
           Interview Prep
@@ -211,7 +211,7 @@ export function InterviewPractice({ category, questions, date }: Props) {
 
         {/* Category header */}
         <div className="mb-6">
-          <p className={`font-mono text-[10px] tracking-widest uppercase mb-1 ${colors.accent}`}>
+          <p className={`font-sans text-[10px] tracking-widest uppercase mb-1 ${colors.accent}`}>
             {category.shortName}
           </p>
           <h2 className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-1">
@@ -238,7 +238,7 @@ export function InterviewPractice({ category, questions, date }: Props) {
               aria-label={`Question ${i + 1}`}
             />
           ))}
-          <span className="ml-2 font-mono text-[10px] text-stone-400 dark:text-stone-500">
+          <span className="ml-2 font-sans text-[10px] text-stone-400 dark:text-stone-500">
             {index + 1} / {total}
           </span>
         </div>
@@ -248,7 +248,7 @@ export function InterviewPractice({ category, questions, date }: Props) {
           <div className="flex items-start justify-between gap-3 mb-3">
             <FrequencyBadge frequency={question.frequency} />
             {practised.has(index) && (
-              <span className="flex items-center gap-1 font-mono text-[9px] tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+              <span className="flex items-center gap-1 font-sans text-[9px] tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
                 <CheckCircle2 size={10} />
                 Practised
               </span>
@@ -337,13 +337,13 @@ export function InterviewPractice({ category, questions, date }: Props) {
 
         {/* Category-level tips footer */}
         <div className="mt-8 rounded-xl bg-stone-50 dark:bg-stone-800/40 border border-stone-200 dark:border-stone-700 px-5 py-4">
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
             {category.shortName} — general tips
           </p>
           <ul className="space-y-2">
             {category.tips.map((tip, i) => (
               <li key={i} className="flex items-start gap-2 text-[12px] text-stone-500 dark:text-stone-400">
-                <span className="flex-shrink-0 w-3 text-stone-300 dark:text-stone-600 font-mono text-[10px] mt-0.5">
+                <span className="flex-shrink-0 w-3 text-stone-300 dark:text-stone-600 font-sans text-[10px] mt-0.5">
                   {i + 1}.
                 </span>
                 {tip}

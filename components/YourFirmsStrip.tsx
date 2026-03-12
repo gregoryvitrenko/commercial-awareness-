@@ -16,7 +16,7 @@ export function YourFirmsStrip({ slugs }: YourFirmsStripProps) {
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-5">
       <div className="flex items-center gap-x-3 gap-y-1 flex-wrap">
-        <span className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 shrink-0">
+        <span className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 shrink-0">
           Tracking
         </span>
         {firms.map((firm) => (

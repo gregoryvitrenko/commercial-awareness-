@@ -118,7 +118,7 @@ export function CommentsSection({ date, storyId, subscribed, currentUserId }: Co
                   <span className="text-[12px] font-sans font-semibold text-stone-700 dark:text-stone-300 truncate">
                     {c.userName}
                   </span>
-                  <span className="text-[11px] font-mono text-stone-400 dark:text-stone-500 flex-shrink-0">
+                  <span className="text-[11px] font-sans text-stone-400 dark:text-stone-500 flex-shrink-0">
                     {relativeTime(c.createdAt)}
                   </span>
                 </div>
@@ -156,7 +156,7 @@ export function CommentsSection({ date, storyId, subscribed, currentUserId }: Co
             />
             {(focused || nearLimit) && (
               <span
-                className={`absolute bottom-2 right-3 text-[10px] font-mono tabular-nums pointer-events-none ${
+                className={`absolute bottom-2 right-3 text-[10px] font-sans tabular-nums pointer-events-none ${
                   nearLimit
                     ? charCount >= 500
                       ? 'text-rose-500'

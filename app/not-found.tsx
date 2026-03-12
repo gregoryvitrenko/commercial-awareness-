@@ -11,7 +11,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="font-mono text-[11px] tracking-wide uppercase text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+        className="font-sans text-[11px] tracking-wide uppercase text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
       >
         Back to briefing
       </Link>

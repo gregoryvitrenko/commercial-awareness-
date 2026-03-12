@@ -84,7 +84,7 @@ export function SavedView({ today }: SavedViewProps) {
                     {b.topic}
                   </span>
                   <span className="text-stone-300 dark:text-stone-700 text-[10px]">·</span>
-                  <span className="text-[10px] font-mono text-stone-400 dark:text-stone-500">
+                  <span className="text-[10px] font-sans text-stone-400 dark:text-stone-500">
                     {formatDate(b.date)}
                   </span>
                 </div>

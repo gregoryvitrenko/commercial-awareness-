@@ -67,7 +67,7 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
             <Scale size={24} className="text-stone-50 dark:text-stone-900" />
           </div>
 
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
             Free quiz
           </p>
 
@@ -133,7 +133,7 @@ function QuestionScreen({
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
 
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1 text-center">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1 text-center">
             {questionIndex + 1} of {total}
           </p>
           <p className="text-[11px] text-stone-400 dark:text-stone-500 text-center mb-6">
@@ -256,7 +256,7 @@ function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: (
           <div className={`w-14 h-14 rounded-2xl ${colors.bg} ${colors.border} border flex items-center justify-center mx-auto mb-4`}>
             <Star size={24} className={colors.accent} />
           </div>
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
             Your best fit
           </p>
           <h2 className="font-serif text-3xl font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-2">
@@ -270,7 +270,7 @@ function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: (
         {/* Score bars */}
         <div className="rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden mb-6">
           <div className="px-5 py-3 border-b border-stone-100 dark:border-stone-800">
-            <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+            <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
               Your area compatibility scores
             </p>
           </div>
@@ -282,7 +282,7 @@ function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: (
                 <div key={area.key}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[12px] font-medium text-stone-700 dark:text-stone-300">{area.key}</span>
-                    <span className={`font-mono text-[10px] ${ac.accent}`}>{score}</span>
+                    <span className={`font-sans text-[10px] ${ac.accent}`}>{score}</span>
                   </div>
                   <div className="h-2 rounded-full bg-stone-100 dark:bg-stone-800 overflow-hidden">
                     <div className={`h-full rounded-full ${ac.dot} transition-all duration-500`} style={{ width: `${pct}%` }} />
@@ -295,7 +295,7 @@ function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: (
 
         {/* About the area */}
         <div className={`rounded-xl border ${colors.border} ${colors.bg} px-5 py-5 mb-6`}>
-          <p className={`font-mono text-[10px] tracking-widest uppercase ${colors.accent} mb-3`}>
+          <p className={`font-sans text-[10px] tracking-widest uppercase ${colors.accent} mb-3`}>
             About {result.topArea.key}
           </p>
           <p className="text-[13px] text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
@@ -326,7 +326,7 @@ function ResultsScreen({ result, onRestart }: { result: AreaResult; onRestart: (
         <div className="rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 overflow-hidden mb-6">
           <div className="px-5 py-3 border-b border-stone-100 dark:border-stone-800 flex items-center gap-2">
             <BookOpen size={12} className={colors.accent} />
-            <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+            <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
               Go deeper
             </p>
           </div>

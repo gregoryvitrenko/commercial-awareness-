@@ -215,7 +215,7 @@ function TopicRow({
     <div className="flex items-center justify-between px-5 py-4">
       <div className="flex items-center gap-2.5 min-w-0">
         <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-        <span className={`text-label font-mono font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
+        <span className={`text-label font-sans font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
           {topic}
         </span>
         <div className="flex items-center gap-1 ml-2">
@@ -234,7 +234,7 @@ function TopicRow({
           })}
         </div>
       </div>
-      <span className="text-label font-mono text-stone-400 dark:text-stone-500 flex-shrink-0">
+      <span className="text-label font-sans text-stone-400 dark:text-stone-500 flex-shrink-0">
         {correct}/{questions.length}
       </span>
     </div>
@@ -455,25 +455,25 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               {/* Summary row */}
               <div className="flex items-center gap-2 mb-3">
                 <BarChart3 className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500 flex-shrink-0" />
-                <span className="font-mono text-label font-semibold tracking-[0.15em] uppercase text-stone-500 dark:text-stone-400">
+                <span className="font-sans text-label font-semibold tracking-[0.15em] uppercase text-stone-500 dark:text-stone-400">
                   Lifetime Stats
                 </span>
               </div>
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1 mb-4">
                 <div>
                   <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">{stats.total}</span>
-                  <span className="text-label font-mono text-stone-400 dark:text-stone-500 ml-1.5">answered</span>
+                  <span className="text-label font-sans text-stone-400 dark:text-stone-500 ml-1.5">answered</span>
                 </div>
                 <div>
                   <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">{overallPct}%</span>
-                  <span className="text-label font-mono text-stone-400 dark:text-stone-500 ml-1.5">accuracy</span>
+                  <span className="text-label font-sans text-stone-400 dark:text-stone-500 ml-1.5">accuracy</span>
                 </div>
                 {best && (
                   <div>
-                    <span className={`text-label font-mono font-semibold ${TOPIC_STYLES[best[0]].label}`}>
+                    <span className={`text-label font-sans font-semibold ${TOPIC_STYLES[best[0]].label}`}>
                       {best[0]}
                     </span>
-                    <span className="text-label font-mono text-stone-400 dark:text-stone-500 ml-1">
+                    <span className="text-label font-sans text-stone-400 dark:text-stone-500 ml-1">
                       {Math.round((best[1].correct / best[1].total) * 100)}% — strongest
                     </span>
                   </div>
@@ -488,7 +488,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                     return (
                       <div key={topic} className="flex items-center gap-3">
                         <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${TOPIC_STYLES[topic].dot}`} />
-                        <span className={`text-label font-mono font-medium tracking-wide w-[100px] truncate flex-shrink-0 ${TOPIC_STYLES[topic].label}`}>
+                        <span className={`text-label font-sans font-medium tracking-wide w-[100px] truncate flex-shrink-0 ${TOPIC_STYLES[topic].label}`}>
                           {topic}
                         </span>
                         <div className="flex-1 h-1.5 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
@@ -501,7 +501,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                             style={{ width: `${pct}%` }}
                           />
                         </div>
-                        <span className="text-label font-mono text-stone-400 dark:text-stone-500 w-[32px] text-right flex-shrink-0">
+                        <span className="text-label font-sans text-stone-400 dark:text-stone-500 w-[32px] text-right flex-shrink-0">
                           {pct}%
                         </span>
                       </div>
@@ -531,20 +531,20 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Flame className="w-4 h-4 text-stone-400 dark:text-stone-500 flex-shrink-0" />
-                  <span className="text-label font-mono font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
+                  <span className="text-label font-sans font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
                     Daily
                   </span>
-                  <span className="text-label font-mono text-stone-400 dark:text-stone-500">
+                  <span className="text-label font-sans text-stone-400 dark:text-stone-500">
                     {streakCount_}q
                   </span>
                   {isToday && streakCount > 0 && (
-                    <span className="text-label font-mono text-stone-500 dark:text-stone-400">
+                    <span className="text-label font-sans text-stone-500 dark:text-stone-400">
                       · {streakCount}d
                     </span>
                   )}
                 </div>
                 {isToday && streakDone && (
-                  <span className="text-label font-mono text-emerald-600 dark:text-emerald-400 font-medium">
+                  <span className="text-label font-sans text-emerald-600 dark:text-emerald-400 font-medium">
                     ✓ done today
                   </span>
                 )}
@@ -581,11 +581,11 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                         {pct}%
                       </span>
                       <div className="pb-1 leading-tight">
-                        <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-amber-500 dark:text-amber-400">
+                        <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-amber-500 dark:text-amber-400">
                           {displayResult.score}/{displayResult.total}
                         </p>
                         {trend && (
-                          <p className={`text-label font-mono font-semibold tracking-[0.14em] uppercase ${trendColor}`}>
+                          <p className={`text-label font-sans font-semibold tracking-[0.14em] uppercase ${trendColor}`}>
                             {trend} trend
                           </p>
                         )}
@@ -601,7 +601,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               })()}
 
               {errorMsg && (
-                <p className="text-caption font-mono text-rose-500 dark:text-rose-400">
+                <p className="text-caption font-sans text-rose-500 dark:text-rose-400">
                   {errorMsg}
                 </p>
               )}
@@ -664,7 +664,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               {/* Header */}
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-stone-400 dark:text-stone-500 flex-shrink-0" />
-                <span className="text-label font-mono font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
+                <span className="text-label font-sans font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
                   Deep Practice
                 </span>
               </div>
@@ -677,15 +677,15 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
                 <div className="pb-1 leading-tight">
                   {countdown ? (
                     <>
-                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">days to</p>
-                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400 max-w-[88px] truncate">
+                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">days to</p>
+                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400 max-w-[88px] truncate">
                         {countdown.shortName}
                       </p>
                     </>
                   ) : (
                     <>
-                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">full</p>
-                      <p className="text-label font-mono font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">questions</p>
+                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">full</p>
+                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">questions</p>
                     </>
                   )}
                 </div>
@@ -886,17 +886,17 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <span className="text-label font-mono text-stone-400 dark:text-stone-500 tracking-wide">
+            <span className="text-label font-sans text-stone-400 dark:text-stone-500 tracking-wide">
               {currentIndex + 1} / {activeQuestions.length}
               {isRetry && ' · retry mode'}
             </span>
             {quizMode === 'streak' ? (
-              <span className="flex items-center gap-1 text-label font-mono text-stone-400 dark:text-stone-500">
+              <span className="flex items-center gap-1 text-label font-sans text-stone-400 dark:text-stone-500">
                 <Flame className="w-2.5 h-2.5" />
                 daily
               </span>
             ) : (
-              <span className="flex items-center gap-1 text-label font-mono text-stone-400 dark:text-stone-500">
+              <span className="flex items-center gap-1 text-label font-sans text-stone-400 dark:text-stone-500">
                 <Zap className="w-2.5 h-2.5" />
                 deep
               </span>
@@ -921,7 +921,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       {meta && (
         <div className="flex items-center gap-2 mb-3">
           <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-          <span className={`text-label font-mono font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
+          <span className={`text-label font-sans font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
             {meta.topic}
           </span>
           <span className="text-stone-300 dark:text-stone-700 text-label">·</span>
@@ -944,7 +944,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
             onClick={() => handleSelect(opt.letter)}
             className={optionStyle(opt.letter)}
           >
-            <span className="font-mono text-label text-stone-400 dark:text-stone-500 mr-2.5">
+            <span className="font-sans text-label text-stone-400 dark:text-stone-500 mr-2.5">
               {opt.letter}
             </span>
             {opt.text}

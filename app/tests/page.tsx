@@ -21,7 +21,7 @@ export default async function TestsPage() {
           <h2 className="text-lg font-bold text-stone-900 dark:text-stone-50 tracking-tight">
             Aptitude Tests
           </h2>
-          <span className="font-mono text-[10px] text-stone-400 dark:text-stone-500 tracking-widest uppercase bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded-chrome">
+          <span className="font-sans text-[10px] text-stone-400 dark:text-stone-500 tracking-widest uppercase bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded-chrome">
             {TESTS.length} tests
           </span>
         </div>

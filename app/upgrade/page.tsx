@@ -128,7 +128,7 @@ export default function UpgradePage() {
               </p>
 
               {error && (
-                <p className="text-label font-mono text-rose-500 dark:text-rose-400 mb-3">
+                <p className="text-label font-sans text-rose-500 dark:text-rose-400 mb-3">
                   {error}
                 </p>
               )}

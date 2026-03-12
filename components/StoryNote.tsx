@@ -35,7 +35,7 @@ export function StoryNote({ date, storyId }: StoryNoteProps) {
         <p className="text-[10px] font-sans font-semibold tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500">
           My notes
         </p>
-        <span className={`text-[10px] font-mono transition-opacity duration-300 ${
+        <span className={`text-[10px] font-sans transition-opacity duration-300 ${
           saveState === 'saved'
             ? 'text-stone-400 dark:text-stone-500 opacity-100'
             : 'opacity-0'

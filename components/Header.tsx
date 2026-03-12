@@ -71,7 +71,7 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
 
         {/* Row 1: date left · brand centre · auth + hamburger right */}
         <div className="grid grid-cols-3 items-center py-3">
-          <span className="hidden sm:block font-mono text-label text-stone-400 dark:text-stone-500 tracking-wide">
+          <span className="hidden sm:block font-sans text-label text-stone-400 dark:text-stone-500 tracking-wide">
             {formatShortDate(displayDate)}
           </span>
           <Link href="/" className="group flex items-center justify-center gap-2.5">
@@ -97,7 +97,7 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
         <div className="flex items-center border-t border-stone-200 dark:border-stone-800">
           {isArchive ? (
             <>
-              <span className="flex-1 font-mono text-label tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 py-2">
+              <span className="flex-1 font-sans text-label tracking-[0.15em] uppercase text-stone-400 dark:text-stone-500 py-2">
                 Archive Edition
               </span>
               <div className="flex items-center gap-4">

@@ -467,13 +467,13 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
 
           {/* Brand + title + date */}
           <div>
-            <p className="font-mono text-[8px] tracking-[0.3em] uppercase text-amber-600/70 mb-2">
+            <p className="font-sans text-[8px] tracking-[0.3em] uppercase text-amber-600/70 mb-2">
               Folio Daily
             </p>
             <p className="font-serif text-3xl text-white/95 leading-tight tracking-tight">
               Daily Briefing
             </p>
-            <p className="font-mono text-[9px] text-stone-500 mt-2.5 tracking-wide">
+            <p className="font-sans text-[9px] text-stone-500 mt-2.5 tracking-wide">
               {isLoading
                 ? duration != null
                   ? 'Generating audio…'
@@ -506,10 +506,10 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
 
       {/* ── Time stamps ────────────────────────────────────────────────────── */}
       <div className="flex justify-between px-5 pt-2 pb-0">
-        <span className="text-[10px] font-mono tabular-nums text-stone-400 dark:text-stone-500">
+        <span className="text-[10px] font-sans tabular-nums text-stone-400 dark:text-stone-500">
           {elapsed != null ? formatTime(elapsed) : '0:00'}
         </span>
-        <span className="text-[10px] font-mono tabular-nums text-stone-400 dark:text-stone-500">
+        <span className="text-[10px] font-sans tabular-nums text-stone-400 dark:text-stone-500">
           {duration != null ? formatTime(duration) : '--:--'}
         </span>
       </div>
@@ -520,7 +520,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
         {/* Speed */}
         <button
           onClick={cycleSpeed}
-          className="w-10 h-10 flex items-center justify-center text-[12px] font-mono font-semibold text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-200 transition-colors tabular-nums"
+          className="w-10 h-10 flex items-center justify-center text-[12px] font-sans font-semibold text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-200 transition-colors tabular-nums"
           aria-label="Change playback speed"
           title="Playback speed"
         >

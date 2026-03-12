@@ -86,7 +86,7 @@ export default async function ArchivePage() {
                             {formatDisplayDate(date)}
                           </span>
                           {isToday && (
-                            <span className="shrink-0 font-mono text-[10px] tracking-widest uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                            <span className="shrink-0 font-sans text-[10px] tracking-widest uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
                               Today
                             </span>
                           )}

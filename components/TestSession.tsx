@@ -346,7 +346,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
           <ChevronLeft size={14} />
           Exit
         </Link>
-        <span className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
+        <span className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500">
           {testType === 'watson-glaser' ? 'Watson Glaser' : 'Situational Judgement'}
           {' · '}
           {format === 'full' ? 'Full simulation' : 'Quick practice'}
@@ -354,7 +354,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
           {mode === 'feedback' ? 'Feedback' : 'Official'}
         </span>
         {isWG && uiState === 'quiz' ? (
-          <div className={`flex items-center gap-1.5 font-mono text-[12px] ${timeLeft < 120 ? 'text-rose-500 dark:text-rose-400' : 'text-stone-400 dark:text-stone-500'}`}>
+          <div className={`flex items-center gap-1.5 font-sans text-[12px] ${timeLeft < 120 ? 'text-rose-500 dark:text-rose-400' : 'text-stone-400 dark:text-stone-500'}`}>
             <Timer size={12} />
             {formatTime(timeLeft)}
           </div>
@@ -412,7 +412,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
         <div className="space-y-8">
           {/* Score */}
           <div className="text-center py-6">
-            <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">Your Score</p>
+            <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">Your Score</p>
             <p className="font-serif text-[64px] font-bold text-stone-900 dark:text-stone-50 leading-none">{pct}%</p>
             <p className="text-[14px] text-stone-500 dark:text-stone-400 mt-2">{correct} / {total} correct</p>
           </div>
@@ -420,12 +420,12 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
           {/* Per-subtype breakdown */}
           {Object.keys(bySubtype).length > 1 && (
             <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-5 py-4">
-              <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-4">Breakdown by section</p>
+              <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-4">Breakdown by section</p>
               <div className="space-y-3">
                 {Object.entries(bySubtype).map(([sub, { correct: c, total: t }]) => (
                   <div key={sub} className="flex items-center gap-3">
                     <span className="text-[12px] text-stone-600 dark:text-stone-400 flex-1 min-w-0">{sub}</span>
-                    <span className="font-mono text-[11px] text-stone-500 dark:text-stone-400 shrink-0">{c}/{t}</span>
+                    <span className="font-sans text-[11px] text-stone-500 dark:text-stone-400 shrink-0">{c}/{t}</span>
                     <div className="w-24 h-1.5 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden shrink-0">
                       <div className="h-full bg-stone-700 dark:bg-stone-300 rounded-full" style={{ width: `${t > 0 ? (c / t) * 100 : 0}%` }} />
                     </div>
@@ -438,7 +438,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
           {/* Official mode: full answer review */}
           {mode === 'official' && (
             <div className="space-y-3">
-              <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">Answer Review</p>
+              <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">Answer Review</p>
               {answers.map((answer) => {
                 const q = questions[answer.questionIndex];
                 if (!q) return null;
@@ -450,7 +450,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
                     <div className="flex items-start gap-2 mb-2">
                       {isCorrect ? <CheckCircle size={13} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" /> : <XCircle size={13} className="text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />}
                       <div className="min-w-0 flex-1">
-                        <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">{q.subtype}</p>
+                        <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">{q.subtype}</p>
                         {q.passage && <p className="text-[11px] text-stone-600 dark:text-stone-400 mb-1 leading-relaxed">{q.passage}</p>}
                         <p className="text-[12px] font-semibold text-stone-800 dark:text-stone-200 mb-1">{q.question}</p>
                         {testType === 'sjt' ? (
@@ -517,7 +517,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
     return (
       <Shell>
         <div>
-          <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
+          <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
             {isWG ? `Section ${sectionNum} of 5` : 'Instructions'}
           </p>
           <h2 className="font-serif text-[26px] font-bold text-stone-900 dark:text-stone-50 mb-4">{subtype}</h2>
@@ -525,13 +525,13 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
 
           {/* Worked example */}
           <div className="border border-stone-200 dark:border-stone-700 rounded-sm px-5 py-5 mb-7 bg-stone-50 dark:bg-stone-800/40">
-            <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-5">Worked Example</p>
+            <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-5">Worked Example</p>
 
             {example && (
               <>
-                <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Statement:</p>
+                <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Statement:</p>
                 <p className="text-[13px] text-stone-700 dark:text-stone-300 leading-relaxed mb-4">{example.passage}</p>
-                <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
+                <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
                   {PROPOSED_LABEL[subtype] ?? 'Proposed Statement'}:
                 </p>
                 <p className="text-[14px] font-semibold text-stone-800 dark:text-stone-200 mb-5">{example.question}</p>
@@ -550,7 +550,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
                   ))}
                 </div>
                 <div className="border-t border-stone-200 dark:border-stone-700 pt-4">
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Answer Feedback:</p>
+                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Answer Feedback:</p>
                   <p className="text-[12px] text-stone-600 dark:text-stone-400 leading-relaxed">{example.explanation}</p>
                 </div>
               </>
@@ -566,16 +566,16 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
                     const isLeast = opt.letter === sjtExample.leastEffectiveLetter;
                     return (
                       <div key={opt.letter} className={`rounded-sm border px-3 py-2 text-[12px] flex items-start gap-3 ${isMost ? 'border-emerald-400 dark:border-emerald-600 bg-emerald-50 dark:bg-emerald-950/40' : isLeast ? 'border-rose-400 dark:border-rose-600 bg-rose-50 dark:bg-rose-950/40' : 'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900'}`}>
-                        <span className="font-mono text-[11px] text-stone-400 shrink-0 mt-0.5">{opt.letter}</span>
+                        <span className="font-sans text-[11px] text-stone-400 shrink-0 mt-0.5">{opt.letter}</span>
                         <span className={`flex-1 ${isMost ? 'text-emerald-800 dark:text-emerald-200' : isLeast ? 'text-rose-800 dark:text-rose-200' : 'text-stone-600 dark:text-stone-400'}`}>{opt.text}</span>
-                        {isMost && <span className="text-[9px] font-mono uppercase tracking-wide text-emerald-600 dark:text-emerald-400 shrink-0">Most</span>}
-                        {isLeast && <span className="text-[9px] font-mono uppercase tracking-wide text-rose-600 dark:text-rose-400 shrink-0">Least</span>}
+                        {isMost && <span className="text-[9px] font-sans uppercase tracking-wide text-emerald-600 dark:text-emerald-400 shrink-0">Most</span>}
+                        {isLeast && <span className="text-[9px] font-sans uppercase tracking-wide text-rose-600 dark:text-rose-400 shrink-0">Least</span>}
                       </div>
                     );
                   })}
                 </div>
                 <div className="border-t border-stone-200 dark:border-stone-700 pt-4">
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Answer Feedback:</p>
+                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Answer Feedback:</p>
                   <p className="text-[12px] text-stone-600 dark:text-stone-400 leading-relaxed">{sjtExample.explanation}</p>
                 </div>
               </>
@@ -621,16 +621,16 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
 
         {/* Question counter + subtype */}
         <div className="flex items-center justify-between mb-6">
-          <span className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">{q.subtype}</span>
-          <span className="font-mono text-[10px] text-stone-400 dark:text-stone-500">{questionNumber} / {totalQuestionsInSchedule}</span>
+          <span className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500">{q.subtype}</span>
+          <span className="font-sans text-[10px] text-stone-400 dark:text-stone-500">{questionNumber} / {totalQuestionsInSchedule}</span>
         </div>
 
         {/* WG: Statement + Proposed X */}
         {!isSJT && (
           <>
-            <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Statement:</p>
+            <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Statement:</p>
             <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-relaxed mb-6">{q.passage}</p>
-            <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">{proposedLabel}:</p>
+            <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">{proposedLabel}:</p>
             <p className="text-[15px] font-semibold text-stone-800 dark:text-stone-200 leading-snug mb-8">{q.question}</p>
           </>
         )}
@@ -684,26 +684,26 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
               }
               return (
                 <div key={opt.letter} className={rowCls}>
-                  <span className="font-mono text-[11px] text-stone-400 shrink-0 mt-0.5">{opt.letter}</span>
+                  <span className="font-sans text-[11px] text-stone-400 shrink-0 mt-0.5">{opt.letter}</span>
                   <span className="flex-1 text-[13px] text-stone-700 dark:text-stone-300 leading-relaxed">{opt.text}</span>
                   {!revealed && (
                     <div className="flex gap-1.5 shrink-0">
                       <button
                         onClick={() => { if (isMostSelected) { setSelectedLetter(null); return; } if (selectedLeast === opt.letter) return; setSelectedLetter(opt.letter); }}
                         disabled={selectedLeast === opt.letter}
-                        className={`text-[9px] font-mono uppercase tracking-wide px-2 py-0.5 rounded border transition-colors ${isMostSelected ? 'bg-emerald-600 border-emerald-600 text-white' : selectedLeast === opt.letter ? 'border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 cursor-not-allowed' : 'border-stone-300 dark:border-stone-600 text-stone-500 dark:text-stone-400 hover:border-emerald-400 hover:text-emerald-600'}`}
+                        className={`text-[9px] font-sans uppercase tracking-wide px-2 py-0.5 rounded border transition-colors ${isMostSelected ? 'bg-emerald-600 border-emerald-600 text-white' : selectedLeast === opt.letter ? 'border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 cursor-not-allowed' : 'border-stone-300 dark:border-stone-600 text-stone-500 dark:text-stone-400 hover:border-emerald-400 hover:text-emerald-600'}`}
                       >M</button>
                       <button
                         onClick={() => { if (isLeastSelected) { setSelectedLeast(null); return; } if (selectedLetter === opt.letter) return; setSelectedLeast(opt.letter); }}
                         disabled={selectedLetter === opt.letter}
-                        className={`text-[9px] font-mono uppercase tracking-wide px-2 py-0.5 rounded border transition-colors ${isLeastSelected ? 'bg-rose-600 border-rose-600 text-white' : selectedLetter === opt.letter ? 'border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 cursor-not-allowed' : 'border-stone-300 dark:border-stone-600 text-stone-500 dark:text-stone-400 hover:border-rose-400 hover:text-rose-600'}`}
+                        className={`text-[9px] font-sans uppercase tracking-wide px-2 py-0.5 rounded border transition-colors ${isLeastSelected ? 'bg-rose-600 border-rose-600 text-white' : selectedLetter === opt.letter ? 'border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 cursor-not-allowed' : 'border-stone-300 dark:border-stone-600 text-stone-500 dark:text-stone-400 hover:border-rose-400 hover:text-rose-600'}`}
                       >L</button>
                     </div>
                   )}
                   {revealed && (
                     <div className="flex gap-1.5 shrink-0">
-                      {opt.letter === q.correctLetter && <span className="text-[9px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded border border-emerald-400 text-emerald-600 dark:text-emerald-400">Most</span>}
-                      {opt.letter === q.leastEffectiveLetter && <span className="text-[9px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded border border-rose-400 text-rose-600 dark:text-rose-400">Least</span>}
+                      {opt.letter === q.correctLetter && <span className="text-[9px] font-sans uppercase tracking-wide px-1.5 py-0.5 rounded border border-emerald-400 text-emerald-600 dark:text-emerald-400">Most</span>}
+                      {opt.letter === q.leastEffectiveLetter && <span className="text-[9px] font-sans uppercase tracking-wide px-1.5 py-0.5 rounded border border-rose-400 text-rose-600 dark:text-rose-400">Least</span>}
                     </div>
                   )}
                 </div>
@@ -732,7 +732,7 @@ export function TestSession({ testType, mode, questionCount = 10, format = 'quic
                 {answerIsCorrect ? 'Correct' : 'Incorrect'}
               </span>
             </div>
-            <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Answer Feedback:</p>
+            <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">Answer Feedback:</p>
             <p className="text-[12px] text-stone-600 dark:text-stone-400 leading-relaxed">{q.explanation}</p>
           </div>
         )}

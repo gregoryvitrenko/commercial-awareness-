@@ -221,7 +221,7 @@ export function TrackerDashboard({ initialApplications, targetFirmSlugs, firms }
     <div>
       {/* Summary + Add button */}
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4 text-[12px] font-mono text-stone-500 dark:text-stone-400">
+        <div className="flex items-center gap-4 text-[12px] font-sans text-stone-500 dark:text-stone-400">
           <span>{applications.length} tracked</span>
           <span className="text-stone-300 dark:text-stone-700">·</span>
           <span>{submitted} submitted</span>
@@ -292,7 +292,7 @@ export function TrackerDashboard({ initialApplications, targetFirmSlugs, firms }
                       >
                         {firm.name}
                       </Link>
-                      <span className="text-[9px] font-mono text-stone-400 dark:text-stone-500 tracking-wider uppercase">
+                      <span className="text-[9px] font-sans text-stone-400 dark:text-stone-500 tracking-wider uppercase">
                         {firm.tier}
                       </span>
                     </div>
@@ -303,7 +303,7 @@ export function TrackerDashboard({ initialApplications, targetFirmSlugs, firms }
 
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {days !== null && (
-                      <span className={`text-[11px] font-mono font-semibold ${
+                      <span className={`text-[11px] font-sans font-semibold ${
                         days <= 14 ? 'text-rose-600 dark:text-rose-400' :
                         days <= 30 ? 'text-amber-600 dark:text-amber-400' :
                         'text-stone-500 dark:text-stone-400'
@@ -317,7 +317,7 @@ export function TrackerDashboard({ initialApplications, targetFirmSlugs, firms }
                       </span>
                     )}
                     {deadline && (
-                      <span className="text-[10px] font-mono text-stone-400 dark:text-stone-500">
+                      <span className="text-[10px] font-sans text-stone-400 dark:text-stone-500">
                         {deadline.closeDate ? fmtDate(deadline.closeDate) : deadline.typically}
                       </span>
                     )}
@@ -357,7 +357,7 @@ export function TrackerDashboard({ initialApplications, targetFirmSlugs, firms }
                     {notesOpen ? 'Hide notes' : app.notes ? 'Edit notes' : 'Add notes'}
                   </button>
                   {app.appliedAt && (
-                    <span className="text-[10px] font-mono text-stone-400 dark:text-stone-500">
+                    <span className="text-[10px] font-sans text-stone-400 dark:text-stone-500">
                       Applied {fmtDate(app.appliedAt)}
                     </span>
                   )}
@@ -504,17 +504,17 @@ function AddApplicationModal({
                         {d.label}
                       </p>
                       {alreadyTracked && (
-                        <span className="text-[10px] font-mono text-emerald-500">
+                        <span className="text-[10px] font-sans text-emerald-500">
                           <Check size={12} />
                         </span>
                       )}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-[11px] font-mono text-stone-400 dark:text-stone-500">
+                      <p className="text-[11px] font-sans text-stone-400 dark:text-stone-500">
                         {d.closeDate ? fmtDate(d.closeDate) : d.typically}
                       </p>
                       {days !== null && (
-                        <span className={`text-[10px] font-mono font-semibold ${
+                        <span className={`text-[10px] font-sans font-semibold ${
                           days <= 14 ? 'text-rose-600' : days <= 30 ? 'text-amber-600' : 'text-stone-500'
                         }`}>
                           {days}d
@@ -549,7 +549,7 @@ function AddApplicationModal({
             {/* Target firms first */}
             {targetFirmSlugs.length > 0 && !search && (
               <div className="px-5 pb-2">
-                <p className="text-[10px] font-mono text-stone-400 dark:text-stone-500 tracking-widest uppercase mb-2">
+                <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 tracking-widest uppercase mb-2">
                   Your target firms
                 </p>
                 <div className="space-y-1">
@@ -567,7 +567,7 @@ function AddApplicationModal({
             <div className="px-5 pb-4">
               {grouped.map((g) => (
                 <div key={g.tier} className="mb-4 last:mb-0">
-                  <p className="text-[10px] font-mono text-stone-400 dark:text-stone-500 tracking-widest uppercase mb-2">
+                  <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 tracking-widest uppercase mb-2">
                     {g.tier}
                   </p>
                   <div className="space-y-1">
@@ -601,7 +601,7 @@ function FirmRow({ firm, onClick }: { firm: FirmForClient; onClick: () => void }
       <span className="text-[13px] text-stone-700 dark:text-stone-300">
         {firm.name}
       </span>
-      <span className="text-[10px] font-mono text-stone-400 dark:text-stone-500 ml-auto">
+      <span className="text-[10px] font-sans text-stone-400 dark:text-stone-500 ml-auto">
         {firm.deadlines.length} programme{firm.deadlines.length !== 1 ? 's' : ''}
       </span>
     </button>

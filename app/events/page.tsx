@@ -14,7 +14,7 @@ export default async function EventsPage() {
   if (!store || upcoming.length === 0) {
     return (
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        <Link href="/" className="font-mono text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
+        <Link href="/" className="font-sans text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
           ← Home
         </Link>
         {/* Page heading */}
@@ -51,7 +51,7 @@ export default async function EventsPage() {
 
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <Link href="/" className="font-mono text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
+      <Link href="/" className="font-sans text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
         ← Home
       </Link>
       {/* Page heading */}

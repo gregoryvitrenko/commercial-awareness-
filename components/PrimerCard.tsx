@@ -17,7 +17,7 @@ export function PrimerCard({ primer }: { primer: Primer }) {
               {primer.category}
             </span>
           </div>
-          <div className="flex items-center gap-1 text-[10px] text-stone-400 dark:text-stone-500 font-mono">
+          <div className="flex items-center gap-1 text-[10px] text-stone-400 dark:text-stone-500 font-sans">
             <Clock size={10} />
             {primer.readTimeMinutes} min
           </div>
@@ -37,13 +37,13 @@ export function PrimerCard({ primer }: { primer: Primer }) {
         <div className="mt-auto pt-3 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <span className="text-[11px] text-stone-400 dark:text-stone-500">
-              <span className="font-mono font-semibold text-stone-600 dark:text-stone-300">
+              <span className="font-sans font-semibold text-stone-600 dark:text-stone-300">
                 {primer.sections.length}
               </span>
               {' '}sections
             </span>
             <span className="text-[11px] text-stone-400 dark:text-stone-500">
-              <span className="font-mono font-semibold text-stone-600 dark:text-stone-300">
+              <span className="font-sans font-semibold text-stone-600 dark:text-stone-300">
                 {primer.keyTerms.length}
               </span>
               {' '}key terms

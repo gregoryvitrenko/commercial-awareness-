@@ -36,13 +36,13 @@ See: `.planning/milestones/v1.1-ROADMAP.md` for full details.
 
 </details>
 
-### 🚧 v1.2 Editorial Design (In Progress)
+### ✅ v1.2 Editorial Design — SHIPPED 2026-03-12
 
 **Milestone Goal:** Elevate Folio's visual register from polished to genuinely editorial — serif headlines, newspaper-style layout hierarchy, tighter spacing rhythm, and a conversion-optimised upgrade page.
 
 - [x] **Phase 13: Typography & Spacing** (1/1 plans) - Playfair Display serif, updated type scale sizes, and vertical rhythm improvements across the design system — completed 2026-03-12
 - ~~**Phase 14: Editorial Layout**~~ — reverted 2026-03-12 (user preferred flat grid over lead story hierarchy)
-- [ ] **Phase 15: Conversion Page** - Upgrade page redesigned as editorial section with outcome framing, social proof, and accent CTA
+- [x] **Phase 15: Conversion Page** (1/1 plans) - Upgrade page redesigned as editorial section with outcome framing, social proof, and amber accent CTA — completed 2026-03-12
 
 ## Phase Details
 
@@ -83,7 +83,7 @@ Plans:
   3. The primary CTA button uses a differentiated accent colour that stands out clearly from the stone/zinc page palette
 **Plans**: 1 plan
 Plans:
-- [ ] 13-01-PLAN.md — Type token updates, headline weight correction, grid and card spacing increase
+- [x] 15-01-PLAN.md — Editorial layout, outcome grid, pull quote, amber CTA button
 
 ## Progress
 
@@ -103,4 +103,4 @@ Plans:
 | 12. Digest Compliance + Improvements | v1.1 | 3/3 | Complete | 2026-03-12 |
 | 13. Typography & Spacing | v1.2 | 1/1 | Complete | 2026-03-12 |
 | 14. Editorial Layout | v1.2 | - | Reverted | 2026-03-12 |
-| 15. Conversion Page | v1.2 | 0/TBD | Not started | - |
+| 15. Conversion Page | v1.2 | 1/1 | Complete | 2026-03-12 |

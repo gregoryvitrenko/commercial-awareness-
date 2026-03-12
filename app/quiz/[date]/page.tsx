@@ -51,7 +51,7 @@ export default async function QuizDatePage({ params }: { params: Promise<{ date:
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
             Daily Quiz
           </h2>
-          <span className="font-mono text-[10px] text-zinc-400 dark:text-zinc-500 tracking-widest uppercase bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
+          <span className="font-sans text-[10px] text-zinc-400 dark:text-zinc-500 tracking-widest uppercase bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
             {questionCount} questions
           </span>
         </div>
@@ -59,7 +59,7 @@ export default async function QuizDatePage({ params }: { params: Promise<{ date:
         {/* Date navigation */}
         {dates.length > 0 && (
           <div className="mb-8">
-            <h3 className="font-mono text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
+            <h3 className="font-sans text-[10px] tracking-widest uppercase text-zinc-400 dark:text-zinc-500 mb-3">
               Available
             </h3>
             <div className="rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 overflow-hidden divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -67,7 +67,7 @@ export default async function QuizDatePage({ params }: { params: Promise<{ date:
                 const isActive = d === date;
                 const isToday = d === today;
                 const badge = isToday ? (
-                  <span className="shrink-0 font-mono text-[10px] tracking-widest uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                  <span className="shrink-0 font-sans text-[10px] tracking-widest uppercase text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
                     Today
                   </span>
                 ) : null;

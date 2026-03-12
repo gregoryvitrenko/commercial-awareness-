@@ -82,7 +82,7 @@ export function FirmsDirectory({ firms }: { firms: FirmProfile[] }) {
 
       {/* Search result count */}
       {q && (
-        <p className="text-[11px] font-mono text-stone-400 dark:text-stone-500 mb-6">
+        <p className="text-[11px] font-sans text-stone-400 dark:text-stone-500 mb-6">
           {totalMatches === 0 ? (
             <>No firms match <span className="text-stone-600 dark:text-stone-300">&ldquo;{query}&rdquo;</span></>
           ) : (
@@ -103,7 +103,7 @@ export function FirmsDirectory({ firms }: { firms: FirmProfile[] }) {
           if (q && tierFirms.length === 0) return null;
           return (
             <div key={tier} id={tierId(tier)} className="scroll-mt-28">
-              <h3 className="font-mono text-sm tracking-widest uppercase text-stone-900 dark:text-stone-100 mb-3">
+              <h3 className="font-sans text-sm tracking-widest uppercase text-stone-900 dark:text-stone-100 mb-3">
                 {tier}
                 {q && (
                   <span className="ml-2 font-sans normal-case tracking-normal text-stone-400 dark:text-stone-500">

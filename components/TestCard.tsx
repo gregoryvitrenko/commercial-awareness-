@@ -9,7 +9,7 @@ export function TestCard({ test }: { test: TestMeta }) {
       className="group block bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-6 py-5 hover:border-stone-400 dark:hover:border-stone-600 transition-colors"
     >
       {/* Vendor badge */}
-      <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
+      <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
         {test.vendor}
       </p>
 

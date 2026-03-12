@@ -76,7 +76,7 @@ export function OnboardingForm({ firms, initialData }: OnboardingFormProps) {
 
       {/* Heading */}
       <div className="mb-8">
-        <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
+        <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-2">
           {isUpdate ? 'Your profile' : 'Getting started'}
         </p>
         <h2 className="font-serif text-[26px] font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-1">

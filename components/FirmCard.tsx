@@ -29,7 +29,7 @@ export function FirmCard({ firm }: { firm: FirmProfile }) {
           <p className="font-serif text-[14px] sm:text-[15px] font-semibold leading-snug text-stone-900 dark:text-stone-50 truncate group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
             {firm.name}
           </p>
-          <p className="text-[10px] font-mono text-stone-400 dark:text-stone-500 mt-0.5">
+          <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 mt-0.5">
             {firm.hq}
           </p>
         </div>
@@ -56,7 +56,7 @@ export function FirmCard({ firm }: { firm: FirmProfile }) {
               <Heart size={11} />
             </span>
           )}
-          <span className="hidden xs:block text-[11px] font-mono font-semibold text-stone-600 dark:text-stone-300 whitespace-nowrap">
+          <span className="hidden xs:block text-[11px] font-sans font-semibold text-stone-600 dark:text-stone-300 whitespace-nowrap">
             NQ {firm.trainingContract.nqSalaryNote}
           </span>
           <ChevronRight

@@ -306,7 +306,7 @@ export default async function FirmProfilePage({
               <ul className="space-y-3">
                 {interviewPack.whyThisFirm.map((bullet, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className={`shrink-0 font-mono text-[10px] font-bold mt-0.5 ${tierText}`}>
+                    <span className={`shrink-0 font-sans text-[10px] font-bold mt-0.5 ${tierText}`}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <p className="text-[14px] text-stone-700 dark:text-stone-300 leading-[1.7]">
@@ -326,7 +326,7 @@ export default async function FirmProfilePage({
                 <Link
                   href="/tests"
                   data-print-hide
-                  className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
+                  className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-sans font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
                 >
                   Practice tests →
                 </Link>
@@ -337,7 +337,7 @@ export default async function FirmProfilePage({
                     key={assessment.programme}
                     className="bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
                   >
-                    <p className="text-[11px] font-mono text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-2">
+                    <p className="text-[11px] font-sans text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-2">
                       {assessment.programme}
                     </p>
                     {assessment.tests.length === 0 ? (
@@ -375,10 +375,10 @@ export default async function FirmProfilePage({
             <div className="flex flex-wrap items-end gap-8 mb-5 pb-5 border-b border-stone-100 dark:border-stone-800">
               {/* NQ — big */}
               <div>
-                <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
+                <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
                   NQ Salary
                 </p>
-                <p className={`font-mono text-[28px] sm:text-[32px] font-bold leading-none tracking-tight ${tierText}`}>
+                <p className={`font-sans text-[28px] sm:text-[32px] font-bold leading-none tracking-tight ${tierText}`}>
                   {firm.trainingContract.nqSalaryNote}
                 </p>
               </div>
@@ -386,26 +386,26 @@ export default async function FirmProfilePage({
               {/* Supporting stats */}
               <div className="flex flex-wrap gap-6 pb-1">
                 <div>
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
+                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
                     TC Salary
                   </p>
-                  <p className="font-mono text-[15px] font-semibold text-stone-700 dark:text-stone-200">
+                  <p className="font-sans text-[15px] font-semibold text-stone-700 dark:text-stone-200">
                     {firm.trainingContract.tcSalaryNote}
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
+                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
                     Intake
                   </p>
-                  <p className="font-mono text-[15px] font-semibold text-stone-700 dark:text-stone-200">
+                  <p className="font-sans text-[15px] font-semibold text-stone-700 dark:text-stone-200">
                     {firm.trainingContract.intakeSizeNote}
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
+                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
                     Seats
                   </p>
-                  <p className="font-mono text-[15px] font-semibold text-stone-700 dark:text-stone-200">
+                  <p className="font-sans text-[15px] font-semibold text-stone-700 dark:text-stone-200">
                     {firm.trainingContract.seats}
                   </p>
                 </div>
@@ -433,7 +433,7 @@ export default async function FirmProfilePage({
                 target="_blank"
                 rel="noopener noreferrer"
                 data-print-hide
-                className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-mono font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
+                className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-sans font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
               >
                 <ExternalLink size={10} />
                 Live dates · The Trackr
@@ -461,7 +461,7 @@ export default async function FirmProfilePage({
                         {deadline.label}
                       </p>
                       {isClosed && (
-                        <span className="inline-block font-mono text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
+                        <span className="inline-block font-sans text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
                           Closed
                         </span>
                       )}
@@ -472,7 +472,7 @@ export default async function FirmProfilePage({
                       )}
                     </div>
                     {hasExact ? (
-                      <p className={`text-[11px] font-mono ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
+                      <p className={`text-[11px] font-sans ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
                         {deadline.openDate && deadline.closeDate
                           ? `${fmtDate(deadline.openDate)} – ${fmtDate(deadline.closeDate)}`
                           : deadline.closeDate
@@ -483,7 +483,7 @@ export default async function FirmProfilePage({
                         </span>
                       </p>
                     ) : (
-                      <p className="text-[11px] text-stone-400 dark:text-stone-500 font-mono">
+                      <p className="text-[11px] text-stone-400 dark:text-stone-500 font-sans">
                         {deadline.typically}
                       </p>
                     )}
@@ -549,7 +549,7 @@ export default async function FirmProfilePage({
                       <p className="text-[12px] text-stone-600 dark:text-stone-400 leading-relaxed mb-1.5">
                         {scheme.eligibility}
                       </p>
-                      <p className="text-[11px] font-mono text-stone-400 dark:text-stone-500">
+                      <p className="text-[11px] font-sans text-stone-400 dark:text-stone-500">
                         {scheme.typically}
                       </p>
                     </div>
@@ -594,7 +594,7 @@ export default async function FirmProfilePage({
                         <p className="text-[13px] font-medium text-stone-800 dark:text-stone-200 leading-snug group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
                           {story.headline}
                         </p>
-                        <p className="text-[10px] font-mono text-stone-400 dark:text-stone-500 mt-0.5">
+                        <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 mt-0.5">
                           {formatDisplayDate(story.date)}
                         </p>
                       </div>
@@ -628,7 +628,7 @@ export default async function FirmProfilePage({
                       >
                         <div className="flex items-center gap-2 mb-1.5">
                           <span className={`inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
-                          <p className="text-[10px] font-mono text-stone-400 dark:text-stone-500 uppercase tracking-widest">
+                          <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 uppercase tracking-widest">
                             {formatDisplayDate(story.date)} · {story.topic}
                           </p>
                         </div>
@@ -655,7 +655,7 @@ export default async function FirmProfilePage({
                   practice areas, and recent news. Try answering each one aloud before reading on.
                 </p>
               </div>
-              <span className="shrink-0 mt-0.5 inline-block text-[9px] font-mono font-medium tracking-widest uppercase px-2 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
+              <span className="shrink-0 mt-0.5 inline-block text-[9px] font-sans font-medium tracking-widest uppercase px-2 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
                 Refreshes weekly
               </span>
             </div>
@@ -668,7 +668,7 @@ export default async function FirmProfilePage({
                     className="flex gap-4 group"
                   >
                     <span
-                      className={`shrink-0 font-mono text-[11px] font-bold tracking-tight mt-0.5 ${tierText} opacity-70`}
+                      className={`shrink-0 font-sans text-[11px] font-bold tracking-tight mt-0.5 ${tierText} opacity-70`}
                     >
                       Q{i + 1}
                     </span>
@@ -691,7 +691,7 @@ export default async function FirmProfilePage({
             <p className="text-[12px] text-amber-700 dark:text-amber-300 leading-relaxed">
               Salary and deadline information is approximate and based on publicly available data from prior recruitment cycles.
               Last verified:{' '}
-              <span className="font-mono">{firm.trainingContract.lastVerified}</span>.
+              <span className="font-sans">{firm.trainingContract.lastVerified}</span>.
               Always check the firm&apos;s official graduate recruitment page for confirmed dates.
             </p>
           </div>
@@ -701,7 +701,7 @@ export default async function FirmProfilePage({
         {/* Print-only footer */}
         <div
           data-print-footer
-          className="hidden mt-8 pt-4 border-t border-stone-200 text-[10px] font-mono text-stone-400"
+          className="hidden mt-8 pt-4 border-t border-stone-200 text-[10px] font-sans text-stone-400"
         >
           <p>
             Generated by Folio — folioapp.co.uk · {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}

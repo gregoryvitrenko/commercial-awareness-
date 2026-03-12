@@ -29,7 +29,7 @@ export default function TermsPage() {
           <Link href="/" className="font-serif text-[20px] font-bold tracking-tight text-stone-900 dark:text-stone-50 hover:opacity-75 transition-opacity">
             Folio
           </Link>
-          <Link href="/" className="font-mono text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors">
+          <Link href="/" className="font-sans text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors">
             ← Home
           </Link>
         </div>
@@ -38,13 +38,13 @@ export default function TermsPage() {
       <main className="max-w-2xl mx-auto px-4 sm:px-6 py-12">
 
         <div className="mb-10">
-          <p className="font-mono text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
+          <p className="font-sans text-[10px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-3">
             Legal
           </p>
           <h1 className="font-serif text-[30px] font-bold text-stone-900 dark:text-stone-50 tracking-tight mb-2">
             Terms of Service
           </h1>
-          <p className="text-[13px] font-mono text-stone-400 dark:text-stone-500">
+          <p className="text-[13px] font-sans text-stone-400 dark:text-stone-500">
             Last updated: 5 March 2026
           </p>
         </div>

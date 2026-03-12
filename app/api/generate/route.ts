@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse, after } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { generateBriefing } from '@/lib/generate';
 import { saveBriefing, getBriefing, getTodayDate, getAptitudeBank, saveAptitudeBank, saveQuiz } from '@/lib/storage';
@@ -71,20 +71,24 @@ async function handleGenerate(request: NextRequest, force = false) {
     const briefing = await generateBriefing();
     await saveBriefing(briefing);
 
-    // Auto-generate quiz — fire-and-forget
-    generateAndSaveQuiz(briefing).catch((err) =>
-      console.error('[generate] Quiz auto-generation failed:', err)
-    );
-
-    // Auto-generate podcast script then MP3 — fire-and-forget
-    generateAndSavePodcastScript(briefing)
-      .then(() => generateAndCachePodcastAudio(briefing.date))
-      .catch((err) =>
-        console.error('[generate] Podcast/audio auto-generation failed:', err)
-      );
-
-    // Refresh aptitude question banks if stale (>7 days) — fire-and-forget
-    void refreshStaleBanks(today);
+    // Schedule background work with after() — runs after response is sent,
+    // but Vercel keeps the function alive until all after() callbacks complete.
+    // This replaces the old fire-and-forget pattern which could get killed early.
+    after(async () => {
+      await Promise.all([
+        generateAndSaveQuiz(briefing).catch((err) =>
+          console.error('[generate] Quiz auto-generation failed:', err)
+        ),
+        generateAndSavePodcastScript(briefing)
+          .then(() => generateAndCachePodcastAudio(briefing.date))
+          .catch((err) =>
+            console.error('[generate] Podcast/audio auto-generation failed:', err)
+          ),
+        refreshStaleBanks(today).catch((err) =>
+          console.error('[generate] Aptitude bank refresh failed:', err)
+        ),
+      ]);
+    });
 
     return NextResponse.json({
       message: 'Briefing generated successfully',

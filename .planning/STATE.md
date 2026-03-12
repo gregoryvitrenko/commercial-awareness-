@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: planning
 stopped_at: Completed 23-02-PLAN.md
-last_updated: "2026-03-12T22:26:31.086Z"
+last_updated: "2026-03-12T22:26:37.125Z"
 last_activity: 2026-03-12 — v2 roadmap written. v1.3 confirmed complete (phases 16-19).
 progress:
   total_phases: 12
   completed_phases: 8
   total_plans: 18
-  completed_plans: 14
+  completed_plans: 15
   percent: 0
 ---
 
@@ -75,6 +75,9 @@ Progress: [░░░░░░░░░░] 0% (0/5 phases)
 - [Phase 20]: oxford-blue #002147 registered as Tailwind colour token with light/dark variants
 - [Phase 20]: Bookmark active state uses oxford-blue/30 border + oxford-blue/5 bg for visual legibility on light backgrounds
 - [Phase 24-interview-prep-page]: Interview prep uses lib/interview-data.ts (dedicated 40+ question bank) not primer interviewQs — richer data structure with framework, keyPoints, tips, commonMistakes
+- [Phase 23-events-podcast-accent]: Events city filter: Oxford blue pill tabs replace underline active state (bg-[#002147] text-white rounded-full)
+- [Phase 23-events-podcast-accent]: Event card date accent: text-[#002147] dark:text-blue-300 font-medium for Oxford blue accent
+- [Phase 23-events-podcast-accent]: Podcast hero: Oxford blue radial glow at 35% opacity (rgba(0,33,71,0.35)) as absolute z-0 layer, content above via z-10
 
 ### Pending Todos
 

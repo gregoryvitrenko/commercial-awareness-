@@ -317,7 +317,10 @@ Plans:
   2. The quiz UI shows the user's current level and a progress bar indicating XP within the current level (100 XP = 1 level) — the level display updates in real time after a completed quiz
   3. The quiz UI shows the user's current daily streak (consecutive days with at least one completed quiz) — the streak count is visible before starting a quiz
   4. All XP, level, and streak data is stored in Redis under per-user keys (`quiz:xp:{userId}`, `quiz:level:{userId}`, `quiz:streak:{userId}`) — refreshing the page does not reset or lose any values
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 29-01-PLAN.md — Backend: lib/quiz-gamification.ts dual-backend functions + API route GET/POST
+- [ ] 29-02-PLAN.md — Frontend: QuizInterface completion POST + results XP panel + quiz page stats strip
 
 ### Phase 30: Application Tracker
 **Goal**: Users can manage their TC application pipeline in Folio — adding, viewing, updating, and deleting application entries that persist in Redis and are accessible only to subscribers
@@ -329,7 +332,10 @@ Plans:
   3. The user can update the status or notes of any existing entry inline or via an edit action — changes persist after page refresh
   4. The user can delete any application entry — the entry is removed from the table and from Redis immediately
   5. Attempting to access `/tracker` without an active subscription redirects to the upgrade page — the data is never visible to free users
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 30-01-PLAN.md — Backend: TrackerEntry type, lib/tracker.ts Redis CRUD, API route
+- [ ] 30-02-PLAN.md — Frontend: /tracker page, TrackerView client component
 
 ## Progress
 
@@ -363,5 +369,5 @@ Plans:
 | 26. Home Newspaper Layout | v3 | 0/1 | Not started | - |
 | 27. Unified Archive | v3 | 0/1 | Not started | - |
 | 28. Quiz + Podcast Heroes & Format | v3 | 0/TBD | Not started | - |
-| 29. Quiz Gamification | v3 | 0/TBD | Not started | - |
-| 30. Application Tracker | v3 | 0/TBD | Not started | - |
+| 29. Quiz Gamification | v3 | 0/2 | Not started | - |
+| 30. Application Tracker | v3 | 0/2 | Not started | - |

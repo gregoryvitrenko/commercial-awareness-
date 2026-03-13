@@ -476,13 +476,16 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
   return (
     <div className="space-y-0">
 
+      {/* ── Rounded navy card wrapping hero + controls ──────────────────────── */}
+      <div className="rounded-3xl overflow-hidden">
+
       {/* ── Hero block ─────────────────────────────────────────────────────── */}
-      <div className="relative bg-stone-900 text-stone-50 overflow-hidden">
-        {/* Oxford blue ambient glow — subtle accent layer */}
+      <div className="relative bg-[#1B2333] text-stone-50 overflow-hidden">
+        {/* Ambient glow */}
         <div
           className="pointer-events-none absolute inset-0 z-0"
           style={{
-            background: 'radial-gradient(ellipse 70% 80% at 20% 50%, rgba(0,33,71,0.35) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse 70% 80% at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 70%)',
           }}
           aria-hidden="true"
         />
@@ -570,8 +573,8 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
 
               {/* Bottom labels */}
               <div className="absolute bottom-3 inset-x-0 flex justify-between px-3">
-                <span className="section-label text-stone-600">Intelligence Unit</span>
-                <span className="section-label text-stone-600">Audio Briefing</span>
+                <span className="font-sans text-[8px] tracking-widest uppercase text-stone-600">Intelligence Unit</span>
+                <span className="font-sans text-[8px] tracking-widest uppercase text-stone-600">Audio Briefing</span>
               </div>
             </div>
           </div>
@@ -580,7 +583,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
       </div>
 
       {/* ── Controls strip ─────────────────────────────────────────────────── */}
-      <div className="bg-stone-950 px-6 py-3">
+      <div className="bg-[#111827] px-6 py-3">
         {/* Progress scrubber */}
         <div
           ref={progressBarRef}
@@ -642,6 +645,8 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
           </span>
         </div>
       </div>
+
+      </div>{/* end rounded navy card */}
 
       {/* ── Briefing notes panel ───────────────────────────────────────────── */}
       <div className="border border-stone-200 dark:border-stone-800 rounded-card mt-6 overflow-hidden">

@@ -9,6 +9,10 @@
       "schedule": "0 8 * * 0"
     },
     {
+      "path": "/api/practice/generate",
+      "schedule": "30 6 * * 1"
+    },
+    {
       "path": "/api/events",
       "schedule": "0 7 * * 1"
     },

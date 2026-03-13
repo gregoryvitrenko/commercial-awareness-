@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { listBriefings, listQuizDates, getTodayDate } from '@/lib/storage';
+import { listBriefings, getTodayDate } from '@/lib/storage';
 import { listPodcastDatesWithStatus } from '@/lib/podcast-storage';
 import { Header } from '@/components/Header';
 import { requireSubscription } from '@/lib/paywall';
@@ -21,11 +21,13 @@ function formatLongDate(dateStr: string): string {
 export default async function ArchivePage() {
   await requireSubscription();
 
-  const [briefingDates, quizDates, podcastEpisodesRaw] = await Promise.all([
+  const [briefingDates, podcastEpisodesRaw] = await Promise.all([
     listBriefings(),
-    listQuizDates(),
     listPodcastDatesWithStatus(),
   ]);
+  // Use briefing dates for the quizzes column — quiz:index may not be populated yet
+  // (quizzes are generated fire-and-forget), but a briefing always exists for each date.
+  const quizDates = briefingDates;
 
   const today = getTodayDate();
   const podcastDates = podcastEpisodesRaw.filter((e) => e.hasAudio).map((e) => e.date);

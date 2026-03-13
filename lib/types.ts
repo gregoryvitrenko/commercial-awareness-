@@ -86,6 +86,13 @@ export interface DailyQuiz {
   questions: QuizQuestion[];
 }
 
+export interface PracticeSet {
+  topicSlug: string;
+  topicLabel: string;
+  generatedAt: string; // ISO 8601
+  questions: QuizQuestion[];
+}
+
 export interface Comment {
   id: string;        // crypto.randomUUID()
   storyId: string;

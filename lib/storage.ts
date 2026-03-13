@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import type { Briefing, DailyQuiz } from './types';
+import type { Briefing, DailyQuiz, PracticeSet } from './types';
 import type { AptitudeQuestion } from './aptitude';
 import { isValidDate } from './security';
 
@@ -289,4 +289,51 @@ export async function saveAptitudeBank(testType: string, data: AptitudeBankStore
 export async function getAptitudeBank(testType: string): Promise<AptitudeBankStore | null> {
   if (useRedis()) return redisGetAptitudeBank(testType);
   return fsGetAptitudeBank(testType);
+}
+
+// ─── Weekly practice sets ──────────────────────────────────────────────────────
+// Evergreen topic questions, pre-generated weekly via cron (Monday 06:00 UTC).
+// Redis key: practice:weekly:{topicSlug}  |  FS: practice-{topicSlug}.json
+
+async function redisSavePracticeSet(topicSlug: string, data: PracticeSet): Promise<void> {
+  const redis = getRedis();
+  await redis.set(`practice:weekly:${topicSlug}`, JSON.stringify(data));
+}
+
+async function redisGetPracticeSet(topicSlug: string): Promise<PracticeSet | null> {
+  const redis = getRedis();
+  const raw = await redis.get(`practice:weekly:${topicSlug}`);
+  if (!raw) return null;
+  return typeof raw === 'string' ? JSON.parse(raw) : raw;
+}
+
+function fsSavePracticeSet(topicSlug: string, data: PracticeSet): void {
+  ensureDir();
+  fs.writeFileSync(
+    path.join(DATA_DIR, `practice-${topicSlug}.json`),
+    JSON.stringify(data, null, 2),
+    'utf-8',
+  );
+}
+
+function fsGetPracticeSet(topicSlug: string): PracticeSet | null {
+  try {
+    const content = fs.readFileSync(path.join(DATA_DIR, `practice-${topicSlug}.json`), 'utf-8');
+    return JSON.parse(content) as PracticeSet;
+  } catch {
+    return null;
+  }
+}
+
+export async function savePracticeSet(topicSlug: string, data: PracticeSet): Promise<void> {
+  if (useRedis()) {
+    await redisSavePracticeSet(topicSlug, data);
+  } else {
+    fsSavePracticeSet(topicSlug, data);
+  }
+}
+
+export async function getPracticeSet(topicSlug: string): Promise<PracticeSet | null> {
+  if (useRedis()) return redisGetPracticeSet(topicSlug);
+  return fsGetPracticeSet(topicSlug);
 }

@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import type { Briefing, DailyQuiz, QuizQuestion } from './types';
+import type { Briefing, DailyQuiz, PracticeSet, QuizQuestion } from './types';
 
 const SYSTEM_PROMPT = `You are a quiz-setter for Folio, a legal prep platform for LLB students targeting Magic Circle, Silver Circle, and elite US law firms. Your questions test whether the student has read and understood today's briefing — not general legal knowledge.`;
 
@@ -101,6 +101,101 @@ export async function generateQuiz(briefing: Briefing): Promise<DailyQuiz> {
 
   return {
     date: briefing.date,
+    generatedAt: new Date().toISOString(),
+    questions,
+  };
+}
+
+// ── Weekly practice set generation ────────────────────────────────────────────
+
+const PRACTICE_TOPICS_META: Record<string, string> = {
+  'ma': 'Cross-border and domestic deal structures, private equity buyouts, regulatory clearances (CMA, EU Commission, FCA), public takeovers under the Takeover Code, earn-outs and locked-box mechanisms, SPA warranties and indemnities',
+  'capital-markets': 'IPOs and secondary offerings on LSE Main Market and AIM, investment-grade and high-yield bond issuances, listing rules, prospectus requirements, underwriting syndicates and stabilisation mechanics, convertible bonds',
+  'banking-finance': 'Leveraged buyout financing, revolving credit facilities, intercreditor arrangements, syndicated loans, security packages, SOFR/SONIA transition post-LIBOR, covenant packages, unitranche facilities',
+  'energy-tech': 'Infrastructure project finance, energy transition (renewables, hydrogen, offshore wind), tech M&A, IP licensing and structuring, data centre deals, clean energy regulation, digital infrastructure',
+  'regulation': 'FCA supervision and enforcement, CMA merger control and market investigations, PRA prudential requirements, EU regulatory divergence post-Brexit, competition law, financial crime and AML obligations',
+  'disputes': 'English High Court commercial litigation, international arbitration (ICC, LCIA, SIAC), enforcement of foreign judgments, damages assessment frameworks, third-party funding, cross-border discovery and disclosure',
+  'international': 'Cross-border M&A, choice of governing law and jurisdiction clauses, FCPA and UK Bribery Act compliance, bilateral investment treaty arbitration, multi-jurisdictional regulatory clearances, sanctions compliance',
+  'ai-law': 'EU AI Act and risk tiers, AI liability frameworks, IP ownership of AI-generated outputs, law firm strategy around AI adoption, legal tech and workflow automation, data protection intersections (UK GDPR and AI)',
+};
+
+const PRACTICE_SYSTEM_PROMPT = `You are a quiz-setter for Folio, a legal prep platform for LLB students targeting Magic Circle, Silver Circle, and elite US law firms. Your questions test commercial awareness and legal knowledge about a specific practice area. Questions are evergreen — not tied to any specific news story. They should challenge a student preparing for a training contract interview.`;
+
+function buildPracticePrompt(topicSlug: string, topicLabel: string): string {
+  const description = PRACTICE_TOPICS_META[topicSlug] ?? topicLabel;
+  return `Generate 9 multiple-choice questions testing commercial awareness and legal knowledge for the practice area: ${topicLabel}.
+
+Context: ${description}
+
+Question design rules (cycle through all three types, 3 of each):
+
+1. Commercial Inference (questions 1, 4, 7) — test whether the student can reason about deal structures, market dynamics, and commercial implications. Do NOT ask purely factual questions. Instead ask about why certain structures are used, what commercial rationale drives a decision, or what the implications are for a named party.
+
+2. Law Firm Angle (questions 2, 5, 8) — test understanding of which UK or US firm is best positioned for specific types of work in this area and why (practice group strength, client relationships, market track record). Distractors must be real competing firms doing similar work — do not use obviously wrong firms.
+
+3. Interview So-What (questions 3, 6, 9) — test the commercial observation a strong candidate would make in an interview: what market trend this area connects to, what a trainee would do day-to-day, or which observation best captures current market significance.
+
+For each question:
+- Write 4 options (A, B, C, D). Exactly one is correct. Distractors must be plausible.
+- Use real law firm names (Linklaters, Freshfields, Clifford Chance, Allen & Overy, Latham & Watkins, Kirkland & Ellis, Skadden, Davis Polk, Herbert Smith Freehills, Slaughter and May), real regulatory bodies (CMA, FCA, PRA, EU Commission, SFO, Takeover Panel), real practice areas.
+- Write an explanation of 1–2 sentences shown after the student answers. Help them understand WHY.
+- Never use options like "None of the above" or "All of the above".
+- Never use the word "distractor" or "correct answer" in any field.
+
+Return a raw JSON object (no markdown fences, no preamble):
+
+{
+  "questions": [
+    {
+      "id": "1",
+      "question": "...",
+      "options": [
+        {"letter": "A", "text": "..."},
+        {"letter": "B", "text": "..."},
+        {"letter": "C", "text": "..."},
+        {"letter": "D", "text": "..."}
+      ],
+      "correctLetter": "B",
+      "explanation": "..."
+    }
+  ]
+}
+
+You must produce exactly 9 questions.`;
+}
+
+export async function generatePracticeSet(topicSlug: string, topicLabel: string): Promise<PracticeSet> {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
+
+  const anthropic = new Anthropic({ apiKey });
+
+  const completion = await anthropic.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 8000,
+    system: PRACTICE_SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: buildPracticePrompt(topicSlug, topicLabel) }],
+  });
+
+  const text = completion.content[0]?.type === 'text' ? completion.content[0].text : '';
+  const jsonStr = extractJSON(text);
+  const parsed = JSON.parse(jsonStr) as { questions: Array<Record<string, unknown>> };
+
+  const questions: QuizQuestion[] = (parsed.questions ?? []).map((q, i) => ({
+    id: `practice-${topicSlug}-${i + 1}`,
+    storyId: '',
+    question: String(q.question ?? ''),
+    options: (q.options as Array<{ letter: string; text: string }> ?? []).map((o) => ({
+      letter: o.letter as 'A' | 'B' | 'C' | 'D',
+      text: String(o.text ?? ''),
+    })),
+    correctLetter: String(q.correctLetter ?? 'A') as 'A' | 'B' | 'C' | 'D',
+    explanation: String(q.explanation ?? ''),
+  }));
+
+  return {
+    topicSlug,
+    topicLabel,
     generatedAt: new Date().toISOString(),
     questions,
   };

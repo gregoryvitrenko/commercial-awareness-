@@ -395,4 +395,4 @@ Plans:
 | 28. Quiz + Podcast Heroes & Format | v3 | 0/TBD | Not started | - |
 | 29. Quiz Gamification | v3 | 0/2 | Not started | - |
 | 30. Application Tracker | v3 | 0/2 | Not started | - |
-| 31. Complete Design Overhaul | v3.1 | 4/4 | Complete | 2026-03-13 |
+| 31. Complete Design Overhaul | v3.1 | Complete    | 2026-03-13 | 2026-03-13 |

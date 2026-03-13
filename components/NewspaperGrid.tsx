@@ -51,15 +51,15 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
               </div>
 
               {/* Large serif headline */}
-              <h1 className="font-serif text-5xl font-bold leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-4 group-hover:opacity-80 transition-opacity">
+              <h1 className="font-serif text-4xl lg:text-5xl font-bold leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-4 line-clamp-4 group-hover:opacity-80 transition-opacity">
                 {lead.headline}
               </h1>
 
               {/* Topic colour bar */}
               <div className={`h-0.5 w-16 mb-5 ${leadStyles.dot}`} />
 
-              {/* Full untruncated excerpt */}
-              <p className="text-body text-stone-600 dark:text-stone-300 leading-relaxed mb-6">
+              {/* Excerpt — capped at 3 lines */}
+              <p className="text-body text-stone-600 dark:text-stone-300 leading-relaxed mb-6 line-clamp-3">
                 {stripBold(lead.summary)}
               </p>
 
@@ -151,7 +151,7 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       {/* Headline only — compact */}
-                      <h3 className="font-serif text-base font-semibold text-stone-800 dark:text-stone-100 leading-snug line-clamp-2 group-hover:underline decoration-stone-300 underline-offset-2">
+                      <h3 className="font-serif text-base font-semibold text-stone-800 dark:text-stone-100 leading-snug line-clamp-3 group-hover:underline decoration-stone-300 underline-offset-2">
                         {s.headline}
                       </h3>
                     </div>

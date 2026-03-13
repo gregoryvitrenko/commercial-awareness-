@@ -176,7 +176,7 @@ function WhyThisFirmCallout({
           <div key={i} className="relative overflow-hidden py-4 border-b border-stone-200 dark:border-stone-800 last:border-0">
             <span
               aria-hidden="true"
-              className="absolute right-0 top-1/2 -translate-y-1/2 font-mono text-[72px] font-bold leading-none text-stone-900 dark:text-stone-100 opacity-[0.05] select-none pointer-events-none"
+              className="absolute right-0 top-1/2 -translate-y-1/2 font-sans text-[72px] font-bold leading-none text-stone-900 dark:text-stone-100 opacity-[0.05] select-none pointer-events-none"
             >
               {String(i + 1).padStart(2, '0')}
             </span>

@@ -96,7 +96,7 @@
   /* Section label — canonicalises the font-mono text-[10px] tracking-widest uppercase text-stone-400
      pattern used ~77 times across components. Downstream phases consume this class. */
   .section-label {
-    @apply font-mono text-label tracking-widest uppercase text-stone-400 dark:text-stone-500;
+    @apply font-sans text-label tracking-widest uppercase text-stone-400 dark:text-stone-500;
   }
 }
 
@@ -160,10 +160,6 @@
     }
   }
 
-  /* Ensure mono text and small labels remain visible */
-  .font-mono {
-    color: #78716c !important;
-  }
 
   /* Main content fills the page */
   main {

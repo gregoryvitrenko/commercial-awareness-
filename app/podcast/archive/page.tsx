@@ -98,7 +98,7 @@ export default async function PodcastArchivePage() {
                         >
                           {/* Date column */}
                           <div className="w-14 shrink-0 flex flex-col items-center leading-none mr-4">
-                            <span className="font-mono text-2xl font-bold text-stone-900 dark:text-stone-100 leading-none tabular-nums">
+                            <span className="font-sans text-2xl font-bold text-stone-900 dark:text-stone-100 leading-none tabular-nums">
                               {day}
                             </span>
                             <span className="section-label text-stone-400 mt-0.5">
@@ -134,7 +134,7 @@ export default async function PodcastArchivePage() {
                     return (
                       <div key={date} className="flex items-center gap-0 px-5 py-4 opacity-40">
                         <div className="w-14 shrink-0 flex flex-col items-center leading-none mr-4">
-                          <span className="font-mono text-2xl font-bold text-stone-900 dark:text-stone-100 leading-none tabular-nums">
+                          <span className="font-sans text-2xl font-bold text-stone-900 dark:text-stone-100 leading-none tabular-nums">
                             {day}
                           </span>
                           <span className="section-label text-stone-400 mt-0.5">

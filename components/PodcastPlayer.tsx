@@ -654,7 +654,7 @@ export function PodcastPlayer({ briefing }: { briefing: Briefing }) {
             key={story.id}
             className="relative px-6 py-5 border-b border-stone-100 dark:border-stone-800 last:border-0 overflow-hidden"
           >
-            <span className="absolute right-4 top-2 font-mono text-6xl font-bold text-stone-900 dark:text-stone-100 opacity-[0.06] select-none leading-none">
+            <span className="absolute right-4 top-2 font-sans text-6xl font-bold text-stone-900 dark:text-stone-100 opacity-[0.06] select-none leading-none">
               {String(index + 1).padStart(2, '0')}
             </span>
 

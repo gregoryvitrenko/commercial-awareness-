@@ -37,6 +37,14 @@ export interface Story {
   sources?: string[];
   /** Law firms explicitly named in the story (e.g. ["Freshfields", "Linklaters"]) */
   firms?: string[];
+  /** 1–10 importance score for lead story selection — higher scores surface to the top */
+  leadScore?: number;
+  /** Unsplash hero image URL (lead story only, fetched at generation time) */
+  imageUrl?: string;
+  /** Unsplash attribution — photographer display name */
+  imagePhotographer?: string;
+  /** Unsplash attribution — link to photographer's Unsplash profile */
+  imagePhotographerUrl?: string;
 }
 
 export interface SectorWatchData {

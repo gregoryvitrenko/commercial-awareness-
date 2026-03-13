@@ -14,8 +14,8 @@ const CSP = [
   `script-src 'self' 'unsafe-inline'${isProd ? '' : " 'unsafe-eval'"} https://js.stripe.com https://checkout.stripe.com https://clerk.com https://*.clerk.com https://*.clerk.accounts.dev https://challenges.cloudflare.com`,
   // Tailwind / Clerk widget inline styles
   "style-src 'self' 'unsafe-inline'",
-  // User avatars from Clerk, Stripe images
-  "img-src 'self' data: blob: https://img.clerk.com https://*.stripe.com https://images.clerk.dev",
+  // User avatars from Clerk, Stripe images, Unsplash hero images
+  "img-src 'self' data: blob: https://img.clerk.com https://*.stripe.com https://images.clerk.dev https://images.unsplash.com",
   // Self-hosted fonts
   "font-src 'self' data:",
   // Stripe checkout/billing iframes
@@ -60,6 +60,14 @@ const securityHeaders = [
 
 // ─── Next.js Config ────────────────────────────────────────────────────────────
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
   // SECURITY NOTE: ignoreBuildErrors and ignoreDuringBuilds have been intentionally
   // removed. Type errors and lint errors can mask security-critical bugs.
   // The project compiled cleanly with tsc --noEmit before this change.

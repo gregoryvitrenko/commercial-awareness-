@@ -64,6 +64,7 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
         "partnerAnswer": "2–3 sentences, ~50 words. Lead with a specific commercial observation that goes beyond the headline — name the deal and then immediately explain what it means for law firms: which practice area specifically (M&A, leveraged finance, capital markets, restructuring, disputes), which specific firms are best positioned, and why. The student should be able to drop this into a 2-minute partner conversation without sounding like they just read a summary. Zero filler phrases ('it is worth noting', 'this highlights the importance of').",
         "fullCommercial": "4–5 sentences, ~100 words. Open with the headline fact. Explain the strategic context (WHY this deal or event happened — what drove it). Name the specific practice areas and the specific Magic Circle, Silver Circle, or US firms best positioned and explain why (track record, client relationships, regulatory expertise). Connect to one named broader market trend. End with a concrete statement about what work this creates for commercial lawyers. Zero filler phrases."
       },
+      "leadScore": 7,
       "sources": ["https://example.com/article-url"],
       "firms": ["Freshfields", "Linklaters"]
     }
@@ -84,6 +85,7 @@ Rules:
 - Every story must be from TODAY's news — do not recycle stories from previous days
 - Name specific law firms, banks, and advisers wherever the sources mention them
 - If a practice area has no strong story from the provided sources, use your training knowledge to produce a credible, current-feeling story for that area — but still mark sources as []
+- leadScore is an integer 1–10 rating how newsworthy this story is as a potential front-page lead. Score 8–10 for: landmark deals (£5bn+), sector-wide regulatory decisions, Supreme Court or Court of Appeal rulings, stories affecting multiple practice areas at once, or events that directly move the legal market. Score 5–7 for solid but routine stories (mid-size deals, standard regulatory updates). Score 1–4 for minor or niche stories. Be discriminating — only one story per briefing should score 9 or 10.
 - firms must be an array of 2–5 short law firm names explicitly mentioned in this story (e.g. "Freshfields", "Linklaters", "Kirkland"). Use short names only — no "& Partners", no "LLP". If no firms are named, use []
 - In the summary and all three whyItMatters sub-fields, wrap 4–8 key terms per paragraph in **double asterisks** like this: **CMA**, **£4.2bn**, **Freshfields**, **Article 101 TFEU**. Bold only the most scan-worthy facts: deal values, firm names, regulatory bodies, named legislation, and central named parties. Do not bold every proper noun — be selective so bolding carries weight.
 
@@ -126,8 +128,50 @@ function parseOneToFollow(raw: unknown): OneToFollowData | string {
   return String(raw ?? '');
 }
 
+async function fetchLeadImage(headline: string): Promise<{
+  url: string;
+  photographer: string;
+  photographerUrl: string;
+} | null> {
+  const accessKey = process.env.UNSPLASH_ACCESS_KEY;
+  if (!accessKey) return null;
+
+  // Use first 6 words of headline as search query — specific enough for good results
+  const query = headline.split(' ').slice(0, 6).join(' ');
+
+  try {
+    const res = await fetch(
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
+      { headers: { Authorization: `Client-ID ${accessKey}` } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json() as {
+      results?: Array<{
+        urls: { regular: string };
+        user: { name: string; links: { html: string } };
+      }>;
+    };
+    const photo = data.results?.[0];
+    if (!photo) return null;
+    return {
+      url: photo.urls.regular,
+      photographer: photo.user.name,
+      photographerUrl: photo.user.links.html,
+    };
+  } catch {
+    return null;
+  }
+}
+
 function buildBriefing(parsed: Record<string, unknown>, date: string): Briefing {
   const rawStories = (parsed.stories as Record<string, unknown>[]) ?? [];
+
+  // Sort by leadScore descending before assigning IDs so id=1 is always the lead
+  rawStories.sort((a, b) => {
+    const scoreA = typeof a.leadScore === 'number' ? a.leadScore : 5;
+    const scoreB = typeof b.leadScore === 'number' ? b.leadScore : 5;
+    return scoreB - scoreA;
+  });
 
   const stories: Story[] = rawStories.map((s, i) => {
     // Parse 3-tier talking points (new format) or fall back to legacy string
@@ -152,6 +196,7 @@ function buildBriefing(parsed: Record<string, unknown>, date: string): Briefing 
       talkingPoints,
       sources: (s.sources as string[]) ?? [],
       firms: (s.firms as string[]) ?? [],
+      leadScore: typeof s.leadScore === 'number' ? s.leadScore : undefined,
     };
   });
 
@@ -287,5 +332,18 @@ export async function generateBriefing(): Promise<Briefing> {
     console.error('[generate] JSON repair error:', err);
     throw err;
   }
-  return buildBriefing(JSON.parse(repaired), today);
+  const briefing = buildBriefing(JSON.parse(repaired), today);
+
+  // Fetch a hero image for the lead story from Unsplash (fails silently if key not set)
+  const leadStory = briefing.stories[0];
+  if (leadStory) {
+    const image = await fetchLeadImage(leadStory.headline);
+    if (image) {
+      leadStory.imageUrl = image.url;
+      leadStory.imagePhotographer = image.photographer;
+      leadStory.imagePhotographerUrl = image.photographerUrl;
+    }
+  }
+
+  return briefing;
 }

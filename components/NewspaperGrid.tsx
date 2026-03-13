@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Lock } from 'lucide-react';
 import { TOPIC_STYLES, type Story } from '@/lib/types';
@@ -42,6 +43,33 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
             className="group cursor-pointer"
           >
             <article>
+              {/* Hero image */}
+              {lead.imageUrl && (
+                <div className="relative mb-6 overflow-hidden rounded-card">
+                  <div className="relative w-full" style={{ paddingBottom: '52%' }}>
+                    <Image
+                      src={lead.imageUrl}
+                      alt={lead.headline}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 65vw"
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                  {lead.imagePhotographer && lead.imagePhotographerUrl && (
+                    <a
+                      href={`${lead.imagePhotographerUrl}?utm_source=folio&utm_medium=referral`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-2 right-2 text-[10px] text-white/70 hover:text-white/100 transition-colors bg-black/30 rounded px-1.5 py-0.5"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Photo: {lead.imagePhotographer} / Unsplash
+                    </a>
+                  )}
+                </div>
+              )}
+
               {/* Topic badge */}
               <div className="flex items-center gap-2 mb-6">
                 <span className={`inline-block w-2 h-2 rounded-full ${leadStyles.dot}`} />

@@ -1,8 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import type { TrackedApplication } from './types';
-
-// ─── Backend detection ────────────────────────────────────────────────────────
+import type { TrackerEntry } from './types';
+import * as fs from 'fs';
+import * as path from 'path';
 
 function useRedis(): boolean {
   return !!(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
@@ -16,45 +14,66 @@ function getRedis() {
   });
 }
 
-// ─── Filesystem fallback ──────────────────────────────────────────────────────
-
-const TRACKER_FILE = path.join(process.cwd(), 'data', 'tracker.json');
-
-function fsReadAll(): Record<string, TrackedApplication[]> {
-  try {
-    if (!fs.existsSync(TRACKER_FILE)) return {};
-    return JSON.parse(fs.readFileSync(TRACKER_FILE, 'utf-8'));
-  } catch {
-    return {};
-  }
+async function redisGet(userId: string): Promise<TrackerEntry[]> {
+  const redis = getRedis();
+  const raw = await redis.get(`tracker:${userId}`);
+  if (!raw) return [];
+  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  return Array.isArray(parsed) ? parsed : [];
 }
 
-function fsWrite(data: Record<string, TrackedApplication[]>): void {
-  const dir = path.dirname(TRACKER_FILE);
+async function redisSet(userId: string, entries: TrackerEntry[]): Promise<void> {
+  const redis = getRedis();
+  await redis.set(`tracker:${userId}`, JSON.stringify(entries));
+}
+
+function getFilePath(userId: string): string {
+  const dir = path.join(process.cwd(), 'data', 'tracker');
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(TRACKER_FILE, JSON.stringify(data, null, 2), 'utf-8');
+  return path.join(dir, `${userId}.json`);
 }
 
-// ─── Public API ───────────────────────────────────────────────────────────────
-
-export async function getTrackerForUser(userId: string): Promise<TrackedApplication[]> {
-  if (useRedis()) {
-    const redis = getRedis();
-    const data = await redis.get(`tracker:${userId}`);
-    if (!data) return [];
-    return typeof data === 'string' ? JSON.parse(data) : (data as TrackedApplication[]);
-  }
-  const all = fsReadAll();
-  return all[userId] ?? [];
+function fsGet(userId: string): TrackerEntry[] {
+  const filePath = getFilePath(userId);
+  if (!fs.existsSync(filePath)) return [];
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 
-export async function setTrackerForUser(userId: string, items: TrackedApplication[]): Promise<void> {
-  if (useRedis()) {
-    const redis = getRedis();
-    await redis.set(`tracker:${userId}`, JSON.stringify(items));
-    return;
+function fsSet(userId: string, entries: TrackerEntry[]): void {
+  fs.writeFileSync(getFilePath(userId), JSON.stringify(entries, null, 2));
+}
+
+export async function getEntries(userId: string): Promise<TrackerEntry[]> {
+  if (useRedis()) return redisGet(userId);
+  return fsGet(userId);
+}
+
+export async function addEntry(userId: string, entry: TrackerEntry): Promise<TrackerEntry[]> {
+  const entries = await getEntries(userId);
+  entries.push(entry);
+  if (useRedis()) await redisSet(userId, entries);
+  else fsSet(userId, entries);
+  return entries;
+}
+
+export async function updateEntry(
+  userId: string,
+  id: string,
+  patch: Partial<Pick<TrackerEntry, 'status' | 'notes'>>,
+): Promise<TrackerEntry[]> {
+  const entries = await getEntries(userId);
+  const idx = entries.findIndex((e) => e.id === id);
+  if (idx !== -1) {
+    entries[idx] = { ...entries[idx], ...patch, updatedAt: new Date().toISOString() };
   }
-  const all = fsReadAll();
-  all[userId] = items;
-  fsWrite(all);
+  if (useRedis()) await redisSet(userId, entries);
+  else fsSet(userId, entries);
+  return entries;
+}
+
+export async function deleteEntry(userId: string, id: string): Promise<TrackerEntry[]> {
+  const entries = (await getEntries(userId)).filter((e) => e.id !== id);
+  if (useRedis()) await redisSet(userId, entries);
+  else fsSet(userId, entries);
+  return entries;
 }

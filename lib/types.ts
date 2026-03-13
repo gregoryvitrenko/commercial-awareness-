@@ -134,6 +134,26 @@ export interface TrackedApplication {
   updatedAt: string;         // ISO timestamp — last status/note change
 }
 
+// ── Application Tracker (freeform entries) ───────────────────────────────────
+
+export type TrackerStatus =
+  | 'Applied'
+  | 'In Progress'
+  | 'Submitted'
+  | 'Interview'
+  | 'Offer'
+  | 'Rejected';
+
+export interface TrackerEntry {
+  id: string;       // crypto.randomUUID()
+  firm: string;     // freeform firm name, max 100 chars
+  status: TrackerStatus;
+  deadline: string; // YYYY-MM-DD
+  notes: string;    // user notes, max 500 chars
+  createdAt: string; // ISO 8601
+  updatedAt: string; // ISO 8601
+}
+
 // ── Diversity Schemes ────────────────────────────────────────────────────────
 
 export type DiversitySchemeType =

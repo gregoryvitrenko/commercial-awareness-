@@ -13,12 +13,13 @@ export default async function SavedPage() {
     <>
       <Header date={today} />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        <div className="space-y-4 mb-12">
-          <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
-            Your Library
-          </span>
-          <h2 className="text-5xl font-serif">Saved Articles</h2>
-          <p className="max-w-xl opacity-60 text-lg font-light">Bookmarked stories and notes.</p>
+        <div className="mb-12">
+          <p className="section-label mb-3">Personal Archive</p>
+          <h1 className="font-serif text-5xl lg:text-6xl font-normal mb-4">Saved Stories</h1>
+          <div className="w-16 h-px bg-stone-300 dark:bg-stone-700 mb-4" />
+          <p className="text-caption text-stone-500 dark:text-stone-400">
+            Bookmarked stories and notes.
+          </p>
         </div>
         <SavedView today={today} />
       </main>

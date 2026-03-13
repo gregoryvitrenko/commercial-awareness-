@@ -65,7 +65,7 @@ export function SavedView({ today }: SavedViewProps) {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {bookmarks.map((b) => {
         const styles = TOPIC_STYLES[b.topic] ?? TOPIC_STYLES['International'];
         const note = notes[`${b.date}-${b.storyId}`];
@@ -74,48 +74,52 @@ export function SavedView({ today }: SavedViewProps) {
         return (
           <div
             key={`${b.date}-${b.storyId}`}
-            className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-card px-5 py-4"
+            className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-card p-5"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
-                  <span className={`text-[10px] font-sans font-semibold tracking-[0.12em] uppercase ${styles.label}`}>
-                    {b.topic}
-                  </span>
-                  <span className="text-stone-300 dark:text-stone-700 text-[10px]">·</span>
-                  <span className="text-[10px] font-sans text-stone-400 dark:text-stone-500">
-                    {formatDate(b.date)}
-                  </span>
-                </div>
-
-                <Link href={href} className="group">
-                  <h3 className="font-serif text-[17px] font-bold leading-snug text-stone-900 dark:text-stone-50 tracking-tight group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2 mb-2">
-                    {b.headline}
-                  </h3>
-                </Link>
-
-                <p className="text-[12px] text-stone-500 dark:text-stone-400 leading-relaxed line-clamp-2">
-                  {b.excerpt}
-                </p>
-
-                {note && (
-                  <div className="mt-3 pl-3 border-l-2 border-charcoal dark:border-charcoal/60">
-                    <p className="text-[12px] text-stone-600 dark:text-stone-400 italic leading-relaxed line-clamp-2">
-                      {note}
-                    </p>
-                  </div>
-                )}
+            {/* Top row: date + remove button */}
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-caption text-stone-400 dark:text-stone-500">
+                {formatDate(b.date)}
+              </span>
+              <div className="flex items-center gap-2">
+                {/* Filled bookmark icon — dark, not interactive */}
+                <Bookmark className="w-4 h-4 text-stone-800 dark:text-stone-200" fill="currentColor" />
+                {/* Remove button */}
+                <button
+                  onClick={() => handleRemove(b)}
+                  className="p-1 text-stone-300 dark:text-stone-600 hover:text-stone-600 dark:hover:text-stone-400 transition-colors"
+                  aria-label="Remove bookmark"
+                >
+                  <BookmarkX className="w-4 h-4" />
+                </button>
               </div>
-
-              <button
-                onClick={() => handleRemove(b)}
-                className="flex-shrink-0 p-1.5 text-stone-300 dark:text-stone-600 hover:text-stone-600 dark:hover:text-stone-400 transition-colors"
-                aria-label="Remove bookmark"
-              >
-                <BookmarkX className="w-4 h-4" />
-              </button>
             </div>
+
+            {/* Large serif headline */}
+            <Link href={href} className="group block mb-4">
+              <h3 className="font-serif text-heading font-semibold leading-snug text-stone-900 dark:text-stone-50 tracking-tight group-hover:underline decoration-stone-300 underline-offset-2">
+                {b.headline}
+              </h3>
+            </Link>
+
+            {/* Bottom row: topic chip + read time */}
+            <div className="flex items-center gap-3">
+              <span className={`inline-block px-2.5 py-0.5 rounded-pill border text-label font-sans uppercase tracking-wide ${styles.label} border-current`}>
+                {b.topic}
+              </span>
+              <span className="text-label text-stone-400 dark:text-stone-500 font-sans uppercase tracking-wide">
+                8 Min Read
+              </span>
+            </div>
+
+            {/* Inline note (if present) */}
+            {note && (
+              <div className="mt-4 pl-3 border-l-2 border-charcoal dark:border-charcoal/60">
+                <p className="text-caption text-stone-600 dark:text-stone-400 italic leading-relaxed line-clamp-2">
+                  {note}
+                </p>
+              </div>
+            )}
           </div>
         );
       })}

@@ -129,8 +129,7 @@ export default async function InterviewPage() {
                 href={`/primers/${primer.slug}`}
                 className="group rounded-card border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-4 py-4 flex flex-col gap-2 hover:shadow-sm transition-shadow"
               >
-                <div className="flex items-center gap-2">
-                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${styles.dot}`} />
+                <div className="flex items-center">
                   <p className={`section-label ${styles.label}`}>{primer.category}</p>
                 </div>
                 <h3 className="font-serif text-[15px] font-semibold text-stone-900 dark:text-stone-50 leading-snug">

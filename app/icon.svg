@@ -1,21 +1,14 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <pattern id="v" x="0" y="0" width="2" height="1" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="0.9" height="1" fill="white"/>
-    </pattern>
-    <pattern id="h" x="0" y="0" width="1" height="2" patternUnits="userSpaceOnUse">
-      <rect x="0" y="0" width="1" height="0.9" fill="white"/>
-    </pattern>
-  </defs>
-
-  <!-- Dark rounded background -->
-  <rect width="32" height="32" rx="7" fill="#1c1917"/>
-
-  <!-- F centred: stem full height, arms at natural proportions -->
-  <!-- stem -->
-  <rect x="8"  y="5"  width="5"  height="22" fill="url(#v)"/>
-  <!-- top arm -->
-  <rect x="8"  y="5"  width="17" height="4"  fill="url(#h)"/>
-  <!-- middle arm (~65% width, ~50% height) -->
-  <rect x="8"  y="15" width="11" height="4"  fill="url(#h)"/>
+  <!-- Cream background, slight rounded corners -->
+  <rect width="32" height="32" rx="5" fill="#F5F0E8"/>
+  <!-- Bold serif F, centred -->
+  <text
+    x="16"
+    y="25"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-weight="700"
+    font-size="24"
+    fill="#1A1A1A"
+  >F</text>
 </svg>

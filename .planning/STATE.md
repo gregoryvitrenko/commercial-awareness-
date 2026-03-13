@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v3.1
 milestone_name: Design Polish
 status: completed
-stopped_at: Completed 31-03 quiz page POLISH-01 audit
-last_updated: "2026-03-13T12:50:47.908Z"
-last_activity: 2026-03-13 — Phase 29 executed (2 plans)
+stopped_at: Completed 31-01 tab dot removal + centered headings
+last_updated: "2026-03-13T00:10:00Z"
+last_activity: 2026-03-13 — Phase 31 plan 01 executed (POLISH-05, POLISH-03)
 progress:
   total_phases: 19
   completed_phases: 16
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-03-12)
 
 ## Current Position
 
-Phase: 29 — Quiz Gamification (COMPLETE)
-Plan: 29-02 (last completed)
-Status: Phase 29 done — QUIZ-04, QUIZ-05, QUIZ-06 satisfied. All v3 phases complete.
-Last activity: 2026-03-13 — Phase 29 executed (2 plans)
+Phase: 31 — Complete Design Overhaul (IN PROGRESS)
+Plan: 31-01 (last completed)
+Status: Phase 31 plan 01 done — POLISH-05, POLISH-03 satisfied.
+Last activity: 2026-03-13 — Phase 31 plan 01 executed (tab dots + centered headings)
 
 ## v3 Phase Map
 
@@ -75,6 +75,11 @@ Last activity: 2026-03-13 — Phase 29 executed (2 plans)
 - [Phase 25]: charcoal (#2D3436) registered as named Tailwind token replacing oxford-blue (#002147) — all CTAs, active states, hero backgrounds now use charcoal
 - [Phase 25]: v3 heading pattern applied to 9 pages — space-y-4 mb-12 block with tracking-[0.3em] overline + text-5xl font-serif title + opacity-60 description
 
+### Decisions (Phase 31)
+
+- [Phase 31-01]: POLISH-05: Removed colored dot spans from TabBar and interview practice area grid — tabs show clean uppercase text only with active underline border
+- [Phase 31-01]: POLISH-03: text-center + max-w-xl removal applied to heading blocks on primers, tests, interview, quiz practice pages
+
 ### Pending Todos
 
 None — Phase 25 complete, ready to execute Phase 26.
@@ -85,7 +90,7 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-13T12:55:00.000Z
-Stopped at: Completed 31-03 quiz page POLISH-01 audit
+Last session: 2026-03-13
+Stopped at: Completed 31-01 (tab dot removal + centered headings)
 Resume file: None
-Next action: Verify milestone and run `/gsd:complete-milestone` — all v3 phases (25-30) now COMPLETE
+Next action: Execute plan 31-02 (PrimerCard redesign)

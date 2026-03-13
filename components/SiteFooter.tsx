@@ -1,48 +1,46 @@
 import Link from 'next/link';
+import { FolioMark } from './FolioLogo';
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 mt-auto">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <footer className="border-t border-stone-200 dark:border-stone-800 bg-paper dark:bg-stone-950 mt-auto">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
 
-        <p className="font-sans text-label text-stone-400 dark:text-stone-600 tracking-wide">
+        {/* Left: Folio wordmark */}
+        <Link
+          href="/"
+          className="flex items-center gap-1 text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-400 transition-colors"
+        >
+          <FolioMark size={18} />
+          <span className="font-serif text-sm tracking-wide">olio</span>
+        </Link>
+
+        {/* Center: copyright */}
+        <p className="font-sans text-label uppercase tracking-widest text-stone-400 dark:text-stone-500">
           © {year} Folio
         </p>
 
-        <nav className="flex items-center gap-6">
-          <a
-            href="mailto:hello@folioapp.co.uk"
-            className="font-sans text-label text-stone-400 dark:text-stone-600 hover:text-stone-700 dark:hover:text-stone-300 transition-colors tracking-wide"
-          >
-            Feedback
-          </a>
+        {/* Right: nav links */}
+        <nav className="flex items-center gap-5">
           <Link
             href="/terms"
-            className="font-sans text-label text-stone-400 dark:text-stone-600 hover:text-stone-700 dark:hover:text-stone-300 transition-colors tracking-wide"
+            className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
-            Terms
+            Legal
           </Link>
           <Link
             href="/privacy"
-            className="font-sans text-label text-stone-400 dark:text-stone-600 hover:text-stone-700 dark:hover:text-stone-300 transition-colors tracking-wide"
+            className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             Privacy
           </Link>
           <a
             href="mailto:hello@folioapp.co.uk"
-            className="font-sans text-label text-stone-400 dark:text-stone-600 hover:text-stone-700 dark:hover:text-stone-300 transition-colors tracking-wide"
+            className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             Contact
-          </a>
-          <a
-            href="https://www.linkedin.com/in/gregory-vitrenko-7258a0350"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-sans text-label text-stone-400 dark:text-stone-600 hover:text-stone-700 dark:hover:text-stone-300 transition-colors tracking-wide"
-          >
-            LinkedIn
           </a>
         </nav>
 

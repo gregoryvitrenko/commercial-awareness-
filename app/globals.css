@@ -100,6 +100,26 @@
   }
 }
 
+/* ── Level-up overlay animation ──────────────────────────────────────────── */
+@keyframes levelUpOverlay {
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes levelUpNumber {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.9); }
+  20%  { opacity: 1; transform: translateY(0)    scale(1);   }
+  78%  { opacity: 1; transform: translateY(0)    scale(1);   }
+  100% { opacity: 0; transform: translateY(-8px) scale(1.04); }
+}
+.animate-level-up-overlay {
+  animation: levelUpOverlay 2.6s ease-in-out forwards;
+}
+.animate-level-up-number {
+  animation: levelUpNumber 2.6s ease-in-out forwards;
+}
+
 /* ── Print styles for firm pack PDF export ────────────────────────────────── */
 @media print {
   /* Force light mode colours */

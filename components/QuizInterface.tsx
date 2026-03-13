@@ -288,6 +288,10 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
   // Server-persisted gamification (XP / level / streak)
   const [gamificationData, setGamificationData] = useState<GamificationData | null>(null);
 
+  // Level-up overlay
+  const [showLevelUp, setShowLevelUp] = useState(false);
+  const [levelUpLevel, setLevelUpLevel] = useState(0);
+
   useEffect(() => {
     // Load streak-specific result for the daily card — never overwritten by practice
     const saved = loadStreakResult(date);
@@ -451,11 +455,32 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
           body: JSON.stringify({ type: completionType }),
         })
           .then((r) => r.json())
-          .then((data: GamificationData) => setGamificationData(data))
+          .then((data: GamificationData) => {
+            setGamificationData(data);
+            if (data.leveledUp) {
+              setLevelUpLevel(data.level);
+              setShowLevelUp(true);
+              setTimeout(() => setShowLevelUp(false), 2600);
+            }
+          })
           .catch(() => {});
       }
     }
   }
+
+  // ── Level-up overlay ──────────────────────────────────────────────────────
+  const levelUpOverlay = showLevelUp && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-level-up-overlay bg-[#1B2333]/90 pointer-events-none">
+      <div className="text-center animate-level-up-number">
+        <p className="font-sans text-label tracking-widest uppercase text-white/40 mb-4">
+          Level Up
+        </p>
+        <p className="font-serif text-[7rem] font-bold text-white leading-none tracking-tight">
+          {levelUpLevel}
+        </p>
+      </div>
+    </div>
+  );
 
   // ── Idle / loading state ───────────────────────────────────────────────────
 
@@ -466,6 +491,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
 
     return (
       <div>
+        {levelUpOverlay}
         <h3 className="section-label mb-4">
           Choose your practice
         </h3>
@@ -701,6 +727,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
 
     return (
       <div className="space-y-8">
+        {levelUpOverlay}
         {/* Score card */}
         <div>
           <h3 className="section-label mb-3">
@@ -859,6 +886,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
 
   return (
     <div className="max-w-2xl mx-auto py-10">
+      {levelUpOverlay}
 
       {/* Progress */}
       <div className="mb-8">

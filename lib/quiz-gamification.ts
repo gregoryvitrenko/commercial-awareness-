@@ -24,6 +24,8 @@ export interface GamificationData {
   level: number;
   streak: number;
   lastCompleted: string | null;
+  /** Only present on POST response — true if this completion caused a level-up */
+  leveledUp?: boolean;
 }
 
 // ── Backend detection ──────────────────────────────────────────────────────────
@@ -142,6 +144,7 @@ export async function recordQuizCompletion(
     level: newLevel,
     streak: newStreak,
     lastCompleted: today,
+    leveledUp: newLevel > current.level,
   };
 
   if (useRedis()) {

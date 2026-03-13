@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { FolioMark } from './FolioLogo';
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -11,15 +10,14 @@ export function SiteFooter() {
         {/* Left: Folio wordmark */}
         <Link
           href="/"
-          className="flex items-center gap-1 text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-400 transition-colors"
+          className="font-serif text-sm font-semibold text-stone-400 dark:text-stone-500 hover:text-stone-600 dark:hover:text-stone-400 transition-colors"
         >
-          <FolioMark size={18} />
-          <span className="font-serif text-sm tracking-wide">olio</span>
+          Folio
         </Link>
 
         {/* Center: copyright */}
         <p className="font-sans text-label uppercase tracking-widest text-stone-400 dark:text-stone-500">
-          © {year} Brand Guidelines
+          © {year} Folio
         </p>
 
         {/* Right: nav links */}

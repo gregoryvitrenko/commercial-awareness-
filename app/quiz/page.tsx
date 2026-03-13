@@ -128,18 +128,18 @@ export default async function QuizPage() {
       <Header date={activeDate} />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
-        {/* 1. Heading block */}
-        <div className="space-y-3 mb-6">
-          <span className="section-label opacity-40">Intelligence Training</span>
-          <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">Commercial Quiz</h2>
-        </div>
-
-        {/* 2. Gamification strip — own row, full width, before panels */}
-        {statsStrip && (
-          <div className="mb-10">
-            {statsStrip}
+        {/* 1. Heading + gamification stats side-by-side */}
+        <div className="flex items-start justify-between gap-6 mb-10 flex-wrap">
+          <div className="space-y-1">
+            <span className="section-label opacity-40">Intelligence Training</span>
+            <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">Commercial Quiz</h2>
           </div>
-        )}
+          {statsStrip && (
+            <div className="flex-shrink-0">
+              {statsStrip}
+            </div>
+          )}
+        </div>
 
         {/* 3. Two-panel grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

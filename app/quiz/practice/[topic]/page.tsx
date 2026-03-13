@@ -1,5 +1,6 @@
 import { requireSubscription } from '@/lib/paywall';
-import { getPracticeSet, getTodayDate } from '@/lib/storage';
+import { getPracticeSet, savePracticeSet, getTodayDate } from '@/lib/storage';
+import { generatePracticeSet } from '@/lib/quiz';
 import { Header } from '@/components/Header';
 import { QuizInterface } from '@/components/QuizInterface';
 import Link from 'next/link';
@@ -43,7 +44,18 @@ export default async function QuizPracticePage({
     );
   }
 
-  const practiceSet = await getPracticeSet(topicSlug);
+  // Fetch from cache; generate on-demand if not yet seeded.
+  // First-ever load will be slow (~10s) — subsequent visits are instant from Redis.
+  let practiceSet = await getPracticeSet(topicSlug);
+  if (!practiceSet) {
+    try {
+      const generated = await generatePracticeSet(topicSlug, topicLabel);
+      await savePracticeSet(topicSlug, generated);
+      practiceSet = generated;
+    } catch (err) {
+      console.error(`[practice] On-demand generation failed for ${topicSlug}:`, err);
+    }
+  }
 
   return (
     <>
@@ -67,15 +79,15 @@ export default async function QuizPracticePage({
             date={today}
             initialQuiz={{ date: today, generatedAt: practiceSet.generatedAt, questions: practiceSet.questions }}
             storyMeta={[]}
-            countdown={null}
+            isPractice={true}
           />
         ) : (
           <div className="rounded-card border border-stone-200 dark:border-stone-800 p-10 text-center space-y-3">
             <p className="text-body text-stone-500 dark:text-stone-400">
-              Practice questions for {topicLabel} are being prepared.
+              Could not load practice questions for {topicLabel}.
             </p>
             <p className="text-caption text-stone-400 dark:text-stone-500">
-              Deep practice sets are generated every Monday. Check back soon.
+              Please try again in a moment.
             </p>
           </div>
         )}

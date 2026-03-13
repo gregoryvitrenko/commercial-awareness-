@@ -249,12 +249,14 @@ interface QuizInterfaceProps {
   initialQuiz: DailyQuiz | null;
   storyMeta: StoryMeta[];
   countdown?: CountdownData | null;
+  /** When true: auto-start immediately with all questions (practice mode, no card selection) */
+  isPractice?: boolean;
 }
 
-type QuizMode = 'streak' | 'deep';
+type QuizMode = 'streak' | 'practice';
 type UIState = 'idle' | 'loading' | 'quiz' | 'results';
 
-export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizInterfaceProps) {
+export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPractice = false }: QuizInterfaceProps) {
   // Streak only applies to today's quiz — not archive dates
   const isToday = date === new Date().toLocaleDateString('en-CA');
 
@@ -287,7 +289,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
   const [gamificationData, setGamificationData] = useState<GamificationData | null>(null);
 
   useEffect(() => {
-    // Load streak-specific result for the daily card — never overwritten by deep practice
+    // Load streak-specific result for the daily card — never overwritten by practice
     const saved = loadStreakResult(date);
     setStreakResult(saved);
     setPreviousResult(saved); // initialise retry base with streak result
@@ -300,8 +302,20 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
     setStats(loadQuizStats());
   }, [date]);
 
-  // How many questions each mode will use (for labelling before quiz loads)
-  const deepCount = initialQuiz?.questions.length ?? 24;
+  // Practice mode: auto-start immediately with all questions — no card selection screen
+  useEffect(() => {
+    if (isPractice && initialQuiz && uiState === 'idle') {
+      setQuiz(initialQuiz);
+      setActiveQuestions(initialQuiz.questions);
+      setCurrentIndex(0);
+      setAnswers({});
+      setChosen(null);
+      setUIState('quiz');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPractice, initialQuiz]);
+
+  // How many questions in streak mode (for labelling before quiz loads)
   const streakCount_ = initialQuiz ? getStreakQuestions(initialQuiz.questions).length : storyMeta.length;
 
   async function fetchAndStart(mode: QuizMode, retryMissed = false) {
@@ -332,6 +346,8 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
 
     let questions = resolvedQuiz.questions;
 
+    // streak mode: 1 question per story (keeps the daily brief + preserves streak)
+    // practice mode: all questions
     if (mode === 'streak') {
       questions = getStreakQuestions(questions);
     }
@@ -381,7 +397,6 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
       };
 
       if (isRetry) {
-        // For streak retry: merge against streak answers. For deep retry: merge against previousResult.
         const mergeBase = (quizMode === 'streak' ? (streakResult ?? previousResult) : previousResult)!;
         const merged: StoredResult = {
           score: 0,
@@ -396,8 +411,6 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           saveStreakResult(date, merged);
           saveLastResult(merged.score, merged.total, date);
           setStreakResult(merged);
-        } else {
-          saveDeepResult(date, merged);
         }
         setPreviousResult(merged);
         setAnswers(merged.answers);
@@ -406,8 +419,6 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           saveStreakResult(date, result);
           saveLastResult(result.score, result.total, date);
           setStreakResult(result);
-        } else {
-          saveDeepResult(date, result);
         }
         setPreviousResult(result);
         setAnswers(nextAnswers);
@@ -433,7 +444,7 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
 
       // Fire-and-forget gamification POST on first completion only
       if (!isRetry) {
-        const completionType = quizMode === 'streak' ? 'daily' : 'practice';
+        const completionType = isPractice ? 'practice' : 'daily';
         fetch('/api/quiz/gamification', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -530,9 +541,8 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
           );
         })()}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-
-          {/* ── Daily (streak) card ───────────────────────────────────────── */}
+        {/* ── Daily (streak) card ─────────────────────────────────────────── */}
+        <div>
           <div
             onClick={() => !streakDone && fetchAndStart('streak', false)}
             className={`group relative flex flex-col rounded-card bg-stone-900 dark:bg-stone-950 overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-stone-900/10 hover:-translate-y-0.5 ${!streakDone ? 'cursor-pointer' : ''}`}
@@ -660,80 +670,8 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
             </div>
           </div>
 
-          {/* ── Deep practice card ────────────────────────────────────────── */}
-          <div
-            onClick={() => fetchAndStart('deep', false)}
-            className="group relative flex flex-col rounded-card border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 overflow-hidden cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-stone-900/5 dark:hover:shadow-stone-950/20 hover:-translate-y-0.5"
-          >
-            {/* Top bar */}
-            <div className="h-[3px] bg-stone-200 dark:bg-stone-700 flex-shrink-0" />
-
-            <div className="relative flex flex-col flex-1 px-5 pt-5 pb-5 gap-4">
-              {/* Header */}
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-stone-400 dark:text-stone-500 flex-shrink-0" />
-                <span className="text-label font-sans font-semibold tracking-widest uppercase text-stone-900 dark:text-stone-100">
-                  Deep Practice
-                </span>
-              </div>
-
-              {/* Hero: firm countdown or question count */}
-              <div className="flex items-end gap-3 min-h-[52px]">
-                <span className="text-5xl font-bold text-stone-900 dark:text-stone-50 tracking-tight leading-none">
-                  {countdown ? countdown.daysLeft : deepCount}
-                </span>
-                <div className="pb-1 leading-tight">
-                  {countdown ? (
-                    <>
-                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">days to</p>
-                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400 max-w-[88px] truncate">
-                        {countdown.shortName}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">full</p>
-                      <p className="text-label font-sans font-semibold tracking-[0.14em] uppercase text-stone-500 dark:text-stone-400">questions</p>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed -mt-1">
-                {countdown
-                  ? `${countdown.label} deadline — keep prepping daily.`
-                  : 'All 3 questions per practice area. Full recall drill.'}
-              </p>
-
-              {/* Action */}
-              <div className="mt-auto">
-                {uiState === 'loading' && quizMode === 'deep' ? (
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-caption font-sans font-medium">
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    Generating…
-                  </div>
-                ) : (
-                  <button
-                    onClick={(e) => { e.stopPropagation(); fetchAndStart('deep', false); }}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-card bg-stone-900 dark:bg-stone-100 hover:bg-stone-700 dark:hover:bg-stone-300 text-white dark:text-stone-900 text-caption font-sans font-medium transition-colors"
-                  >
-                    <Zap className="w-3.5 h-3.5" />
-                    {quiz ? 'Start deep practice →' : 'Generate & start →'}
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div className="mt-4">
-          <Link
-            href="/"
-            className="text-caption text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
-          >
-            ← Back to briefing
-          </Link>
-        </div>
       </div>
     );
   }
@@ -743,10 +681,10 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
   if (uiState === 'results' && quiz) {
     const finalAnswers = answers;
 
-    // For streak mode results: only show the questions that were in scope
-    const scopedQuestions = quizMode === 'streak'
-      ? getStreakQuestions(quiz.questions)
-      : quiz.questions;
+    // Scope questions to what was actually in the session
+    const scopedQuestions = isPractice
+      ? quiz.questions
+      : getStreakQuestions(quiz.questions);
 
     const score = scopedQuestions.filter(
       (q) => finalAnswers[q.id] === q.correctLetter
@@ -877,21 +815,12 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               Retry {missedCount} missed
             </button>
           )}
-          {quizMode === 'streak' && (
-            <button
-              onClick={() => fetchAndStart('deep', false)}
-              className="flex items-center gap-2 px-4 py-2 rounded-chrome border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-caption font-sans hover:bg-stone-50 dark:hover:bg-stone-800/50 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
-              <Zap className="w-3.5 h-3.5" />
-              Deep practice
-            </button>
-          )}
           <Link
-            href="/"
+            href={isPractice ? '/quiz' : '/'}
             className="flex items-center gap-1.5 px-4 py-2 rounded-chrome border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-400 text-caption font-sans hover:text-stone-900 dark:hover:text-stone-100 hover:border-stone-400 dark:hover:border-stone-500 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            Back to briefing
+            {isPractice ? 'Back to quiz' : 'Back to briefing'}
           </Link>
         </div>
       </div>
@@ -939,15 +868,15 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown }: QuizI
               {currentIndex + 1} / {activeQuestions.length}
               {isRetry && ' · retry mode'}
             </span>
-            {quizMode === 'streak' ? (
+            {isPractice ? (
               <span className="flex items-center gap-1 text-label font-sans text-stone-400 dark:text-stone-500">
-                <Flame className="w-2.5 h-2.5" />
-                daily
+                <Zap className="w-2.5 h-2.5" />
+                practice
               </span>
             ) : (
               <span className="flex items-center gap-1 text-label font-sans text-stone-400 dark:text-stone-500">
-                <Zap className="w-2.5 h-2.5" />
-                deep
+                <Flame className="w-2.5 h-2.5" />
+                daily
               </span>
             )}
           </div>

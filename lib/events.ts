@@ -88,16 +88,16 @@ const TAVILY_TIMEOUT_MS = 12_000;
 const CONTENT_LIMIT = 800;
 
 const EVENT_QUERIES = [
-  'UK law firm student social events networking 2026',
-  'Linklaters Freshfields Clifford Chance student social event 2026',
-  'law society student networking event London 2026',
-  'legal networking event Manchester Edinburgh Bristol students 2026',
-  'UK legal careers student event workshop panel discussion 2026',
-  'bar association law society student social drinks UK 2026',
-  'magic circle US law firm open day student event UK 2026',
-  'UK legal sector networking drinks reception student trainee 2026',
-  'law school careers fair recruitment event UK 2026',
-  'City law firm insight day student diversity event UK 2026',
+  'site:eventbrite.co.uk law legal networking students UK 2026',
+  'site:lawsociety.org.uk events students 2026',
+  'law firm open day insight day student event London 2026 register',
+  'magic circle silver circle law firm student networking drinks 2026',
+  'UK law school careers fair recruitment event 2026 register',
+  'legal networking event London Manchester Edinburgh Bristol students 2026',
+  'City law firm diversity inclusion student event workshop 2026',
+  'bar association law society student panel discussion 2026',
+  'Linklaters Freshfields Clifford Chance Allen Overy student event 2026',
+  'UK legal sector trainee student social networking event April May 2026',
 ];
 
 async function searchForEvents(): Promise<string> {
@@ -116,8 +116,8 @@ async function searchForEvents(): Promise<string> {
           api_key: apiKey,
           query: q,
           search_depth: 'basic',
-          topic: 'news',         // news-optimised index for event announcements
-          days: 7,               // events announced in the last week
+          topic: 'general',      // general index crawls event listing sites (Eventbrite, firm sites)
+          days: 60,              // look back 60 days — event pages stay live well before the event
           max_results: 5,
           include_answer: false,
         }),

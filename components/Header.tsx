@@ -22,7 +22,6 @@ const NAV_LINKS = [
   { label: 'Tracker', href: '/tracker' },
   { label: 'Events', href: '/events' },
   { label: 'Archive', href: '/archive' },
-  { label: 'Saved', href: '/saved' },
   { label: 'Firms', href: '/firms' },
   { label: 'Primers', href: '/primers' },
 ];

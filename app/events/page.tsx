@@ -34,7 +34,7 @@ export default async function EventsPage() {
             No upcoming events
           </h2>
           <p className="text-caption text-stone-500 max-w-sm">
-            We refresh events every Monday. Check back after the next update.
+            We refresh events every Monday and Thursday. Check back after the next update.
           </p>
           {store && (
             <p className="section-label text-stone-400 mt-2">

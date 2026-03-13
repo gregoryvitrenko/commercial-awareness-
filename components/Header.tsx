@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { Bookmark, Menu, X, ChevronDown } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { AuthButtons } from './AuthButtons';
-import { FolioMark } from './FolioLogo';
 
 interface HeaderProps {
   date: string;
@@ -70,8 +69,7 @@ export function Header({ date, isArchive = false, archiveDate }: HeaderProps) {
             aria-label="Folio"
             className="flex items-center gap-1 flex-shrink-0 text-stone-900 dark:text-stone-50 hover:text-stone-600 dark:hover:text-stone-400 transition-colors no-underline"
           >
-            <FolioMark size={22} className="flex-shrink-0" />
-            <span className="font-serif text-display tracking-tight" style={{ letterSpacing: '-0.03em' }}>olio</span>
+            <span className="font-serif text-display font-bold tracking-tight" style={{ letterSpacing: '-0.03em' }}>Folio</span>
           </Link>
 
           {/* Centre: nav — desktop only */}

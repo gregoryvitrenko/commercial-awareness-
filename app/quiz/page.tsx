@@ -52,7 +52,7 @@ export default async function QuizPage() {
   const xpInLevel = gamification ? gamification.xp % 100 : 0;
 
   const statsStrip = gamification && (
-    <div className="flex items-center gap-3 flex-shrink-0">
+    <div className="flex items-center gap-4 flex-wrap">
       {/* Streak card */}
       <div className="rounded-card border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-5 py-4 min-w-[180px]">
         <p className="section-label text-stone-400 dark:text-stone-500 mb-2">Daily Streak</p>
@@ -104,14 +104,19 @@ export default async function QuizPage() {
       <>
         <Header date={today} />
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-          {/* Heading row */}
-          <div className="flex items-start justify-between gap-8 mb-12 flex-wrap">
-            <div className="space-y-3">
-              <span className="section-label opacity-40">Intelligence Training</span>
-              <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">Commercial Quiz</h2>
-            </div>
-            {statsStrip}
+          {/* 1. Heading block */}
+          <div className="space-y-3 mb-6">
+            <span className="section-label opacity-40">Intelligence Training</span>
+            <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">Commercial Quiz</h2>
           </div>
+
+          {/* 2. Gamification strip — own row, full width, before panels */}
+          {statsStrip && (
+            <div className="mb-10">
+              {statsStrip}
+            </div>
+          )}
+
           <p className="text-sm text-stone-500 dark:text-stone-400 py-20 text-center">No briefing available yet.</p>
         </main>
       </>
@@ -123,16 +128,20 @@ export default async function QuizPage() {
       <Header date={activeDate} />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
-        {/* ── Heading + gamification stats row ──────────────────────────────── */}
-        <div className="flex items-start justify-between gap-8 mb-12 flex-wrap">
-          <div className="space-y-3">
-            <span className="section-label opacity-40">Intelligence Training</span>
-            <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">Commercial Quiz</h2>
-          </div>
-          {statsStrip}
+        {/* 1. Heading block */}
+        <div className="space-y-3 mb-6">
+          <span className="section-label opacity-40">Intelligence Training</span>
+          <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">Commercial Quiz</h2>
         </div>
 
-        {/* ── Two-column grid ────────────────────────────────────────────────── */}
+        {/* 2. Gamification strip — own row, full width, before panels */}
+        {statsStrip && (
+          <div className="mb-10">
+            {statsStrip}
+          </div>
+        )}
+
+        {/* 3. Two-panel grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
           {/* Left — Daily Briefing quiz card */}

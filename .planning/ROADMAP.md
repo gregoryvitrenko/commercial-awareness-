@@ -79,7 +79,7 @@ See phase details below for full success criteria.
 
 **Milestone Goal:** Align the deployed site to the AI Studio mockup across every page — new header shell (wordmark-left / flat nav / no dropdowns), site footer, and full redesigns of the archive, saved, tracker, events, primers, quiz, tests, interview, and fit assessment pages to match the mockup layout, typography scale, and visual restraint.
 
-- [ ] **Phase 32: Header + Footer** — New header shell: wordmark-left, flat nav links (no dropdowns), mobile drawer update. New site footer component added sitewide.
+- [x] **Phase 32: Header + Footer** — New header shell: wordmark-left, flat nav links (no dropdowns), mobile drawer update. New site footer component added sitewide. (completed 2026-03-13)
 - [ ] **Phase 33: Archive + Saved Pages** — Archive: left-aligned huge serif heading, italic column headers, pure minimal list (no cards). Saved: new heading + card redesign (date, filled bookmark, serif title, tag + read time).
 - [ ] **Phase 34: Tracker + Events Pages** — Tracker: "The Tracker" heading, table layout with styled status badges, serif firm names. Events: centered huge serif heading, rounded-xl cards, REGISTER INTEREST buttons.
 - [ ] **Phase 35: Primers 3-Column Grid** — Switch primers grid from 2-col to 3-col, final PrimerCard polish (outlined category chip, no dot, READ PRIMER link).
@@ -392,7 +392,7 @@ Plans:
   2. Clicking a quiz entry in the Quizzes column navigates to `/quiz/[date]` — the quiz is playable from the archive
   3. Clicking a podcast entry in the Podcasts column plays or navigates to that episode — the podcast column is populated from existing Blob-cached episodes
   4. The main navigation Archive item opens a dropdown with anchor links to Briefings, Quizzes, and Podcasts sections within the unified archive page
-**Plans:** 1 plan
+**Plans:** 2/2 plans complete
 Plans:
 - [ ] 27-01-PLAN.md — Unified 3-column archive page + nav anchor link updates
 
@@ -489,7 +489,7 @@ Plans:
 | 29. Quiz Gamification | v3 | 0/2 | Not started | - |
 | 30. Application Tracker | v3 | 0/2 | Not started | - |
 | 31. Complete Design Overhaul | v3.1 | Complete    | 2026-03-13 | 2026-03-13 |
-| 32. Header + Footer | v3.2 | 1/2 | In progress | 2026-03-13 |
+| 32. Header + Footer | 2/2 | Complete    | 2026-03-13 | 2026-03-13 |
 | 33. Archive + Saved Pages | v3.2 | 0/2 | Not started | - |
 | 34. Tracker + Events Pages | v3.2 | 0/2 | Not started | - |
 | 35. Primers 3-Column Grid | v3.2 | 0/1 | Not started | - |

@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
 import { Calendar } from 'lucide-react';
 import { getEvents } from '@/lib/events';
 import { CityFilter, EventsGrid } from './CityFilter';
@@ -14,16 +13,15 @@ export default async function EventsPage() {
   if (!store || upcoming.length === 0) {
     return (
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        <Link href="/" className="font-sans text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
-          ← Home
-        </Link>
-        {/* Page heading */}
-        <div className="space-y-4 mb-12">
-          <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
-            Sector Intelligence
-          </span>
-          <h1 className="text-5xl font-serif">Legal Events</h1>
-          <p className="max-w-xl opacity-60 text-lg font-light">Upcoming events across UK legal markets.</p>
+        {/* Page heading — centered */}
+        <div className="text-center space-y-3 mb-12">
+          <span className="section-label opacity-40">Professional Network</span>
+          <h1 className="text-[64px] leading-none font-serif font-bold text-stone-900 dark:text-stone-50">
+            Upcoming Events
+          </h1>
+          <p className="opacity-60 text-lg font-light max-w-xl mx-auto">
+            Curated events across UK legal markets — networking, workshops, and career fairs.
+          </p>
         </div>
 
         {/* Empty state */}
@@ -51,16 +49,15 @@ export default async function EventsPage() {
 
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-      <Link href="/" className="font-sans text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors inline-block mb-6">
-        ← Home
-      </Link>
-      {/* Page heading */}
-      <div className="space-y-4 mb-12">
-        <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
-          Sector Intelligence
-        </span>
-        <h1 className="text-5xl font-serif">Legal Events</h1>
-        <p className="max-w-xl opacity-60 text-lg font-light">Upcoming events across UK legal markets.</p>
+      {/* Page heading — centered */}
+      <div className="text-center space-y-3 mb-12">
+        <span className="section-label opacity-40">Professional Network</span>
+        <h1 className="text-[64px] leading-none font-serif font-bold text-stone-900 dark:text-stone-50">
+          Upcoming Events
+        </h1>
+        <p className="opacity-60 text-lg font-light max-w-xl mx-auto">
+          Curated events across UK legal markets — networking, workshops, and career fairs.
+        </p>
       </div>
 
       {/* CityFilter wrapped in Suspense — fallback renders all events unfiltered

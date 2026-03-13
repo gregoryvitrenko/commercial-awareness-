@@ -272,6 +272,7 @@ export interface LegalEvent {
   description: string;
   whyAttend: string;
   sourceUrl: string;    // never undefined; fallback: "https://www.lawsociety.org.uk"
+  registrationUrl?: string; // external registration link if available
 }
 
 export interface EventsStore {

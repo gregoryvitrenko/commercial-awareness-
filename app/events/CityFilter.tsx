@@ -29,30 +29,51 @@ interface EventCardProps {
   event: LegalEvent;
 }
 
+function formatDateDisplay(dateStr: string): string {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).toUpperCase();
+}
+
 function EventCard({ event }: EventCardProps) {
   return (
-    <Link
-      href={`/events/${event.id}`}
-      className="block rounded-card border border-stone-200 dark:border-stone-800 hover:border-stone-400 dark:hover:border-stone-600 transition-colors p-4"
-    >
-      <div className="flex items-start justify-between gap-2 mb-2">
+    <div className="flex flex-col rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-5 gap-3">
+      {/* Top row: category chip left, date right */}
+      <div className="flex items-center justify-between gap-2">
         <span className={`inline-block rounded-chrome px-2 py-0.5 text-label font-medium ${EVENT_TYPE_COLOURS[event.eventType]}`}>
           {event.eventType}
         </span>
+        <span className="section-label text-stone-400 dark:text-stone-500 whitespace-nowrap">
+          {formatDateDisplay(event.date)}
+        </span>
       </div>
-      <h3 className="text-body font-semibold text-stone-900 dark:text-stone-100 mb-1 leading-snug">
+
+      {/* Title */}
+      <h3 className="font-serif text-[18px] font-semibold text-stone-900 dark:text-stone-100 leading-snug">
         {event.title}
       </h3>
-      <p className="text-caption text-charcoal dark:text-charcoal-light font-medium mb-1">
-        {formatShortDate(event.date, event.time)}
+
+      {/* Time + location */}
+      <p className="text-caption text-stone-500 dark:text-stone-400">
+        {event.time ? `${event.time} · ` : ''}{event.city} · {event.organiser}
       </p>
-      <p className="text-caption text-stone-500">
-        {event.city} · {event.organiser}
-      </p>
-      <p className="section-label mt-2 text-stone-500">
-        {event.eligibility}
-      </p>
-    </Link>
+
+      {/* Spacer pushes button to bottom */}
+      <div className="flex-1" />
+
+      {/* REGISTER INTEREST — full-width outlined button */}
+      <Link
+        href={event.registrationUrl ?? `/events/${event.id}`}
+        target={event.registrationUrl ? '_blank' : undefined}
+        rel={event.registrationUrl ? 'noopener noreferrer' : undefined}
+        className="block w-full text-center border border-stone-300 dark:border-stone-600 rounded-full py-2.5 section-label text-stone-700 dark:text-stone-300 hover:border-stone-500 dark:hover:border-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+      >
+        REGISTER INTEREST
+      </Link>
+    </div>
   );
 }
 

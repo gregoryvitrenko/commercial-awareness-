@@ -6,16 +6,16 @@ import type { TrackerEntry, TrackerStatus } from '@/lib/types';
 const STATUS_OPTIONS: TrackerStatus[] = ['Applied', 'In Progress', 'Submitted', 'Interview', 'Offer', 'Rejected'];
 
 function StatusBadge({ status }: { status: TrackerStatus }) {
-  const colors: Record<TrackerStatus, string> = {
-    'Applied':     'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-300',
-    'In Progress': 'bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-300',
+  const styles: Record<TrackerStatus, string> = {
+    'Applied':     'border border-stone-300 text-stone-500 dark:border-stone-600 dark:text-stone-400',
+    'In Progress': 'border border-stone-400 text-stone-600 dark:border-stone-500 dark:text-stone-300',
     'Submitted':   'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
     'Interview':   'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300',
     'Offer':       'bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
     'Rejected':    'bg-rose-50 text-rose-600 dark:bg-rose-900/30 dark:text-rose-300',
   };
   return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide uppercase font-mono ${colors[status]}`}>
+    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium tracking-wide uppercase font-mono ${styles[status]}`}>
       {status}
     </span>
   );
@@ -24,8 +24,8 @@ function StatusBadge({ status }: { status: TrackerStatus }) {
 function formatDeadline(dateStr: string): string {
   if (!dateStr) return '—';
   const [year, month, day] = dateStr.split('-').map(Number);
-  return new Date(year, month - 1, day).toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'short', year: 'numeric',
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric',
   });
 }
 
@@ -99,24 +99,17 @@ export function TrackerView() {
 
   return (
     <div>
-      {/* Page heading */}
-      <div className="space-y-4 mb-12">
-        <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
-          Application Management
-        </span>
-        <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">The Tracker</h2>
-      </div>
-
-      {/* Top bar */}
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="font-serif text-lg font-semibold text-stone-700 dark:text-stone-300">
-          {entries.length} application{entries.length !== 1 ? 's' : ''}
-        </h3>
+      {/* Heading row */}
+      <div className="flex items-end justify-between mb-12">
+        <div className="space-y-2">
+          <span className="section-label opacity-40">Application Management</span>
+          <h2 className="text-[56px] leading-none font-serif font-bold text-stone-900 dark:text-stone-50">The Tracker</h2>
+        </div>
         <button
           onClick={() => { resetForm(); setShowForm(true); }}
-          className="px-6 py-3 rounded-[16px] bg-[#2D3436] text-white text-[13px] font-medium hover:bg-[#2D3436]/90 transition-all duration-200"
+          className="px-5 py-2.5 rounded-full bg-[#2D3436] text-white text-[12px] font-medium tracking-wide hover:bg-[#2D3436]/90 transition-colors whitespace-nowrap"
         >
-          Add Application
+          + Add Application
         </button>
       </div>
 
@@ -165,10 +158,10 @@ export function TrackerView() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-stone-100 dark:border-stone-800">
-                <th className="text-left px-6 py-3 font-mono text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 font-normal">Firm</th>
-                <th className="text-left px-6 py-3 font-mono text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 font-normal">Status</th>
-                <th className="text-left px-6 py-3 font-mono text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 font-normal">Deadline</th>
-                <th className="text-left px-6 py-3 font-mono text-[10px] uppercase tracking-widest text-stone-400 dark:text-stone-500 font-normal hidden md:table-cell">Notes</th>
+                <th className="text-left px-6 py-3 section-label text-stone-400 dark:text-stone-500 font-normal">Firm</th>
+                <th className="text-left px-6 py-3 section-label text-stone-400 dark:text-stone-500 font-normal">Status</th>
+                <th className="text-left px-6 py-3 section-label text-stone-400 dark:text-stone-500 font-normal">Deadline</th>
+                <th className="text-left px-6 py-3 section-label text-stone-400 dark:text-stone-500 font-normal hidden md:table-cell">Notes</th>
                 <th className="px-6 py-3" />
               </tr>
             </thead>

@@ -20,9 +20,15 @@ function formatDisplayDate(dateStr: string): string {
   });
 }
 
-export default async function QuizDatePage({ params }: { params: Promise<{ date: string }> }) {
+export default async function QuizDatePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ date: string }>;
+  searchParams: Promise<{ autostart?: string }>;
+}) {
   await requireSubscription();
-  const { date } = await params;
+  const [{ date }, { autostart }] = await Promise.all([params, searchParams]);
   const today = getTodayDate();
 
   const briefing = await getBriefing(date);
@@ -54,15 +60,18 @@ export default async function QuizDatePage({ params }: { params: Promise<{ date:
           <h2 className="text-5xl font-serif text-stone-900 dark:text-stone-50">
             {isToday ? 'Today' : formatDisplayDate(date)}
           </h2>
-          <p className="max-w-xl opacity-60 text-lg font-light font-sans">
-            {quiz?.questions.length ?? 0} questions
-          </p>
+          {quiz && quiz.questions.length > 0 && (
+            <p className="max-w-xl opacity-60 text-lg font-light font-sans">
+              {quiz.questions.length} questions
+            </p>
+          )}
         </div>
 
         <QuizInterface
           date={date}
           initialQuiz={quiz}
           storyMeta={storyMeta}
+          autoStart={autostart === '1'}
         />
       </main>
     </>

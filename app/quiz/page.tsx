@@ -5,7 +5,7 @@ import { TOPIC_STYLES } from '@/lib/types';
 import { Sparkles, Plus } from 'lucide-react';
 import { requireSubscription } from '@/lib/paywall';
 import { auth } from '@clerk/nextjs/server';
-import { getGamificationData } from '@/lib/quiz-gamification';
+import { getGamificationData, xpInCurrentLevel, xpForNextLevel } from '@/lib/quiz-gamification';
 
 // ── Deep practice topics ───────────────────────────────────────────────────────
 
@@ -49,7 +49,8 @@ export default async function QuizPage() {
 
   // ── Gamification stat cards ────────────────────────────────────────────────
   const streakBars = gamification ? Math.min(gamification.streak, 7) : 0;
-  const xpInLevel = gamification ? gamification.xp % 100 : 0;
+  const currentLevelXP = gamification ? xpInCurrentLevel(gamification.xp, gamification.level) : 0;
+  const nextLevelXP = gamification ? xpForNextLevel(gamification.level) : 100;
 
   const statsStrip = gamification && (
     <div className="flex items-center gap-4 flex-wrap">
@@ -86,13 +87,13 @@ export default async function QuizPage() {
             Level {gamification.level}
           </p>
           <p className="section-label text-stone-400 dark:text-stone-500">
-            {xpInLevel}/100 XP
+            {currentLevelXP}/{nextLevelXP} XP
           </p>
         </div>
         <div className="h-2 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
           <div
             className="h-full bg-[#1B2333] dark:bg-stone-300 rounded-full transition-all"
-            style={{ width: `${xpInLevel}%` }}
+            style={{ width: `${(currentLevelXP / nextLevelXP) * 100}%` }}
           />
         </div>
       </div>
@@ -177,7 +178,7 @@ export default async function QuizPage() {
                 </div>
                 <div>
                   <Link
-                    href={`/quiz/${activeDate}`}
+                    href={`/quiz/${activeDate}?autostart=1`}
                     className="inline-block bg-white text-[#1B2333] font-bold text-[11px] tracking-widest uppercase px-10 py-4 rounded-full hover:bg-stone-100 transition-colors"
                   >
                     Start Daily Quiz

@@ -251,12 +251,14 @@ interface QuizInterfaceProps {
   countdown?: CountdownData | null;
   /** When true: auto-start immediately with all questions (practice mode, no card selection) */
   isPractice?: boolean;
+  /** When true: auto-start in streak mode immediately, bypassing the card selection screen */
+  autoStart?: boolean;
 }
 
 type QuizMode = 'streak' | 'practice';
 type UIState = 'idle' | 'loading' | 'quiz' | 'results';
 
-export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPractice = false }: QuizInterfaceProps) {
+export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPractice = false, autoStart = false }: QuizInterfaceProps) {
   // Streak only applies to today's quiz — not archive dates
   const isToday = date === new Date().toLocaleDateString('en-CA');
 
@@ -318,6 +320,14 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPractice, initialQuiz]);
+
+  // Auto-start in streak mode (used when navigating from the quiz hub CTA)
+  useEffect(() => {
+    if (autoStart) {
+      fetchAndStart('streak');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // How many questions in streak mode (for labelling before quiz loads)
   const streakCount_ = initialQuiz ? getStreakQuestions(initialQuiz.questions).length : storyMeta.length;
@@ -770,45 +780,59 @@ export function QuizInterface({ date, initialQuiz, storyMeta, countdown, isPract
         </div>
 
         {/* Gamification panel — XP earned, shown after first completion only */}
-        {gamificationData && !isRetry && (
-          <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 px-5 py-4">
-            <p className="section-label mb-3">XP Earned</p>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              {/* Level */}
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">
-                  Lvl {gamificationData.level}
-                </span>
-                <span className="text-label font-sans text-stone-400 dark:text-stone-500">
-                  +{quizMode === 'streak' ? 100 : 150} XP
-                </span>
-              </div>
-              {/* XP progress bar */}
-              <div className="flex-1 min-w-[120px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-label font-sans text-stone-500 dark:text-stone-400">
-                    {gamificationData.xp % 100}/100 XP
+        {gamificationData && !isRetry && (() => {
+          const xpAwarded = gamificationData.xpAwarded ?? 0;
+          const level = gamificationData.level;
+          // Triangular level formula: cumulative XP for level N = N*(N+1)/2*100
+          const xpForLevel = (n: number) => (n * (n + 1) / 2) * 100;
+          const xpInLevel = gamificationData.xp - xpForLevel(level);
+          const xpNeeded = (level + 1) * 100;
+          return (
+            <div className="rounded-card bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 px-5 py-4">
+              <p className="section-label mb-3">{xpAwarded > 0 ? 'XP Earned' : 'Progress'}</p>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                {/* Level */}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">
+                    Lvl {level}
+                  </span>
+                  {xpAwarded > 0 ? (
+                    <span className="text-label font-sans text-stone-400 dark:text-stone-500">
+                      +{xpAwarded} XP
+                    </span>
+                  ) : (
+                    <span className="text-label font-sans text-stone-400 dark:text-stone-500">
+                      {quizMode === 'streak' ? 'already done today' : 'XP resets next week'}
+                    </span>
+                  )}
+                </div>
+                {/* XP progress bar */}
+                <div className="flex-1 min-w-[120px]">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-label font-sans text-stone-500 dark:text-stone-400">
+                      {xpInLevel}/{xpNeeded} XP
+                    </span>
+                  </div>
+                  <div className="h-2 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-charcoal dark:bg-stone-300 rounded-full transition-all duration-500"
+                      style={{ width: `${(xpInLevel / xpNeeded) * 100}%` }}
+                    />
+                  </div>
+                </div>
+                {/* Streak */}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">
+                    {gamificationData.streak}
+                  </span>
+                  <span className="text-label font-sans text-stone-400 dark:text-stone-500">
+                    day streak
                   </span>
                 </div>
-                <div className="h-2 bg-stone-100 dark:bg-stone-800 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-charcoal dark:bg-stone-300 rounded-full transition-all duration-500"
-                    style={{ width: `${gamificationData.xp % 100}%` }}
-                  />
-                </div>
-              </div>
-              {/* Streak */}
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold text-stone-900 dark:text-stone-50 tracking-tight">
-                  {gamificationData.streak}
-                </span>
-                <span className="text-label font-sans text-stone-400 dark:text-stone-500">
-                  day streak
-                </span>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* Per-topic breakdown */}
         <div>

@@ -377,11 +377,8 @@ export default async function FirmProfilePage({
 
             {/* Main: talking points + practice questions */}
             <SectionCard>
-              <div className="flex items-start justify-between gap-4 mb-6">
+              <div className="mb-6">
                 <SectionHeading icon={<MessageSquare size={13} />} label="Interview Prep" />
-                <span className="shrink-0 mt-0.5 inline-block text-label font-medium uppercase px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
-                  Refreshes weekly
-                </span>
               </div>
 
               <p className="section-label mb-3">Talking Points</p>
@@ -419,21 +416,28 @@ export default async function FirmProfilePage({
                   Talking points are being generated — refresh the page in a moment.
                 </p>
               )}
-
-              <div className="border-t border-stone-200 dark:border-stone-800 my-6" />
-
-              {interviewPack && interviewPack.practiceQuestions.length > 0 ? (
-                <CollapsibleQuestions
-                  questions={interviewPack.practiceQuestions}
-                  firmShortName={firm.shortName}
-                />
-              ) : (
-                <p className="text-caption text-stone-400 dark:text-stone-500 italic">
-                  Practice questions are being generated — refresh the page in a moment.
-                </p>
-              )}
             </SectionCard>
           </div>
+
+          {/* Practice Questions — full width */}
+          <SectionCard>
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <SectionHeading icon={<MessageSquare size={13} />} label="Practice Questions" />
+              <span className="shrink-0 mt-0.5 inline-block text-label font-medium uppercase px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
+                Refreshes weekly
+              </span>
+            </div>
+            {interviewPack && interviewPack.practiceQuestions.length > 0 ? (
+              <CollapsibleQuestions
+                questions={interviewPack.practiceQuestions}
+                firmShortName={firm.shortName}
+              />
+            ) : (
+              <p className="text-caption text-stone-400 dark:text-stone-500 italic">
+                Practice questions are being generated — refresh the page in a moment.
+              </p>
+            )}
+          </SectionCard>
 
           {/* Assessments */}
           {firm.assessments && firm.assessments.length > 0 && (

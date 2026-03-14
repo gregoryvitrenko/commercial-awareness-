@@ -35,7 +35,7 @@ export function SiteFooter() {
             Privacy
           </Link>
           <a
-            href="mailto:feedbackfolio@gmail.com"
+            href="mailto:feedbackfolioapp@gmail.com"
             className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             Contact

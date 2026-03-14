@@ -10,9 +10,14 @@ interface BriefingViewProps {
 }
 
 export function BriefingView({ briefing, subscribed = false }: BriefingViewProps) {
-  const LAUNCH_DATE = new Date('2026-03-01');
-  const briefingDate = new Date(briefing.date);
-  const issueNumber = Math.max(1, Math.round((briefingDate.getTime() - LAUNCH_DATE.getTime()) / (1000 * 60 * 60 * 24)) + 1);
+  const [year, month, day] = briefing.date.split('-').map(Number);
+  const briefingDate = new Date(year, month - 1, day);
+  const formattedDate = briefingDate.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 
   return (
     <main className="max-w-5xl mx-auto px-4 sm:px-6 pt-10 pb-10">
@@ -52,17 +57,13 @@ export function BriefingView({ briefing, subscribed = false }: BriefingViewProps
 
       {/* Strapline */}
       <p className="font-serif text-base sm:text-lg italic text-stone-400 dark:text-stone-500 text-center mb-3 leading-relaxed">
-        Daily commercial law briefings for future City trainees — curated stories, talking points, and firm intelligence, every morning.
+        From commercial awareness to commercial fluency — briefings, quiz, firm intelligence, and interview prep, every morning.
       </p>
 
-      {/* Editorial masthead */}
-      <div className="flex items-center justify-between gap-4 py-5 mb-2 border-b border-stone-200 dark:border-stone-800">
-        <span className="section-label flex-shrink-0 invisible" aria-hidden="true">Vol. 1 / No. 00</span>
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold tracking-tight text-stone-900 dark:text-stone-50 text-center flex-1">
-          Folio
-        </h1>
-        <span className="section-label text-stone-400 dark:text-stone-500 flex-shrink-0 text-right">
-          Vol. 1 / No. {issueNumber}
+      {/* Date line */}
+      <div className="flex items-center justify-center py-4 mb-2 border-b border-stone-200 dark:border-stone-800">
+        <span className="section-label text-stone-400 dark:text-stone-500">
+          {formattedDate}
         </span>
       </div>
 

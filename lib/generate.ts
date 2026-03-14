@@ -3,7 +3,7 @@ import { jsonrepair } from 'jsonrepair';
 import type { Briefing, Story, TopicCategory, WhyItMatters, TalkingPoints, SectorWatchData, OneToFollowData } from './types';
 import { getBriefing } from './storage';
 
-const SYSTEM_PROMPT = `You are the briefing engine for Folio, a legal-prep platform producing daily commercial awareness briefings for a first-year LLB student in London targeting Magic Circle, Silver Circle, and elite US law firms. Your briefings are grounded in the specific facts, figures, names, and details from the news sources provided. Every claim — deal value, adviser name, regulatory body, timeline, financing term — must be traceable to a source article. You write with the precision of a senior lawyer who has read the originals, not a generalist who has skimmed headlines.`;
+const SYSTEM_PROMPT = `You are the briefing engine for Folio, a commercial law intelligence platform for UK law students targeting Magic Circle, Silver Circle, and elite US firms. You write the daily 8am briefing with the confidence of a well-read mid-level associate briefing a partner — direct, commercially sharp, and precise. You state facts from the sources provided, connect them to their legal and commercial significance, and stop when the facts run out. You never hedge, never attribute sources in prose, and never comment on what information is unavailable.`;
 
 function buildExclusionBlock(previousBriefing: Briefing | null): string {
   if (!previousBriefing || previousBriefing.stories.length === 0) return '';
@@ -53,7 +53,7 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
     {
       "topic": "M&A",
       "headline": "One sharp, declarative sentence — name the parties, deal value, and type of transaction",
-      "summary": "10–14 sentences. Write as a senior lawyer who has read the source articles. You MUST include: exact deal value (or 'undisclosed' if not reported), named advisers on each side with their roles (e.g. 'Freshfields advised the target; Linklaters advised the acquirer'), specific regulatory bodies and the exact approval timeline stated in the sources, the precise financing structure (debt/equity split, debt providers named if known), named parties with a line on who they are and why they matter, the strategic rationale as articulated by the principals or as evidenced by the facts, market context grounded in specific numbers or comparables from the sources, and any explicit conditions, break fees, or open questions mentioned. Do not round figures or omit specifics that appear in the source material.",
+      "summary": "Write a tight editorial summary using only facts clearly present in the sources. Maximum 200 words — write fewer if the facts warrant it. A confident 100-word brief beats a padded 200-word one. Work through this priority order, including each item only if the sources support it: (1) Core event — what happened, who was involved, which sector and jurisdiction. (2) Deal economics — headline value, size, key metrics, consideration structure. (3) Named parties and roles — buyer/seller/target, PE sponsor, advisers on each side with their roles, regulators. (4) Legal and regulatory dimension — approvals needed, regulatory regime, conditions, notable clauses. (5) Strategic context — why this happened, what trend it reflects. The Golden Rule: if a detail is absent from the sources, omit it silently. Never write that something 'was not disclosed', 'could not be confirmed', or 'was not available'. Never use 'according to [source]', 'reports suggest', 'it is unclear', or any phrase that attributes the prose to a source or flags a gap. Never repeat a fact already stated — each point once, then move on. Wrap 4–8 key terms per story in **double asterisks**: deal values, firm names, regulatory bodies, named legislation, central parties.",
       "whyItMatters": {
         "ukFirms": "3–4 sentences. Name the specific Magic Circle firms (Freshfields Bruckhaus Deringer, Linklaters, Allen & Overy Shearman, Clifford Chance, Slaughter and May) or Silver Circle firms (Herbert Smith Freehills, Ashurst, Hogan Lovells, Travers Smith, Macfarlies) best positioned on this matter and explain precisely why — which practice group has the track record, which office has the client relationship, which partner team wins this type of mandate. Note any Takeover Panel, CMA clearance, or FCA authorisation requirements that give UK firms the edge.",
         "usFirms": "2–3 sentences. Name which elite US firms in London (Kirkland & Ellis, Latham & Watkins, Sullivan & Cromwell, Skadden Arps, Paul Weiss, Weil Gotshal & Manges, Davis Polk, Cleary Gottlieb) are the natural choice for the PE sponsor, the leveraged finance package, or the cross-border structuring work, and explain the specific competitive advantage (e.g. Kirkland's dominance of UK PE fund formation, Latham's leveraged finance bench in London). Note any tension with UK firms for the same mandate.",
@@ -61,8 +61,8 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
       },
       "talkingPoints": {
         "soundbite": "ONE sentence, max 15 words. Name the deal or firm and the single most striking commercial implication — NOT a restatement of the headline. Do not use phrases like 'significant development', 'marks a new era', or 'signals change'. The sentence should give a student something to say that sounds informed, not just summarised. BAD: 'Carlyle Group\\'s target to raise $200bn is a significant development in private equity.' GOOD: 'PE AUM scale drives larger European M&A mandates — Magic Circle funds practices see direct deal flow as Carlyle deploys capital.'",
-        "partnerAnswer": "2–3 sentences, ~50 words. Lead with a specific commercial observation that goes beyond the headline — name the deal and then immediately explain what it means for law firms: which practice area specifically (M&A, leveraged finance, capital markets, restructuring, disputes), which specific firms are best positioned, and why. The student should be able to drop this into a 2-minute partner conversation without sounding like they just read a summary. Zero filler phrases ('it is worth noting', 'this highlights the importance of').",
-        "fullCommercial": "4–5 sentences, ~100 words. Open with the headline fact. Explain the strategic context (WHY this deal or event happened — what drove it). Name the specific practice areas and the specific Magic Circle, Silver Circle, or US firms best positioned and explain why (track record, client relationships, regulatory expertise). Connect to one named broader market trend. End with a concrete statement about what work this creates for commercial lawyers. Zero filler phrases."
+        "partnerAnswer": "2–3 sentences, ~50 words. Assume the partner has already read the headline — do not restate it. Lead immediately with the commercial implication: what does this mean for the firm's practice, clients, or deal pipeline? Name the specific practice area and which firms are best positioned to win the work, and briefly why. The student should be able to drop this into a 2-minute partner conversation without sounding like they just read a summary. Zero filler phrases.",
+        "fullCommercial": "4–5 sentences, ~100 words. For someone who has not yet seen the story. Open with the headline fact in one sentence. Explain the strategic context — why this happened. Name the specific practice areas and the specific Magic Circle, Silver Circle, or US firms best positioned, with a brief reason (track record, client relationship, regulatory expertise). Connect to one named broader market trend. End with a concrete statement about what work this creates for commercial lawyers. Zero filler phrases."
       },
       "leadScore": 7,
       "sources": ["https://example.com/article-url"],
@@ -87,6 +87,7 @@ Rules:
 - If a practice area has no strong story from the provided sources, use your training knowledge to produce a credible, current-feeling story for that area — but still mark sources as []
 - leadScore is an integer 1–10 rating how newsworthy this story is as a potential front-page lead. Score 8–10 for: landmark deals (£5bn+), sector-wide regulatory decisions, Supreme Court or Court of Appeal rulings, stories affecting multiple practice areas at once, or events that directly move the legal market. Score 5–7 for solid but routine stories (mid-size deals, standard regulatory updates). Score 1–4 for minor or niche stories. Be discriminating — only one story per briefing should score 9 or 10.
 - firms must be an array of 2–5 short law firm names explicitly mentioned in this story (e.g. "Freshfields", "Linklaters", "Kirkland"). Use short names only — no "& Partners", no "LLP". If no firms are named, use []
+- Before finalising each summary, reread it and remove any sentence that: (a) mentions source availability, paywalls, or what could not be found, (b) uses phrases like 'according to', 'reports suggest', 'it is unclear', 'details were not available', 'no advisers were named', or similar hedging or meta-commentary, (c) repeats a fact already stated with no new angle
 - In the summary and all three whyItMatters sub-fields, wrap 4–8 key terms per paragraph in **double asterisks** like this: **CMA**, **£4.2bn**, **Freshfields**, **Article 101 TFEU**. Bold only the most scan-worthy facts: deal values, firm names, regulatory bodies, named legislation, and central named parties. Do not bold every proper noun — be selective so bolding carries weight.
 
 Tone: Intelligent but not stuffy. Brief a sharp colleague, not a filing report. Zero filler phrases ("it is worth noting", "this highlights the importance of", "in conclusion"). If a number is imprecise, say so briefly rather than omitting it.
@@ -213,31 +214,65 @@ async function searchNews(dateLabel: string): Promise<string> {
   const apiKey = process.env.TAVILY_API_KEY;
   if (!apiKey) return '(no web search — Tavily API key not set)';
 
-  // Date-specific queries anchored to today so Tavily prioritises fresh results.
-  // 8 topic queries + 4 supplementary queries = 12 total (~360 credits/month, well within 1000/month free tier).
-  // Supplementary queries target FT/Reuters/Bloomberg sources and broader City deal flow
-  // to increase the chance of capturing high-quality stories published this morning.
-  const queries = [
+  // 8 primary queries (one per topic) + 4 existing supplementary + 3 new supplementary
+  // targeting non-paywalled primary sources = 15 total.
+  // search_depth: 'advanced' (2 credits/query) × 15 × 30 days ≈ 900 credits/month.
+  // Events cron stays on basic. Running on Tavily pay-as-you-go for overflow.
+  // Per-query include_domains biases supplementary queries toward ungated primary sources
+  // (law firm press releases, regulator sites, PR wires) so Claude gets full deal detail
+  // rather than 800-char paywalled excerpts.
+  interface TavilyQuery {
+    query: string;
+    include_domains?: string[];
+  }
+
+  const queries: TavilyQuery[] = [
     // ── Primary: one per practice area ──────────────────────────────────────
-    `UK M&A private equity deal announced today ${dateLabel}`,
-    `UK capital markets IPO equity debt bond issuance today ${dateLabel}`,
-    `UK leveraged finance loan syndicated lending private credit today ${dateLabel}`,
-    `UK EU competition law financial regulation today ${dateLabel}`,
-    `energy infrastructure technology legal news today ${dateLabel}`,
-    `UK commercial litigation arbitration dispute today ${dateLabel}`,
-    `cross-border international trade deal London law firms today ${dateLabel}`,
-    `AI artificial intelligence law firms legal practice regulation today ${dateLabel}`,
+    { query: `UK M&A private equity deal announced today ${dateLabel}` },
+    { query: `UK capital markets IPO equity debt bond issuance today ${dateLabel}` },
+    { query: `UK leveraged finance loan syndicated lending private credit today ${dateLabel}` },
+    { query: `UK EU competition law financial regulation today ${dateLabel}` },
+    { query: `energy infrastructure technology legal news today ${dateLabel}` },
+    { query: `UK commercial litigation arbitration dispute today ${dateLabel}` },
+    { query: `cross-border international trade deal London law firms today ${dateLabel}` },
+    { query: `AI artificial intelligence law firms legal practice regulation today ${dateLabel}` },
     // ── Supplementary: high-quality sources + broader deal flow ───────────
-    `Financial Times Reuters City of London deal merger acquisition ${dateLabel}`,
-    `Magic Circle Silver Circle law firm mandate instruction today ${dateLabel}`,
-    `UK High Court Court of Appeal judgment ruling enforcement today ${dateLabel}`,
-    `FCA PRA CMA regulatory decision enforcement action UK today ${dateLabel}`,
+    { query: `Financial Times Reuters City of London deal merger acquisition ${dateLabel}` },
+    { query: `Magic Circle Silver Circle law firm mandate instruction today ${dateLabel}` },
+    { query: `UK High Court Court of Appeal judgment ruling enforcement today ${dateLabel}` },
+    { query: `FCA PRA CMA regulatory decision enforcement action UK today ${dateLabel}` },
+    // ── Supplementary: non-paywalled primary sources ──────────────────────
+    {
+      query: `UK law firm deal announcement press release merger acquisition ${dateLabel}`,
+      include_domains: [
+        'businesswire.com', 'prnewswire.com', 'globenewswire.com',
+        'linklaters.com', 'freshfields.com', 'cliffordchance.com',
+        'allenovery.com', 'slaughterandmay.com', 'ashurst.com',
+        'hsf.com', 'hoganlovells.com', 'kirkland.com', 'lw.com',
+        'skadden.com', 'davispolk.com', 'sullcrom.com',
+      ],
+    },
+    {
+      query: `FCA CMA PRA regulatory enforcement decision ruling statement ${dateLabel}`,
+      include_domains: [
+        'fca.org.uk', 'cma.gov.uk', 'pra.org.uk', 'judiciary.gov.uk',
+        'legislation.gov.uk', 'companieshouse.gov.uk', 'ico.org.uk',
+        'ofgem.gov.uk', 'ofcom.org.uk',
+      ],
+    },
+    {
+      query: `AI artificial intelligence law regulation legal technology news ${dateLabel}`,
+      include_domains: [
+        'reuters.com', 'apnews.com', 'techcrunch.com',
+        'artificialintelligenceact.eu', 'digital-strategy.ec.europa.eu',
+      ],
+    },
   ];
 
-  const TAVILY_TIMEOUT_MS = 12_000; // 12 s per request — fail fast rather than hang
+  const TAVILY_TIMEOUT_MS = 12_000;
 
   const results = await Promise.all(
-    queries.map((q) => {
+    queries.map(({ query, include_domains }) => {
       const controller = new AbortController();
       const timer = setTimeout(() => controller.abort(), TAVILY_TIMEOUT_MS);
       return fetch('https://api.tavily.com/search', {
@@ -246,16 +281,17 @@ async function searchNews(dateLabel: string): Promise<string> {
         signal: controller.signal,
         body: JSON.stringify({
           api_key: apiKey,
-          query: q,
-          search_depth: 'basic', // 'advanced' is slow; basic is plenty for news
-          topic: 'news',         // news-optimised index — avoids stale evergreen pages
-          days: 1,               // only results published in the last 24 hours
-          max_results: 8,        // larger pool increases chance of capturing morning news
+          query,
+          search_depth: 'advanced', // 2 credits/query — richer content chunks per result
+          topic: 'news',
+          days: 1,
+          max_results: 8,
           include_answer: false,
+          ...(include_domains ? { include_domains } : {}),
         }),
       })
         .then((r) => r.json())
-        .catch(() => ({ results: [] })) // on timeout or network error, return empty
+        .catch(() => ({ results: [] }))
         .finally(() => clearTimeout(timer));
     })
   );

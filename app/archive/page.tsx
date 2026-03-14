@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { listBriefings, getTodayDate } from '@/lib/storage';
+import { listBriefings, getBriefing, getTodayDate } from '@/lib/storage';
 import { listPodcastDatesWithStatus } from '@/lib/podcast-storage';
 import { Header } from '@/components/Header';
 import { requireSubscription } from '@/lib/paywall';
+import { BriefingsFilter } from './BriefingsFilter';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,6 +33,25 @@ export default async function ArchivePage() {
   const today = getTodayDate();
   const podcastDates = podcastEpisodesRaw.filter((e) => e.hasAudio).map((e) => e.date);
 
+  // ── Build firm → dates index for the briefings filter ──────────────────────
+  const displayDates = briefingDates.slice(0, 30);
+  const recentBriefings = await Promise.all(displayDates.map((d) => getBriefing(d)));
+
+  const firmDates: Record<string, string[]> = {};
+  recentBriefings.forEach((briefing, i) => {
+    if (!briefing) return;
+    const date = displayDates[i];
+    const firmsInBriefing = new Set<string>();
+    briefing.stories.forEach((story) => {
+      (story.firms ?? []).forEach((f) => firmsInBriefing.add(f));
+    });
+    firmsInBriefing.forEach((firm) => {
+      if (!firmDates[firm]) firmDates[firm] = [];
+      firmDates[firm].push(date);
+    });
+  });
+  // ───────────────────────────────────────────────────────────────────────────
+
   return (
     <>
       <Header date={today} />
@@ -49,32 +69,12 @@ export default async function ArchivePage() {
         {/* 3-column grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-          {/* Briefings column */}
+          {/* Briefings column — with firm filter */}
           <div id="briefings">
             <h3 className="text-2xl font-serif italic border-b border-stone-200 dark:border-stone-800 pb-4 mb-6">
               Briefings
             </h3>
-            <div className="space-y-0">
-              {briefingDates.slice(0, 30).map((date) => (
-                <Link
-                  key={date}
-                  href={date === today ? '/' : `/archive/${date}`}
-                  className="group block"
-                >
-                  <div className="py-2 border-b border-stone-100 dark:border-stone-800/50">
-                    <span className="text-caption text-stone-400 dark:text-stone-500 block mb-0.5">
-                      {formatShortDate(date)}
-                    </span>
-                    <span className="font-serif text-body text-stone-800 dark:text-stone-200 group-hover:underline underline-offset-2">
-                      {formatLongDate(date)}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-              {briefingDates.length === 0 && (
-                <p className="text-caption text-stone-400">No entries yet.</p>
-              )}
-            </div>
+            <BriefingsFilter allDates={displayDates} firmDates={firmDates} today={today} />
           </div>
 
           {/* Quizzes column */}

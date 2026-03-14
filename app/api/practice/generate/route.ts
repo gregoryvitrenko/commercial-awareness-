@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { after } from 'next/server';
 import { generatePracticeSet } from '@/lib/quiz';
-import { savePracticeSet } from '@/lib/storage';
+import { savePracticeSet, getAptitudeBank, saveAptitudeBank, getTodayDate } from '@/lib/storage';
+import { buildAptitudeBank } from '@/lib/aptitude';
 
 export const maxDuration = 120;
 
@@ -24,9 +25,11 @@ export async function GET(request: NextRequest) {
   }
 
   after(async () => {
-    console.log('[practice/generate] Starting weekly practice set generation for all topics');
+    const today = getTodayDate();
+    console.log('[practice/generate] Starting weekly refresh: practice sets + aptitude banks');
     const results: Record<string, string> = {};
 
+    // ── Deep practice sets (all 8 topics) ─────────────────────────────────
     await Promise.all(
       PRACTICE_TOPICS.map(async ({ slug, label }) => {
         try {
@@ -40,6 +43,20 @@ export async function GET(request: NextRequest) {
         }
       })
     );
+
+    // ── Aptitude banks (Watson Glaser + SJT) ──────────────────────────────
+    const aptitudeTypes = ['watson-glaser', 'sjt'] as const;
+    for (const testType of aptitudeTypes) {
+      try {
+        const questions = await buildAptitudeBank(testType);
+        await saveAptitudeBank(testType, { questions, lastRefreshed: today });
+        results[testType] = `ok (${questions.length} questions)`;
+        console.log(`[practice/generate] Aptitude bank refreshed: ${testType} (${questions.length} questions)`);
+      } catch (err) {
+        results[testType] = `error: ${err instanceof Error ? err.message : String(err)}`;
+        console.error(`[practice/generate] Aptitude bank failed: ${testType}`, err);
+      }
+    }
 
     console.log('[practice/generate] Complete:', results);
   });

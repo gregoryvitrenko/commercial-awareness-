@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse, after } from 'next/server';
 import { auth } from '@clerk/nextjs/server';
 import { generateBriefing } from '@/lib/generate';
-import { saveBriefing, getBriefing, getTodayDate, getAptitudeBank, saveAptitudeBank, saveQuiz } from '@/lib/storage';
+import { saveBriefing, getBriefing, getTodayDate, saveQuiz } from '@/lib/storage';
 import { generateAndSavePodcastScript } from '@/lib/podcast';
 import { generateAndCachePodcastAudio } from '@/lib/podcast-audio';
 import { generateQuiz } from '@/lib/quiz';
-import { buildAptitudeBank, BANK_TTL_DAYS } from '@/lib/aptitude';
 import { prewarmAllFirmPacks } from '@/lib/firm-pack';
 import { checkRateLimit } from '@/lib/rate-limit';
 import type { Briefing } from '@/lib/types';
@@ -16,30 +15,6 @@ export const maxDuration = 300; // 5-minute timeout for generation
 // money. Must be admin-only. Any authenticated user reaching this without the check
 // could drain API quotas intentionally or accidentally.
 const ADMIN_USER_ID = process.env.ADMIN_USER_ID;
-
-async function refreshStaleBanks(today: string): Promise<void> {
-  const types = ['watson-glaser', 'sjt'] as const;
-  for (const testType of types) {
-    try {
-      const existing = await getAptitudeBank(testType);
-      const age = existing
-        ? Math.abs((new Date(today).getTime() - new Date(existing.lastRefreshed).getTime()) / (1000 * 60 * 60 * 24))
-        : Infinity;
-      // Refresh every 3 days (was 7) so users always get a fresh bank without a long wait.
-      // At ~25-40 Haiku questions per bank, generation takes ~10s — acceptable in background.
-      const REFRESH_DAYS = Math.min(BANK_TTL_DAYS, 3);
-      if (age >= REFRESH_DAYS) {
-        const questions = await buildAptitudeBank(testType);
-        await saveAptitudeBank(testType, { questions, lastRefreshed: today });
-        console.log(`[generate] Aptitude bank refreshed: ${testType} (${questions.length} questions)`);
-      } else {
-        console.log(`[generate] Aptitude bank fresh, skipping: ${testType} (age: ${age.toFixed(1)} days)`);
-      }
-    } catch (err) {
-      console.error(`[generate] Aptitude bank refresh failed for ${testType}:`, err);
-    }
-  }
-}
 
 async function generateAndSaveQuiz(briefing: Briefing): Promise<void> {
   const quiz = await generateQuiz(briefing);
@@ -93,9 +68,6 @@ async function handleGenerate(request: NextRequest, force = false) {
           .catch((err) =>
             console.error('[generate] Podcast/audio auto-generation failed:', err)
           ),
-        refreshStaleBanks(today).catch((err) =>
-          console.error('[generate] Aptitude bank refresh failed:', err)
-        ),
         // Pre-warm all 38 firm packs in batches of 5 — users should never
         // land on a firm page and wait for on-demand generation.
         prewarmAllFirmPacks(recentHeadlines, 5).catch((err) =>

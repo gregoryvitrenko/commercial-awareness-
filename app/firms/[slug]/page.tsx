@@ -361,7 +361,8 @@ export default async function FirmProfilePage({
                 className="bg-[#1B2333] rounded-3xl px-5 py-5"
               >
                 <p className="section-label text-stone-400 mb-3">Strategic Advice</p>
-                <p className="text-body text-stone-200 leading-relaxed italic">
+                <span aria-hidden="true" className="block font-serif text-4xl text-stone-600 leading-none mb-1 select-none">&ldquo;</span>
+                <p className="text-caption text-stone-300 leading-relaxed italic">
                   {firm.interviewFocus}
                 </p>
               </div>

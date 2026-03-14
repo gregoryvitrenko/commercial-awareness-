@@ -24,6 +24,7 @@ import { listBriefings, getBriefing, getTodayDate } from '@/lib/storage';
 import { TOPIC_STYLES, type FirmTier, type DiversitySchemeType } from '@/lib/types';
 import { getFirmInterviewPack, type FirmInterviewPack } from '@/lib/firm-pack';
 import { CollapsibleQuestions } from '@/components/CollapsibleQuestions';
+import { CollapsibleStories } from '@/components/CollapsibleStories';
 
 export const dynamic = 'force-dynamic';
 
@@ -370,36 +371,7 @@ export default async function FirmProfilePage({
               {/* Recent Stories */}
               <SectionCard>
                 <SectionHeading icon={<Newspaper size={13} />} label="Recent Stories" />
-                {recentStories.length === 0 ? (
-                  <p className="text-caption text-stone-400 dark:text-stone-500">
-                    No stories mentioning {firm.shortName} in the last 30 days.
-                  </p>
-                ) : (
-                  <div className="divide-y divide-stone-100 dark:divide-stone-800">
-                    {recentStories.map((story) => {
-                      const styles =
-                        TOPIC_STYLES[story.topic as keyof typeof TOPIC_STYLES] ??
-                        TOPIC_STYLES['International'];
-                      return (
-                        <Link
-                          key={`${story.date}-${story.id}`}
-                          href={`/story/${story.id}`}
-                          className="flex items-start gap-3 py-3 group hover:bg-stone-50 dark:hover:bg-stone-800/30 -mx-6 px-6 transition-colors"
-                        >
-                          <span className={`mt-1.5 inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
-                          <div className="min-w-0">
-                            <p className="text-caption font-medium text-stone-800 dark:text-stone-200 leading-snug group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
-                              {story.headline}
-                            </p>
-                            <p className="text-label font-sans text-stone-400 dark:text-stone-500 mt-0.5">
-                              {formatDisplayDate(story.date)}
-                            </p>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                )}
+                <CollapsibleStories stories={recentStories} />
               </SectionCard>
             </div>
 

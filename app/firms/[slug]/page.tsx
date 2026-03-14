@@ -303,7 +303,7 @@ export default async function FirmProfilePage({
             {/* Application Deadlines — dark sidebar */}
             <div
               data-print-section
-              className="bg-stone-900 dark:bg-stone-950 rounded-3xl px-5 py-5"
+              className="bg-[#1B2333] rounded-3xl px-5 py-5"
             >
               <div className="flex items-start justify-between gap-3 mb-4">
                 <h2 className="font-serif italic text-subheading text-stone-100 leading-snug">
@@ -331,7 +331,7 @@ export default async function FirmProfilePage({
                   return (
                     <div
                       key={deadline.label}
-                      className={`bg-stone-800 dark:bg-stone-900 rounded-2xl px-4 py-3${isClosed ? ' opacity-50' : ''}`}
+                      className={`bg-[#141C2A] rounded-2xl px-4 py-3${isClosed ? ' opacity-50' : ''}`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
@@ -381,7 +381,7 @@ export default async function FirmProfilePage({
               {/* Strategic Advice */}
               <div
                 data-print-section
-                className="bg-stone-900 dark:bg-stone-950 border border-stone-800 rounded-3xl px-5 py-5"
+                className="bg-[#1B2333] rounded-3xl px-5 py-5"
               >
                 <p className="section-label text-stone-400 mb-3">Strategic Advice</p>
                 <p className="text-body text-stone-200 leading-relaxed italic">

@@ -75,7 +75,7 @@ export default function TermsPage() {
             Under the Consumer Contracts Regulations 2013, you have a right to cancel a digital service within 14 days of purchase. By accessing paid features immediately after subscribing, you acknowledge that the service has begun and agree that the 14-day right to cancel is waived for the period already used.
           </p>
           <p>
-            If you experience a technical issue that prevents you from accessing the service, please contact us at <a href="mailto:hello@folioapp.co.uk" className="underline underline-offset-2">hello@folioapp.co.uk</a> and we will review the situation fairly.
+            If you experience a technical issue that prevents you from accessing the service, please contact us at <a href="mailto:folioapp@gmail.com" className="underline underline-offset-2">folioapp@gmail.com</a> and we will review the situation fairly.
           </p>
         </Section>
 
@@ -122,8 +122,8 @@ export default function TermsPage() {
         <Section title="Contact">
           <p>
             For questions about these Terms, contact us at{' '}
-            <a href="mailto:hello@folioapp.co.uk" className="underline underline-offset-2 text-stone-700 dark:text-stone-300">
-              hello@folioapp.co.uk
+            <a href="mailto:folioapp@gmail.com" className="underline underline-offset-2 text-stone-700 dark:text-stone-300">
+              folioapp@gmail.com
             </a>.
           </p>
         </Section>

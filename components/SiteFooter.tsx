@@ -35,10 +35,18 @@ export function SiteFooter() {
             Privacy
           </Link>
           <a
-            href="mailto:hello@folioapp.co.uk"
+            href="mailto:folioapp@gmail.com"
             className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             Contact
+          </a>
+          <a
+            href="https://www.linkedin.com/in/gregory-vitrenko-7258a0350"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+          >
+            LinkedIn
           </a>
         </nav>
 

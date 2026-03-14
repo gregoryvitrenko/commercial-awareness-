@@ -19,7 +19,7 @@ export default async function PrimersPage() {
           <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
             Practice Area Primers
           </span>
-          <h2 className="text-5xl font-serif">Topic Primers</h2>
+          <h2 className="text-5xl font-serif font-semibold">Topic Primers</h2>
           <p className="opacity-60 text-lg font-light">Eight areas. Essential for interviews.</p>
         </div>
 

@@ -24,7 +24,7 @@ export default async function FitPage() {
           <span className="text-[11px] uppercase tracking-[0.3em] font-semibold opacity-40 font-sans">
             Self Assessment
           </span>
-          <h2 className="text-5xl font-serif">Fit Assessment</h2>
+          <h2 className="text-5xl font-serif font-semibold">Fit Assessment</h2>
           <p className="opacity-60 text-lg font-light">
             Find the right firm and practice area for you.
           </p>

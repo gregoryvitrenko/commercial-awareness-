@@ -14,6 +14,7 @@ import {
   Heart,
   GraduationCap,
   MessageSquare,
+  ArrowUpRight,
 } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { PrintButton } from '@/components/PrintButton';
@@ -422,9 +423,27 @@ export default async function FirmProfilePage({
           {/* Practice Questions — full width */}
           <SectionCard>
             <div className="flex items-start justify-between gap-4 mb-4">
-              <SectionHeading icon={<MessageSquare size={13} />} label="Practice Questions" />
-              <span className="shrink-0 mt-0.5 inline-block text-label font-medium uppercase px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
-                Refreshes weekly
+              <div className="flex items-start gap-3">
+                <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-xl bg-stone-100 dark:bg-stone-800">
+                  <MessageSquare size={14} className="text-stone-400 dark:text-stone-500" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2.5 mb-1">
+                    <p className="section-label">Practice Questions</p>
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                      <span className="text-label font-medium uppercase text-emerald-600 dark:text-emerald-500">Active</span>
+                    </span>
+                  </div>
+                  {interviewPack && interviewPack.practiceQuestions.length > 0 && (
+                    <p className="font-serif italic text-stone-500 dark:text-stone-400 text-sm">
+                      {interviewPack.practiceQuestions.length} curated questions for {firm.shortName}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <span className="shrink-0 mt-0.5 text-label font-medium uppercase text-stone-400 dark:text-stone-500 print:hidden whitespace-nowrap">
+                Next Refresh · Weekly
               </span>
             </div>
             {interviewPack && interviewPack.practiceQuestions.length > 0 ? (
@@ -442,7 +461,7 @@ export default async function FirmProfilePage({
           {/* Assessments */}
           {firm.assessments && firm.assessments.length > 0 && (
             <SectionCard>
-              <div className="flex items-start justify-between gap-3 mb-4">
+              <div className="flex items-start justify-between gap-3 mb-5">
                 <SectionHeading icon={<GraduationCap size={13} />} label="Online Assessments" />
                 <Link
                   href="/tests"
@@ -452,33 +471,41 @@ export default async function FirmProfilePage({
                   Practice tests →
                 </Link>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {firm.assessments.map((assessment) => (
                   <div
                     key={assessment.programme}
-                    className="bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-2xl px-4 py-3"
+                    className="border border-stone-200 dark:border-stone-700 rounded-2xl p-5"
                   >
-                    <p className="section-label mb-2">{assessment.programme}</p>
+                    <p className="section-label mb-4">{assessment.programme}</p>
                     {assessment.tests.length === 0 ? (
-                      <p className="text-caption text-stone-400 dark:text-stone-500 italic">
+                      <p className="font-serif italic text-stone-400 dark:text-stone-500 text-base">
                         No formal online assessments
                       </p>
                     ) : (
-                      <div className="flex flex-wrap gap-1.5 mb-1">
-                        {assessment.tests.map((test) => (
-                          <span
-                            key={test}
-                            className="inline-block text-label font-semibold px-2.5 py-0.5 rounded-full bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-300 dark:border-stone-600"
-                          >
-                            {test}
-                          </span>
-                        ))}
+                      <div className={`grid gap-5 ${assessment.notes ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
+                        {assessment.notes && (
+                          <div>
+                            <p className="text-label font-medium uppercase text-stone-400 dark:text-stone-500 mb-2">Method</p>
+                            <p className="font-serif italic text-stone-600 dark:text-stone-400 text-base leading-relaxed">
+                              &ldquo;{assessment.notes}&rdquo;
+                            </p>
+                          </div>
+                        )}
+                        <div>
+                          <p className="text-label font-medium uppercase text-stone-400 dark:text-stone-500 mb-2">Tests</p>
+                          <div className="flex flex-wrap gap-2">
+                            {assessment.tests.map((test) => (
+                              <span
+                                key={test}
+                                className="text-caption font-medium px-3 py-1.5 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700"
+                              >
+                                {test}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                    )}
-                    {assessment.notes && (
-                      <p className="text-label text-stone-400 dark:text-stone-500 mt-1.5 leading-relaxed">
-                        {assessment.notes}
-                      </p>
                     )}
                   </div>
                 ))}
@@ -490,19 +517,24 @@ export default async function FirmProfilePage({
           {firm.forageUrl && (
             <SectionCard>
               <SectionHeading icon={<Briefcase size={13} />} label="Virtual Experience" />
-              <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
-                {firm.shortName} offers free virtual work experience simulations on Forage — a practical way to explore the firm&apos;s work before applying and a genuine signal of interest for your application.
+              <p className="font-serif italic text-stone-700 dark:text-stone-300 text-xl sm:text-2xl leading-snug mt-4 mb-6">
+                Explore {firm.shortName}&apos;s work before you apply — free simulations on Forage, built to mirror real trainee tasks.
               </p>
-              <a
-                href={firm.forageUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-print-hide
-                className="inline-flex items-center gap-1.5 text-caption font-medium px-5 py-2 rounded-full border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
-              >
-                View Forage simulations
-                <ExternalLink size={11} />
-              </a>
+              <div className="flex flex-wrap items-center gap-4" data-print-hide>
+                <a
+                  href={firm.forageUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-label font-semibold tracking-widest uppercase px-5 py-2.5 rounded-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 hover:opacity-80 transition-opacity"
+                >
+                  View Simulations →
+                </a>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-label font-medium uppercase text-stone-400 dark:text-stone-500">Free Access</span>
+                  <span className="w-1 h-1 rounded-full bg-stone-300 dark:bg-stone-600 inline-block" />
+                  <span className="text-label font-medium uppercase text-stone-400 dark:text-stone-500">Self-Paced</span>
+                </div>
+              </div>
             </SectionCard>
           )}
 
@@ -510,35 +542,38 @@ export default async function FirmProfilePage({
           {diversitySchemes.length > 0 && (
             <SectionCard>
               <SectionHeading icon={<Heart size={13} />} label="Diversity & Access Schemes" />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                 {diversitySchemes.map((scheme) => (
                   <div
                     key={scheme.name}
-                    className="flex flex-col bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-2xl px-4 py-4"
+                    className="flex flex-col border border-stone-200 dark:border-stone-700 rounded-2xl px-5 py-5"
                   >
-                    <div className="flex flex-wrap items-center gap-2 mb-2">
-                      <p className="text-caption font-semibold text-stone-900 dark:text-stone-100">
-                        {scheme.name}
-                      </p>
-                      <span className={`inline-block text-label font-semibold uppercase px-2 py-0.5 rounded-full ${SCHEME_TYPE_BADGE[scheme.type]}`}>
-                        {SCHEME_TYPE_LABEL[scheme.type]}
-                      </span>
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <div>
+                        <p className="text-label font-medium uppercase text-stone-400 dark:text-stone-500 mb-1">
+                          {SCHEME_TYPE_LABEL[scheme.type]}
+                        </p>
+                        <p className="font-serif text-xl text-stone-900 dark:text-stone-100 leading-snug">
+                          {scheme.name}
+                        </p>
+                      </div>
+                      <a
+                        href={scheme.applyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-print-hide
+                        className="shrink-0 flex items-center justify-center w-7 h-7 rounded-full border border-stone-200 dark:border-stone-700 text-stone-400 dark:text-stone-500 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                        aria-label={`Apply for ${scheme.name}`}
+                      >
+                        <ArrowUpRight size={13} />
+                      </a>
                     </div>
-                    <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-2 flex-1">
+                    <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-3 flex-1">
                       {scheme.eligibility}
                     </p>
-                    <p className="text-label text-stone-400 dark:text-stone-500 mb-3">
+                    <p className="text-label text-stone-400 dark:text-stone-500">
                       {scheme.typically}
                     </p>
-                    <a
-                      href={scheme.applyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-print-hide
-                      className="self-start inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-full border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
-                    >
-                      Apply →
-                    </a>
                   </div>
                 ))}
               </div>

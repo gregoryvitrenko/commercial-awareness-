@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
   ExternalLink,
-  AlertTriangle,
+  ShieldCheck,
   MapPin,
   ChevronLeft,
   Briefcase,
@@ -546,13 +546,18 @@ export default async function FirmProfilePage({
           )}
 
           {/* Disclaimer */}
-          <div className="flex items-start gap-2.5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 px-4 py-3">
-            <AlertTriangle size={13} className="shrink-0 mt-0.5 text-amber-500 dark:text-amber-400" />
-            <p className="text-caption text-amber-700 dark:text-amber-300 leading-relaxed">
-              Salary and deadline information is approximate and based on publicly available data from prior recruitment cycles.
-              Last verified: <span className="font-sans">{firm.trainingContract.lastVerified}</span>.
-              Always check the firm&apos;s official graduate recruitment page for confirmed dates.
-            </p>
+          <div className="flex items-start gap-4 rounded-2xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 px-5 py-4">
+            <div className="shrink-0 flex items-center justify-center w-8 h-8 rounded-xl bg-stone-100 dark:bg-stone-800">
+              <ShieldCheck size={14} className="text-stone-400 dark:text-stone-500" />
+            </div>
+            <div>
+              <p className="section-label mb-1.5">Data Verification</p>
+              <p className="text-caption text-stone-500 dark:text-stone-400 leading-relaxed">
+                Salary and deadline information is approximate and based on publicly available data from prior recruitment cycles.
+                Last verified: <span className="font-sans">{firm.trainingContract.lastVerified}</span>.
+                Always check the firm&apos;s official graduate recruitment page for confirmed dates.
+              </p>
+            </div>
           </div>
 
         </div>

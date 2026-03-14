@@ -53,6 +53,11 @@ export const metadata: Metadata = {
     title: 'Folio — Daily commercial awareness for law students',
     description: siteDescription,
   },
+  verification: {
+    other: {
+      'msvalidate.01': 'ADA2FD8E90198BEFA8169721C51FDEB6',
+    },
+  },
 };
 
 export const viewport: Viewport = {

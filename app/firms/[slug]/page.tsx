@@ -43,15 +43,6 @@ const TIER_BADGE: Record<FirmTier, string> = {
     'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800',
 };
 
-const TIER_LEFT_BORDER: Record<FirmTier, string> = {
-  'Magic Circle':  'border-l-blue-500 dark:border-l-blue-400',
-  'Silver Circle': 'border-l-violet-500 dark:border-l-violet-400',
-  'National':      'border-l-rose-500 dark:border-l-rose-400',
-  'International': 'border-l-teal-500 dark:border-l-teal-400',
-  'US Firms':      'border-l-amber-500 dark:border-l-amber-400',
-  'Boutique':      'border-l-emerald-500 dark:border-l-emerald-400',
-};
-
 const TIER_STAT_TEXT: Record<FirmTier, string> = {
   'Magic Circle':  'text-blue-600 dark:text-blue-400',
   'Silver Circle': 'text-violet-600 dark:text-violet-400',
@@ -84,74 +75,42 @@ const SCHEME_TYPE_LABEL: Record<DiversitySchemeType, string> = {
   disability: 'Disability',
 };
 
-// ── Shared layout primitives ──────────────────────────────────────────────────
+// ── Layout primitives ─────────────────────────────────────────────────────────
 
-/** Card with optional tier-coloured left accent */
 function SectionCard({
   children,
-  accent = '',
   className = '',
 }: {
   children: React.ReactNode;
-  accent?: string;
   className?: string;
 }) {
   return (
     <div
       data-print-section
-      className={`bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-6 py-5
-        ${accent ? `border-l-[3px] ${accent}` : ''}
-        ${className}`}
+      className={`bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-6 py-5 ${className}`}
     >
       {children}
     </div>
   );
 }
 
-/** Horizontal stat strip — surfaces key TC numbers immediately below the hero */
-function StatStrip({ trainingContract, tierText }: {
-  trainingContract: NonNullable<ReturnType<typeof getFirmBySlug>>['trainingContract'];
-  tierText: string;
-}) {
-  return (
-    <div className="border-y border-stone-200 dark:border-stone-800 py-4 mb-8">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div>
-          <p className="section-label mb-1">NQ Salary</p>
-          <p className={`font-sans text-subheading leading-tight ${tierText}`}>
-            {trainingContract.nqSalaryNote}
-          </p>
-        </div>
-        <div>
-          <p className="section-label mb-1">TC Salary</p>
-          <p className="font-sans text-body font-medium text-stone-800 dark:text-stone-200">
-            {trainingContract.tcSalaryNote}
-          </p>
-        </div>
-        <div>
-          <p className="section-label mb-1">Annual Intake</p>
-          <p className="font-sans text-body font-medium text-stone-800 dark:text-stone-200">
-            {trainingContract.intakeSizeNote}
-          </p>
-        </div>
-        <div>
-          <p className="section-label mb-1">Seats</p>
-          <p className="font-sans text-body font-medium text-stone-800 dark:text-stone-200">
-            {trainingContract.seats} seats
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-/** Section heading — icon + label using design system tokens */
 function SectionHeading({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div className="flex items-center gap-2 mb-4">
       <span className="text-stone-400 dark:text-stone-500">{icon}</span>
       <span className="section-label">{label}</span>
+    </div>
+  );
+}
+
+/** Individual stat box used in the hero 2×2 grid */
+function StatBox({ label, value, accent = '' }: { label: string; value: string; accent?: string }) {
+  return (
+    <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-sm px-4 py-3">
+      <p className="section-label mb-1.5">{label}</p>
+      <p className={`font-sans text-body font-medium text-stone-800 dark:text-stone-100 ${accent}`}>
+        {value}
+      </p>
     </div>
   );
 }
@@ -212,7 +171,7 @@ export default async function FirmProfilePage({
     )
     .filter((s) => s.firms.some((f) => aliasSet.has(f.toLowerCase())));
 
-  // ── Interview Pack: 10 practice questions, cached per firm ────────────────
+  // ── Interview Pack ────────────────────────────────────────────────────────
   let interviewPack: FirmInterviewPack | null = null;
   try {
     interviewPack = await getFirmInterviewPack(
@@ -220,20 +179,18 @@ export default async function FirmProfilePage({
       recentStories.map((s) => s.headline),
     );
   } catch {
-    // Non-fatal — page renders without questions if generation fails
     interviewPack = null;
   }
 
-  const tierAccent = TIER_LEFT_BORDER[firm.tier];
-  const tierText   = TIER_STAT_TEXT[firm.tier];
+  const tierText = TIER_STAT_TEXT[firm.tier];
 
   return (
     <>
       <Header date={today} />
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
-        {/* Back link + print button */}
-        <div className="flex items-center justify-between mb-6">
+        {/* Back link + print */}
+        <div className="flex items-center justify-between mb-8">
           <Link
             href="/firms"
             data-print-hide
@@ -245,60 +202,79 @@ export default async function FirmProfilePage({
           <PrintButton />
         </div>
 
-        {/* ── Hero ──────────────────────────────────────────────────────────── */}
-        <div className={`mb-8 pl-5 border-l-[4px] ${tierAccent}`}>
-          <h1 className="font-serif text-3xl sm:text-4xl tracking-tight text-stone-900 dark:text-stone-50 leading-tight mb-2">
-            {firm.name}
-          </h1>
+        {/* ── Hero: name left / stats right ────────────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 mb-10 pb-10 border-b border-stone-200 dark:border-stone-800">
 
-          {/* Tier + HQ inline */}
-          <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span
-              className={`shrink-0 inline-block text-label font-semibold tracking-wide uppercase px-2.5 py-1 rounded-sm ${TIER_BADGE[firm.tier]}`}
-            >
-              {firm.tier}
-            </span>
-            <span className="text-stone-300 dark:text-stone-700">·</span>
-            <div className="flex items-center gap-1 text-caption text-stone-500 dark:text-stone-400">
-              <MapPin size={11} className="shrink-0" />
-              <span className="font-medium">{firm.hq}</span>
+          {/* Left: firm name + meta */}
+          <div>
+            <p className="section-label mb-3">Firm Intelligence</p>
+            <h1 className="font-serif text-4xl sm:text-5xl tracking-tight text-stone-900 dark:text-stone-50 leading-[1.1] mb-5">
+              {firm.name}
+            </h1>
+
+            {/* Tier + HQ */}
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <span className={`inline-block text-label font-semibold tracking-wide uppercase px-2.5 py-1 rounded-sm ${TIER_BADGE[firm.tier]}`}>
+                {firm.tier}
+              </span>
+              <span className="text-stone-300 dark:text-stone-700">·</span>
+              <div className="flex items-center gap-1 text-caption text-stone-500 dark:text-stone-400">
+                <MapPin size={11} className="shrink-0" />
+                <span className="font-medium">{firm.hq}</span>
+              </div>
+            </div>
+
+            {/* Offices */}
+            {firm.offices.length > 0 && (
+              <div className="flex flex-wrap gap-1 mb-5">
+                {firm.offices.map((office) => (
+                  <span
+                    key={office}
+                    className="text-label px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 rounded-sm border border-stone-200 dark:border-stone-700"
+                  >
+                    {office}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* CTA buttons */}
+            <div className="flex flex-wrap items-center gap-2" data-print-hide>
+              <a
+                href={firm.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-caption font-medium px-4 py-2 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
+              >
+                Website
+                <ExternalLink size={11} />
+              </a>
+              <a
+                href={firm.trainingContract.applyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-caption font-medium px-4 py-2 rounded-sm bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 hover:opacity-80 transition-opacity"
+              >
+                Apply Now
+                <ExternalLink size={11} />
+              </a>
             </div>
           </div>
 
-          {/* Offices */}
-          {firm.offices.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
-              {firm.offices.map((office) => (
-                <span
-                  key={office}
-                  className="text-label px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 rounded-sm border border-stone-200 dark:border-stone-700"
-                >
-                  {office}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Website */}
-          <a
-            href={firm.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-print-hide
-            className="inline-flex items-center gap-1.5 text-label text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
-          >
-            <ExternalLink size={11} />
-            {firm.website.replace(/^https?:\/\//, '')}
-          </a>
+          {/* Right: 2×2 stat grid */}
+          <div className="grid grid-cols-2 gap-3 content-start md:min-w-[280px]">
+            <StatBox label="NQ Salary" value={firm.trainingContract.nqSalaryNote} accent={tierText} />
+            <StatBox label="TC Salary" value={firm.trainingContract.tcSalaryNote} />
+            <StatBox label="Annual Intake" value={firm.trainingContract.intakeSizeNote} />
+            <StatBox label="Seats" value={`${firm.trainingContract.seats} seats`} />
+          </div>
         </div>
 
-        {/* ── Stat Strip ──────────────────────────────────────────────────────── */}
-        <StatStrip trainingContract={firm.trainingContract} tierText={tierText} />
-
+        {/* ── Sections ─────────────────────────────────────────────────────── */}
         <div className="space-y-4">
 
-          {/* ── At a Glance ─────────────────────────────────────────────────── */}
-          <SectionCard accent={tierAccent}>
+          {/* At a Glance */}
+          <SectionCard>
             <SectionHeading icon={<TrendingUp size={13} />} label="At a Glance" />
             <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed mb-4">
               {firm.knownFor}
@@ -315,137 +291,178 @@ export default async function FirmProfilePage({
             </div>
           </SectionCard>
 
-          {/* ── Culture ─────────────────────────────────────────────────────── */}
-          <SectionCard accent={tierAccent}>
+          {/* Culture */}
+          <SectionCard>
             <SectionHeading icon={<Users size={13} />} label="Culture" />
             <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
               {firm.culture}
             </p>
           </SectionCard>
 
-          {/* ── Interview Focus ──────────────────────────────────────────────── */}
-          <div
-            data-print-section
-            className="bg-stone-900 dark:bg-stone-950 border border-stone-800 rounded-sm px-6 py-5"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-stone-500"><Briefcase size={13} /></span>
-              <span className="section-label text-stone-400">Interview Focus</span>
+          {/* ── Interview Prep: 2-col sidebar layout ─────────────────────── */}
+          <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-4">
+
+            {/* Left sidebar */}
+            <div className="space-y-4">
+
+              {/* Strategic Advice — dark card */}
+              <div
+                data-print-section
+                className="bg-stone-900 dark:bg-stone-950 border border-stone-800 rounded-sm px-5 py-5"
+              >
+                <p className="section-label text-stone-400 mb-3">Strategic Advice</p>
+                <p className="text-body text-stone-200 leading-relaxed italic">
+                  {firm.interviewFocus}
+                </p>
+              </div>
+
+              {/* Recent Stories */}
+              <SectionCard>
+                <SectionHeading icon={<Newspaper size={13} />} label="Recent Stories" />
+                {recentStories.length === 0 ? (
+                  <p className="text-caption text-stone-400 dark:text-stone-500">
+                    No stories mentioning {firm.shortName} in the last 30 days.
+                  </p>
+                ) : (
+                  <div className="divide-y divide-stone-100 dark:divide-stone-800">
+                    {recentStories.map((story) => {
+                      const styles =
+                        TOPIC_STYLES[story.topic as keyof typeof TOPIC_STYLES] ??
+                        TOPIC_STYLES['International'];
+                      return (
+                        <Link
+                          key={`${story.date}-${story.id}`}
+                          href={`/story/${story.id}`}
+                          className="flex items-start gap-3 py-3 group hover:bg-stone-50 dark:hover:bg-stone-800/30 -mx-6 px-6 transition-colors"
+                        >
+                          <span className={`mt-1.5 inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
+                          <div className="min-w-0">
+                            <p className="text-caption font-medium text-stone-800 dark:text-stone-200 leading-snug group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
+                              {story.headline}
+                            </p>
+                            <p className="text-label font-sans text-stone-400 dark:text-stone-500 mt-0.5">
+                              {formatDisplayDate(story.date)}
+                            </p>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </SectionCard>
             </div>
-            <p className="text-body text-stone-100 leading-relaxed">
-              {firm.interviewFocus}
-            </p>
-          </div>
 
-          {/* ── Interview Prep ───────────────────────────────────────────────── */}
-          <SectionCard accent={tierAccent}>
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <SectionHeading icon={<MessageSquare size={13} />} label="Interview Prep" />
-              <span className="shrink-0 mt-0.5 inline-block text-label font-medium uppercase px-2 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
-                Refreshes weekly
-              </span>
-            </div>
+            {/* Main: talking points + practice questions */}
+            <SectionCard>
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <SectionHeading icon={<MessageSquare size={13} />} label="Interview Prep" />
+                <span className="shrink-0 mt-0.5 inline-block text-label font-medium uppercase px-2 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
+                  Refreshes weekly
+                </span>
+              </div>
 
-            {/* Talking Points */}
-            <p className="section-label mb-4">Talking Points</p>
-            <p className="text-caption text-stone-400 dark:text-stone-500 mb-5 leading-relaxed">
-              Arguments for &ldquo;Why {firm.shortName}?&rdquo; and ready-made observations from recent news. Adapt to your own voice.
-            </p>
+              {/* Talking Points */}
+              <p className="section-label mb-3">Talking Points</p>
+              <p className="text-caption text-stone-400 dark:text-stone-500 mb-5 leading-relaxed">
+                Arguments for &ldquo;Why {firm.shortName}?&rdquo; and ready-made observations from recent news. Adapt to your own voice.
+              </p>
 
-            {/* Why This Firm bullets — strategic positioning */}
-            {interviewPack && interviewPack.whyThisFirm && interviewPack.whyThisFirm.length > 0 && (
-              <div className="space-y-0 mb-4">
-                {interviewPack.whyThisFirm.map((bullet, i) => (
-                  <div key={`why-${i}`} className="relative overflow-hidden py-4 border-b border-stone-100 dark:border-stone-800 last:border-0">
-                    <span
-                      aria-hidden="true"
-                      className="absolute right-0 top-1/2 -translate-y-1/2 font-sans text-[72px] font-bold leading-none text-stone-900 dark:text-stone-100 opacity-[0.04] select-none pointer-events-none"
+              {/* Why This Firm — 2-col card grid */}
+              {interviewPack && interviewPack.whyThisFirm && interviewPack.whyThisFirm.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+                  {interviewPack.whyThisFirm.map((bullet, i) => (
+                    <div
+                      key={`why-${i}`}
+                      className="relative overflow-hidden bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 rounded-sm p-4"
                     >
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div className="relative flex gap-3">
-                      <span className={`section-label ${tierText} shrink-0 mt-0.5`}>
-                        {String(i + 1).padStart(2, '0')}
+                      <span
+                        aria-hidden="true"
+                        className="absolute right-2 top-2 font-sans text-[56px] font-bold leading-none text-stone-900 dark:text-stone-100 opacity-[0.05] select-none pointer-events-none"
+                      >
+                        {i + 1}
                       </span>
-                      <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
+                      <p className={`section-label ${tierText} mb-2`}>
+                        {String(i + 1).padStart(2, '0')}
+                      </p>
+                      <p className="text-caption text-stone-700 dark:text-stone-300 leading-relaxed relative">
                         {bullet}
                       </p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
 
-            {/* News-anchored talking points */}
-            {recentStories.filter((s) => s.talkingPoint).length > 0 && (
-              <div className="space-y-4 mb-2">
-                {recentStories
-                  .filter((s) => s.talkingPoint)
-                  .map((story) => {
-                    const styles =
-                      TOPIC_STYLES[story.topic as keyof typeof TOPIC_STYLES] ??
-                      TOPIC_STYLES['International'];
-                    return (
-                      <div
-                        key={`tp-${story.date}-${story.id}`}
-                        className="border-l-2 border-stone-200 dark:border-stone-700 pl-4"
-                      >
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
-                          <p className="section-label">
-                            {formatDisplayDate(story.date)} · {story.topic}
+              {/* News-anchored talking points */}
+              {recentStories.filter((s) => s.talkingPoint).length > 0 && (
+                <div className="space-y-4 mb-2">
+                  {recentStories
+                    .filter((s) => s.talkingPoint)
+                    .map((story) => {
+                      const styles =
+                        TOPIC_STYLES[story.topic as keyof typeof TOPIC_STYLES] ??
+                        TOPIC_STYLES['International'];
+                      return (
+                        <div
+                          key={`tp-${story.date}-${story.id}`}
+                          className="border-l-2 border-stone-200 dark:border-stone-700 pl-4"
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className={`inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
+                            <p className="section-label">
+                              {formatDisplayDate(story.date)} · {story.topic}
+                            </p>
+                          </div>
+                          <p className="text-label font-medium text-stone-500 dark:text-stone-400 leading-snug mb-1.5">
+                            {story.headline}
+                          </p>
+                          <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
+                            {story.talkingPoint}
                           </p>
                         </div>
-                        <p className="text-label font-medium text-stone-500 dark:text-stone-400 leading-snug mb-1.5">
-                          {story.headline}
-                        </p>
-                        <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
-                          {story.talkingPoint}
-                        </p>
-                      </div>
-                    );
-                  })}
-              </div>
-            )}
+                      );
+                    })}
+                </div>
+              )}
 
-            {!interviewPack && (
-              <p className="text-caption text-stone-400 dark:text-stone-500 italic mb-2">
-                Talking points are being generated — refresh the page in a moment.
+              {!interviewPack && (
+                <p className="text-caption text-stone-400 dark:text-stone-500 italic mb-2">
+                  Talking points are being generated — refresh the page in a moment.
+                </p>
+              )}
+
+              {/* Divider */}
+              <div className="border-t border-stone-200 dark:border-stone-800 my-6" />
+
+              {/* Practice Questions */}
+              <p className="section-label mb-3">Practice Questions</p>
+              <p className="text-caption text-stone-400 dark:text-stone-500 mb-5 leading-relaxed">
+                10 questions tailored to {firm.shortName} — drawn from the firm&apos;s profile, practice areas, and recent news. Try answering each one aloud.
               </p>
-            )}
 
-            {/* Divider */}
-            <div className="border-t border-stone-200 dark:border-stone-800 my-6" />
+              {interviewPack && interviewPack.practiceQuestions.length > 0 ? (
+                <ol className="space-y-4">
+                  {interviewPack.practiceQuestions.map((question, i) => (
+                    <li key={i} className="flex gap-4">
+                      <span className="shrink-0 font-serif text-body text-stone-400 dark:text-stone-500 leading-none mt-0.5 w-6 text-right">
+                        {i + 1}.
+                      </span>
+                      <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
+                        {question}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-caption text-stone-400 dark:text-stone-500 italic">
+                  Practice questions are being generated — refresh the page in a moment.
+                </p>
+              )}
+            </SectionCard>
+          </div>
 
-            {/* Practice Questions */}
-            <p className="section-label mb-4">Practice Questions</p>
-            <p className="text-caption text-stone-400 dark:text-stone-500 mb-5 leading-relaxed">
-              10 questions tailored to {firm.shortName} — drawn from the firm&apos;s profile, practice areas, and recent news. Try answering each one aloud.
-            </p>
-
-            {interviewPack && interviewPack.practiceQuestions.length > 0 ? (
-              <ol className="space-y-4">
-                {interviewPack.practiceQuestions.map((question, i) => (
-                  <li key={i} className="flex gap-4">
-                    <span className="shrink-0 font-serif text-body text-stone-400 dark:text-stone-500 leading-none mt-0.5 w-6 text-right">
-                      {i + 1}.
-                    </span>
-                    <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
-                      {question}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <p className="text-caption text-stone-400 dark:text-stone-500 italic">
-                Practice questions are being generated — refresh the page in a moment.
-              </p>
-            )}
-          </SectionCard>
-
-          {/* ── Assessments ─────────────────────────────────────────────────── */}
+          {/* Assessments */}
           {firm.assessments && firm.assessments.length > 0 && (
-            <SectionCard accent={tierAccent}>
+            <SectionCard>
               <div className="flex items-start justify-between gap-3 mb-4">
                 <SectionHeading icon={<GraduationCap size={13} />} label="Online Assessments" />
                 <Link
@@ -462,9 +479,7 @@ export default async function FirmProfilePage({
                     key={assessment.programme}
                     className="bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
                   >
-                    <p className="section-label mb-2">
-                      {assessment.programme}
-                    </p>
+                    <p className="section-label mb-2">{assessment.programme}</p>
                     {assessment.tests.length === 0 ? (
                       <p className="text-caption text-stone-400 dark:text-stone-500 italic">
                         No formal online assessments
@@ -492,57 +507,8 @@ export default async function FirmProfilePage({
             </SectionCard>
           )}
 
-          {/* ── Training Contract ────────────────────────────────────────────── */}
-          <SectionCard accent={tierAccent}>
-            <SectionHeading icon={<BadgeDollarSign size={13} />} label="Training Contract" />
-
-            {/* NQ salary hero stat + secondary stats */}
-            <div className="flex flex-wrap items-end gap-8 mb-5 pb-5 border-b border-stone-100 dark:border-stone-800">
-              {/* NQ — prominent */}
-              <div>
-                <p className="section-label mb-1">NQ Salary</p>
-                <p className={`font-sans text-article leading-none tracking-tight ${tierText}`}>
-                  {firm.trainingContract.nqSalaryNote}
-                </p>
-              </div>
-
-              {/* Supporting stats */}
-              <div className="flex flex-wrap gap-6 pb-1">
-                <div>
-                  <p className="section-label mb-0.5">TC Salary</p>
-                  <p className="font-sans text-body font-medium text-stone-700 dark:text-stone-200">
-                    {firm.trainingContract.tcSalaryNote}
-                  </p>
-                </div>
-                <div>
-                  <p className="section-label mb-0.5">Intake</p>
-                  <p className="font-sans text-body font-medium text-stone-700 dark:text-stone-200">
-                    {firm.trainingContract.intakeSizeNote}
-                  </p>
-                </div>
-                <div>
-                  <p className="section-label mb-0.5">Seats</p>
-                  <p className="font-sans text-body font-medium text-stone-700 dark:text-stone-200">
-                    {firm.trainingContract.seats}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <a
-              href={firm.trainingContract.applyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-print-hide
-              className="inline-flex items-center gap-1.5 text-caption font-medium px-4 py-2 rounded-sm bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 hover:opacity-80 transition-opacity"
-            >
-              Apply for Training Contract
-              <ExternalLink size={11} />
-            </a>
-          </SectionCard>
-
-          {/* ── Application Deadlines ────────────────────────────────────────── */}
-          <SectionCard accent={tierAccent}>
+          {/* Application Deadlines */}
+          <SectionCard>
             <div className="flex items-start justify-between gap-3 mb-4">
               <SectionHeading icon={<Calendar size={13} />} label="Application Deadlines" />
               <a
@@ -564,65 +530,62 @@ export default async function FirmProfilePage({
                 };
                 const hasExact = deadline.openDate || deadline.closeDate;
                 const isClosed = deadline.closeDate ? deadline.closeDate < today : false;
-
                 return (
-                <div
-                  key={deadline.label}
-                  className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3${isClosed ? ' opacity-60' : ''}`}
-                >
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <p className={`text-caption font-semibold ${isClosed ? 'text-stone-500 dark:text-stone-400' : 'text-stone-900 dark:text-stone-100'}`}>
-                        {deadline.label}
-                      </p>
-                      {isClosed && (
-                        <span className="inline-block font-sans text-label font-semibold uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
-                          Closed
-                        </span>
-                      )}
-                      {!isClosed && deadline.rolling && (
-                        <span className="inline-block text-label font-semibold uppercase px-1.5 py-0.5 rounded-sm bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-                          Rolling
-                        </span>
+                  <div
+                    key={deadline.label}
+                    className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3${isClosed ? ' opacity-60' : ''}`}
+                  >
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <p className={`text-caption font-semibold ${isClosed ? 'text-stone-500 dark:text-stone-400' : 'text-stone-900 dark:text-stone-100'}`}>
+                          {deadline.label}
+                        </p>
+                        {isClosed && (
+                          <span className="inline-block font-sans text-label font-semibold uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
+                            Closed
+                          </span>
+                        )}
+                        {!isClosed && deadline.rolling && (
+                          <span className="inline-block text-label font-semibold uppercase px-1.5 py-0.5 rounded-sm bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                            Rolling
+                          </span>
+                        )}
+                      </div>
+                      {hasExact ? (
+                        <p className={`text-label font-sans ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
+                          {deadline.openDate && deadline.closeDate
+                            ? `${fmtDate(deadline.openDate)} – ${fmtDate(deadline.closeDate)}`
+                            : deadline.closeDate
+                            ? `Closes ${fmtDate(deadline.closeDate)}`
+                            : `Opens ${fmtDate(deadline.openDate!)}`}
+                          <span className="text-stone-400 dark:text-stone-500 ml-2">({deadline.typically})</span>
+                        </p>
+                      ) : (
+                        <p className="text-label font-sans text-stone-400 dark:text-stone-500">
+                          {deadline.typically}
+                        </p>
                       )}
                     </div>
-                    {hasExact ? (
-                      <p className={`text-label font-sans ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
-                        {deadline.openDate && deadline.closeDate
-                          ? `${fmtDate(deadline.openDate)} – ${fmtDate(deadline.closeDate)}`
-                          : deadline.closeDate
-                          ? `Closes ${fmtDate(deadline.closeDate)}`
-                          : `Opens ${fmtDate(deadline.openDate!)}`}
-                        <span className="text-stone-400 dark:text-stone-500 ml-2">
-                          ({deadline.typically})
-                        </span>
-                      </p>
-                    ) : (
-                      <p className="text-label font-sans text-stone-400 dark:text-stone-500">
-                        {deadline.typically}
-                      </p>
+                    {!isClosed && (
+                      <a
+                        href={deadline.applyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-print-hide
+                        className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+                      >
+                        Apply →
+                      </a>
                     )}
                   </div>
-                  {!isClosed && (
-                  <a
-                    href={deadline.applyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-print-hide
-                    className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
-                  >
-                    Apply →
-                  </a>
-                  )}
-                </div>
                 );
               })}
             </div>
           </SectionCard>
 
-          {/* ── Forage Virtual Experience ────────────────────────────────────── */}
+          {/* Virtual Experience */}
           {firm.forageUrl && (
-            <SectionCard accent={tierAccent}>
+            <SectionCard>
               <SectionHeading icon={<Briefcase size={13} />} label="Virtual Experience" />
               <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
                 {firm.shortName} offers free virtual work experience simulations on Forage — a practical way to explore the firm&apos;s work before applying and a genuine signal of interest for your application.
@@ -640,40 +603,36 @@ export default async function FirmProfilePage({
             </SectionCard>
           )}
 
-          {/* ── Diversity & Access Schemes ───────────────────────────────────── */}
+          {/* Diversity & Access — 2-col grid */}
           {diversitySchemes.length > 0 && (
-            <SectionCard accent={tierAccent}>
+            <SectionCard>
               <SectionHeading icon={<Heart size={13} />} label="Diversity & Access Schemes" />
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {diversitySchemes.map((scheme) => (
                   <div
                     key={scheme.name}
-                    className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
+                    className="flex flex-col bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-4"
                   >
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <p className="text-caption font-semibold text-stone-900 dark:text-stone-100">
-                          {scheme.name}
-                        </p>
-                        <span
-                          className={`inline-block text-label font-semibold uppercase px-2 py-0.5 rounded-sm ${SCHEME_TYPE_BADGE[scheme.type]}`}
-                        >
-                          {SCHEME_TYPE_LABEL[scheme.type]}
-                        </span>
-                      </div>
-                      <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-1.5">
-                        {scheme.eligibility}
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <p className="text-caption font-semibold text-stone-900 dark:text-stone-100">
+                        {scheme.name}
                       </p>
-                      <p className="text-label font-sans text-stone-400 dark:text-stone-500">
-                        {scheme.typically}
-                      </p>
+                      <span className={`inline-block text-label font-semibold uppercase px-2 py-0.5 rounded-sm ${SCHEME_TYPE_BADGE[scheme.type]}`}>
+                        {SCHEME_TYPE_LABEL[scheme.type]}
+                      </span>
                     </div>
+                    <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-2 flex-1">
+                      {scheme.eligibility}
+                    </p>
+                    <p className="text-label text-stone-400 dark:text-stone-500 mb-3">
+                      {scheme.typically}
+                    </p>
                     <a
                       href={scheme.applyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       data-print-hide
-                      className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+                      className="self-start inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
                     >
                       Apply →
                     </a>
@@ -683,68 +642,25 @@ export default async function FirmProfilePage({
             </SectionCard>
           )}
 
-          {/* ── Recent Stories ───────────────────────────────────────────────── */}
-          <SectionCard accent={tierAccent}>
-            <SectionHeading icon={<Newspaper size={13} />} label="Recent Stories" />
-            {recentStories.length === 0 ? (
-              <p className="text-caption text-stone-400 dark:text-stone-500">
-                No stories mentioning {firm.shortName} in the last 30 days.
-              </p>
-            ) : (
-              <div className="divide-y divide-stone-100 dark:divide-stone-800">
-                {recentStories.map((story) => {
-                  const styles =
-                    TOPIC_STYLES[story.topic as keyof typeof TOPIC_STYLES] ??
-                    TOPIC_STYLES['International'];
-                  return (
-                    <Link
-                      key={`${story.date}-${story.id}`}
-                      href={`/story/${story.id}`}
-                      className="flex items-start gap-3 py-3 group hover:bg-stone-50 dark:hover:bg-stone-800/30 -mx-6 px-6 transition-colors"
-                    >
-                      <span
-                        className={`mt-1.5 inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`}
-                      />
-                      <div className="min-w-0">
-                        <p className="text-caption font-medium text-stone-800 dark:text-stone-200 leading-snug group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
-                          {story.headline}
-                        </p>
-                        <p className="text-label font-sans text-stone-400 dark:text-stone-500 mt-0.5">
-                          {formatDisplayDate(story.date)}
-                        </p>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </SectionCard>
-
-
-          {/* ── Disclaimer footer ────────────────────────────────────────────── */}
+          {/* Disclaimer */}
           <div className="flex items-start gap-2.5 rounded-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 px-4 py-3">
             <AlertTriangle size={13} className="shrink-0 mt-0.5 text-amber-500 dark:text-amber-400" />
             <p className="text-caption text-amber-700 dark:text-amber-300 leading-relaxed">
               Salary and deadline information is approximate and based on publicly available data from prior recruitment cycles.
-              Last verified:{' '}
-              <span className="font-sans">{firm.trainingContract.lastVerified}</span>.
+              Last verified: <span className="font-sans">{firm.trainingContract.lastVerified}</span>.
               Always check the firm&apos;s official graduate recruitment page for confirmed dates.
             </p>
           </div>
 
         </div>
 
-        {/* Print-only footer */}
+        {/* Print footer */}
         <div
           data-print-footer
           className="hidden mt-8 pt-4 border-t border-stone-200 text-label font-sans text-stone-400"
         >
-          <p>
-            Generated by Folio — folioapp.co.uk · {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </p>
-          <p className="mt-0.5">
-            Salary and deadline information is approximate. Always verify with the firm&apos;s official graduate recruitment page.
-          </p>
+          <p>Generated by Folio — folioapp.co.uk · {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+          <p className="mt-0.5">Salary and deadline information is approximate. Always verify with the firm&apos;s official graduate recruitment page.</p>
         </div>
       </main>
     </>

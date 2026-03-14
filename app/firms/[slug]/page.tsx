@@ -120,25 +120,25 @@ function StatStrip({ trainingContract, tierText }: {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div>
           <p className="section-label mb-1">NQ Salary</p>
-          <p className={`font-sans text-[18px] font-bold leading-tight ${tierText}`}>
+          <p className={`font-sans text-subheading leading-tight ${tierText}`}>
             {trainingContract.nqSalaryNote}
           </p>
         </div>
         <div>
           <p className="section-label mb-1">TC Salary</p>
-          <p className="font-sans text-[15px] font-semibold text-stone-800 dark:text-stone-200">
+          <p className="font-sans text-body font-medium text-stone-800 dark:text-stone-200">
             {trainingContract.tcSalaryNote}
           </p>
         </div>
         <div>
           <p className="section-label mb-1">Annual Intake</p>
-          <p className="font-sans text-[15px] font-semibold text-stone-800 dark:text-stone-200">
+          <p className="font-sans text-body font-medium text-stone-800 dark:text-stone-200">
             {trainingContract.intakeSizeNote}
           </p>
         </div>
         <div>
           <p className="section-label mb-1">Seats</p>
-          <p className="font-sans text-[15px] font-semibold text-stone-800 dark:text-stone-200">
+          <p className="font-sans text-body font-medium text-stone-800 dark:text-stone-200">
             {trainingContract.seats} seats
           </p>
         </div>
@@ -164,11 +164,9 @@ function WhyThisFirmCallout({
     >
       <div className="flex items-center gap-2 mb-4">
         <span className="text-stone-400 dark:text-stone-500"><Lightbulb size={13} /></span>
-        <span className="font-sans text-[10px] font-semibold tracking-[0.15em] uppercase text-stone-500 dark:text-stone-400">
-          Why This Firm?
-        </span>
+        <span className="section-label">Why This Firm?</span>
       </div>
-      <p className="text-[12px] text-stone-400 dark:text-stone-500 mb-6 leading-relaxed">
+      <p className="text-caption text-stone-400 dark:text-stone-500 mb-6 leading-relaxed">
         Concrete talking points for &ldquo;Why {firmShortName}?&rdquo; — anchored to the firm&apos;s market position and recent deals. Adapt to your own voice.
       </p>
       <div className="space-y-0">
@@ -184,7 +182,7 @@ function WhyThisFirmCallout({
               <span className={`section-label ${tierText} shrink-0 mt-0.5`}>
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+              <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
                 {bullet}
               </p>
             </div>
@@ -195,14 +193,12 @@ function WhyThisFirmCallout({
   );
 }
 
-/** Section label — sans-semibold, more readable than mono stone-400 */
+/** Section heading — icon + label using design system tokens */
 function SectionHeading({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div className="flex items-center gap-2 mb-4">
       <span className="text-stone-400 dark:text-stone-500">{icon}</span>
-      <span className="font-sans text-[10px] font-semibold tracking-[0.15em] uppercase text-stone-500 dark:text-stone-400">
-        {label}
-      </span>
+      <span className="section-label">{label}</span>
     </div>
   );
 }
@@ -288,7 +284,7 @@ export default async function FirmProfilePage({
           <Link
             href="/firms"
             data-print-hide
-            className="inline-flex items-center gap-1.5 text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-label text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             <ChevronLeft size={12} />
             All firms
@@ -298,19 +294,19 @@ export default async function FirmProfilePage({
 
         {/* ── Hero ──────────────────────────────────────────────────────────── */}
         <div className={`mb-8 pl-5 border-l-[4px] ${tierAccent}`}>
-          <h1 className="font-serif text-[30px] sm:text-[36px] font-bold tracking-tight text-stone-900 dark:text-stone-50 leading-tight mb-2">
+          <h1 className="font-serif text-3xl sm:text-4xl tracking-tight text-stone-900 dark:text-stone-50 leading-tight mb-2">
             {firm.name}
           </h1>
 
           {/* Tier + HQ inline */}
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span
-              className={`shrink-0 inline-block text-[10px] font-sans font-semibold tracking-[0.08em] uppercase px-2.5 py-1 rounded-sm ${TIER_BADGE[firm.tier]}`}
+              className={`shrink-0 inline-block text-label font-semibold tracking-wide uppercase px-2.5 py-1 rounded-sm ${TIER_BADGE[firm.tier]}`}
             >
               {firm.tier}
             </span>
             <span className="text-stone-300 dark:text-stone-700">·</span>
-            <div className="flex items-center gap-1 text-[12px] text-stone-500 dark:text-stone-400">
+            <div className="flex items-center gap-1 text-caption text-stone-500 dark:text-stone-400">
               <MapPin size={11} className="shrink-0" />
               <span className="font-medium">{firm.hq}</span>
             </div>
@@ -322,7 +318,7 @@ export default async function FirmProfilePage({
               {firm.offices.map((office) => (
                 <span
                   key={office}
-                  className="text-[10px] px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 rounded-sm border border-stone-200 dark:border-stone-700"
+                  className="text-label px-1.5 py-0.5 bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 rounded-sm border border-stone-200 dark:border-stone-700"
                 >
                   {office}
                 </span>
@@ -336,7 +332,7 @@ export default async function FirmProfilePage({
             target="_blank"
             rel="noopener noreferrer"
             data-print-hide
-            className="inline-flex items-center gap-1.5 text-[11px] text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+            className="inline-flex items-center gap-1.5 text-label text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
           >
             <ExternalLink size={11} />
             {firm.website.replace(/^https?:\/\//, '')}
@@ -351,14 +347,14 @@ export default async function FirmProfilePage({
           {/* ── At a Glance ─────────────────────────────────────────────────── */}
           <SectionCard accent={tierAccent}>
             <SectionHeading icon={<TrendingUp size={13} />} label="At a Glance" />
-            <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75] mb-4">
+            <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed mb-4">
               {firm.knownFor}
             </p>
             <div className="flex flex-wrap gap-1.5">
               {firm.practiceAreas.map((area) => (
                 <span
                   key={area}
-                  className="inline-block text-[10px] font-sans font-medium px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700"
+                  className="inline-block text-label font-medium px-2 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700"
                 >
                   {area}
                 </span>
@@ -369,7 +365,7 @@ export default async function FirmProfilePage({
           {/* ── Culture ─────────────────────────────────────────────────────── */}
           <SectionCard accent={tierAccent}>
             <SectionHeading icon={<Users size={13} />} label="Culture" />
-            <p className="text-[15px] text-stone-700 dark:text-stone-300 leading-[1.75]">
+            <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
               {firm.culture}
             </p>
           </SectionCard>
@@ -383,7 +379,7 @@ export default async function FirmProfilePage({
               <span className="text-stone-500"><Briefcase size={13} /></span>
               <span className="section-label text-stone-400">Interview Focus</span>
             </div>
-            <p className="text-[15px] text-stone-100 leading-[1.75]">
+            <p className="text-body text-stone-100 leading-relaxed">
               {firm.interviewFocus}
             </p>
           </div>
@@ -405,7 +401,7 @@ export default async function FirmProfilePage({
                 <Link
                   href="/tests"
                   data-print-hide
-                  className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-sans font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
+                  className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
                 >
                   Practice tests →
                 </Link>
@@ -416,11 +412,11 @@ export default async function FirmProfilePage({
                     key={assessment.programme}
                     className="bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700 rounded-sm px-4 py-3"
                   >
-                    <p className="text-[11px] font-sans text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-2">
+                    <p className="section-label mb-2">
                       {assessment.programme}
                     </p>
                     {assessment.tests.length === 0 ? (
-                      <p className="text-[12px] text-stone-400 dark:text-stone-500 italic">
+                      <p className="text-caption text-stone-400 dark:text-stone-500 italic">
                         No formal online assessments
                       </p>
                     ) : (
@@ -428,7 +424,7 @@ export default async function FirmProfilePage({
                         {assessment.tests.map((test) => (
                           <span
                             key={test}
-                            className="inline-block text-[10px] font-sans font-semibold px-2 py-0.5 rounded-sm bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-300 dark:border-stone-600"
+                            className="inline-block text-label font-semibold px-2 py-0.5 rounded-sm bg-white dark:bg-stone-900 text-stone-600 dark:text-stone-300 border border-stone-300 dark:border-stone-600"
                           >
                             {test}
                           </span>
@@ -436,7 +432,7 @@ export default async function FirmProfilePage({
                       </div>
                     )}
                     {assessment.notes && (
-                      <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-1.5 leading-relaxed">
+                      <p className="text-label text-stone-400 dark:text-stone-500 mt-1.5 leading-relaxed">
                         {assessment.notes}
                       </p>
                     )}
@@ -452,12 +448,10 @@ export default async function FirmProfilePage({
 
             {/* NQ salary hero stat + secondary stats */}
             <div className="flex flex-wrap items-end gap-8 mb-5 pb-5 border-b border-stone-100 dark:border-stone-800">
-              {/* NQ — big */}
+              {/* NQ — prominent */}
               <div>
-                <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-1">
-                  NQ Salary
-                </p>
-                <p className={`font-sans text-[28px] sm:text-[32px] font-bold leading-none tracking-tight ${tierText}`}>
+                <p className="section-label mb-1">NQ Salary</p>
+                <p className={`font-sans text-article leading-none tracking-tight ${tierText}`}>
                   {firm.trainingContract.nqSalaryNote}
                 </p>
               </div>
@@ -465,26 +459,20 @@ export default async function FirmProfilePage({
               {/* Supporting stats */}
               <div className="flex flex-wrap gap-6 pb-1">
                 <div>
-                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
-                    TC Salary
-                  </p>
-                  <p className="font-sans text-[15px] font-semibold text-stone-700 dark:text-stone-200">
+                  <p className="section-label mb-0.5">TC Salary</p>
+                  <p className="font-sans text-body font-medium text-stone-700 dark:text-stone-200">
                     {firm.trainingContract.tcSalaryNote}
                   </p>
                 </div>
                 <div>
-                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
-                    Intake
-                  </p>
-                  <p className="font-sans text-[15px] font-semibold text-stone-700 dark:text-stone-200">
+                  <p className="section-label mb-0.5">Intake</p>
+                  <p className="font-sans text-body font-medium text-stone-700 dark:text-stone-200">
                     {firm.trainingContract.intakeSizeNote}
                   </p>
                 </div>
                 <div>
-                  <p className="font-sans text-[9px] tracking-widest uppercase text-stone-400 dark:text-stone-500 mb-0.5">
-                    Seats
-                  </p>
-                  <p className="font-sans text-[15px] font-semibold text-stone-700 dark:text-stone-200">
+                  <p className="section-label mb-0.5">Seats</p>
+                  <p className="font-sans text-body font-medium text-stone-700 dark:text-stone-200">
                     {firm.trainingContract.seats}
                   </p>
                 </div>
@@ -496,7 +484,7 @@ export default async function FirmProfilePage({
               target="_blank"
               rel="noopener noreferrer"
               data-print-hide
-              className="inline-flex items-center gap-1.5 text-[12px] font-medium px-4 py-2 rounded-sm bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 hover:opacity-80 transition-opacity"
+              className="inline-flex items-center gap-1.5 text-caption font-medium px-4 py-2 rounded-sm bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 hover:opacity-80 transition-opacity"
             >
               Apply for Training Contract
               <ExternalLink size={11} />
@@ -512,7 +500,7 @@ export default async function FirmProfilePage({
                 target="_blank"
                 rel="noopener noreferrer"
                 data-print-hide
-                className="shrink-0 inline-flex items-center gap-1.5 text-[10px] font-sans font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
+                className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-2.5 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-700 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors -mt-0.5"
               >
                 <ExternalLink size={10} />
                 Live dates · The Trackr
@@ -520,13 +508,11 @@ export default async function FirmProfilePage({
             </div>
             <div className="space-y-3">
               {firm.trainingContract.deadlines.map((deadline) => {
-                // Format exact dates if available
                 const fmtDate = (iso: string) => {
                   const [y, m, d] = iso.split('-').map(Number);
                   return new Date(y, m - 1, d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
                 };
                 const hasExact = deadline.openDate || deadline.closeDate;
-                // Closed check: ISO YYYY-MM-DD strings compare lexicographically correctly
                 const isClosed = deadline.closeDate ? deadline.closeDate < today : false;
 
                 return (
@@ -536,22 +522,22 @@ export default async function FirmProfilePage({
                 >
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <p className={`text-[13px] font-semibold ${isClosed ? 'text-stone-500 dark:text-stone-400' : 'text-stone-900 dark:text-stone-100'}`}>
+                      <p className={`text-caption font-semibold ${isClosed ? 'text-stone-500 dark:text-stone-400' : 'text-stone-900 dark:text-stone-100'}`}>
                         {deadline.label}
                       </p>
                       {isClosed && (
-                        <span className="inline-block font-sans text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
+                        <span className="inline-block font-sans text-label font-semibold uppercase px-1.5 py-0.5 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700">
                           Closed
                         </span>
                       )}
                       {!isClosed && deadline.rolling && (
-                        <span className="inline-block text-[9px] font-sans font-semibold tracking-[0.06em] uppercase px-1.5 py-0.5 rounded-sm bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                        <span className="inline-block text-label font-semibold uppercase px-1.5 py-0.5 rounded-sm bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
                           Rolling
                         </span>
                       )}
                     </div>
                     {hasExact ? (
-                      <p className={`text-[11px] font-sans ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
+                      <p className={`text-label font-sans ${isClosed ? 'line-through text-stone-400 dark:text-stone-500' : 'text-stone-600 dark:text-stone-300'}`}>
                         {deadline.openDate && deadline.closeDate
                           ? `${fmtDate(deadline.openDate)} – ${fmtDate(deadline.closeDate)}`
                           : deadline.closeDate
@@ -562,7 +548,7 @@ export default async function FirmProfilePage({
                         </span>
                       </p>
                     ) : (
-                      <p className="text-[11px] text-stone-400 dark:text-stone-500 font-sans">
+                      <p className="text-label font-sans text-stone-400 dark:text-stone-500">
                         {deadline.typically}
                       </p>
                     )}
@@ -573,7 +559,7 @@ export default async function FirmProfilePage({
                     target="_blank"
                     rel="noopener noreferrer"
                     data-print-hide
-                    className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+                    className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
                   >
                     Apply →
                   </a>
@@ -588,7 +574,7 @@ export default async function FirmProfilePage({
           {firm.forageUrl && (
             <SectionCard accent={tierAccent}>
               <SectionHeading icon={<Briefcase size={13} />} label="Virtual Experience" />
-              <p className="text-[14px] text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
+              <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
                 {firm.shortName} offers free virtual work experience simulations on Forage — a practical way to explore the firm&apos;s work before applying and a genuine signal of interest for your application.
               </p>
               <a
@@ -596,7 +582,7 @@ export default async function FirmProfilePage({
                 target="_blank"
                 rel="noopener noreferrer"
                 data-print-hide
-                className="inline-flex items-center gap-1.5 text-[12px] font-medium px-4 py-2 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
+                className="inline-flex items-center gap-1.5 text-caption font-medium px-4 py-2 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
               >
                 View Forage simulations
                 <ExternalLink size={11} />
@@ -616,19 +602,19 @@ export default async function FirmProfilePage({
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <p className="text-[13px] font-semibold text-stone-900 dark:text-stone-100">
+                        <p className="text-caption font-semibold text-stone-900 dark:text-stone-100">
                           {scheme.name}
                         </p>
                         <span
-                          className={`inline-block text-[9px] font-sans font-semibold tracking-[0.08em] uppercase px-2 py-0.5 rounded-sm ${SCHEME_TYPE_BADGE[scheme.type]}`}
+                          className={`inline-block text-label font-semibold uppercase px-2 py-0.5 rounded-sm ${SCHEME_TYPE_BADGE[scheme.type]}`}
                         >
                           {SCHEME_TYPE_LABEL[scheme.type]}
                         </span>
                       </div>
-                      <p className="text-[12px] text-stone-600 dark:text-stone-400 leading-relaxed mb-1.5">
+                      <p className="text-caption text-stone-600 dark:text-stone-400 leading-relaxed mb-1.5">
                         {scheme.eligibility}
                       </p>
-                      <p className="text-[11px] font-sans text-stone-400 dark:text-stone-500">
+                      <p className="text-label font-sans text-stone-400 dark:text-stone-500">
                         {scheme.typically}
                       </p>
                     </div>
@@ -637,7 +623,7 @@ export default async function FirmProfilePage({
                       target="_blank"
                       rel="noopener noreferrer"
                       data-print-hide
-                      className="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
+                      className="shrink-0 inline-flex items-center gap-1.5 text-label font-medium px-3 py-1.5 rounded-sm border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors"
                     >
                       Apply →
                     </a>
@@ -651,7 +637,7 @@ export default async function FirmProfilePage({
           <SectionCard accent={tierAccent}>
             <SectionHeading icon={<Newspaper size={13} />} label="Recent Stories" />
             {recentStories.length === 0 ? (
-              <p className="text-[13px] text-stone-400 dark:text-stone-500">
+              <p className="text-caption text-stone-400 dark:text-stone-500">
                 No stories mentioning {firm.shortName} in the last 30 days.
               </p>
             ) : (
@@ -670,10 +656,10 @@ export default async function FirmProfilePage({
                         className={`mt-1.5 inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`}
                       />
                       <div className="min-w-0">
-                        <p className="text-[13px] font-medium text-stone-800 dark:text-stone-200 leading-snug group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
+                        <p className="text-caption font-medium text-stone-800 dark:text-stone-200 leading-snug group-hover:underline decoration-stone-400 dark:decoration-stone-500 underline-offset-2">
                           {story.headline}
                         </p>
-                        <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 mt-0.5">
+                        <p className="text-label font-sans text-stone-400 dark:text-stone-500 mt-0.5">
                           {formatDisplayDate(story.date)}
                         </p>
                       </div>
@@ -688,7 +674,7 @@ export default async function FirmProfilePage({
           {recentStories.length > 0 && (
             <SectionCard accent={tierAccent}>
               <SectionHeading icon={<MessageSquare size={13} />} label="Interview Talking Points" />
-              <p className="text-[12px] text-stone-400 dark:text-stone-500 mb-4 leading-relaxed">
+              <p className="text-caption text-stone-400 dark:text-stone-500 leading-relaxed mb-4">
                 These are the interview angles on recent stories mentioning {firm.shortName}. Each
                 one gives you a ready-made observation to deploy when an interviewer asks{' '}
                 &ldquo;What&apos;s caught your attention in the news recently?&rdquo;
@@ -707,14 +693,14 @@ export default async function FirmProfilePage({
                       >
                         <div className="flex items-center gap-2 mb-1.5">
                           <span className={`inline-block w-1.5 h-1.5 shrink-0 rounded-full ${styles.dot}`} />
-                          <p className="text-[10px] font-sans text-stone-400 dark:text-stone-500 uppercase tracking-widest">
+                          <p className="section-label">
                             {formatDisplayDate(story.date)} · {story.topic}
                           </p>
                         </div>
-                        <p className="text-[11px] font-medium text-stone-500 dark:text-stone-400 leading-snug mb-1.5">
+                        <p className="text-label font-medium text-stone-500 dark:text-stone-400 leading-snug mb-1.5">
                           {story.headline}
                         </p>
-                        <p className="text-[14px] text-stone-700 dark:text-stone-300 leading-[1.7]">
+                        <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
                           {story.talkingPoint}
                         </p>
                       </div>
@@ -729,12 +715,12 @@ export default async function FirmProfilePage({
             <div className="flex items-start justify-between gap-4 mb-5">
               <div>
                 <SectionHeading icon={<HelpCircle size={13} />} label="Practice Interview Questions" />
-                <p className="text-[12px] text-stone-400 dark:text-stone-500 leading-relaxed -mt-1">
+                <p className="text-caption text-stone-400 dark:text-stone-500 leading-relaxed -mt-1">
                   10 questions tailored to {firm.shortName} — drawn from the firm&apos;s profile,
                   practice areas, and recent news. Try answering each one aloud before reading on.
                 </p>
               </div>
-              <span className="shrink-0 mt-0.5 inline-block text-[9px] font-sans font-medium tracking-widest uppercase px-2 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
+              <span className="shrink-0 mt-0.5 inline-block text-label font-medium uppercase px-2 py-1 rounded-sm bg-stone-100 dark:bg-stone-800 text-stone-400 dark:text-stone-500 border border-stone-200 dark:border-stone-700 print:hidden">
                 Refreshes weekly
               </span>
             </div>
@@ -746,17 +732,17 @@ export default async function FirmProfilePage({
                     key={i}
                     className="flex gap-4 group"
                   >
-                    <span className="shrink-0 font-serif text-[15px] font-semibold text-stone-400 dark:text-stone-500 leading-none mt-0.5 w-6 text-right">
+                    <span className="shrink-0 font-serif text-body text-stone-400 dark:text-stone-500 leading-none mt-0.5 w-6 text-right">
                       {i + 1}.
                     </span>
-                    <p className="text-[14px] text-stone-700 dark:text-stone-300 leading-[1.7]">
+                    <p className="text-body text-stone-700 dark:text-stone-300 leading-relaxed">
                       {question}
                     </p>
                   </li>
                 ))}
               </ol>
             ) : (
-              <p className="text-[13px] text-stone-400 dark:text-stone-500 italic">
+              <p className="text-caption text-stone-400 dark:text-stone-500 italic">
                 Interview questions are being generated — refresh the page in a moment.
               </p>
             )}
@@ -765,7 +751,7 @@ export default async function FirmProfilePage({
           {/* ── Disclaimer footer ────────────────────────────────────────────── */}
           <div className="flex items-start gap-2.5 rounded-sm bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 px-4 py-3">
             <AlertTriangle size={13} className="shrink-0 mt-0.5 text-amber-500 dark:text-amber-400" />
-            <p className="text-[12px] text-amber-700 dark:text-amber-300 leading-relaxed">
+            <p className="text-caption text-amber-700 dark:text-amber-300 leading-relaxed">
               Salary and deadline information is approximate and based on publicly available data from prior recruitment cycles.
               Last verified:{' '}
               <span className="font-sans">{firm.trainingContract.lastVerified}</span>.
@@ -778,7 +764,7 @@ export default async function FirmProfilePage({
         {/* Print-only footer */}
         <div
           data-print-footer
-          className="hidden mt-8 pt-4 border-t border-stone-200 text-[10px] font-sans text-stone-400"
+          className="hidden mt-8 pt-4 border-t border-stone-200 text-label font-sans text-stone-400"
         >
           <p>
             Generated by Folio — folioapp.co.uk · {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}

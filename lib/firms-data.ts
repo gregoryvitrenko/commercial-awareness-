@@ -385,7 +385,7 @@ export const FIRMS: FirmProfile[] = [
       lastVerified: '2026-03-03',
     },
     accentColor: 'text-teal-700 dark:text-teal-400',
-    forageUrl: 'https://www.theforage.com/simulations/hogan-lovells/commercial-law-qxqv',
+    // forageUrl removed — Forage simulation page no longer exists
   },
 
   {
@@ -520,7 +520,7 @@ export const FIRMS: FirmProfile[] = [
     shortName: 'Eversheds',
     aliases: ['Eversheds Sutherland', 'Eversheds', 'Eversheds-Sutherland', 'Eversheds Sutherland International'],
     tier: 'National',
-    website: 'https://www.eversheds-sutherland.com',
+    website: 'https://www.eversheds-sutherland.com/en/global',
     hq: 'London / Edinburgh',
     offices: ['London', 'Edinburgh', 'Birmingham', 'Manchester', 'Leeds', 'Bristol', 'Nottingham', 'Cardiff', 'Dublin', 'Brussels', 'Paris', 'Berlin', 'New York', 'Singapore', 'Hong Kong'],
     practiceAreas: ['Corporate / M&A', 'Banking & Finance', 'Disputes', 'Employment', 'Real Estate', 'Energy', 'Regulation', 'Tax'],
@@ -1311,7 +1311,7 @@ export const FIRMS: FirmProfile[] = [
       lastVerified: '2026-03-03',
     },
     accentColor: 'text-emerald-700 dark:text-emerald-400',
-    forageUrl: 'https://www.theforage.com/simulations/mishcon-de-reya',
+    // forageUrl removed — Forage simulation page no longer exists
   },
 
   {
@@ -1353,7 +1353,7 @@ export const FIRMS: FirmProfile[] = [
       lastVerified: '2026-03-03',
     },
     accentColor: 'text-teal-700 dark:text-teal-400',
-    forageUrl: 'https://www.theforage.com/simulations/bird-and-bird',
+    // forageUrl removed — Forage simulation page no longer exists
   },
 
   {
@@ -1469,7 +1469,7 @@ export const FIRMS: FirmProfile[] = [
       lastVerified: '2026-03-03',
     },
     accentColor: 'text-teal-700 dark:text-teal-400',
-    forageUrl: 'https://www.theforage.com/simulations/simmons-and-simmons',
+    // forageUrl removed — Forage simulation page no longer exists
   },
 
   // ─── US Firms — additional ────────────────────────────────────────────────
@@ -1513,7 +1513,7 @@ export const FIRMS: FirmProfile[] = [
       lastVerified: '2026-03-03',
     },
     accentColor: 'text-amber-700 dark:text-amber-400',
-    forageUrl: 'https://www.theforage.com/simulations/white-and-case',
+    // forageUrl removed — Forage simulation page no longer exists
   },
 
   {
@@ -1795,20 +1795,20 @@ export const FIRMS: FirmProfile[] = [
         {
           label: 'Open Day / First Year Programme',
           typically: 'Opens September · Closes November',
-          applyUrl: 'https://www.cov.com/en/careers/london-graduate-recruitment',
+          applyUrl: 'https://www.cov.com/en/careers/lawyers/london/our-opportunities/covinsights',
         },
         {
           label: 'Summer Vacation Scheme',
           typically: 'Opens October · Closes December',
-          applyUrl: 'https://www.cov.com/en/careers/london-graduate-recruitment',
+          applyUrl: 'https://www.cov.com/en/careers/lawyers/london/our-opportunities/vacation-schemes',
         },
         {
           label: 'Training Contract (direct)',
           typically: 'Opens October · Closes January',
-          applyUrl: 'https://www.cov.com/en/careers/london-graduate-recruitment',
+          applyUrl: 'https://www.cov.com/en/careers/lawyers/london/apply',
         },
       ],
-      applyUrl: 'https://www.cov.com/en/careers/london-graduate-recruitment',
+      applyUrl: 'https://www.cov.com/en/careers/lawyers/london',
       lastVerified: '2026-03-05',
     },
     accentColor: 'text-amber-700 dark:text-amber-400',

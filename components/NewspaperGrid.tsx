@@ -51,7 +51,7 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
               </div>
 
               {/* Large serif headline */}
-              <h1 className="font-serif text-3xl lg:text-4xl font-semibold leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-4 line-clamp-4 group-hover:opacity-80 transition-opacity">
+              <h1 className="font-serif text-4xl lg:text-5xl leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-4 line-clamp-4 group-hover:opacity-75 transition-opacity">
                 {lead.headline}
               </h1>
 
@@ -128,7 +128,7 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
 
           {/* Market Intelligence list */}
           <div>
-            <p className="section-label text-stone-400 mb-4">Market Intelligence</p>
+            <p className="section-label text-stone-400 mb-4">Also Today</p>
             <div className="space-y-0 divide-y divide-stone-100 dark:divide-stone-800">
               {sidebarStories.map((s, i) => {
                 const dest = subscribed ? `/story/${s.id}?date=${date}` : '/upgrade';

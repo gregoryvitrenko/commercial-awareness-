@@ -51,7 +51,7 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
               </div>
 
               {/* Large serif headline */}
-              <h1 className="font-serif text-4xl lg:text-5xl leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-4 line-clamp-4 group-hover:opacity-75 transition-opacity">
+              <h1 className="font-serif text-3xl lg:text-4xl font-semibold leading-tight text-stone-900 dark:text-stone-50 tracking-tight mb-4 line-clamp-4 group-hover:opacity-80 transition-opacity">
                 {lead.headline}
               </h1>
 
@@ -167,15 +167,15 @@ export function NewspaperGrid({ stories, date, subscribed }: NewspaperGridProps)
       {/* ── Below-fold divider + 3-column grid ───────────────────────────────── */}
       {belowFold.length > 0 && (
         <>
-          <div className="flex items-center gap-4 my-10">
+          <div className="flex items-center gap-4 my-8">
             <div className="h-px flex-1 bg-stone-200 dark:bg-stone-800" />
             <span className="section-label flex-shrink-0">More stories</span>
             <div className="h-px flex-1 bg-stone-200 dark:bg-stone-800" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-stone-200 dark:divide-stone-800">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {belowFold.map((story, i) => (
-              <div key={story.id} id={`story-${story.id}`} className="min-w-0 lg:px-8 first:lg:pl-0 last:lg:pr-0 py-8 lg:py-0">
+              <div key={story.id} id={`story-${story.id}`} className="min-w-0">
                 <StoryCard
                   story={story}
                   index={i + 5}

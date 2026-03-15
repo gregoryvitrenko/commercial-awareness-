@@ -20,10 +20,7 @@ export function SectorWatch({ sectorWatch, oneToFollow }: SectorWatchProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-200 dark:divide-stone-800 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden">
 
       {/* ── Sector Watch ── */}
-      <div className="relative flex flex-col pt-5 pb-8 px-6 overflow-hidden">
-        {/* Top editorial accent line */}
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-stone-900 dark:bg-stone-100" />
-
+      <div className="flex flex-col pt-5 pb-8 px-6">
         <div className="flex items-center gap-2 mb-6">
           <TrendingUp size={11} className="text-stone-500 dark:text-stone-400 flex-shrink-0" />
           <span className="section-label">
@@ -66,7 +63,7 @@ export function SectorWatch({ sectorWatch, oneToFollow }: SectorWatchProps) {
             <h3 className="font-serif text-2xl lg:text-3xl leading-tight text-stone-900 dark:text-stone-50 mb-5">
               {renderBold(oneToFollow.story)}
             </h3>
-            <p className="text-body text-stone-500 dark:text-stone-400 leading-relaxed flex-1">
+            <p className="text-body text-stone-600 dark:text-stone-400 leading-relaxed flex-1">
               {renderBold(oneToFollow.why)}
             </p>
           </>

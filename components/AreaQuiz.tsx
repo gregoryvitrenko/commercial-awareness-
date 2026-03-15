@@ -11,9 +11,11 @@ import {
   Star,
   Share2,
   BookOpen,
+  Zap,
 } from 'lucide-react';
 import {
-  AREA_QUESTIONS,
+  SHORT_AREA_QUESTIONS,
+  LONG_AREA_QUESTIONS,
   calculateAreaResult,
   type AreaResult,
   type AreaQuestion,
@@ -37,7 +39,9 @@ const AREA_COLORS: Record<string, {
 
 // ─── Intro screen ─────────────────────────────────────────────────────────────
 
-function IntroScreen({ onStart }: { onStart: () => void }) {
+function IntroScreen({ onStart }: { onStart: (format: 'short' | 'long') => void }) {
+  const [selected, setSelected] = useState<'short' | 'long'>('short');
+
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col">
 
@@ -76,11 +80,39 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
           </h2>
 
           <p className="text-[14px] text-stone-500 dark:text-stone-400 leading-relaxed mb-8 max-w-sm mx-auto">
-            10 questions. Rank options in order of preference to discover which practice area matches your interests, working style, and ambitions.
+            Rank options in order of preference to discover which practice area matches your interests, working style, and ambitions.
           </p>
 
+          {/* Format selector */}
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            {([
+              { key: 'short' as const, Icon: Zap,      label: 'Quick',    sub: '10 questions · ~2 min' },
+              { key: 'long'  as const, Icon: BookOpen,  label: 'In-depth', sub: '20 questions · ~7 min' },
+            ]).map(({ key, Icon, label, sub }) => (
+              <button
+                key={key}
+                onClick={() => setSelected(key)}
+                className={`flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 transition-all ${
+                  selected === key
+                    ? 'border-stone-900 dark:border-stone-100 bg-stone-900 dark:bg-stone-100'
+                    : 'border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 hover:border-stone-400 dark:hover:border-stone-500'
+                }`}
+              >
+                <Icon size={18} className={selected === key ? 'text-stone-50 dark:text-stone-900' : 'text-stone-400 dark:text-stone-500'} />
+                <div>
+                  <p className={`text-[13px] font-semibold ${selected === key ? 'text-stone-50 dark:text-stone-900' : 'text-stone-800 dark:text-stone-200'}`}>
+                    {label}
+                  </p>
+                  <p className={`text-[11px] mt-0.5 ${selected === key ? 'text-stone-300 dark:text-stone-600' : 'text-stone-400 dark:text-stone-500'}`}>
+                    {sub}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+
           <button
-            onClick={onStart}
+            onClick={() => onStart(selected)}
             className="w-full max-w-xs mx-auto py-3 rounded-xl bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 text-[14px] font-sans font-medium hover:opacity-80 transition-opacity flex items-center justify-center gap-2"
           >
             Start quiz
@@ -390,14 +422,22 @@ type Stage = 'intro' | 'questions' | 'results';
 
 export function AreaQuiz() {
   const [stage, setStage] = useState<Stage>('intro');
+  const [format, setFormat] = useState<'short' | 'long'>('short');
   const [currentQ, setCurrentQ] = useState(0);
   // answers[i] = array of option indices in rank order (rank 1 first)
-  const [answers, setAnswers] = useState<number[][]>(
-    Array(AREA_QUESTIONS.length).fill(null).map(() => [])
-  );
+  const [answers, setAnswers] = useState<number[][]>([]);
   const [result, setResult] = useState<AreaResult | null>(null);
 
-  const total = AREA_QUESTIONS.length;
+  const activeQuestions = format === 'short' ? SHORT_AREA_QUESTIONS : LONG_AREA_QUESTIONS;
+  const total = activeQuestions.length;
+
+  function handleStart(f: 'short' | 'long') {
+    const qs = f === 'short' ? SHORT_AREA_QUESTIONS : LONG_AREA_QUESTIONS;
+    setFormat(f);
+    setAnswers(Array(qs.length).fill(null).map(() => []));
+    setCurrentQ(0);
+    setStage('questions');
+  }
 
   const handleToggleRank = useCallback((optionIdx: number) => {
     setAnswers((prev) => {
@@ -416,12 +456,12 @@ export function AreaQuiz() {
 
   function handleNext() {
     const ranked = answers[currentQ] ?? [];
-    if (ranked.length !== AREA_QUESTIONS[currentQ].options.length) return;
+    if (ranked.length !== activeQuestions[currentQ].options.length) return;
     if (currentQ < total - 1) {
       setCurrentQ(q => q + 1);
       window.scrollTo(0, 0);
     } else {
-      const r = calculateAreaResult(answers);
+      const r = calculateAreaResult(answers, activeQuestions);
       setResult(r);
       setStage('results');
       window.scrollTo(0, 0);
@@ -435,19 +475,19 @@ export function AreaQuiz() {
   function handleRestart() {
     setStage('intro');
     setCurrentQ(0);
-    setAnswers(Array(AREA_QUESTIONS.length).fill(null).map(() => []));
+    setAnswers([]);
     setResult(null);
     window.scrollTo(0, 0);
   }
 
-  if (stage === 'intro') return <IntroScreen onStart={() => setStage('questions')} />;
+  if (stage === 'intro') return <IntroScreen onStart={handleStart} />;
   if (stage === 'results' && result) return <ResultsScreen result={result} onRestart={handleRestart} />;
 
   return (
     <QuestionScreen
       questionIndex={currentQ}
       total={total}
-      question={AREA_QUESTIONS[currentQ]}
+      question={activeQuestions[currentQ]}
       rankedOptions={answers[currentQ] ?? []}
       onToggleRank={handleToggleRank}
       onNext={handleNext}

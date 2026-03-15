@@ -351,7 +351,233 @@ export const AREA_QUESTIONS: AreaQuestion[] = [
       },
     ],
   },
+
+  // ── Long-format additional questions (Q11–20) ────────────────────────────
+  {
+    id: 11,
+    question: 'When you read the financial news, what catches your eye?',
+    options: [
+      {
+        label: 'A blockbuster takeover bid or billion-pound merger',
+        scores: { ...Z, 'M&A': 3, 'Capital Markets': 1 },
+      },
+      {
+        label: 'A regulator fining a bank or technology company',
+        scores: { ...Z, 'Regulation': 3, 'AI & Law': 1 },
+      },
+      {
+        label: 'A court ruling that changes how a whole industry operates',
+        scores: { ...Z, 'Disputes': 3, 'Regulation': 2 },
+      },
+      {
+        label: 'A major infrastructure deal or new energy project financing',
+        scores: { ...Z, 'Energy & Tech': 3, 'Banking & Finance': 2 },
+      },
+    ],
+  },
+  {
+    id: 12,
+    question: 'Which best describes how you prefer to solve problems?',
+    options: [
+      {
+        label: 'Structuring — finding the architecture that makes a deal work',
+        scores: { ...Z, 'M&A': 2, 'Banking & Finance': 3, 'Capital Markets': 2 },
+      },
+      {
+        label: 'Analysing — finding the legal argument that wins',
+        scores: { ...Z, 'Disputes': 3, 'Regulation': 2 },
+      },
+      {
+        label: 'Navigating — steering clients through regulatory uncertainty',
+        scores: { ...Z, 'Regulation': 3, 'AI & Law': 2, 'International': 1 },
+      },
+      {
+        label: 'Innovating — applying law to genuinely new and untested situations',
+        scores: { ...Z, 'AI & Law': 3, 'Energy & Tech': 2 },
+      },
+    ],
+  },
+  {
+    id: 13,
+    question: 'How do you feel about numbers and financial modelling?',
+    options: [
+      {
+        label: 'I enjoy them — understanding the economics is central to the advice',
+        scores: { ...Z, 'Banking & Finance': 3, 'Capital Markets': 3, 'M&A': 1 },
+      },
+      {
+        label: 'Comfortable with them — I use them to understand deals and clients',
+        scores: { ...Z, 'M&A': 2, 'Energy & Tech': 2, 'International': 1 },
+      },
+      {
+        label: 'I prefer the legal analysis — happy to leave modelling to the bankers',
+        scores: { ...Z, 'Disputes': 2, 'Regulation': 2, 'AI & Law': 1 },
+      },
+      {
+        label: 'Mixed — depends on the context and what the problem actually is',
+        scores: { ...Z, 'International': 2, 'M&A': 1, 'Regulation': 1 },
+      },
+    ],
+  },
+  {
+    id: 14,
+    question: 'Which working environment sounds most like you?',
+    options: [
+      {
+        label: 'Deal rooms, late nights, and the adrenaline of closing',
+        scores: { ...Z, 'M&A': 3, 'Capital Markets': 2, 'Banking & Finance': 1 },
+      },
+      {
+        label: 'Court filings, skeleton arguments, and witness preparation',
+        scores: { ...Z, 'Disputes': 3, 'International': 1 },
+      },
+      {
+        label: 'Policy papers, regulatory submissions, and government engagement',
+        scores: { ...Z, 'Regulation': 3, 'AI & Law': 2 },
+      },
+      {
+        label: 'Multiple offices, different time zones, genuinely cross-border work',
+        scores: { ...Z, 'International': 3, 'Energy & Tech': 2 },
+      },
+    ],
+  },
+  {
+    id: 15,
+    question: 'Which career trajectory appeals most?',
+    options: [
+      {
+        label: 'Transactional powerhouse — the lawyer who closes the biggest deals',
+        scores: { ...Z, 'M&A': 3, 'Banking & Finance': 2, 'Capital Markets': 2 },
+      },
+      {
+        label: 'Elite litigator — sought after for the highest-stakes disputes',
+        scores: { ...Z, 'Disputes': 3, 'International': 1 },
+      },
+      {
+        label: 'Regulatory strategist — advising governments, regulators, and boardrooms',
+        scores: { ...Z, 'Regulation': 3, 'AI & Law': 2 },
+      },
+      {
+        label: 'Global practitioner — building an international practice across markets',
+        scores: { ...Z, 'International': 3, 'Energy & Tech': 1 },
+      },
+    ],
+  },
+  {
+    id: 16,
+    question: 'Which of these skills do you most want to develop?',
+    options: [
+      {
+        label: 'Commercial negotiation — getting the best deal terms for my client',
+        scores: { ...Z, 'M&A': 3, 'Banking & Finance': 2 },
+      },
+      {
+        label: 'Advocacy — making the most compelling oral or written argument',
+        scores: { ...Z, 'Disputes': 3, 'International': 1 },
+      },
+      {
+        label: 'Regulatory strategy — anticipating how rules will evolve and shift',
+        scores: { ...Z, 'Regulation': 3, 'AI & Law': 2 },
+      },
+      {
+        label: 'Technical drafting — financial documents, prospectuses, facility agreements',
+        scores: { ...Z, 'Banking & Finance': 3, 'Capital Markets': 3 },
+      },
+    ],
+  },
+  {
+    id: 17,
+    question: 'What role do you see technology playing in your legal practice?',
+    options: [
+      {
+        label: 'Central — I want to be at the frontier of AI and legal tech',
+        scores: { ...Z, 'AI & Law': 3, 'Regulation': 1 },
+      },
+      {
+        label: 'Important context — I need to understand it to advise clients well',
+        scores: { ...Z, 'Regulation': 2, 'Energy & Tech': 2, 'M&A': 1 },
+      },
+      {
+        label: 'Useful tool — but the core of my work stays fundamentally legal',
+        scores: { ...Z, 'Disputes': 2, 'Banking & Finance': 1, 'International': 1 },
+      },
+      {
+        label: 'Subject matter — I want to advise on tech deals and infrastructure',
+        scores: { ...Z, 'Energy & Tech': 3, 'M&A': 2 },
+      },
+    ],
+  },
+  {
+    id: 18,
+    question: 'Which of these real-world scenarios excites you most?',
+    options: [
+      {
+        label: 'Advising on the London IPO of a major company raising £2bn',
+        scores: { ...Z, 'Capital Markets': 3, 'Banking & Finance': 1 },
+      },
+      {
+        label: 'Acting for a state in an investor-state arbitration worth $500m',
+        scores: { ...Z, 'International': 3, 'Disputes': 3 },
+      },
+      {
+        label: 'Advising a tech giant on navigating the EU AI Act',
+        scores: { ...Z, 'AI & Law': 3, 'Regulation': 2 },
+      },
+      {
+        label: 'Financing a North Sea wind farm with a complex project structure',
+        scores: { ...Z, 'Energy & Tech': 3, 'Banking & Finance': 2 },
+      },
+    ],
+  },
+  {
+    id: 19,
+    question: 'How important is it that your work has a tangible real-world impact?',
+    options: [
+      {
+        label: 'Very — I want the deals I close to reshape industries',
+        scores: { ...Z, 'M&A': 2, 'Energy & Tech': 3, 'Capital Markets': 1 },
+      },
+      {
+        label: 'Yes — I want the legal principles I argue to matter beyond one case',
+        scores: { ...Z, 'Disputes': 3, 'Regulation': 2 },
+      },
+      {
+        label: 'Absolutely — shaping how AI and technology are regulated has never been more important',
+        scores: { ...Z, 'AI & Law': 3, 'Regulation': 2 },
+      },
+      {
+        label: 'Mostly — I want my work to enable clients to operate globally',
+        scores: { ...Z, 'International': 3, 'Banking & Finance': 1 },
+      },
+    ],
+  },
+  {
+    id: 20,
+    question: 'Which of these best describes your personality in a team?',
+    options: [
+      {
+        label: 'The deal-driver — I keep things moving and push for completion',
+        scores: { ...Z, 'M&A': 3, 'Capital Markets': 2, 'Banking & Finance': 1 },
+      },
+      {
+        label: 'The analyst — I find the argument nobody else spotted',
+        scores: { ...Z, 'Disputes': 3, 'Regulation': 2 },
+      },
+      {
+        label: 'The strategist — I think three steps ahead about risk and exposure',
+        scores: { ...Z, 'Regulation': 3, 'AI & Law': 2, 'International': 1 },
+      },
+      {
+        label: 'The connector — I build the bridges between jurisdictions and teams',
+        scores: { ...Z, 'International': 3, 'Energy & Tech': 2 },
+      },
+    ],
+  },
 ];
+
+// Convenience exports for format filtering
+export const SHORT_AREA_QUESTIONS = AREA_QUESTIONS.slice(0, 10);
+export const LONG_AREA_QUESTIONS = AREA_QUESTIONS; // all 20
 
 // ─── Scoring engine ───────────────────────────────────────────────────────────
 
@@ -371,16 +597,17 @@ export interface AreaResult {
  * Calculate area result from ranked answers.
  * answers[i] = array of option indices in rank order (rank 1 first).
  * Higher-ranked options contribute more via linear decay multiplier.
+ * Pass activeQuestions to support short/long format scoring correctly.
  */
-export function calculateAreaResult(answers: number[][]): AreaResult {
+export function calculateAreaResult(answers: number[][], activeQuestions: AreaQuestion[] = AREA_QUESTIONS): AreaResult {
   const scores: Record<AreaKey, number> = {
     'M&A': 0, 'Capital Markets': 0, 'Banking & Finance': 0, 'Energy & Tech': 0,
     'Regulation': 0, 'Disputes': 0, 'International': 0, 'AI & Law': 0,
   };
 
-  for (let i = 0; i < AREA_QUESTIONS.length; i++) {
+  for (let i = 0; i < activeQuestions.length; i++) {
     const ranked = answers[i] ?? [];
-    const question = AREA_QUESTIONS[i];
+    const question = activeQuestions[i];
     const numOptions = question.options.length;
 
     ranked.forEach((optionIdx, rankIdx) => {

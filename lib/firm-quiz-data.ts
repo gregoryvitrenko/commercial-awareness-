@@ -295,7 +295,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     ],
   },
 
-  // ── Long-format additional questions (Q11–15) ─────────────────────────────
+  // ── Long-format additional questions (Q11–20) ────────────────────────────
   {
     id: 11,
     question: 'Which legal skill do you most want to develop?',
@@ -346,11 +346,61 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { label: 'The culture — I want somewhere I actually enjoy being', scores: { 'magic-circle': 0, 'silver-circle': 3, 'us-firms': 0, international: 1, boutique: 3 } },
     ],
   },
+  {
+    id: 16,
+    question: 'How do you prefer to learn on the job?',
+    options: [
+      { label: 'Thrown in at the deep end — sink or swim builds you fastest', scores: { 'magic-circle': 1, 'silver-circle': 0, 'us-firms': 3, international: 0, boutique: 1 } },
+      { label: 'Structured supervision — regular feedback and clear expectations', scores: { 'magic-circle': 3, 'silver-circle': 3, 'us-firms': 0, international: 1, boutique: 0 } },
+      { label: 'Shadowing senior lawyers closely on live deals or cases', scores: { 'magic-circle': 1, 'silver-circle': 2, 'us-firms': 2, international: 1, boutique: 2 } },
+      { label: 'Running my own files with a partner available when needed', scores: { 'magic-circle': 0, 'silver-circle': 1, 'us-firms': 1, international: 0, boutique: 3 } },
+    ],
+  },
+  {
+    id: 17,
+    question: 'If you could choose a secondment during your training contract, which would you pick?',
+    options: [
+      { label: 'A major client in-house team (bank, PE fund, or FTSE 100)', scores: { 'magic-circle': 2, 'silver-circle': 2, 'us-firms': 2, international: 0, boutique: 0 } },
+      { label: 'A foreign office — New York, Hong Kong, Singapore, or Dubai', scores: { 'magic-circle': 2, 'silver-circle': 0, 'us-firms': 1, international: 3, boutique: 0 } },
+      { label: 'A regulatory body or government department', scores: { 'magic-circle': 1, 'silver-circle': 2, 'us-firms': 0, international: 1, boutique: 2 } },
+      { label: 'No secondment — I want maximum seat variety at the firm itself', scores: { 'magic-circle': 1, 'silver-circle': 1, 'us-firms': 2, international: 0, boutique: 2 } },
+    ],
+  },
+  {
+    id: 18,
+    question: 'Which of these would you most emphasise in a training contract application?',
+    options: [
+      { label: 'Academic excellence and analytical ability', scores: { 'magic-circle': 3, 'silver-circle': 1, 'us-firms': 2, international: 1, boutique: 0 } },
+      { label: 'Commercial awareness and business instinct', scores: { 'magic-circle': 2, 'silver-circle': 2, 'us-firms': 3, international: 1, boutique: 0 } },
+      { label: 'International background, languages, or cross-cultural experience', scores: { 'magic-circle': 1, 'silver-circle': 0, 'us-firms': 0, international: 3, boutique: 1 } },
+      { label: 'Specific sector passion — I know exactly what I want to do', scores: { 'magic-circle': 0, 'silver-circle': 1, 'us-firms': 1, international: 0, boutique: 3 } },
+    ],
+  },
+  {
+    id: 19,
+    question: 'What kind of firm reputation matters most to you?',
+    options: [
+      { label: 'The global brand — instantly recognised anywhere in the world', scores: { 'magic-circle': 3, 'silver-circle': 0, 'us-firms': 2, international: 2, boutique: 0 } },
+      { label: 'Market-leading in a specific practice area I care about', scores: { 'magic-circle': 1, 'silver-circle': 2, 'us-firms': 3, international: 0, boutique: 2 } },
+      { label: 'A genuine culture of respect — known for treating people well', scores: { 'magic-circle': 0, 'silver-circle': 3, 'us-firms': 0, international: 1, boutique: 2 } },
+      { label: 'The best cross-border network and international desk reputation', scores: { 'magic-circle': 1, 'silver-circle': 0, 'us-firms': 0, international: 3, boutique: 0 } },
+    ],
+  },
+  {
+    id: 20,
+    question: 'Where do you picture yourself in ten years?',
+    options: [
+      { label: 'Partner at a Magic Circle or elite US firm, leading marquee deals', scores: { 'magic-circle': 2, 'silver-circle': 0, 'us-firms': 3, international: 0, boutique: 0 } },
+      { label: 'A respected senior lawyer at a firm where I genuinely enjoy the work', scores: { 'magic-circle': 0, 'silver-circle': 3, 'us-firms': 0, international: 1, boutique: 2 } },
+      { label: 'Running an international practice or heading up a global office', scores: { 'magic-circle': 1, 'silver-circle': 0, 'us-firms': 0, international: 3, boutique: 0 } },
+      { label: 'A recognised authority in a niche I\'ve built from scratch', scores: { 'magic-circle': 0, 'silver-circle': 1, 'us-firms': 1, international: 0, boutique: 3 } },
+    ],
+  },
 ];
 
 // Convenience exports for format filtering
 export const SHORT_QUESTIONS = QUIZ_QUESTIONS.slice(0, 10);
-export const LONG_QUESTIONS = QUIZ_QUESTIONS; // all 15
+export const LONG_QUESTIONS = QUIZ_QUESTIONS; // all 20
 
 // ─── Scoring engine ───────────────────────────────────────────────────────────
 

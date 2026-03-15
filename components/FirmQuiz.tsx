@@ -85,7 +85,7 @@ function IntroScreen({ onStart }: { onStart: (format: 'short' | 'long') => void 
           <div className="grid grid-cols-2 gap-3 mb-6">
             {([
               { key: 'short' as const, Icon: Zap,      label: 'Quick',    sub: '10 questions · ~2 min' },
-              { key: 'long'  as const, Icon: BookOpen,  label: 'In-depth', sub: '15 questions · ~5 min' },
+              { key: 'long'  as const, Icon: BookOpen,  label: 'In-depth', sub: '20 questions · ~7 min' },
             ]).map(({ key, Icon, label, sub }) => (
               <button
                 key={key}
@@ -393,7 +393,7 @@ function ResultsScreen({ result, onRestart }: { result: QuizResult; onRestart: (
               className="flex items-center justify-center gap-2 text-[12px] font-medium text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
             >
               <Lock size={10} />
-              Explore all 38 firm profiles
+              Explore all 55 firm profiles
               <ArrowRight size={12} />
             </Link>
           </div>

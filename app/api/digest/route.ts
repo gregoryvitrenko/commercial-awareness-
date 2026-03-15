@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import Anthropic from '@anthropic-ai/sdk';
+import { auth } from '@clerk/nextjs/server';
 import { listBriefings, getBriefing } from '@/lib/storage';
 import { sendWeeklyDigest, buildUnsubscribeUrl, type DigestStory } from '@/lib/email';
 import { getOrCreateReferralCode } from '@/lib/referral';
@@ -257,4 +258,55 @@ export async function GET(req: NextRequest) {
   console.log(`[digest] Weekly digest sent: ${sent} ok, ${failed} failed, ${skipped} skipped opt-out (${subscribers.length} total subscribers)`);
 
   return NextResponse.json({ sent, failed, skipped, total: subscribers.length });
+}
+
+// ── POST: admin test — sends digest to a single email address ────────────────
+
+export async function POST(req: NextRequest) {
+  const { userId } = await auth();
+  const adminId = process.env.ADMIN_USER_ID;
+  if (!userId || !adminId || userId !== adminId) {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
+  const { email } = await req.json() as { email?: string };
+  if (!email) return NextResponse.json({ error: 'email required' }, { status: 400 });
+
+  const allDates = await listBriefings();
+  const now = new Date();
+  const weekAgo = new Date(now);
+  weekAgo.setDate(weekAgo.getDate() - 7);
+
+  const recentDates = allDates
+    .filter((d) => new Date(d) >= weekAgo)
+    .sort((a, b) => a.localeCompare(b));
+
+  const allStories: DigestStory[] = [];
+  const seenFingerprints = new Set<string>();
+
+  for (const date of recentDates) {
+    const briefing = await getBriefing(date);
+    if (!briefing) continue;
+    for (const story of briefing.stories) {
+      const fingerprint = story.headline
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '')
+        .split(/\s+/)
+        .slice(0, 5)
+        .join(' ');
+      if (seenFingerprints.has(fingerprint)) continue;
+      seenFingerprints.add(fingerprint);
+      allStories.push({ headline: story.headline, topic: story.topic, summary: story.summary, date: briefing.date });
+    }
+  }
+
+  const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const weekLabel = `${fmt(weekAgo)} – ${fmt(now)} ${now.getFullYear()}`;
+  const { topStories, subject } = await rankStoriesAndSubject(allStories, weekLabel);
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.folioapp.co.uk';
+  const unsubUrl = buildUnsubscribeUrl(email, siteUrl);
+  const result = await sendWeeklyDigest(email, topStories, weekLabel, `[TEST] ${subject}`, unsubUrl);
+
+  return NextResponse.json(result);
 }

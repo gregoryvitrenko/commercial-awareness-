@@ -37,14 +37,14 @@ function buildUserPrompt(
 ${exclusionBlock}
 Using the news sources provided below, produce exactly 8 stories — one for each of the practice areas below. You MUST cover all eight; omitting any area is an error. Select the highest-signal story available from TODAY's news in each area:
 
-1. M&A — private equity and M&A deals with UK/European nexus
-2. Capital Markets — IPOs, equity offerings, debt issuance, and bond markets
-3. Banking & Finance — leveraged finance, loan facilities, syndicated lending, private credit, fund finance, and structured finance transactions
-4. Energy & Tech — energy, infrastructure, or technology with regulatory or transactional relevance (exclude AI — covered separately)
-5. Regulation — competition law, financial regulation, or regulatory enforcement
-6. Disputes — commercially significant litigation, arbitration, or enforcement action
-7. International — cross-border deals, trade law, or global moves relevant to London firms
-8. AI & Law — artificial intelligence in legal practice (firm AI strategies, AI tool adoption, AI-related regulation such as the EU AI Act, generative AI in deal-making or litigation, or AI literacy requirements in trainee recruitment)
+1. M&A — private equity and M&A deals with UK/European nexus; strongly prefer UK or London-advised transactions
+2. Capital Markets — IPOs, equity offerings, debt issuance, and bond markets; prefer London Stock Exchange, UK-listed issuers, or deals governed by English law
+3. Banking & Finance — leveraged finance, loan facilities, syndicated lending, private credit, fund finance, and structured finance transactions; prefer transactions involving London market participants or governed by English law
+4. Energy & Tech — UK or European energy, infrastructure, or technology with regulatory or transactional relevance (exclude AI — covered separately); prefer stories touching Ofgem, DESNZ, or UK/EU regulatory frameworks
+5. Regulation — UK or EU competition law (CMA, EC), financial regulation (FCA, PRA), or regulatory enforcement; strongly prefer FCA, CMA, PRA, ICO, or Ofcom actions over US regulatory stories
+6. Disputes — commercially significant UK litigation (High Court, Court of Appeal, Supreme Court), arbitration seated in London, or enforcement action with UK nexus; prefer English law judgments
+7. International — cross-border deals, trade law, or global moves with direct relevance to London firms or English law; avoid pure US domestic stories with no UK angle
+8. AI & Law — artificial intelligence in UK/EU legal practice or regulation (UK AI regulation, EU AI Act implementation, City firm AI strategies, AI tool adoption by UK law firms, generative AI in English-law deal-making or litigation)
 
 Return a raw JSON object (no markdown fences, no preamble) with this exact structure:
 
@@ -80,6 +80,7 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
 }
 
 Rules:
+- Geographic priority: This briefing is for UK law students targeting City firms. At least 5 of the 8 stories must have a clear UK or EU nexus (UK parties, English law, London market, UK regulator, or UK court). US-only stories with no UK angle should only appear if nothing stronger is available for that practice area.
 - You MUST produce exactly 8 stories. Each of the eight topics must appear exactly once: "M&A", "Capital Markets", "Banking & Finance", "Energy & Tech", "Regulation", "Disputes", "International", "AI & Law"
 - sources must be an array of 1–3 real URLs drawn from the SOURCE lines in the news context below. Only include URLs that actually appear in the sources provided. Each URL must be a direct article-level link (e.g. ft.com/content/abc123, reuters.com/markets/deals/...) — NEVER a section page, category index, or homepage (e.g. never ft.com/mergers-acquisitions, never bloomberg.com/markets). If the only available URL for a story is a section/category page, omit it and use [].
 - Every story must be from TODAY's news — do not recycle stories from previous days
@@ -238,18 +239,18 @@ async function searchNews(dateLabel: string): Promise<string> {
   const queries: TavilyQuery[] = [
     // ── Primary: one per practice area ──────────────────────────────────────
     { query: `UK M&A private equity deal announced today ${dateLabel}` },
-    { query: `UK capital markets IPO equity debt bond issuance today ${dateLabel}` },
+    { query: `UK capital markets IPO equity debt bond issuance London today ${dateLabel}` },
     { query: `UK leveraged finance loan syndicated lending private credit today ${dateLabel}` },
-    { query: `UK EU competition law financial regulation today ${dateLabel}` },
-    { query: `energy infrastructure technology legal news today ${dateLabel}` },
-    { query: `UK commercial litigation arbitration dispute today ${dateLabel}` },
-    { query: `cross-border international trade deal London law firms today ${dateLabel}` },
-    { query: `AI artificial intelligence law firms legal practice regulation today ${dateLabel}` },
+    { query: `UK EU competition law FCA PRA financial regulation today ${dateLabel}` },
+    { query: `UK EU energy infrastructure technology deal regulation legal news today ${dateLabel}` },
+    { query: `UK High Court Court of Appeal commercial litigation arbitration dispute today ${dateLabel}` },
+    { query: `cross-border international deal UK London law firms European nexus today ${dateLabel}` },
+    { query: `UK EU AI artificial intelligence law regulation legal practice City firms today ${dateLabel}` },
     // ── Supplementary: high-quality sources + broader deal flow ───────────
-    { query: `Financial Times Reuters City of London deal merger acquisition ${dateLabel}` },
-    { query: `Magic Circle Silver Circle law firm mandate instruction today ${dateLabel}` },
-    { query: `UK High Court Court of Appeal judgment ruling enforcement today ${dateLabel}` },
-    { query: `FCA PRA CMA regulatory decision enforcement action UK today ${dateLabel}` },
+    { query: `Financial Times Reuters City of London deal merger acquisition UK ${dateLabel}` },
+    { query: `Magic Circle Silver Circle law firm mandate instruction UK today ${dateLabel}` },
+    { query: `UK High Court Court of Appeal Supreme Court judgment ruling today ${dateLabel}` },
+    { query: `FCA PRA CMA ICO Ofgem regulatory decision enforcement action UK today ${dateLabel}` },
     // ── Supplementary: non-paywalled primary sources ──────────────────────
     {
       query: `UK law firm deal announcement press release merger acquisition ${dateLabel}`,
@@ -262,7 +263,7 @@ async function searchNews(dateLabel: string): Promise<string> {
       ],
     },
     {
-      query: `FCA CMA PRA regulatory enforcement decision ruling statement ${dateLabel}`,
+      query: `FCA CMA PRA ICO regulatory enforcement decision ruling UK statement ${dateLabel}`,
       include_domains: [
         'fca.org.uk', 'cma.gov.uk', 'pra.org.uk', 'judiciary.gov.uk',
         'legislation.gov.uk', 'companieshouse.gov.uk', 'ico.org.uk',
@@ -270,10 +271,11 @@ async function searchNews(dateLabel: string): Promise<string> {
       ],
     },
     {
-      query: `AI artificial intelligence law regulation legal technology news ${dateLabel}`,
+      query: `AI artificial intelligence UK EU law regulation legal technology City firms ${dateLabel}`,
       include_domains: [
-        'reuters.com', 'apnews.com', 'techcrunch.com',
+        'reuters.com', 'ft.com', 'lawgazette.co.uk',
         'artificialintelligenceact.eu', 'digital-strategy.ec.europa.eu',
+        'gov.uk', 'ico.org.uk',
       ],
     },
   ];

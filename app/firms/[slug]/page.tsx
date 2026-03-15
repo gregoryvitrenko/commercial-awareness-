@@ -438,7 +438,13 @@ export default async function FirmProfilePage({
                 </div>
               </div>
               <span className="shrink-0 mt-0.5 text-label font-medium uppercase text-stone-400 dark:text-stone-500 print:hidden whitespace-nowrap">
-                Next Refresh · Weekly
+                {interviewPack?.generatedAt
+                  ? (() => {
+                      const next = new Date(interviewPack.generatedAt);
+                      next.setDate(next.getDate() + 7);
+                      return `Refreshes ${next.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`;
+                    })()
+                  : 'Refreshes weekly'}
               </span>
             </div>
             {interviewPack && interviewPack.practiceQuestions.length > 0 ? (

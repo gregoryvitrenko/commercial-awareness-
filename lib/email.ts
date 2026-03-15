@@ -5,18 +5,10 @@ const FROM = process.env.EMAIL_FROM ?? 'Folio <hello@folioapp.co.uk>';
 
 // ── Unsubscribe HMAC helpers ───────────────────────────────────────────────────
 
-/**
- * Returns a 64-char hex HMAC-SHA256 signature for the given email address.
- * Used to sign and verify one-click unsubscribe URLs.
- */
 export function signUnsubscribeToken(email: string, secret: string): string {
   return crypto.createHmac('sha256', secret).update(email).digest('hex');
 }
 
-/**
- * Builds a fully-qualified, HMAC-signed unsubscribe URL.
- * Reads CRON_SECRET from env; throws if not set (prevents silent unsigned links).
- */
 export function buildUnsubscribeUrl(email: string, siteUrl: string): string {
   const secret = process.env.CRON_SECRET;
   if (!secret) throw new Error('[email] CRON_SECRET env var not set — cannot build unsubscribe URL');
@@ -24,8 +16,64 @@ export function buildUnsubscribeUrl(email: string, siteUrl: string): string {
   return `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(email)}&sig=${sig}`;
 }
 
+// ── Topic accent colours ───────────────────────────────────────────────────────
+
+const TOPIC_COLORS: Record<string, string> = {
+  'M&A':                '#2563eb',
+  'Capital Markets':    '#7c3aed',
+  'Banking & Finance':  '#ea580c',
+  'Energy & Tech':      '#059669',
+  'Regulation':         '#d97706',
+  'Disputes':           '#e11d48',
+  'International':      '#0d9488',
+  'AI & Law':           '#4f46e5',
+};
+
+// ── Shared design tokens ──────────────────────────────────────────────────────
+
+const T = {
+  bg:          '#F5F2ED',   // warm cream page background
+  card:        '#FFFFFF',
+  border:      '#E8E3DA',
+  header:      '#1C1917',   // stone-900
+  headerText:  '#F5F2ED',
+  body:        '#292524',   // stone-800
+  muted:       '#78716C',   // stone-500
+  faint:       '#A8A29E',   // stone-400
+  cta:         '#1C1917',
+  ctaText:     '#FFFFFF',
+  serif:       "Georgia, 'Times New Roman', serif",
+  sans:        "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+};
+
+// ── Welcome email ─────────────────────────────────────────────────────────────
+
 function welcomeHtml(firstName: string, todayUrl: string): string {
-  const name = firstName ? firstName : 'there';
+  const name = firstName || 'there';
+  const features = [
+    ['Daily briefing', '8 curated stories every morning — deals, disputes, and regulatory shifts'],
+    ['Daily quiz',     '24 questions to sharpen your commercial recall'],
+    ['Audio briefing', 'The full briefing read aloud — listen on your commute'],
+    ['Firm profiles',  'Salaries, deadlines, interview packs for 55+ firms'],
+  ];
+
+  const featureRows = features.map(([title, desc]) => `
+    <tr>
+      <td style="padding: 10px 0; border-bottom: 1px solid ${T.border};">
+        <table cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td width="20" valign="top" style="padding-top: 1px;">
+              <div style="width: 6px; height: 6px; background: ${T.body}; border-radius: 50%; margin-top: 6px;"></div>
+            </td>
+            <td>
+              <span style="font-family: ${T.serif}; font-size: 14px; color: ${T.body}; font-weight: bold;">${title}</span>
+              <span style="font-family: ${T.sans}; font-size: 13px; color: ${T.muted};"> — ${desc}</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>`).join('');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,74 +81,70 @@ function welcomeHtml(firstName: string, todayUrl: string): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome to Folio</title>
 </head>
-<body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:40px 16px;">
+<body style="margin:0;padding:0;background:${T.bg};font-family:${T.sans};">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:${T.bg};padding:48px 16px;">
     <tr>
       <td align="center">
         <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;">
 
-          <!-- Header -->
+          <!-- Wordmark -->
           <tr>
-            <td style="background:#09090b;border-radius:12px 12px 0 0;padding:28px 36px;">
-              <p style="margin:0;font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.12em;text-transform:uppercase;color:#71717a;">
-                Folio
-              </p>
+            <td style="padding-bottom: 20px;" align="center">
+              <span style="font-family:${T.serif};font-size:28px;font-weight:bold;color:${T.body};letter-spacing:-0.02em;">Folio</span>
             </td>
           </tr>
 
-          <!-- Body -->
+          <!-- Card -->
           <tr>
-            <td style="background:#ffffff;padding:36px 36px 28px;border-left:1px solid #e4e4e7;border-right:1px solid #e4e4e7;">
-              <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#09090b;line-height:1.3;">
-                You&rsquo;re in, ${name}.
-              </h1>
-              <p style="margin:0 0 24px;font-size:15px;color:#52525b;line-height:1.6;">
-                Your Folio subscription is active. Every morning you get a concise briefing on the deals, disputes, and regulatory moves that matter to training contract and vacation scheme applications.
-              </p>
+            <td style="background:${T.card};border:1px solid ${T.border};border-radius:4px;overflow:hidden;">
 
-              <!-- Feature list -->
-              <table cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <!-- Card header -->
+              <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="padding:5px 0;font-size:14px;color:#3f3f46;line-height:1.5;">
-                    <span style="color:#16a34a;margin-right:8px;font-weight:600;">✓</span>Daily briefing — 8 curated stories each morning
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:5px 0;font-size:14px;color:#3f3f46;line-height:1.5;">
-                    <span style="color:#16a34a;margin-right:8px;font-weight:600;">✓</span>Quiz — 24 questions to test your recall
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:5px 0;font-size:14px;color:#3f3f46;line-height:1.5;">
-                    <span style="color:#16a34a;margin-right:8px;font-weight:600;">✓</span>Audio briefing — listen on the go
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:5px 0;font-size:14px;color:#3f3f46;line-height:1.5;">
-                    <span style="color:#16a34a;margin-right:8px;font-weight:600;">✓</span>Full articles + save for later
+                  <td style="background:${T.header};padding:28px 36px;">
+                    <p style="margin:0;font-family:${T.serif};font-size:22px;color:${T.headerText};line-height:1.3;">
+                      You&rsquo;re in, ${name}.
+                    </p>
                   </td>
                 </tr>
               </table>
 
-              <!-- CTA -->
-              <table cellpadding="0" cellspacing="0">
+              <!-- Card body -->
+              <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="background:#09090b;border-radius:8px;">
-                    <a href="${todayUrl}" style="display:inline-block;padding:12px 24px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.01em;">
-                      Read today&rsquo;s briefing &rarr;
-                    </a>
+                  <td style="padding:32px 36px 28px;">
+                    <p style="margin:0 0 28px;font-family:${T.sans};font-size:15px;color:${T.muted};line-height:1.65;">
+                      Your Folio subscription is active. Every morning you get a concise commercial law briefing — the kind of content that turns a competent interviewee into one who clearly follows the market.
+                    </p>
+
+                    <!-- Features -->
+                    <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+                      ${featureRows}
+                    </table>
+
+                    <!-- CTA -->
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="background:${T.cta};border-radius:3px;">
+                          <a href="${todayUrl}" style="display:inline-block;padding:13px 28px;font-family:${T.sans};font-size:14px;font-weight:600;color:${T.ctaText};text-decoration:none;letter-spacing:0.01em;">
+                            Read today&rsquo;s briefing &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
+
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="background:#fafafa;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 12px 12px;padding:20px 36px;">
-              <p style="margin:0;font-size:12px;color:#a1a1aa;line-height:1.6;">
+            <td style="padding: 24px 0 0;" align="center">
+              <p style="margin:0;font-family:${T.sans};font-size:12px;color:${T.faint};line-height:1.6;">
                 You&rsquo;re receiving this because you subscribed to Folio.
-                Manage your subscription at any time from your account settings.
+                Manage your subscription in account settings.
               </p>
             </td>
           </tr>
@@ -113,20 +157,7 @@ function welcomeHtml(firstName: string, todayUrl: string): string {
 </html>`;
 }
 
-// ── Topic colours for the digest ──────────────────────────────────────────────
-
-const TOPIC_COLORS: Record<string, string> = {
-  'M&A': '#2563eb',
-  'Capital Markets': '#7c3aed',
-  'Banking & Finance': '#ea580c',
-  'Energy & Tech': '#059669',
-  'Regulation': '#d97706',
-  'Disputes': '#e11d48',
-  'International': '#0d9488',
-  'AI & Law': '#4f46e5',
-};
-
-// ── Weekly digest template ──────────────────────────────────────────────────
+// ── Weekly digest template ────────────────────────────────────────────────────
 
 export interface DigestStory {
   headline: string;
@@ -135,29 +166,60 @@ export interface DigestStory {
   date: string; // YYYY-MM-DD
 }
 
-function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string, unsubscribeUrl: string, referralLink?: string): string {
-  const storyRows = stories
-    .map((s) => {
-      const color = TOPIC_COLORS[s.topic] ?? '#71717a';
-      const [, month, day] = s.date.split('-').map(Number);
-      const dateStr = new Date(Number(s.date.split('-')[0]), month - 1, day)
-        .toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-      return `
+function digestHtml(
+  stories: DigestStory[],
+  siteUrl: string,
+  weekLabel: string,
+  unsubscribeUrl: string,
+  referralLink?: string,
+): string {
+  const storyRows = stories.map((s) => {
+    const color = TOPIC_COLORS[s.topic] ?? T.muted;
+    const [year, month, day] = s.date.split('-').map(Number);
+    const dateStr = new Date(year, month - 1, day)
+      .toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    const summary = s.summary.length > 180 ? s.summary.slice(0, 177) + '...' : s.summary;
+
+    return `
+    <tr>
+      <td style="padding: 0 0 20px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <!-- Colour accent bar -->
+            <td width="3" style="background:${color};border-radius:2px;">&nbsp;</td>
+            <td width="16">&nbsp;</td>
+            <td>
+              <p style="margin:0 0 5px;font-family:${T.sans};font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:${color};">
+                ${s.topic}&ensp;&middot;&ensp;${dateStr}
+              </p>
+              <p style="margin:0 0 6px;font-family:${T.serif};font-size:16px;font-weight:bold;color:${T.body};line-height:1.4;">
+                ${s.headline}
+              </p>
+              <p style="margin:0;font-family:${T.sans};font-size:13px;color:${T.muted};line-height:1.6;">
+                ${summary}
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr><td style="border-bottom:1px solid ${T.border};padding-bottom:20px;"></td></tr>`;
+  }).join('');
+
+  const referralBlock = referralLink ? `
+  <tr>
+    <td style="padding: 24px 36px;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:${T.bg};border:1px solid ${T.border};border-radius:3px;padding:20px 24px;">
         <tr>
-          <td style="padding:16px 0;border-bottom:1px solid #f4f4f5;">
-            <p style="margin:0 0 4px;font-size:10px;font-family:'Courier New',monospace;letter-spacing:0.1em;text-transform:uppercase;color:${color};font-weight:600;">
-              ${s.topic} · ${dateStr}
-            </p>
-            <p style="margin:0 0 6px;font-size:15px;font-weight:600;color:#09090b;line-height:1.4;">
-              ${s.headline}
-            </p>
-            <p style="margin:0;font-size:13px;color:#52525b;line-height:1.55;">
-              ${s.summary.length > 160 ? s.summary.slice(0, 157) + '...' : s.summary}
-            </p>
+          <td>
+            <p style="margin:0 0 6px;font-family:${T.serif};font-size:15px;font-weight:bold;color:${T.body};">Share Folio</p>
+            <p style="margin:0 0 12px;font-family:${T.sans};font-size:13px;color:${T.muted};line-height:1.5;">Get a free month when three friends subscribe using your link.</p>
+            <p style="margin:0;font-family:${T.sans};font-size:12px;color:${T.faint};word-break:break-all;">${referralLink}</p>
           </td>
-        </tr>`;
-    })
-    .join('');
+        </tr>
+      </table>
+    </td>
+  </tr>` : '';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -166,82 +228,95 @@ function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string, 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Folio Weekly Digest</title>
 </head>
-<body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:40px 16px;">
+<body style="margin:0;padding:0;background:${T.bg};font-family:${T.sans};">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:${T.bg};padding:48px 16px;">
     <tr>
       <td align="center">
         <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;">
 
-          <!-- Header -->
+          <!-- Wordmark -->
           <tr>
-            <td style="background:#09090b;border-radius:12px 12px 0 0;padding:28px 36px;">
-              <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td>
-                    <p style="margin:0;font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.12em;text-transform:uppercase;color:#71717a;">
-                      Folio
-                    </p>
-                  </td>
-                  <td align="right">
-                    <p style="margin:0;font-size:11px;font-family:'Courier New',monospace;letter-spacing:0.08em;text-transform:uppercase;color:#52525b;">
-                      Weekly Digest
-                    </p>
-                  </td>
-                </tr>
-              </table>
+            <td style="padding-bottom: 20px;" align="center">
+              <span style="font-family:${T.serif};font-size:28px;font-weight:bold;color:${T.body};letter-spacing:-0.02em;">Folio</span>
             </td>
           </tr>
 
-          <!-- Body -->
+          <!-- Card -->
           <tr>
-            <td style="background:#ffffff;padding:36px 36px 28px;border-left:1px solid #e4e4e7;border-right:1px solid #e4e4e7;">
-              <h1 style="margin:0 0 4px;font-size:20px;font-weight:700;color:#09090b;line-height:1.3;">
-                Your weekly Folio briefing
-              </h1>
-              <p style="margin:0 0 24px;font-size:13px;color:#a1a1aa;font-family:'Courier New',monospace;letter-spacing:0.04em;">
-                ${weekLabel}
-              </p>
+            <td style="background:${T.card};border:1px solid ${T.border};border-radius:4px;overflow:hidden;">
 
-              <p style="margin:0 0 20px;font-size:14px;color:#52525b;line-height:1.6;">
-                Here are the most important stories from this week. Each one is the kind of deal, dispute, or regulatory shift that could come up in a training contract interview.
-              </p>
+              <!-- Card header -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background:${T.header};padding:28px 36px;">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td>
+                          <p style="margin:0;font-family:${T.serif};font-size:20px;color:${T.headerText};line-height:1.3;">
+                            Weekly Digest
+                          </p>
+                        </td>
+                        <td align="right" valign="middle">
+                          <p style="margin:0;font-family:${T.sans};font-size:11px;color:#A8A29E;letter-spacing:0.06em;text-transform:uppercase;">
+                            ${weekLabel}
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Intro -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:28px 36px 8px;">
+                    <p style="margin:0;font-family:${T.sans};font-size:14px;color:${T.muted};line-height:1.65;">
+                      The most significant story from each practice area this week — curated for training contract and vacation scheme interviews.
+                    </p>
+                  </td>
+                </tr>
+              </table>
 
               <!-- Stories -->
               <table width="100%" cellpadding="0" cellspacing="0">
-                ${storyRows}
+                <tr>
+                  <td style="padding:20px 36px 0;">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                      ${storyRows}
+                    </table>
+                  </td>
+                </tr>
               </table>
 
               <!-- CTA -->
-              <table cellpadding="0" cellspacing="0" style="margin-top:28px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="background:#09090b;border-radius:8px;">
-                    <a href="${siteUrl}" style="display:inline-block;padding:12px 24px;font-size:14px;font-weight:600;color:#ffffff;text-decoration:none;letter-spacing:0.01em;">
-                      Read full briefings &rarr;
-                    </a>
+                  <td style="padding:28px 36px;">
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="background:${T.cta};border-radius:3px;">
+                          <a href="${siteUrl}" style="display:inline-block;padding:13px 28px;font-family:${T.sans};font-size:14px;font-weight:600;color:${T.ctaText};text-decoration:none;letter-spacing:0.01em;">
+                            Read full briefings &rarr;
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
 
-              ${referralLink ? `
-              <!-- Referral CTA -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px;">
-                <tr>
-                  <td style="background:#fafaf9;border:1px solid #e7e5e4;border-radius:8px;padding:20px 24px;">
-                    <p style="margin:0 0 8px;font-size:14px;font-weight:600;color:#1c1917;">Share Folio with a friend</p>
-                    <p style="margin:0 0 12px;font-size:13px;color:#57534e;line-height:1.5;">Get a free month when 3 friends subscribe.</p>
-                    <p style="margin:0;font-size:12px;font-family:'Courier New',monospace;color:#78716c;word-break:break-all;">${referralLink}</p>
-                  </td>
-                </tr>
-              </table>` : ''}
+              ${referralBlock}
+
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="background:#fafafa;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 12px 12px;padding:20px 36px;">
-              <p style="margin:0;font-size:12px;color:#a1a1aa;line-height:1.6;">
-                You&rsquo;re receiving this because you subscribe to Folio.
-                <a href="${unsubscribeUrl}" style="color:#71717a;text-decoration:underline;">Unsubscribe from this digest</a>
+            <td style="padding: 24px 0 0;" align="center">
+              <p style="margin:0;font-family:${T.sans};font-size:12px;color:${T.faint};line-height:1.6;">
+                You&rsquo;re receiving this because you subscribe to Folio.&ensp;
+                <a href="${unsubscribeUrl}" style="color:${T.faint};text-decoration:underline;">Unsubscribe</a>
               </p>
             </td>
           </tr>
@@ -253,6 +328,8 @@ function digestHtml(stories: DigestStory[], siteUrl: string, weekLabel: string, 
 </body>
 </html>`;
 }
+
+// ── Send functions ────────────────────────────────────────────────────────────
 
 export async function sendWeeklyDigest(
   to: string,
@@ -298,16 +375,14 @@ export async function sendWelcomeEmail(to: string, firstName?: string): Promise<
   }
 
   const resend = new Resend(apiKey);
-
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.folioapp.co.uk';
-  const todayUrl = siteUrl;
 
   const { error } = await resend.emails.send({
     from: FROM,
     replyTo: 'feedbackfolioapp@gmail.com',
     to,
     subject: 'Welcome to Folio',
-    html: welcomeHtml(firstName ?? '', todayUrl),
+    html: welcomeHtml(firstName ?? '', siteUrl),
   });
 
   if (error) {

@@ -33,24 +33,86 @@ async function isOptedOut(email: string): Promise<boolean> {
   return val !== null;
 }
 
-// ── Claude Haiku subject line generation ─────────────────────────────────────
+const TOPICS = ['M&A', 'Capital Markets', 'Banking & Finance', 'Energy & Tech', 'Regulation', 'Disputes', 'International', 'AI & Law'] as const;
 
-async function generateSubjectLine(headlines: string[]): Promise<string | null> {
+// ── AI: pick best story per practice area + generate subject line ─────────────
+
+interface RankedStories {
+  topStories: DigestStory[];
+  subject: string;
+}
+
+async function rankStoriesAndSubject(
+  allStories: DigestStory[],
+  weekLabel: string,
+): Promise<RankedStories> {
+  const fallbackSubject = `${allStories[0]?.headline ?? 'This week in law'} + more`;
+
   try {
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-    const prompt = `You are writing a subject line for a weekly email digest for UK law students preparing for training contract interviews. The digest covers the following stories:\n\n${headlines.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n\nWrite ONE email subject line. Requirements:\n- Under 60 characters\n- Editorial style (like a newspaper headline, not a marketing email)\n- References the most compelling story\n- No quotation marks, no "Re:", no "FW:"\n- Return only the subject line text, nothing else`;
+
+    const storiesJson = allStories.map((s, i) => ({
+      index: i,
+      topic: s.topic,
+      headline: s.headline,
+      summary: s.summary.slice(0, 120),
+    }));
+
+    const prompt = `You are a commercial law editor preparing a weekly digest for UK law students targeting training contract interviews. The digest covers the week of ${weekLabel}.
+
+Here are all stories published this week (JSON array):
+${JSON.stringify(storiesJson, null, 2)}
+
+Your tasks:
+1. For each of the 8 practice areas, select the single most important story that week. Rank by: significance to the UK legal market, likely interview relevance, deal/case size, regulatory impact. If a topic has no stories this week, omit it.
+2. Write one email subject line: under 60 chars, editorial style (newspaper headline, not marketing), references the most compelling story, no quotes.
+
+Respond with valid JSON only — no markdown, no explanation:
+{
+  "selections": {
+    "M&A": <index or null>,
+    "Capital Markets": <index or null>,
+    "Banking & Finance": <index or null>,
+    "Energy & Tech": <index or null>,
+    "Regulation": <index or null>,
+    "Disputes": <index or null>,
+    "International": <index or null>,
+    "AI & Law": <index or null>
+  },
+  "subject": "<subject line>"
+}`;
 
     const msg = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 80,
+      max_tokens: 300,
       messages: [{ role: 'user', content: prompt }],
     });
 
-    const text = msg.content[0]?.type === 'text' ? msg.content[0].text.trim() : null;
-    if (!text || text.length === 0 || text.length > 80) return null;
-    return text;
-  } catch {
-    return null;
+    const raw = msg.content[0]?.type === 'text' ? msg.content[0].text.trim() : '';
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('No JSON in response');
+
+    const parsed = JSON.parse(jsonMatch[0]) as {
+      selections: Record<string, number | null>;
+      subject: string;
+    };
+
+    const topStories: DigestStory[] = [];
+    for (const topic of TOPICS) {
+      const idx = parsed.selections[topic];
+      if (typeof idx === 'number' && allStories[idx]) {
+        topStories.push(allStories[idx]);
+      }
+    }
+
+    const subject = typeof parsed.subject === 'string' && parsed.subject.length > 0 && parsed.subject.length <= 80
+      ? parsed.subject
+      : fallbackSubject;
+
+    return { topStories: topStories.length > 0 ? topStories : allStories.slice(0, 8), subject };
+  } catch (err) {
+    console.error('[digest] AI ranking failed, falling back to recency order:', err);
+    return { topStories: allStories.slice(0, 8), subject: fallbackSubject };
   }
 }
 
@@ -81,26 +143,23 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ sent: 0, note: 'No briefings this week' });
   }
 
-  // Build digest stories: pick 1 top story per day (first story = most important)
-  // De-duplicate: track first-5-word fingerprints; same opener across days = same deal, keep most recent
-  const digestStories: DigestStory[] = [];
+  // Collect all stories from the week — de-duplicate by 5-word fingerprint
+  const allStories: DigestStory[] = [];
   const seenFingerprints = new Set<string>();
 
   for (const date of recentDates) {
     const briefing = await getBriefing(date);
     if (!briefing) continue;
-    // Take up to 2 stories per day to fill the digest (max ~14 stories for 7 days)
-    for (const story of briefing.stories.slice(0, 2)) {
-      // Fingerprint: lowercase first 5 words, strip punctuation
+    for (const story of briefing.stories) {
       const fingerprint = story.headline
         .toLowerCase()
         .replace(/[^a-z0-9\s]/g, '')
         .split(/\s+/)
         .slice(0, 5)
         .join(' ');
-      if (seenFingerprints.has(fingerprint)) continue; // duplicate — skip
+      if (seenFingerprints.has(fingerprint)) continue;
       seenFingerprints.add(fingerprint);
-      digestStories.push({
+      allStories.push({
         headline: story.headline,
         topic: story.topic,
         summary: story.summary,
@@ -109,18 +168,13 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Cap at 10 stories max (enough for a scannable email)
-  const topStories = digestStories.slice(0, 10);
-
   // Week label: "24 Feb – 2 Mar 2026"
   const fmt = (d: Date) =>
     d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   const weekLabel = `${fmt(weekAgo)} – ${fmt(now)} ${now.getFullYear()}`;
 
-  // Generate editorial subject line via Claude Haiku, fall back to template
-  const headlines = topStories.map((s) => s.headline);
-  const aiSubject = await generateSubjectLine(headlines);
-  const subject = aiSubject ?? `${topStories[0]?.headline ?? 'This week in law'} + ${topStories.length - 1} more`;
+  // AI selects best story per practice area + generates subject line
+  const { topStories, subject } = await rankStoriesAndSubject(allStories, weekLabel);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.folioapp.co.uk';
 

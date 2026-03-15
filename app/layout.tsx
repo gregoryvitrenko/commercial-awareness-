@@ -75,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider proxyUrl="https://www.folioapp.co.uk/__clerk">
+    <ClerkProvider>
       <html
         lang="en"
         className={`${inter.variable} ${playfairDisplay.variable} ${jetbrainsMono.variable} scroll-smooth`}

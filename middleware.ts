@@ -6,11 +6,6 @@ const REVIEW_SECRET = 'folio-rev-xK9mP7wQ2';
 export default clerkMiddleware(async (auth, req) => {
   const url = new URL(req.url);
 
-  // Let Clerk proxy requests pass through without middleware processing
-  if (url.pathname.startsWith('/__clerk')) {
-    return NextResponse.next();
-  }
-
   const reviewKey = url.searchParams.get('review_key');
 
   if (reviewKey === REVIEW_SECRET) {
@@ -28,9 +23,9 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    // Skip Next.js internals, static files, and Clerk proxy path
-    '/((?!_next|__clerk|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes (except clerk-proxy)
-    '/(api(?!/clerk-proxy)|trpc)(.*)',
+    // Skip Next.js internals and static files
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
   ],
 };

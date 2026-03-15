@@ -135,7 +135,10 @@ async function fetchLeadImage(headline: string): Promise<{
   photographerUrl: string;
 } | null> {
   const accessKey = process.env.UNSPLASH_ACCESS_KEY;
-  if (!accessKey) return null;
+  if (!accessKey) {
+    console.warn('[generate] Unsplash: UNSPLASH_ACCESS_KEY not set — skipping hero image');
+    return null;
+  }
 
   // Use first 6 words of headline as search query — specific enough for good results
   const query = headline.split(' ').slice(0, 6).join(' ');
@@ -145,7 +148,10 @@ async function fetchLeadImage(headline: string): Promise<{
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
       { headers: { Authorization: `Client-ID ${accessKey}` } }
     );
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.warn(`[generate] Unsplash: HTTP ${res.status} for query "${query}"`);
+      return null;
+    }
     const data = await res.json() as {
       results?: Array<{
         urls: { regular: string };
@@ -153,7 +159,10 @@ async function fetchLeadImage(headline: string): Promise<{
       }>;
     };
     const photo = data.results?.[0];
-    if (!photo) return null;
+    if (!photo) {
+      console.warn(`[generate] Unsplash: no results for query "${query}"`);
+      return null;
+    }
     return {
       url: photo.urls.regular,
       photographer: photo.user.name,

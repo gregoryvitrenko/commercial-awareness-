@@ -1394,7 +1394,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'bristows',
-    name: 'Bristows LLP',
+    name: 'Bristows',
     shortName: 'Bristows',
     aliases: ['Bristows', 'Bristows LLP'],
     tier: 'Boutique',
@@ -1476,7 +1476,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'white-case',
-    name: 'White & Case LLP',
+    name: 'White & Case',
     shortName: 'White & Case',
     aliases: ['White & Case', 'White and Case', 'W&C'],
     tier: 'US Firms',
@@ -1518,7 +1518,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'milbank',
-    name: 'Milbank LLP',
+    name: 'Milbank',
     shortName: 'Milbank',
     aliases: ['Milbank', 'Milbank LLP', 'Milbank, Tweed, Hadley & McCloy'],
     tier: 'US Firms',
@@ -1554,7 +1554,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'debevoise-plimpton',
-    name: 'Debevoise & Plimpton LLP',
+    name: 'Debevoise & Plimpton',
     shortName: 'Debevoise',
     aliases: ['Debevoise', 'Debevoise & Plimpton', 'Debevoise and Plimpton', 'D&P'],
     tier: 'US Firms',
@@ -1590,7 +1590,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'simpson-thacher',
-    name: 'Simpson Thacher & Bartlett LLP',
+    name: 'Simpson Thacher & Bartlett',
     shortName: 'Simpson Thacher',
     aliases: ['Simpson Thacher', 'Simpson Thacher & Bartlett', 'STB'],
     tier: 'US Firms',
@@ -1626,7 +1626,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'willkie-farr',
-    name: 'Willkie Farr & Gallagher LLP',
+    name: 'Willkie Farr & Gallagher',
     shortName: 'Willkie',
     aliases: ['Willkie', 'Willkie Farr', 'Willkie Farr & Gallagher', 'Willkie Farr and Gallagher'],
     tier: 'US Firms',
@@ -1662,7 +1662,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'sidley-austin',
-    name: 'Sidley Austin LLP',
+    name: 'Sidley Austin',
     shortName: 'Sidley',
     aliases: ['Sidley', 'Sidley Austin', 'Sidley Austin LLP'],
     tier: 'US Firms',
@@ -1698,7 +1698,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'goodwin-procter',
-    name: 'Goodwin Procter LLP',
+    name: 'Goodwin Procter',
     shortName: 'Goodwin',
     aliases: ['Goodwin', 'Goodwin Procter', 'Goodwin Procter LLP'],
     tier: 'US Firms',
@@ -1734,7 +1734,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'dechert',
-    name: 'Dechert LLP',
+    name: 'Dechert',
     shortName: 'Dechert',
     aliases: ['Dechert', 'Dechert LLP'],
     tier: 'US Firms',
@@ -1775,7 +1775,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'covington-burling',
-    name: 'Covington & Burling LLP',
+    name: 'Covington & Burling',
     shortName: 'Covington',
     aliases: ['Covington & Burling', 'Covington', 'Cov', 'CovBur', 'Covington and Burling'],
     tier: 'US Firms',
@@ -2049,15 +2049,15 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'morrison-foerster',
-    name: 'Morrison Foerster',
+    name: 'Morrison & Foerster',
     shortName: 'MoFo',
-    aliases: ['Morrison Foerster', 'Morrison & Foerster', 'MoFo'],
+    aliases: ['Morrison & Foerster', 'Morrison Foerster', 'MoFo'],
     tier: 'US Firms',
     website: 'https://www.mofo.com',
     hq: 'San Francisco / New York',
     offices: ['London', 'New York', 'San Francisco', 'Los Angeles', 'Washington DC', 'Tokyo', 'Beijing', 'Shanghai', 'Hong Kong', 'Singapore', 'Brussels'],
     practiceAreas: ['Technology M&A', 'Intellectual Property', 'Privacy & Data Security', 'Life Sciences', 'Capital Markets', 'Financial Services Regulatory'],
-    knownFor: "Morrison Foerster is the pre-eminent US firm for technology M&A, IP litigation, and privacy law, acting for the world's largest tech companies, biotech firms, and financial institutions on high-stakes transactions and regulatory matters. The London office is a growing presence in European tech deals and financial services regulation.",
+    knownFor: "Morrison & Foerster is the pre-eminent US firm for technology M&A, IP litigation, and privacy law, acting for the world's largest tech companies, biotech firms, and financial institutions on high-stakes transactions and regulatory matters. The London office is a growing presence in European tech deals and financial services regulation.",
     culture: "MoFo has a distinctly tech-forward culture that reflects its Silicon Valley roots — the London office attracts trainees with a genuine interest in technology, data, and life sciences. The training programme is small which means trainees get exceptional access to senior partners and to cutting-edge tech transactions. The firm's commitment to pro bono work is among the strongest of any US firm in London.",
     interviewFocus: "MoFo interviews focus on technology and data regulation — expect questions on the EU AI Act and UK AI policy, privacy law developments post-Schrems II, and recent tech M&A transactions. Candidates should demonstrate a genuine passion for technology law and understand why a boutique US tech firm offers something different from a generalist Magic Circle practice.",
     trainingContract: {
@@ -2111,7 +2111,7 @@ export const FIRMS: FirmProfile[] = [
 
   {
     slug: 'cooley',
-    name: 'Cooley LLP',
+    name: 'Cooley',
     shortName: 'Cooley',
     aliases: ['Cooley', 'Cooley LLP'],
     tier: 'US Firms',

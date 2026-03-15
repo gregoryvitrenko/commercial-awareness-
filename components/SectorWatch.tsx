@@ -1,4 +1,4 @@
-import { TrendingUp, Zap } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import type { SectorWatchData, OneToFollowData } from '@/lib/types';
 import { renderBold } from '@/lib/bold';
 
@@ -17,10 +17,10 @@ function isOTFData(v: unknown): v is OneToFollowData {
 
 export function SectorWatch({ sectorWatch, oneToFollow }: SectorWatchProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-200 dark:divide-stone-800">
+    <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-200 dark:divide-stone-800 border border-stone-200 dark:border-stone-800 rounded-sm overflow-hidden">
 
       {/* ── Sector Watch ── */}
-      <div className="relative flex flex-col pt-5 pb-8 md:pr-8 overflow-hidden">
+      <div className="relative flex flex-col pt-5 pb-8 px-6 overflow-hidden">
         {/* Top editorial accent line */}
         <div className="absolute inset-x-0 top-0 h-[2px] bg-stone-900 dark:bg-stone-100" />
 
@@ -46,15 +46,10 @@ export function SectorWatch({ sectorWatch, oneToFollow }: SectorWatchProps) {
           </p>
         )}
 
-        {/* Footer */}
-        <div className="flex items-center justify-between mt-8 pt-4 border-t border-stone-100 dark:border-stone-800">
-          <span className="section-label text-stone-400 dark:text-stone-500">Market Intelligence Unit</span>
-          <span className="inline-block w-2 h-2 rounded-full bg-stone-400 dark:bg-stone-600" />
-        </div>
       </div>
 
       {/* ── One to Follow ── */}
-      <div className="flex flex-col pt-5 pb-8 md:pl-8">
+      <div className="flex flex-col pt-5 pb-8 px-6">
         <div className="flex items-center gap-2 mb-6">
           {/* Pulsing amber dot — signals developing/live story */}
           <span className="relative flex h-2 w-2 flex-shrink-0">
@@ -81,13 +76,6 @@ export function SectorWatch({ sectorWatch, oneToFollow }: SectorWatchProps) {
           </p>
         )}
 
-        {/* Footer */}
-        <div className="flex items-center gap-2 mt-8 pt-4 border-t border-stone-100 dark:border-stone-800">
-          <div className="flex items-center justify-center w-6 h-6 rounded-full border border-stone-200 dark:border-stone-700">
-            <Zap size={11} className="text-stone-400 dark:text-stone-500" />
-          </div>
-          <span className="section-label text-stone-400 dark:text-stone-500">Legal Precedent Alert</span>
-        </div>
       </div>
 
     </div>

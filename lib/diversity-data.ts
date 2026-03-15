@@ -22,7 +22,7 @@ export const DIVERSITY_SCHEMES: Record<string, DiversityScheme[]> = {
       eligibility:
         'Open to first-year undergraduates (or second-year on a four-year course) from underrepresented socioeconomic backgrounds. Provides a week of work experience, mentoring, and insight into City legal careers.',
       typically: 'Applications open October · closes December',
-      applyUrl: 'https://earlycareersuk.aoshearman.com/our-programmes',
+      applyUrl: 'https://earlycareersuk.aoshearman.com/opportunities/smart-start-programme',
     },
     {
       name: 'PRIME Work Experience',

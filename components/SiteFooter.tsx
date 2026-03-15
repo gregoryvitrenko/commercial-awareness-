@@ -41,7 +41,7 @@ export function SiteFooter() {
             Contact
           </a>
           <a
-            href="https://www.linkedin.com/in/gregory-vitrenko-7258a0350"
+            href="https://www.linkedin.com/in/gregoryvitrenko/"
             target="_blank"
             rel="noopener noreferrer"
             className="font-sans text-label uppercase tracking-wide text-stone-400 dark:text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"

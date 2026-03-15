@@ -17,12 +17,20 @@ export const DIVERSITY_SCHEMES: Record<string, DiversityScheme[]> = {
 
   'allen-overy-shearman': [
     {
-      name: 'Access A&O Shearman',
+      name: 'Smart Start Programme',
       type: 'socioeconomic',
       eligibility:
-        'Open to first-year undergraduates (or second-year on a four-year course) from underrepresented socioeconomic backgrounds. Provides a week of work experience, mentoring, and insight into City legal careers.',
-      typically: 'Applications open October · closes December',
+        'For Year 12 students from lower socioeconomic backgrounds. A week of work experience, workshops and skills training at the A&O Shearman London office. Open to students meeting at least one socioeconomic criterion (household income, free school meals, or first-in-family to attend university).',
+      typically: 'Applications open January · closes March',
       applyUrl: 'https://earlycareersuk.aoshearman.com/opportunities/smart-start-programme',
+    },
+    {
+      name: 'Black Student Lawyer Programme',
+      type: 'ethnicity',
+      eligibility:
+        'For Black or mixed-Black heritage undergraduate students. Provides mentoring, skills development and a fast-track route to the vacation scheme.',
+      typically: 'Check the A&O early careers site for current cycle dates',
+      applyUrl: 'https://earlycareersuk.aoshearman.com/opportunities/black-student-lawyer-programme',
     },
     {
       name: 'PRIME Work Experience',

@@ -10,10 +10,10 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Law Firm Profiles',
-  description: 'Profiles for 46 UK and US law firms — Magic Circle, Silver Circle, and top US firms. Salaries, training contract deadlines, practice areas, diversity schemes, and interview prep.',
+  description: 'Profiles for 55 UK and US law firms — Magic Circle, Silver Circle, and top US firms. Salaries, training contract deadlines, practice areas, diversity schemes, and interview prep.',
   openGraph: {
     title: 'Law Firm Profiles | Folio',
-    description: 'Profiles for 46 firms including Allen & Overy Shearman, Clifford Chance, Freshfields, Linklaters, Slaughter and May, Latham & Watkins, and more.',
+    description: 'Profiles for 55 firms including Allen & Overy Shearman, Clifford Chance, Freshfields, Linklaters, Slaughter and May, Latham & Watkins, and more.',
   },
 };
 
@@ -32,7 +32,7 @@ export default async function FirmsPage() {
             Directory
           </span>
           <h2 className="text-5xl font-serif">Law Firm Profiles</h2>
-          <p className="max-w-xl opacity-60 text-lg font-light">46 firms. Magic Circle to boutique.</p>
+          <p className="max-w-xl opacity-60 text-lg font-light">{FIRMS.length} firms. Magic Circle to boutique.</p>
         </div>
 
         {/* Disclaimer */}

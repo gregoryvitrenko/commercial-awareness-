@@ -25,6 +25,14 @@ export const DIVERSITY_SCHEMES: Record<string, DiversityScheme[]> = {
       applyUrl: 'https://earlycareersuk.aoshearman.com/opportunities/smart-start-programme',
     },
     {
+      name: 'Step into Law',
+      type: 'work-experience',
+      eligibility:
+        'For Year 13 students curious about commercial law. Three in-person touchpoints plus virtual follow-up covering skills workshops, commercial awareness and application support. Minimum predicted grades AAB.',
+      typically: 'Applications open January · closes February',
+      applyUrl: 'https://earlycareersuk.aoshearman.com/opportunities/step-into-law-scheme',
+    },
+    {
       name: 'Black Student Lawyer Programme',
       type: 'ethnicity',
       eligibility:

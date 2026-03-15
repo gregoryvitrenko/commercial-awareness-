@@ -273,6 +273,7 @@ export async function sendWeeklyDigest(
 
   const { error } = await resend.emails.send({
     from: FROM,
+    replyTo: 'feedbackfolioapp@gmail.com',
     to,
     subject,
     html: digestHtml(stories, siteUrl, weekLabel, unsubscribeUrl, referralLink),
@@ -303,6 +304,7 @@ export async function sendWelcomeEmail(to: string, firstName?: string): Promise<
 
   const { error } = await resend.emails.send({
     from: FROM,
+    replyTo: 'feedbackfolioapp@gmail.com',
     to,
     subject: 'Welcome to Folio',
     html: welcomeHtml(firstName ?? '', todayUrl),

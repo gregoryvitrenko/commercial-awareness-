@@ -33,7 +33,9 @@ export function FirmsDirectory({ firms }: { firms: FirmProfile[] }) {
 
   const byTier = TIER_ORDER.reduce<Record<FirmTier, FirmProfile[]>>(
     (acc, tier) => {
-      acc[tier] = filtered.filter((f) => f.tier === tier);
+      acc[tier] = filtered
+        .filter((f) => f.tier === tier)
+        .sort((a, b) => a.name.localeCompare(b.name));
       return acc;
     },
     {} as Record<FirmTier, FirmProfile[]>

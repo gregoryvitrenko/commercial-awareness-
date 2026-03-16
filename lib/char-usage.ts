@@ -146,6 +146,16 @@ export async function recordUsage(chars: number): Promise<void> {
  * Hard cap: also blocks if `chars` alone would exceed the monthly remaining
  * (guards the final days of the month when daily budget rounds very small).
  */
+/**
+ * Returns the character limit for today's podcast script.
+ * = remaining monthly chars / days left in month.
+ * This guarantees every day gets audio if each script stays within budget.
+ */
+export async function getDailyCharBudget(): Promise<number> {
+  const { remaining, daysRemaining } = await getMonthlyUsage();
+  return Math.floor(remaining / daysRemaining);
+}
+
 export async function hasCapacity(chars: number): Promise<boolean> {
   const { remaining, dailyBudget, usedToday } = await getMonthlyUsage();
 

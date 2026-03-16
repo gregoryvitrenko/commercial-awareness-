@@ -64,6 +64,7 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
         "partnerAnswer": "2–3 sentences, ~50 words. Assume the partner has already read the headline — do not restate it. Lead immediately with the commercial implication: what does this mean for the firm's practice, clients, or deal pipeline? Name the specific practice area and which firms are best positioned to win the work, and briefly why. The student should be able to drop this into a 2-minute partner conversation without sounding like they just read a summary. Zero filler phrases.",
         "fullCommercial": "4–5 sentences, ~100 words. For someone who has not yet seen the story. Open with the headline fact in one sentence. Explain the strategic context — why this happened. Name the specific practice areas and the specific Magic Circle, Silver Circle, or US firms best positioned, with a brief reason (track record, client relationship, regulatory expertise). Connect to one named broader market trend. End with a concrete statement about what work this creates for commercial lawyers. Zero filler phrases."
       },
+      "imageQuery": "3–5 word Unsplash search query that captures the INDUSTRY or SETTING of this story — not the legal transaction itself. Think about what a photojournalist would photograph: the sector, the physical environment, or the geography. Examples: 'North Sea oil platform aerial' for an energy deal, 'London financial district skyline' for a City regulation story, 'pharmaceutical laboratory research' for a pharma M&A, 'cargo container port shipping' for a trade dispute, 'semiconductor microchip factory' for a tech acquisition, 'European Parliament Brussels' for EU regulation. NEVER use abstract legal/business terms like 'merger', 'acquisition', 'regulation', 'corporate', 'handshake', 'gavel'. The image should evoke the WORLD the story takes place in, not the legal work itself.",
       "leadScore": 7,
       "sources": ["https://example.com/article-url"],
       "firms": ["Freshfields", "Linklaters"]
@@ -130,7 +131,46 @@ function parseOneToFollow(raw: unknown): OneToFollowData | string {
   return String(raw ?? '');
 }
 
-async function fetchLeadImage(headline: string): Promise<{
+// Topic → reliable Unsplash fallback queries (guaranteed to return results)
+const TOPIC_FALLBACK_QUERIES: Record<string, string> = {
+  'M&A': 'London financial district skyline',
+  'Capital Markets': 'stock exchange trading floor',
+  'Banking & Finance': 'City of London Canary Wharf',
+  'Energy & Tech': 'wind turbine energy infrastructure',
+  'Regulation': 'Westminster Parliament London',
+  'Disputes': 'Royal Courts of Justice London',
+  'International': 'world map globe international',
+  'AI & Law': 'server room data centre technology',
+};
+
+async function searchUnsplash(
+  query: string,
+  accessKey: string
+): Promise<{ url: string; photographer: string; photographerUrl: string } | null> {
+  const res = await fetch(
+    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=5&orientation=landscape`,
+    { headers: { Authorization: `Client-ID ${accessKey}` } }
+  );
+  if (!res.ok) return null;
+  const data = await res.json() as {
+    results?: Array<{
+      urls: { regular: string };
+      user: { name: string; links: { html: string } };
+    }>;
+  };
+  const photo = data.results?.[0];
+  if (!photo) return null;
+  return {
+    url: photo.urls.regular,
+    photographer: photo.user.name,
+    photographerUrl: photo.user.links.html,
+  };
+}
+
+async function fetchLeadImage(
+  imageQuery: string | undefined,
+  topic: string = 'International'
+): Promise<{
   url: string;
   photographer: string;
   photographerUrl: string;
@@ -141,34 +181,26 @@ async function fetchLeadImage(headline: string): Promise<{
     return null;
   }
 
-  // Use first 6 words of headline as search query — specific enough for good results
-  const query = headline.split(' ').slice(0, 6).join(' ');
+  const fallback = TOPIC_FALLBACK_QUERIES[topic] || 'London skyline cityscape';
+
+  // Build query list: Claude's AI-generated query first, then topic fallback
+  const queries: string[] = [];
+  if (imageQuery && imageQuery.length > 3) {
+    queries.push(imageQuery);
+  }
+  queries.push(fallback);
 
   try {
-    const res = await fetch(
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&orientation=landscape`,
-      { headers: { Authorization: `Client-ID ${accessKey}` } }
-    );
-    if (!res.ok) {
-      console.warn(`[generate] Unsplash: HTTP ${res.status} for query "${query}"`);
-      return null;
+    for (const query of queries) {
+      const result = await searchUnsplash(query, accessKey);
+      if (result) {
+        console.log(`[generate] Unsplash: found image for query "${query}"`);
+        return result;
+      }
+      console.log(`[generate] Unsplash: no results for "${query}", trying fallback...`);
     }
-    const data = await res.json() as {
-      results?: Array<{
-        urls: { regular: string };
-        user: { name: string; links: { html: string } };
-      }>;
-    };
-    const photo = data.results?.[0];
-    if (!photo) {
-      console.warn(`[generate] Unsplash: no results for query "${query}"`);
-      return null;
-    }
-    return {
-      url: photo.urls.regular,
-      photographer: photo.user.name,
-      photographerUrl: photo.user.links.html,
-    };
+    console.warn('[generate] Unsplash: all queries returned no results');
+    return null;
   } catch {
     return null;
   }
@@ -405,12 +437,25 @@ export async function generateBriefing(): Promise<Briefing> {
     console.error('[generate] JSON repair error:', err);
     throw err;
   }
-  const briefing = buildBriefing(JSON.parse(repaired), today);
+  const parsedData = JSON.parse(repaired);
+
+  // Extract imageQuery from the lead story before buildBriefing strips unknown fields.
+  // The lead story is the one with the highest leadScore (buildBriefing sorts by it).
+  const rawStories = (parsedData.stories as Record<string, unknown>[]) ?? [];
+  const leadRaw = [...rawStories].sort((a, b) => {
+    const sa = typeof a.leadScore === 'number' ? a.leadScore : 5;
+    const sb = typeof b.leadScore === 'number' ? b.leadScore : 5;
+    return sb - sa;
+  })[0];
+  const leadImageQuery = leadRaw?.imageQuery as string | undefined;
+  const leadTopic = (leadRaw?.topic as string) ?? 'International';
+
+  const briefing = buildBriefing(parsedData, today);
 
   // Fetch a hero image for the lead story from Unsplash (fails silently if key not set)
   const leadStory = briefing.stories[0];
   if (leadStory) {
-    const image = await fetchLeadImage(leadStory.headline);
+    const image = await fetchLeadImage(leadImageQuery, leadTopic);
     if (image) {
       leadStory.imageUrl = image.url;
       leadStory.imagePhotographer = image.photographer;

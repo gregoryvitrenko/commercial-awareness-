@@ -115,7 +115,7 @@ async function searchForEvents(): Promise<string> {
         body: JSON.stringify({
           api_key: apiKey,
           query: q,
-          search_depth: 'basic',
+          search_depth: 'advanced',
           topic: 'general',      // general index crawls event listing sites (Eventbrite, firm sites)
           days: 60,              // look back 60 days — event pages stay live well before the event
           max_results: 5,

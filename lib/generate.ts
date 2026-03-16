@@ -53,7 +53,7 @@ Return a raw JSON object (no markdown fences, no preamble) with this exact struc
     {
       "topic": "M&A",
       "headline": "One sharp, declarative sentence — name the parties, deal value, and type of transaction",
-      "summary": "Write a tight editorial summary using only facts clearly present in the sources. Maximum 200 words — write fewer if the facts warrant it. A confident 100-word brief beats a padded 200-word one. Work through this priority order, including each item only if the sources support it: (1) Core event — what happened, who was involved, which sector and jurisdiction. (2) Deal economics — headline value, size, key metrics, consideration structure. (3) Named parties and roles — buyer/seller/target, PE sponsor, advisers on each side with their roles, regulators. (4) Legal and regulatory dimension — approvals needed, regulatory regime, conditions, notable clauses. (5) Strategic context — why this happened, what trend it reflects. The Golden Rule: if a detail is absent from the sources, omit it silently. Never write that something 'was not disclosed', 'could not be confirmed', or 'was not available'. Never use 'according to [source]', 'reports suggest', 'it is unclear', or any phrase that attributes the prose to a source or flags a gap. Never repeat a fact already stated — each point once, then move on. Wrap 4–8 key terms per story in **double asterisks**: deal values, firm names, regulatory bodies, named legislation, central parties.",
+      "summary": "Write a substantive editorial summary using only facts clearly present in the sources. Target 200–300 words — enough to give the reader real depth without padding. A confident 150-word brief beats a padded 300-word one, but don't cut short when the facts support a fuller picture. Work through this priority order, including each item only if the sources support it: (1) Core event — what happened, who was involved, which sector and jurisdiction. (2) Deal economics — headline value, size, key metrics, consideration structure. (3) Named parties and roles — buyer/seller/target, PE sponsor, advisers on each side with their roles, regulators. (4) Legal and regulatory dimension — approvals needed, regulatory regime, conditions, notable clauses. (5) Strategic context — why this happened, what trend it reflects. The Golden Rule: if a detail is absent from the sources, omit it silently. Never write that something 'was not disclosed', 'could not be confirmed', or 'was not available'. Never use 'according to [source]', 'reports suggest', 'it is unclear', or any phrase that attributes the prose to a source or flags a gap. Never repeat a fact already stated — each point once, then move on. Wrap 4–8 key terms per story in **double asterisks**: deal values, firm names, regulatory bodies, named legislation, central parties.",
       "whyItMatters": {
         "ukFirms": "3–4 sentences. Name the specific Magic Circle firms (Freshfields Bruckhaus Deringer, Linklaters, Allen & Overy Shearman, Clifford Chance, Slaughter and May) or Silver Circle firms (Herbert Smith Freehills, Ashurst, Hogan Lovells, Travers Smith, Macfarlies) best positioned on this matter and explain precisely why — which practice group has the track record, which office has the client relationship, which partner team wins this type of mandate. Note any Takeover Panel, CMA clearance, or FCA authorisation requirements that give UK firms the edge.",
         "usFirms": "2–3 sentences. Name which elite US firms in London (Kirkland & Ellis, Latham & Watkins, Sullivan & Cromwell, Skadden Arps, Paul Weiss, Weil Gotshal & Manges, Davis Polk, Cleary Gottlieb) are the natural choice for the PE sponsor, the leveraged finance package, or the cross-border structuring work, and explain the specific competitive advantage (e.g. Kirkland's dominance of UK PE fund formation, Latham's leveraged finance bench in London). Note any tension with UK firms for the same mandate.",
@@ -224,13 +224,13 @@ async function searchNews(dateLabel: string): Promise<string> {
   const apiKey = process.env.TAVILY_API_KEY;
   if (!apiKey) return '(no web search — Tavily API key not set)';
 
-  // 8 primary queries (one per topic) + 4 existing supplementary + 3 new supplementary
-  // targeting non-paywalled primary sources = 15 total.
-  // search_depth: 'advanced' (2 credits/query) × 15 × 30 days ≈ 900 credits/month.
-  // Events cron stays on basic. Running on Tavily pay-as-you-go for overflow.
+  // 8 primary queries (one per topic) + 7 supplementary + 5 include_domains-targeted = 20 total.
+  // search_depth: 'advanced' (2 credits/query) × 20 × 31 days = 1,240 credits/month.
+  // Events cron on advanced (10 queries × 2 × 8 runs = 160/month). Total ≈ 1,400/month.
+  // Budget: 1,000 free (Researcher plan) + 1,000 pay-as-you-go = 2,000 credits/month.
   // Per-query include_domains biases supplementary queries toward ungated primary sources
   // (law firm press releases, regulator sites, PR wires) so Claude gets full deal detail
-  // rather than 800-char paywalled excerpts.
+  // rather than truncated paywalled excerpts.
   interface TavilyQuery {
     query: string;
     include_domains?: string[];
@@ -251,6 +251,9 @@ async function searchNews(dateLabel: string): Promise<string> {
     { query: `Magic Circle Silver Circle law firm mandate instruction UK today ${dateLabel}` },
     { query: `UK High Court Court of Appeal Supreme Court judgment ruling today ${dateLabel}` },
     { query: `FCA PRA CMA ICO Ofgem regulatory decision enforcement action UK today ${dateLabel}` },
+    { query: `UK private credit direct lending fund finance facility today ${dateLabel}` },
+    { query: `European cross-border M&A deal PE buyout continental Europe UK angle today ${dateLabel}` },
+    { query: `UK ESG sustainability climate regulation green finance legal today ${dateLabel}` },
     // ── Supplementary: non-paywalled primary sources ──────────────────────
     {
       query: `UK law firm deal announcement press release merger acquisition ${dateLabel}`,
@@ -276,6 +279,20 @@ async function searchNews(dateLabel: string): Promise<string> {
         'reuters.com', 'ft.com', 'lawgazette.co.uk',
         'artificialintelligenceact.eu', 'digital-strategy.ec.europa.eu',
         'gov.uk', 'ico.org.uk',
+      ],
+    },
+    {
+      query: `law firm deal UK legal news commercial awareness solicitor trainee ${dateLabel}`,
+      include_domains: [
+        'lawgazette.co.uk', 'legal500.com', 'chambersandpartners.com',
+        'thelawyer.com', 'legalcheek.com', 'rollonfriday.com',
+      ],
+    },
+    {
+      query: `private equity secondaries continuation fund UK Europe deal today ${dateLabel}`,
+      include_domains: [
+        'privateequitywire.co.uk', 'buyoutsnews.com', 'pitchbook.com',
+        'preqin.com', 'reuters.com', 'ft.com',
       ],
     },
   ];
@@ -307,7 +324,7 @@ async function searchNews(dateLabel: string): Promise<string> {
     })
   );
 
-  const CONTENT_LIMIT = 800;
+  const CONTENT_LIMIT = 1000;
   const items = results
     .flatMap((r) => (r.results ?? []) as { url: string; title: string; content: string }[])
     .map((item) => {
@@ -366,7 +383,7 @@ export async function generateBriefing(): Promise<Briefing> {
 
   const completion = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 16000,
+    max_tokens: 20000,
     system: SYSTEM_PROMPT,
     messages: [
       { role: 'user', content: buildUserPrompt(dateStr, searchContext, exclusionBlock) },
